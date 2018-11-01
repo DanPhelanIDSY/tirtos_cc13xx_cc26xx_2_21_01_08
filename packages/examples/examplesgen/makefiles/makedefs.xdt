@@ -1,0 +1,130 @@
+%%{
+    var Boards        = $args[0];
+    var board         = $args[1];
+    var toolchain     = $args[2];
+    var toolchainDir  = $args[3];
+    var prodList      = $args[4];
+    var externalCOpts = $args[5];
+    var externalLOpts = $args[6];
+    var xdcExtraPaths = $args[7];
+    var xdcPath       = [];
+    var packageVars   = [];
+    var inProduct     = false;
+
+    /* Determine if makedefs are being generated in an installed product */
+    if (prodList["tirtos"].ver != null && prodList["tirtos"].ver != "") {
+        inProduct = ((prodList["bios"].absPath).search(prodList["tirtos"].ver) >= 0);
+    }
+
+    /* Returns product path depending if generating from product or not */
+    var getProdPath = function (prodString) {
+        if (inProduct) {
+            return (prodList["tirtos"].makeVarPath + "/products/" +
+                prodList[prodString].ver);
+        }
+        else {
+            return (prodList[prodString].absPath);
+        }
+    };
+
+    var getPackageVarPath = function (prodString) {
+        return (prodList[prodString].makePackages + " = " +
+            prodList[prodString].makeVarPath + "/packages");
+    };
+%%}
+###### CHANGE LOCATION TO YOUR CODEGEN TOOLS INSTALL DIR. UNIX PATH (no backslashes) #######
+CODEGEN_INSTALL_DIR = `toolchainDir`
+
+% if (toolchain == "TI") {
+%     if (board.family == "MSP430") {
+CC = "$(CODEGEN_INSTALL_DIR)/bin/cl430"
+LNK = "$(CODEGEN_INSTALL_DIR)/bin/cl430"
+%     }
+%     else if (board.family == "C2000") {
+CC = "$(CODEGEN_INSTALL_DIR)/bin/cl2000"
+LNK = "$(CODEGEN_INSTALL_DIR)/bin/cl2000"
+%     }
+%     else {
+CC = "$(CODEGEN_INSTALL_DIR)/bin/armcl"
+LNK = "$(CODEGEN_INSTALL_DIR)/bin/armcl"
+%     }
+% }
+% if (toolchain == "IAR") {
+%     if (board.family == "MSP430") {
+CC = "$(CODEGEN_INSTALL_DIR)/bin/icc430"
+LNK = "$(CODEGEN_INSTALL_DIR)/bin/xlink"
+%     }
+%     else {
+CC = "$(CODEGEN_INSTALL_DIR)/bin/iccarm"
+LNK = "$(CODEGEN_INSTALL_DIR)/bin/ilinkarm"
+%     }
+% }
+% if (toolchain == "GNU") {
+CC = "$(CODEGEN_INSTALL_DIR)/bin/arm-none-eabi-gcc"
+LNK = "$(CODEGEN_INSTALL_DIR)/bin/arm-none-eabi-gcc"
+% }
+
+`prodList["xdctools"].makeVar` := `prodList["xdctools"].absPath`
+`prodList["tirtos"].makeVar` := `prodList["tirtos"].absPath`
+`prodList["tidrivers"].makeVar` := `getProdPath("tidrivers")`
+`prodList["bios"].makeVar` := `getProdPath("bios")`
+% packageVars.push(getPackageVarPath("tirtos"));
+% packageVars.push(getPackageVarPath("tidrivers"));
+% packageVars.push(getPackageVarPath("bios"));
+% xdcPath.push(prodList["tirtos"].makePackagesPath);
+% xdcPath.push(prodList["tidrivers"].makePackagesPath);
+% xdcPath.push(prodList["bios"].makePackagesPath);
+%
+% if (prodList["ndk"].absPath != "") {
+%     packageVars.push(getPackageVarPath("ndk"));
+%     xdcPath.push(prodList["ndk"].makePackagesPath);
+`prodList["ndk"].makeVar` := `getProdPath("ndk")`
+% }
+%
+% if (prodList["ns"].absPath != "") {
+%     packageVars.push(getPackageVarPath("ns"));
+%     xdcPath.push(prodList["ns"].makePackagesPath);
+`prodList["ns"].makeVar` := `getProdPath("ns")`
+% }
+%
+% if (prodList["uia"].absPath != "") {
+%     packageVars.push(getPackageVarPath("uia"));
+%     xdcPath.push(prodList["uia"].makePackagesPath);
+`prodList["uia"].makeVar` := `getProdPath("uia")`
+% }
+%
+% if (board.driverlib && board.driverlib != "") {
+`prodList[board.driverlib].makeVar` ?= `getProdPath(board.driverlib)`
+% }
+%
+% if (xdcExtraPaths != "") {
+OPTIONAL_XDCPATH := `xdcExtraPaths`
+%     xdcPath.push("$(OPTIONAL_XDCPATH)");
+% }
+%
+
+`packageVars.join("\n");`
+
+XDCPATH = `xdcPath.join(";")`;
+
+CFLAGS =`externalCOpts + Boards.getMakefileCompilerOptions(board, toolchain)`
+
+LFLAGS =`externalLOpts + Boards.getMakefileLinkerOptions(board, toolchain)`
+
+###################### SHOULD NOT MODIFY BELOW THIS LINE ############################
+export XDCPATH
+
+XDCTARGET = `Boards.getTarget(board, toolchain)`
+PLATFORM = `Boards.getPlatform(board)`
+
+ifeq ("$(SHELL)","sh.exe")
+#For Windows
+        RMDIR  = -rmdir /S /Q
+        remove = -del $(subst /,\,$1)
+        pwd    = cd
+else
+#For Linux
+        RMDIR  = rm -rf
+        remove = rm -f $(subst /,\,$1)
+        pwd    = pwd
+endif

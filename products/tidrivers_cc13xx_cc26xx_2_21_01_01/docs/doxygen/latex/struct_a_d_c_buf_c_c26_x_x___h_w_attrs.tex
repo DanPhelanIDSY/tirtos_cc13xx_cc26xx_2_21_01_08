@@ -1,0 +1,95 @@
+\subsection{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_a_d_c_buf_c_c26_x_x___h_w_attrs}\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+
+
+A\+D\+C\+Buf\+C\+C26\+X\+X Hardware Attributes.  
+
+
+
+
+{\ttfamily \#include $<$A\+D\+C\+Buf\+C\+C26\+X\+X.\+h$>$}
+
+
+
+Collaboration diagram for A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=201pt]{struct_a_d_c_buf_c_c26_x_x___h_w_attrs__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \hyperlink{struct_a_d_c_buf_c_c26_x_x___h_w_attrs_a28c09f6a57b37133bd331c59f0b7e9c3}{swi\+Priority}
+\begin{DoxyCompactList}\small\item\em A\+D\+C S\+W\+I priority. The higher the number, the higher the priority. The minimum is 0 and the maximum is 15 by default. The maximum can be reduced to save R\+A\+M by adding or modifying Swi.\+num\+Priorities in the kernel configuration file. \end{DoxyCompactList}\item 
+uint32\+\_\+t \hyperlink{struct_a_d_c_buf_c_c26_x_x___h_w_attrs_aa6cd006fc627af80afb01f4f65d9405f}{gpt\+D\+M\+A\+Channel\+Mask}
+\item 
+uint8\+\_\+t \hyperlink{struct_a_d_c_buf_c_c26_x_x___h_w_attrs_a8f26b88e0b885debb7659c20f719dce9}{int\+Priority}
+\begin{DoxyCompactList}\small\item\em A\+D\+C peripheral\textquotesingle{}s interrupt priority. \end{DoxyCompactList}\item 
+\hyperlink{struct_a_d_c_buf_c_c26_x_x___adc_channel_lut_entry}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Adc\+Channel\+Lut\+Entry} const $\ast$ \hyperlink{struct_a_d_c_buf_c_c26_x_x___h_w_attrs_ad157d7e25bef35c76f3ae92bd912b109}{adc\+Channel\+Lut}
+\item 
+uint8\+\_\+t \hyperlink{struct_a_d_c_buf_c_c26_x_x___h_w_attrs_aa3672991bcc912125a7faca2befbb7d1}{gp\+Timer\+Unit}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+A\+D\+C\+Buf\+C\+C26\+X\+X Hardware Attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For C\+C26xx\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item inc/hw\+\_\+ints.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} ADCBufCC26XX_HWAttrs ADCBufCC26XXHWAttrs[] = \{
+    \{
+        .intPriority = ~0,
+        .swiPriority = 0,
+        .gpTimerUnit = CC2650\_GPTIMER0A,
+        .gptDMAChannelMask = 1 << UDMA\_CHAN\_TIMER0\_A,
+    \}
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!swi\+Priority@{swi\+Priority}}
+\index{swi\+Priority@{swi\+Priority}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{swi\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::swi\+Priority}\label{struct_a_d_c_buf_c_c26_x_x___h_w_attrs_a28c09f6a57b37133bd331c59f0b7e9c3}
+
+
+A\+D\+C S\+W\+I priority. The higher the number, the higher the priority. The minimum is 0 and the maximum is 15 by default. The maximum can be reduced to save R\+A\+M by adding or modifying Swi.\+num\+Priorities in the kernel configuration file. 
+
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!gpt\+D\+M\+A\+Channel\+Mask@{gpt\+D\+M\+A\+Channel\+Mask}}
+\index{gpt\+D\+M\+A\+Channel\+Mask@{gpt\+D\+M\+A\+Channel\+Mask}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{gpt\+D\+M\+A\+Channel\+Mask}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::gpt\+D\+M\+A\+Channel\+Mask}\label{struct_a_d_c_buf_c_c26_x_x___h_w_attrs_aa6cd006fc627af80afb01f4f65d9405f}
+u\+D\+M\+A control\+Table channel index for the G\+P\+T \index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!int\+Priority@{int\+Priority}}
+\index{int\+Priority@{int\+Priority}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::int\+Priority}\label{struct_a_d_c_buf_c_c26_x_x___h_w_attrs_a8f26b88e0b885debb7659c20f719dce9}
+
+
+A\+D\+C peripheral\textquotesingle{}s interrupt priority. 
+
+The C\+C26xx uses three of the priority bits, meaning $\sim$0 has the same effect as (7 $<$$<$ 5).
+
+(7 $<$$<$ 5) will apply the lowest priority.
+
+(1 $<$$<$ 5) will apply the highest priority.
+
+Setting the priority to 0 is not supported by this driver.
+
+H\+W\+I\textquotesingle{}s with priority 0 ignore the H\+W\+I dispatcher to support zero-\/latency interrupts, thus invalidating the critical sections in this driver. \index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!adc\+Channel\+Lut@{adc\+Channel\+Lut}}
+\index{adc\+Channel\+Lut@{adc\+Channel\+Lut}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{adc\+Channel\+Lut}]{\setlength{\rightskip}{0pt plus 5cm}{\bf A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Adc\+Channel\+Lut\+Entry} const$\ast$ A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::adc\+Channel\+Lut}\label{struct_a_d_c_buf_c_c26_x_x___h_w_attrs_ad157d7e25bef35c76f3ae92bd912b109}
+Pointer to a table of \hyperlink{struct_a_d_c_buf_c_c26_x_x___adc_channel_lut_entry}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Adc\+Channel\+Lut\+Entry}\textquotesingle{}s mapping internal Comp\+B\+Input to D\+I\+O \index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!gp\+Timer\+Unit@{gp\+Timer\+Unit}}
+\index{gp\+Timer\+Unit@{gp\+Timer\+Unit}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{gp\+Timer\+Unit}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::gp\+Timer\+Unit}\label{struct_a_d_c_buf_c_c26_x_x___h_w_attrs_aa3672991bcc912125a7faca2befbb7d1}
+G\+P\+Timer unit index (0\+A, 0\+B, 1\+A..) 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_a_d_c_buf_c_c26_x_x_8h}{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}\end{DoxyCompactItemize}

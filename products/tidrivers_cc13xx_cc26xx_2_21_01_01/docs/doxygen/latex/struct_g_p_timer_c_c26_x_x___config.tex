@@ -1,0 +1,66 @@
+\subsection{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config Struct Reference}
+\label{struct_g_p_timer_c_c26_x_x___config}\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config}}
+
+
+G\+P\+Timer Global configuration.  
+
+
+
+
+{\ttfamily \#include $<$G\+P\+Timer\+C\+C26\+X\+X.\+h$>$}
+
+
+
+Collaboration diagram for G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=183pt]{struct_g_p_timer_c_c26_x_x___config__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_g_p_timer_c_c26_x_x___object}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object} $\ast$ \hyperlink{struct_g_p_timer_c_c26_x_x___config_a92658b3b494f165b96a8bb7324ffb737}{object}
+\item 
+const \hyperlink{struct_g_p_timer_c_c26_x_x___h_w_attrs}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs} $\ast$ \hyperlink{struct_g_p_timer_c_c26_x_x___config_a713a6a23b178957ab2f245326f954b2b}{hw\+Attrs}
+\item 
+\hyperlink{_g_p_timer_c_c26_x_x_8h_aff5462fa33c306f2c8bd29284fd898b0}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Part} \hyperlink{struct_g_p_timer_c_c26_x_x___config_a6d76dc1cbe8a2e7e38a2c6546ea58782}{timer\+Part}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+G\+P\+Timer Global configuration. 
+
+The \hyperlink{struct_g_p_timer_c_c26_x_x___config}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config} structure contains a set of pointers used to characterize the G\+P\+Timer driver implementation. An example structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{comment}{// GPTimer configuration (used as GPTimer\_Handle by driver and application)}
+\textcolor{keyword}{const} GPTimerCC26XX_Config GPTimerCC26XX\_config[CC2650\_GPTIMERPARTSCOUNT] = \{
+  \{ &gptimerCC26XXObjects[0], &gptimerCC26xxHWAttrs[0], GPT_A\},
+  \{ &gptimerCC26XXObjects[0], &gptimerCC26xxHWAttrs[1], GPT_B\},
+  \{ &gptimerCC26XXObjects[1], &gptimerCC26xxHWAttrs[2], GPT_A\},
+  \{ &gptimerCC26XXObjects[1], &gptimerCC26xxHWAttrs[3], GPT_B\},
+  \{ &gptimerCC26XXObjects[2], &gptimerCC26xxHWAttrs[4], GPT_A\},
+  \{ &gptimerCC26XXObjects[2], &gptimerCC26xxHWAttrs[5], GPT_B\},
+  \{ &gptimerCC26XXObjects[3], &gptimerCC26xxHWAttrs[6], GPT_A\},
+  \{ &gptimerCC26XXObjects[3], &gptimerCC26xxHWAttrs[7], GPT_B\},
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config}!object@{object}}
+\index{object@{object}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config}}
+\paragraph[{object}]{\setlength{\rightskip}{0pt plus 5cm}{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object}$\ast$ G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config\+::object}\label{struct_g_p_timer_c_c26_x_x___config_a92658b3b494f165b96a8bb7324ffb737}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config}!hw\+Attrs@{hw\+Attrs}}
+\index{hw\+Attrs@{hw\+Attrs}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config}}
+\paragraph[{hw\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}$\ast$ G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config\+::hw\+Attrs}\label{struct_g_p_timer_c_c26_x_x___config_a713a6a23b178957ab2f245326f954b2b}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config}!timer\+Part@{timer\+Part}}
+\index{timer\+Part@{timer\+Part}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config}}
+\paragraph[{timer\+Part}]{\setlength{\rightskip}{0pt plus 5cm}{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Part} G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config\+::timer\+Part}\label{struct_g_p_timer_c_c26_x_x___config_a6d76dc1cbe8a2e7e38a2c6546ea58782}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_g_p_timer_c_c26_x_x_8h}{G\+P\+Timer\+C\+C26\+X\+X.\+h}\end{DoxyCompactItemize}

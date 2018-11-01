@@ -1,0 +1,55 @@
+\subsection{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request Struct Reference}
+\label{struct_p_d_m_c_c26_x_x___buffer_request}\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request}}
+
+
+A \hyperlink{struct_p_d_m_c_c26_x_x___buffer_request}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request} data structure is used with \hyperlink{_p_d_m_c_c26_x_x_8h_a15a0017513c13ca244f7e3a0f5761e8d}{P\+D\+M\+C\+C26\+X\+X\+\_\+request\+Buffer()}.  
+
+
+
+
+{\ttfamily \#include $<$P\+D\+M\+C\+C26\+X\+X.\+h$>$}
+
+
+
+Collaboration diagram for P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=183pt]{struct_p_d_m_c_c26_x_x___buffer_request__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_p_d_m_c_c26_x_x__pcm_buffer}{P\+D\+M\+C\+C26\+X\+X\+\_\+pcm\+Buffer} $\ast$ \hyperlink{struct_p_d_m_c_c26_x_x___buffer_request_af1ba97caba202d780151fb276b128802}{buffer}
+\item 
+\hyperlink{_p_d_m_c_c26_x_x_8h_afbfe993e790be75708df00186070a779}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Status} \hyperlink{struct_p_d_m_c_c26_x_x___buffer_request_aced5abcb251e52d046809a985d8e2af7}{status}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+A \hyperlink{struct_p_d_m_c_c26_x_x___buffer_request}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request} data structure is used with \hyperlink{_p_d_m_c_c26_x_x_8h_a15a0017513c13ca244f7e3a0f5761e8d}{P\+D\+M\+C\+C26\+X\+X\+\_\+request\+Buffer()}. 
+
+buffer is a pointer to the requested buffer. It is N\+U\+L\+L if no buffer is available. Each buffer contains a metadata header of size P\+C\+M\+\_\+\+M\+E\+T\+A\+D\+A\+T\+A\+\_\+\+S\+I\+Z\+E. The first byte of the metadata is always an 8 bit sequence number. The other bytes depends on mode.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Mode }&{\bf Interpretation of buffer\+In being N\+U\+L\+L after returning  }\\\cline{1-2}
+Blocking mode &Request timed out and still no buffer available \\\cline{1-2}
+Non-\/\+Blocking mode &No buffer available \\\cline{1-2}
+\end{TabularC}
+
+
+\subsubsection{Field Documentation}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request}!buffer@{buffer}}
+\index{buffer@{buffer}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request}}
+\paragraph[{buffer}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+pcm\+Buffer}$\ast$ P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request\+::buffer}\label{struct_p_d_m_c_c26_x_x___buffer_request_af1ba97caba202d780151fb276b128802}
+Pointer to requested buffer. Note that this includes P\+C\+M\+\_\+\+M\+E\+T\+A\+D\+A\+T\+A\+\_\+\+S\+I\+Z\+E bytes of metadata as a header \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request}!status@{status}}
+\index{status@{status}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request}}
+\paragraph[{status}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Status} P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request\+::status}\label{struct_p_d_m_c_c26_x_x___buffer_request_aced5abcb251e52d046809a985d8e2af7}
+Status code set by P\+D\+M\+C\+C26\+X\+X\+\_\+request\+Buffer 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_p_d_m_c_c26_x_x_8h}{P\+D\+M\+C\+C26\+X\+X.\+h}\end{DoxyCompactItemize}

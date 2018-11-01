@@ -1,0 +1,362 @@
+\subsection{Wi\+Fi.\+h File Reference}
+\label{_wi_fi_8h}\index{Wi\+Fi.\+h@{Wi\+Fi.\+h}}
+
+
+\subsubsection{Detailed Description}
+Wi\+Fi driver interface. 
+
+============================================================================
+
+The Wi\+Fi header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/WiFi.h>}
+\end{DoxyCode}
+
+
+\subsubsection*{Operation}
+
+The T\+I-\/\+R\+T\+O\+S Wi\+Fi driver implements many of the crucial elements necessary to communicate with a T\+I Wi-\/\+Fi device. It uses the T\+I-\/\+R\+T\+O\+S S\+P\+I module and implements a state machine to send and receive commands, data, and events to and from a Wi-\/\+Fi device.
+
+The A\+P\+Is in this driver give the user the ability to open a Wi\+Fi driver instance that will communicate with the Wi-\/\+Fi device\textquotesingle{}s host driver without further direct calls to the driver from the application.
+
+\paragraph*{Opening the driver}
+
+
+\begin{DoxyCode}
+WiFi_Handle      handle;
+WiFi_Params      params;
+
+WiFi_Params_init(&params);
+params.bitRate  = bitRateValue;
+handle = WiFi_open(WiFi\_configIndex, SPI\_configIndex, callbackPtr,
+                   &params);
+\textcolor{keywordflow}{if} (!handle) \{
+    System\_printf(\textcolor{stringliteral}{"WiFi did not open"});
+\}
+
+\textcolor{comment}{// Wi-Fi device's host driver APIs (such as socket()) may now be used}
+\end{DoxyCode}
+
+
+\paragraph*{Configuration}
+
+\subparagraph*{Simple\+Link C\+C3100 device}
+
+The Simple\+Link Host Driver for C\+C3100 the device requires a mechanism to allow functions to execute in a temporary context. A Spawn\+Task is dynamically created to meet satisfy this requirement. The priority for the Spawn\+Task can be changed via the graphical editor, or by editing the script as a text file, with the following line of code\+: 
+\begin{DoxyCode}
+WiFi.spawnTaskPriority = 3;
+\end{DoxyCode}
+ The default will create the Spawn\+Task with the priority set to 3.
+
+\subsubsection*{Implementation}
+
+The Wi\+Fi driver interface module is joined (at link time) to a N\+U\+L\+L-\/terminated array of \hyperlink{struct_wi_fi___config}{Wi\+Fi\+\_\+\+Config} data structures named {\itshape Wi\+Fi\+\_\+config}. {\itshape Wi\+Fi\+\_\+config} is implemented in the application with each entry being an instance of a Wi\+Fi driver. Each entry in {\itshape Wi\+Fi\+\_\+config} contains a\+:
+\begin{DoxyItemize}
+\item (\hyperlink{struct_wi_fi___fxn_table}{Wi\+Fi\+\_\+\+Fxn\+Table} $\ast$) to a set of functions that implement a Wi\+Fi driver
+\item (void $\ast$) data object that is associated with the \hyperlink{struct_wi_fi___fxn_table}{Wi\+Fi\+\_\+\+Fxn\+Table}
+\item (void $\ast$) hardware attributes that are associated to the \hyperlink{struct_wi_fi___fxn_table}{Wi\+Fi\+\_\+\+Fxn\+Table}
+\end{DoxyItemize}
+
+The Wi\+Fi driver currently only supports one instance of the module. This means that the Wi\+Fi\+\_\+config structure may only contain one non-\/\+N\+U\+L\+L entry, and it must be located at index 0.
+
+\subsubsection*{Instrumentation}
+
+The Wi\+Fi driver interface produces log statements if instrumentation is enabled.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Diagnostics Mask }&{\bf Log details  }\\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R1 &basic operations performed \\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R2 &detailed operations performed \\\cline{1-2}
+\end{TabularC}
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+Include dependency graph for Wi\+Fi.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=85pt]{_wi_fi_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_wi_fi___params}{Wi\+Fi\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em Wi\+Fi Parameters. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_wi_fi___fxn_table}{Wi\+Fi\+\_\+\+Fxn\+Table}
+\begin{DoxyCompactList}\small\item\em The definition of a Wi\+Fi function table that contains the required set of functions to control a specific Wi\+Fi driver implementation. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_wi_fi___config}{Wi\+Fi\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em Wi\+Fi Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group___wi_fi___c_o_n_t_r_o_l_ga1f193fb2e462cfbfe8d5648c7b766710}{Wi\+Fi\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~32
+\item 
+\#define \hyperlink{group___wi_fi___c_o_n_t_r_o_l_ga2c7d9d0bec5da43eb7cc442f2f155399}{Wi\+Fi\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~-\/32
+\item 
+\#define \hyperlink{group___wi_fi___s_t_a_t_u_s_ga02c176082ea8f3c0a258564269dffe71}{Wi\+Fi\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}~0
+\begin{DoxyCompactList}\small\item\em Successful status code returned by \hyperlink{_wi_fi_8h_a1f42a1e174ed1682b7de43ec6f043bf7}{Wi\+Fi\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___wi_fi___s_t_a_t_u_s_ga3ad6de679b76f24a0fb86eb3299253ad}{Wi\+Fi\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}~-\/1
+\begin{DoxyCompactList}\small\item\em Generic error status code returned by \hyperlink{_wi_fi_8h_a1f42a1e174ed1682b7de43ec6f043bf7}{Wi\+Fi\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___wi_fi___s_t_a_t_u_s_gac838b848572d4fdc52755592d2372f67}{Wi\+Fi\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}~-\/2
+\begin{DoxyCompactList}\small\item\em An error status code returned by \hyperlink{_wi_fi_8h_a1f42a1e174ed1682b7de43ec6f043bf7}{Wi\+Fi\+\_\+control()} for undefined command codes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef void($\ast$ \hyperlink{_wi_fi_8h_a6441e73863c7f533a09c508e44734e09}{Wi\+Fi\+\_\+evnt\+Callback}) (long event\+Type, char $\ast$data, unsigned char length)
+\begin{DoxyCompactList}\small\item\em A typedef to a an unsolicited event callback function. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_wi_fi___config}{Wi\+Fi\+\_\+\+Config} $\ast$ \hyperlink{_wi_fi_8h_a2969512dbfbf2a383ac8c1a9cf01a95c}{Wi\+Fi\+\_\+\+Handle}
+\begin{DoxyCompactList}\small\item\em A handle that is returned from a \hyperlink{_wi_fi_8h_a74bfb46543ca040aabea15dc58f16e92}{Wi\+Fi\+\_\+open()} call. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_wi_fi___params}{Wi\+Fi\+\_\+\+Params} \hyperlink{_wi_fi_8h_aa46f9e8e6cf93cd1eb18ae5af57ce635}{Wi\+Fi\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em Wi\+Fi Parameters. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_wi_fi_8h_ac7aed5d39515b94dc5b850b366c1c493}{Wi\+Fi\+\_\+\+Init\+Fxn}) (\hyperlink{_wi_fi_8h_a2969512dbfbf2a383ac8c1a9cf01a95c}{Wi\+Fi\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_wi_fi_8h_a306a67ecbf66c31b31ee62a7170c563c}{Wi\+Fi\+\_\+init()}. \end{DoxyCompactList}\item 
+typedef \hyperlink{_wi_fi_8h_a2969512dbfbf2a383ac8c1a9cf01a95c}{Wi\+Fi\+\_\+\+Handle}($\ast$ \hyperlink{_wi_fi_8h_a8f482785892cfecbe0799e844c2fb389}{Wi\+Fi\+\_\+\+Open\+Fxn}) (\hyperlink{_wi_fi_8h_a2969512dbfbf2a383ac8c1a9cf01a95c}{Wi\+Fi\+\_\+\+Handle} handle, unsigned int spi\+Index, \hyperlink{_wi_fi_8h_a6441e73863c7f533a09c508e44734e09}{Wi\+Fi\+\_\+evnt\+Callback} evnt\+Callback, \hyperlink{struct_wi_fi___params}{Wi\+Fi\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_wi_fi_8h_a74bfb46543ca040aabea15dc58f16e92}{Wi\+Fi\+\_\+open()}. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_wi_fi_8h_a38017ed0e04ba2fb9a81cd3177c7d7b8}{Wi\+Fi\+\_\+\+Close\+Fxn}) (\hyperlink{_wi_fi_8h_a2969512dbfbf2a383ac8c1a9cf01a95c}{Wi\+Fi\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_wi_fi_8h_a463c68dfbe1ad861adfd073942fcac46}{Wi\+Fi\+\_\+close()}. \end{DoxyCompactList}\item 
+typedef int($\ast$ \hyperlink{_wi_fi_8h_a2b33be721c0a64e9d4059f5318cf32f6}{Wi\+Fi\+\_\+\+Control\+Fxn}) (\hyperlink{_wi_fi_8h_a2969512dbfbf2a383ac8c1a9cf01a95c}{Wi\+Fi\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_wi_fi_8h_a1f42a1e174ed1682b7de43ec6f043bf7}{Wi\+Fi\+\_\+control()}. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_wi_fi___fxn_table}{Wi\+Fi\+\_\+\+Fxn\+Table} \hyperlink{_wi_fi_8h_ac9f5dd5ed47beee3ae78f5c3dc110cdb}{Wi\+Fi\+\_\+\+Fxn\+Table}
+\begin{DoxyCompactList}\small\item\em The definition of a Wi\+Fi function table that contains the required set of functions to control a specific Wi\+Fi driver implementation. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_wi_fi___config}{Wi\+Fi\+\_\+\+Config} \hyperlink{_wi_fi_8h_ac319cd4fddeb63624579ecd4d4275631}{Wi\+Fi\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em Wi\+Fi Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_wi_fi_8h_a463c68dfbe1ad861adfd073942fcac46}{Wi\+Fi\+\_\+close} (\hyperlink{_wi_fi_8h_a2969512dbfbf2a383ac8c1a9cf01a95c}{Wi\+Fi\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to close a Wi\+Fi peripheral specified by the Wi\+Fi handle. \end{DoxyCompactList}\item 
+int \hyperlink{_wi_fi_8h_a1f42a1e174ed1682b7de43ec6f043bf7}{Wi\+Fi\+\_\+control} (\hyperlink{_wi_fi_8h_a2969512dbfbf2a383ac8c1a9cf01a95c}{Wi\+Fi\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em Function performs implementation specific features on a given Wi\+Fi\+\_\+\+Handle. \end{DoxyCompactList}\item 
+void \hyperlink{_wi_fi_8h_a306a67ecbf66c31b31ee62a7170c563c}{Wi\+Fi\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em Function to initialize the Wi\+Fi module. \end{DoxyCompactList}\item 
+\hyperlink{_wi_fi_8h_a2969512dbfbf2a383ac8c1a9cf01a95c}{Wi\+Fi\+\_\+\+Handle} \hyperlink{_wi_fi_8h_a74bfb46543ca040aabea15dc58f16e92}{Wi\+Fi\+\_\+open} (unsigned int wifi\+Index, unsigned int spi\+Index, \hyperlink{_wi_fi_8h_a6441e73863c7f533a09c508e44734e09}{Wi\+Fi\+\_\+evnt\+Callback} evnt\+Callback, \hyperlink{struct_wi_fi___params}{Wi\+Fi\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to initialize a given Wi\+Fi peripheral. \end{DoxyCompactList}\item 
+void \hyperlink{_wi_fi_8h_a89959d0d9640421ee0b8c68eca240ae0}{Wi\+Fi\+\_\+\+Params\+\_\+init} (\hyperlink{struct_wi_fi___params}{Wi\+Fi\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to initialize the \hyperlink{struct_wi_fi___params}{Wi\+Fi\+\_\+\+Params} structure to its defaults. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Typedef Documentation}
+\index{Wi\+Fi.\+h@{Wi\+Fi.\+h}!Wi\+Fi\+\_\+evnt\+Callback@{Wi\+Fi\+\_\+evnt\+Callback}}
+\index{Wi\+Fi\+\_\+evnt\+Callback@{Wi\+Fi\+\_\+evnt\+Callback}!Wi\+Fi.\+h@{Wi\+Fi.\+h}}
+\paragraph[{Wi\+Fi\+\_\+evnt\+Callback}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ Wi\+Fi\+\_\+evnt\+Callback) (long event\+Type, char $\ast$data, unsigned char length)}\label{_wi_fi_8h_a6441e73863c7f533a09c508e44734e09}
+
+
+A typedef to a an unsolicited event callback function. 
+
+This is the definition describing the function that is to be called when the Wi-\/\+Fi device has informed the host M\+C\+U that an event has occurred. For more details, see Doxygen documentation for the specific driver\textbackslash{} implementation in use.
+
+
+\begin{DoxyParams}{Parameters}
+{\em event\+Type} & Type of event\\
+\hline
+{\em data} & Pointer to extra data that some events may supply\\
+\hline
+{\em length} & Length of data \\
+\hline
+\end{DoxyParams}
+\index{Wi\+Fi.\+h@{Wi\+Fi.\+h}!Wi\+Fi\+\_\+\+Handle@{Wi\+Fi\+\_\+\+Handle}}
+\index{Wi\+Fi\+\_\+\+Handle@{Wi\+Fi\+\_\+\+Handle}!Wi\+Fi.\+h@{Wi\+Fi.\+h}}
+\paragraph[{Wi\+Fi\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Wi\+Fi\+\_\+\+Config}$\ast$ {\bf Wi\+Fi\+\_\+\+Handle}}\label{_wi_fi_8h_a2969512dbfbf2a383ac8c1a9cf01a95c}
+
+
+A handle that is returned from a \hyperlink{_wi_fi_8h_a74bfb46543ca040aabea15dc58f16e92}{Wi\+Fi\+\_\+open()} call. 
+
+\index{Wi\+Fi.\+h@{Wi\+Fi.\+h}!Wi\+Fi\+\_\+\+Params@{Wi\+Fi\+\_\+\+Params}}
+\index{Wi\+Fi\+\_\+\+Params@{Wi\+Fi\+\_\+\+Params}!Wi\+Fi.\+h@{Wi\+Fi.\+h}}
+\paragraph[{Wi\+Fi\+\_\+\+Params}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Wi\+Fi\+\_\+\+Params}  {\bf Wi\+Fi\+\_\+\+Params}}\label{_wi_fi_8h_aa46f9e8e6cf93cd1eb18ae5af57ce635}
+
+
+Wi\+Fi Parameters. 
+
+Wi\+Fi parameters are used to with the \hyperlink{_wi_fi_8h_a74bfb46543ca040aabea15dc58f16e92}{Wi\+Fi\+\_\+open()} call. Default values for these parameters are set using \hyperlink{_wi_fi_8h_a89959d0d9640421ee0b8c68eca240ae0}{Wi\+Fi\+\_\+\+Params\+\_\+init()}.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_wi_fi_8h_a89959d0d9640421ee0b8c68eca240ae0}{Wi\+Fi\+\_\+\+Params\+\_\+init()} 
+\end{DoxySeeAlso}
+\index{Wi\+Fi.\+h@{Wi\+Fi.\+h}!Wi\+Fi\+\_\+\+Init\+Fxn@{Wi\+Fi\+\_\+\+Init\+Fxn}}
+\index{Wi\+Fi\+\_\+\+Init\+Fxn@{Wi\+Fi\+\_\+\+Init\+Fxn}!Wi\+Fi.\+h@{Wi\+Fi.\+h}}
+\paragraph[{Wi\+Fi\+\_\+\+Init\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ Wi\+Fi\+\_\+\+Init\+Fxn) ({\bf Wi\+Fi\+\_\+\+Handle} handle)}\label{_wi_fi_8h_ac7aed5d39515b94dc5b850b366c1c493}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_wi_fi_8h_a306a67ecbf66c31b31ee62a7170c563c}{Wi\+Fi\+\_\+init()}. 
+
+\index{Wi\+Fi.\+h@{Wi\+Fi.\+h}!Wi\+Fi\+\_\+\+Open\+Fxn@{Wi\+Fi\+\_\+\+Open\+Fxn}}
+\index{Wi\+Fi\+\_\+\+Open\+Fxn@{Wi\+Fi\+\_\+\+Open\+Fxn}!Wi\+Fi.\+h@{Wi\+Fi.\+h}}
+\paragraph[{Wi\+Fi\+\_\+\+Open\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Wi\+Fi\+\_\+\+Handle}($\ast$ Wi\+Fi\+\_\+\+Open\+Fxn) ({\bf Wi\+Fi\+\_\+\+Handle} handle, unsigned int spi\+Index, {\bf Wi\+Fi\+\_\+evnt\+Callback} evnt\+Callback, {\bf Wi\+Fi\+\_\+\+Params} $\ast$params)}\label{_wi_fi_8h_a8f482785892cfecbe0799e844c2fb389}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_wi_fi_8h_a74bfb46543ca040aabea15dc58f16e92}{Wi\+Fi\+\_\+open()}. 
+
+\index{Wi\+Fi.\+h@{Wi\+Fi.\+h}!Wi\+Fi\+\_\+\+Close\+Fxn@{Wi\+Fi\+\_\+\+Close\+Fxn}}
+\index{Wi\+Fi\+\_\+\+Close\+Fxn@{Wi\+Fi\+\_\+\+Close\+Fxn}!Wi\+Fi.\+h@{Wi\+Fi.\+h}}
+\paragraph[{Wi\+Fi\+\_\+\+Close\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ Wi\+Fi\+\_\+\+Close\+Fxn) ({\bf Wi\+Fi\+\_\+\+Handle} handle)}\label{_wi_fi_8h_a38017ed0e04ba2fb9a81cd3177c7d7b8}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_wi_fi_8h_a463c68dfbe1ad861adfd073942fcac46}{Wi\+Fi\+\_\+close()}. 
+
+\index{Wi\+Fi.\+h@{Wi\+Fi.\+h}!Wi\+Fi\+\_\+\+Control\+Fxn@{Wi\+Fi\+\_\+\+Control\+Fxn}}
+\index{Wi\+Fi\+\_\+\+Control\+Fxn@{Wi\+Fi\+\_\+\+Control\+Fxn}!Wi\+Fi.\+h@{Wi\+Fi.\+h}}
+\paragraph[{Wi\+Fi\+\_\+\+Control\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef int($\ast$ Wi\+Fi\+\_\+\+Control\+Fxn) ({\bf Wi\+Fi\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)}\label{_wi_fi_8h_a2b33be721c0a64e9d4059f5318cf32f6}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_wi_fi_8h_a1f42a1e174ed1682b7de43ec6f043bf7}{Wi\+Fi\+\_\+control()}. 
+
+\index{Wi\+Fi.\+h@{Wi\+Fi.\+h}!Wi\+Fi\+\_\+\+Fxn\+Table@{Wi\+Fi\+\_\+\+Fxn\+Table}}
+\index{Wi\+Fi\+\_\+\+Fxn\+Table@{Wi\+Fi\+\_\+\+Fxn\+Table}!Wi\+Fi.\+h@{Wi\+Fi.\+h}}
+\paragraph[{Wi\+Fi\+\_\+\+Fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Wi\+Fi\+\_\+\+Fxn\+Table}  {\bf Wi\+Fi\+\_\+\+Fxn\+Table}}\label{_wi_fi_8h_ac9f5dd5ed47beee3ae78f5c3dc110cdb}
+
+
+The definition of a Wi\+Fi function table that contains the required set of functions to control a specific Wi\+Fi driver implementation. 
+
+\index{Wi\+Fi.\+h@{Wi\+Fi.\+h}!Wi\+Fi\+\_\+\+Config@{Wi\+Fi\+\_\+\+Config}}
+\index{Wi\+Fi\+\_\+\+Config@{Wi\+Fi\+\_\+\+Config}!Wi\+Fi.\+h@{Wi\+Fi.\+h}}
+\paragraph[{Wi\+Fi\+\_\+\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Wi\+Fi\+\_\+\+Config}  {\bf Wi\+Fi\+\_\+\+Config}}\label{_wi_fi_8h_ac319cd4fddeb63624579ecd4d4275631}
+
+
+Wi\+Fi Global configuration. 
+
+The \hyperlink{struct_wi_fi___config}{Wi\+Fi\+\_\+\+Config} structure contains a set of pointers used to characterize the Wi\+Fi driver implementation.
+
+This structure needs to be defined before calling \hyperlink{_wi_fi_8h_a306a67ecbf66c31b31ee62a7170c563c}{Wi\+Fi\+\_\+init()} and it must not be changed thereafter.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_wi_fi_8h_a306a67ecbf66c31b31ee62a7170c563c}{Wi\+Fi\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Function Documentation}
+\index{Wi\+Fi.\+h@{Wi\+Fi.\+h}!Wi\+Fi\+\_\+close@{Wi\+Fi\+\_\+close}}
+\index{Wi\+Fi\+\_\+close@{Wi\+Fi\+\_\+close}!Wi\+Fi.\+h@{Wi\+Fi.\+h}}
+\paragraph[{Wi\+Fi\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}void Wi\+Fi\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{{\bf Wi\+Fi\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_wi_fi_8h_a463c68dfbe1ad861adfd073942fcac46}
+
+
+Function to close a Wi\+Fi peripheral specified by the Wi\+Fi handle. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_wi_fi_8h_a74bfb46543ca040aabea15dc58f16e92}{Wi\+Fi\+\_\+open()} has to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A Wi\+Fi\+\_\+\+Handle returned from Wi\+Fi\+\_\+open\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_wi_fi_8h_a74bfb46543ca040aabea15dc58f16e92}{Wi\+Fi\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{Wi\+Fi.\+h@{Wi\+Fi.\+h}!Wi\+Fi\+\_\+control@{Wi\+Fi\+\_\+control}}
+\index{Wi\+Fi\+\_\+control@{Wi\+Fi\+\_\+control}!Wi\+Fi.\+h@{Wi\+Fi.\+h}}
+\paragraph[{Wi\+Fi\+\_\+control}]{\setlength{\rightskip}{0pt plus 5cm}int Wi\+Fi\+\_\+control (
+\begin{DoxyParamCaption}
+\item[{{\bf Wi\+Fi\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{cmd, }
+\item[{void $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}\label{_wi_fi_8h_a1f42a1e174ed1682b7de43ec6f043bf7}
+
+
+Function performs implementation specific features on a given Wi\+Fi\+\_\+\+Handle. 
+
+Commands for Wi\+Fi\+\_\+control can originate from \hyperlink{_wi_fi_8h}{Wi\+Fi.\+h} or from implementation specific Wi\+Fi$\ast$.h ({\itshape Wi\+Fi\+C\+C26\+X\+X.\+h}, {\itshape Wi\+Fi\+Tiva.\+h}, etc.. ) files. While commands from \hyperlink{_wi_fi_8h}{Wi\+Fi.\+h} are A\+P\+I portable across driver implementations, not all implementations may support all these commands. Conversely, commands from driver implementation specific Wi\+Fi$\ast$.h files add unique driver capabilities but are not A\+P\+I portable across all Wi\+Fi driver implementations.
+
+Commands supported by \hyperlink{_wi_fi_8h}{Wi\+Fi.\+h} follow a Wi\+Fi\+\_\+\+C\+M\+D\+\_\+$<$cmd$>$ naming convention.~\newline
+ Commands supported by Wi\+Fi$\ast$.h follow a Wi\+Fi$\ast$\+\_\+\+C\+M\+D\+\_\+$<$cmd$>$ naming convention.~\newline
+ Each control command defines {\bfseries arg} differently. The types of {\bfseries arg} are documented with each command.
+
+See \hyperlink{group___wi_fi___c_m_d}{Wi\+Fi\+\_\+control command codes} for command codes.
+
+See \hyperlink{group___wi_fi___s_t_a_t_u_s}{Wi\+Fi\+\_\+control return status codes} for status codes.
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_wi_fi_8h_a74bfb46543ca040aabea15dc58f16e92}{Wi\+Fi\+\_\+open()} has to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A Wi\+Fi handle returned from \hyperlink{_wi_fi_8h_a74bfb46543ca040aabea15dc58f16e92}{Wi\+Fi\+\_\+open()}\\
+\hline
+{\em cmd} & \hyperlink{_wi_fi_8h}{Wi\+Fi.\+h} or Wi\+Fi$\ast$.h commands.\\
+\hline
+{\em arg} & An optional R/\+W (read/write) command argument accompanied with cmd\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Implementation specific return codes. Negative values indicate unsuccessful operations.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_wi_fi_8h_a74bfb46543ca040aabea15dc58f16e92}{Wi\+Fi\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{Wi\+Fi.\+h@{Wi\+Fi.\+h}!Wi\+Fi\+\_\+init@{Wi\+Fi\+\_\+init}}
+\index{Wi\+Fi\+\_\+init@{Wi\+Fi\+\_\+init}!Wi\+Fi.\+h@{Wi\+Fi.\+h}}
+\paragraph[{Wi\+Fi\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void Wi\+Fi\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_wi_fi_8h_a306a67ecbf66c31b31ee62a7170c563c}
+
+
+Function to initialize the Wi\+Fi module. 
+
+\begin{DoxyPrecond}{Precondition}
+The Wi\+Fi\+\_\+config structure must exist and be persistent before this function can be called. This function must also be called before any other Wi\+Fi driver A\+P\+Is. This function call does not modify any peripheral registers. 
+\end{DoxyPrecond}
+\index{Wi\+Fi.\+h@{Wi\+Fi.\+h}!Wi\+Fi\+\_\+open@{Wi\+Fi\+\_\+open}}
+\index{Wi\+Fi\+\_\+open@{Wi\+Fi\+\_\+open}!Wi\+Fi.\+h@{Wi\+Fi.\+h}}
+\paragraph[{Wi\+Fi\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Wi\+Fi\+\_\+\+Handle} Wi\+Fi\+\_\+open (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{wifi\+Index, }
+\item[{unsigned int}]{spi\+Index, }
+\item[{{\bf Wi\+Fi\+\_\+evnt\+Callback}}]{evnt\+Callback, }
+\item[{{\bf Wi\+Fi\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_wi_fi_8h_a74bfb46543ca040aabea15dc58f16e92}
+
+
+Function to initialize a given Wi\+Fi peripheral. 
+
+Function to initialize a given Wi\+Fi peripheral specified by the particular index value. It initializes the specified S\+P\+I peripheral and registers the callbacks that the Wi-\/\+Fi device\textquotesingle{}s host driver requires. \hyperlink{_wi_fi_8h_a74bfb46543ca040aabea15dc58f16e92}{Wi\+Fi\+\_\+open()} may only be called in the context of a Task.
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_wi_fi_8h_a306a67ecbf66c31b31ee62a7170c563c}{Wi\+Fi\+\_\+init()} has been called
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em wifi\+Index} & Logical peripheral number for the Wi\+Fi indexed into the Wi\+Fi\+\_\+config table\\
+\hline
+{\em spi\+Index} & Logical peripheral number for S\+P\+I to be used with the Wi\+Fi indexed into the S\+P\+I\+\_\+config table\\
+\hline
+{\em evnt\+Callback} & Pointer to callback function to handle unsolicited events from the Wi\+Fi device. For details, see Wi\+Fi\+\_\+evnt\+Callback and the Doxygen documentation for the specific driver implementation in use.\\
+\hline
+{\em params} & Pointer to an parameter block, if N\+U\+L\+L it will use default values. All the fields in this structure are R\+O (read-\/only).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A Wi\+Fi\+\_\+\+Handle on success or a N\+U\+L\+L on an error or if it has been opened already.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_wi_fi_8h_a306a67ecbf66c31b31ee62a7170c563c}{Wi\+Fi\+\_\+init()} 
+
+\hyperlink{_wi_fi_8h_a463c68dfbe1ad861adfd073942fcac46}{Wi\+Fi\+\_\+close()} 
+\end{DoxySeeAlso}
+\index{Wi\+Fi.\+h@{Wi\+Fi.\+h}!Wi\+Fi\+\_\+\+Params\+\_\+init@{Wi\+Fi\+\_\+\+Params\+\_\+init}}
+\index{Wi\+Fi\+\_\+\+Params\+\_\+init@{Wi\+Fi\+\_\+\+Params\+\_\+init}!Wi\+Fi.\+h@{Wi\+Fi.\+h}}
+\paragraph[{Wi\+Fi\+\_\+\+Params\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void Wi\+Fi\+\_\+\+Params\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf Wi\+Fi\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_wi_fi_8h_a89959d0d9640421ee0b8c68eca240ae0}
+
+
+Function to initialize the \hyperlink{struct_wi_fi___params}{Wi\+Fi\+\_\+\+Params} structure to its defaults. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & An pointer to \hyperlink{struct_wi_fi___params}{Wi\+Fi\+\_\+\+Params} structure for initialization\\
+\hline
+\end{DoxyParams}
+Default values are\+: bit\+Rate = 1000000; 

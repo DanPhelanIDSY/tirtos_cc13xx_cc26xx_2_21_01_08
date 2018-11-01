@@ -1,0 +1,52 @@
+\subsection{Wi\+Fi\+\_\+control command and status codes}
+\label{group___wi_fi___c_o_n_t_r_o_l}\index{Wi\+Fi\+\_\+control command and status codes@{Wi\+Fi\+\_\+control command and status codes}}
+Collaboration diagram for Wi\+Fi\+\_\+control command and status codes\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=285pt]{group___wi_fi___c_o_n_t_r_o_l}
+\end{center}
+\end{figure}
+\subsubsection*{Modules}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group___wi_fi___s_t_a_t_u_s}{Status Codes}
+\item 
+\hyperlink{group___wi_fi___c_m_d}{Command Codes}
+\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group___wi_fi___c_o_n_t_r_o_l_ga1f193fb2e462cfbfe8d5648c7b766710}{Wi\+Fi\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~32
+\item 
+\#define \hyperlink{group___wi_fi___c_o_n_t_r_o_l_ga2c7d9d0bec5da43eb7cc442f2f155399}{Wi\+Fi\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~-\/32
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+These Wi\+Fi macros are reservations for \hyperlink{_wi_fi_8h}{Wi\+Fi.\+h} 
+
+\subsubsection{Macro Definition Documentation}
+\index{Wi\+Fi\+\_\+control command and status codes@{Wi\+Fi\+\_\+control command and status codes}!Wi\+Fi\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{Wi\+Fi\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{Wi\+Fi\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{Wi\+Fi\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!Wi\+Fi\+\_\+control command and status codes@{Wi\+Fi\+\_\+control command and status codes}}
+\paragraph[{Wi\+Fi\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define Wi\+Fi\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~32}\label{group___wi_fi___c_o_n_t_r_o_l_ga1f193fb2e462cfbfe8d5648c7b766710}
+Common Wi\+Fi\+\_\+control command code reservation offset. Wi\+Fi driver implementations should offset command codes with Wi\+Fi\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing positively
+
+Example implementation specific command codes\+: 
+\begin{DoxyCode}
+1 #define WiFiXYZ\_CMD\_COMMAND0     WiFi\_CMD\_RESERVED + 0
+2 #define WiFiXYZ\_CMD\_COMMAND1     WiFi\_CMD\_RESERVED + 1
+\end{DoxyCode}
+ \index{Wi\+Fi\+\_\+control command and status codes@{Wi\+Fi\+\_\+control command and status codes}!Wi\+Fi\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{Wi\+Fi\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{Wi\+Fi\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{Wi\+Fi\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!Wi\+Fi\+\_\+control command and status codes@{Wi\+Fi\+\_\+control command and status codes}}
+\paragraph[{Wi\+Fi\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define Wi\+Fi\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~-\/32}\label{group___wi_fi___c_o_n_t_r_o_l_ga2c7d9d0bec5da43eb7cc442f2f155399}
+Common Wi\+Fi\+\_\+control status code reservation offset. Wi\+Fi driver implementations should offset status codes with Wi\+Fi\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing negatively.
+
+Example implementation specific status codes\+: 
+\begin{DoxyCode}
+1 #define WiFiXYZ\_STATUS\_ERROR0    WiFi\_STATUS\_RESERVED - 0
+2 #define WiFiXYZ\_STATUS\_ERROR1    WiFi\_STATUS\_RESERVED - 1
+3 #define WiFiXYZ\_STATUS\_ERROR2    WiFi\_STATUS\_RESERVED - 2
+\end{DoxyCode}
+ 

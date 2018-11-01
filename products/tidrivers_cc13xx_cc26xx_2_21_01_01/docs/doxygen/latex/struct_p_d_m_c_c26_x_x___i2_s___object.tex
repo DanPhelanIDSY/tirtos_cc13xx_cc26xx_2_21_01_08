@@ -1,0 +1,132 @@
+\subsection{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object Struct Reference}
+\label{struct_p_d_m_c_c26_x_x___i2_s___object}\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}}
+
+
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Object.  
+
+
+
+
+{\ttfamily \#include $<$P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h$>$}
+
+
+
+Collaboration diagram for P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{struct_p_d_m_c_c26_x_x___i2_s___object__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_aef896b2a7fc07d3b145f8d02eaa9e377}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Request\+Mode} \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___object_a075b678ddb1fa9546ada194fb0ea95be}{request\+Mode}
+\item 
+uint32\+\_\+t \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___object_aeb1eef41ef878b01eb9d80a5522e9f02}{ui32request\+Timeout}
+\item 
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a82786f08d1b22895c79dcd8880fb92f3}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Callback\+Fxn} \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___object_ae12dc32ac991175a4f08515d752ac325}{callback\+Fxn}
+\item 
+int32\+\_\+t \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___object_a72d15d18ea6b70661cd13ec087cecfe1}{i32\+Sample\+Rate}
+\item 
+\hyperlink{struct_p_d_m_c_c26_x_x___i2_s___audio_clock_config}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config} \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___object_af265891596f047a7afec3b74de172d29}{audio\+Clk\+Cfg}
+\item 
+\hyperlink{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config} \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___object_a264fc107af3d9f75af4d16a4725a0d84}{audio\+Pin\+Cfg}
+\item 
+\hyperlink{struct_p_d_m_c_c26_x_x___i2_s___audio_format_config}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Format\+Config} \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___object_a51f2f3fb525d8d95a5b8aeb77891bfed}{audio\+Fmt\+Cfg}
+\item 
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a5b4e6b7c39c913bc6ae97261a5f2a226}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Transfer\+Size} \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___object_aeb8afba6106515f9c369fc7a8e0221a2}{block\+Size}
+\item 
+void $\ast$ \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___object_a71846a6995a34ba716f284596e37e47c}{pv\+Cont\+Buffer}
+\item 
+uint32\+\_\+t \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___object_a72101e63cbac40e6ca3f9ce88d6c8a43}{ui32con\+Buf\+Total\+Size}
+\item 
+void $\ast$ \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___object_a1767920f3e01a87104784c5bc9adebeb}{pv\+Cont\+Mgt\+Buffer}
+\item 
+uint32\+\_\+t \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___object_a20491798f24484564defb6418233de28}{ui32con\+Mgt\+Buf\+Total\+Size}
+\item 
+\hyperlink{struct_p_d_m_c_c26_x_x___i2_s___stream_notification}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Stream\+Notification} $\ast$ \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___object_a53ae4a933eca22f77f05ddaeb9da6a4d}{current\+Stream}
+\item 
+ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+Struct \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___object_a66297ce4fec0f8c26e752cf8d1c1aaf2}{hwi}
+\item 
+Semaphore\+\_\+\+Struct \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___object_a3619d6776e9d8d9f5856c5fe6713dd95}{block\+Complete}
+\item 
+Semaphore\+\_\+\+Struct \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___object_a69503841d91a6659e1566bd0617d804c}{sem\+Stopping}
+\item 
+\hyperlink{_p_i_n_8h_a36ef69d50df6baa6973482669c24a522}{P\+I\+N\+\_\+\+State} \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___object_a369c473d24f32e961a4b9d5fe01620fb}{pin\+State}
+\item 
+\hyperlink{_p_i_n_8h_afb2de52b054638f63c39df1f30a0d88d}{P\+I\+N\+\_\+\+Handle} \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___object_a98840eae8f2530e3c263ab66f31c2d8e}{pin\+Handle}
+\item 
+bool \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___object_abea7f7d13e225bd7f9a036b78a5cd13c}{is\+Open}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Object. 
+
+The application must not access any member variables of this structure! 
+
+\subsubsection{Field Documentation}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}!request\+Mode@{request\+Mode}}
+\index{request\+Mode@{request\+Mode}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}}
+\paragraph[{request\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Request\+Mode} P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object\+::request\+Mode}\label{struct_p_d_m_c_c26_x_x___i2_s___object_a075b678ddb1fa9546ada194fb0ea95be}
+Blocking or return mode \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}!ui32request\+Timeout@{ui32request\+Timeout}}
+\index{ui32request\+Timeout@{ui32request\+Timeout}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}}
+\paragraph[{ui32request\+Timeout}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object\+::ui32request\+Timeout}\label{struct_p_d_m_c_c26_x_x___i2_s___object_aeb1eef41ef878b01eb9d80a5522e9f02}
+Timeout for the request when in blocking mode \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}!callback\+Fxn@{callback\+Fxn}}
+\index{callback\+Fxn@{callback\+Fxn}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}}
+\paragraph[{callback\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Callback\+Fxn} P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object\+::callback\+Fxn}\label{struct_p_d_m_c_c26_x_x___i2_s___object_ae12dc32ac991175a4f08515d752ac325}
+Callback function pointer \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}!i32\+Sample\+Rate@{i32\+Sample\+Rate}}
+\index{i32\+Sample\+Rate@{i32\+Sample\+Rate}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}}
+\paragraph[{i32\+Sample\+Rate}]{\setlength{\rightskip}{0pt plus 5cm}int32\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object\+::i32\+Sample\+Rate}\label{struct_p_d_m_c_c26_x_x___i2_s___object_a72d15d18ea6b70661cd13ec087cecfe1}
+I2\+S bit clock frequency in Hz. If negative, or not one of I2\+S\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+R\+A\+T\+E\+\_\+16\+K/\+\_\+24\+K/\+\_\+32\+K/\+\_\+48\+K then use user configured clock division. \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}!audio\+Clk\+Cfg@{audio\+Clk\+Cfg}}
+\index{audio\+Clk\+Cfg@{audio\+Clk\+Cfg}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}}
+\paragraph[{audio\+Clk\+Cfg}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config} P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object\+::audio\+Clk\+Cfg}\label{struct_p_d_m_c_c26_x_x___i2_s___object_af265891596f047a7afec3b74de172d29}
+I2\+S clock division override and clock config \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}!audio\+Pin\+Cfg@{audio\+Pin\+Cfg}}
+\index{audio\+Pin\+Cfg@{audio\+Pin\+Cfg}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}}
+\paragraph[{audio\+Pin\+Cfg}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config} P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object\+::audio\+Pin\+Cfg}\label{struct_p_d_m_c_c26_x_x___i2_s___object_a264fc107af3d9f75af4d16a4725a0d84}
+I2\+S pin configuration \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}!audio\+Fmt\+Cfg@{audio\+Fmt\+Cfg}}
+\index{audio\+Fmt\+Cfg@{audio\+Fmt\+Cfg}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}}
+\paragraph[{audio\+Fmt\+Cfg}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Format\+Config} P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object\+::audio\+Fmt\+Cfg}\label{struct_p_d_m_c_c26_x_x___i2_s___object_a51f2f3fb525d8d95a5b8aeb77891bfed}
+I2\+S audio format configuration \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}!block\+Size@{block\+Size}}
+\index{block\+Size@{block\+Size}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}}
+\paragraph[{block\+Size}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Transfer\+Size} P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object\+::block\+Size}\label{struct_p_d_m_c_c26_x_x___i2_s___object_aeb8afba6106515f9c369fc7a8e0221a2}
+I2\+S D\+M\+A transfer size, determines the block size in number of samples. Each sample consumes either 16 or 24 bits, set by \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___audio_format_config_aa6310978bb3efcf50aab7226f34597b1}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Format\+Config.\+mem\+Len} \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}!pv\+Cont\+Buffer@{pv\+Cont\+Buffer}}
+\index{pv\+Cont\+Buffer@{pv\+Cont\+Buffer}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}}
+\paragraph[{pv\+Cont\+Buffer}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object\+::pv\+Cont\+Buffer}\label{struct_p_d_m_c_c26_x_x___i2_s___object_a71846a6995a34ba716f284596e37e47c}
+Pointer to consecutive buffer in memory. Driver will chunk it into the queue \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}!ui32con\+Buf\+Total\+Size@{ui32con\+Buf\+Total\+Size}}
+\index{ui32con\+Buf\+Total\+Size@{ui32con\+Buf\+Total\+Size}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}}
+\paragraph[{ui32con\+Buf\+Total\+Size}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object\+::ui32con\+Buf\+Total\+Size}\label{struct_p_d_m_c_c26_x_x___i2_s___object_a72101e63cbac40e6ca3f9ce88d6c8a43}
+Size of consecutive buffer must match total available sample size\+: block $\ast$ number of samples $\ast$ samplesize(in bytes) $\ast$ number of channels \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}!pv\+Cont\+Mgt\+Buffer@{pv\+Cont\+Mgt\+Buffer}}
+\index{pv\+Cont\+Mgt\+Buffer@{pv\+Cont\+Mgt\+Buffer}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}}
+\paragraph[{pv\+Cont\+Mgt\+Buffer}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object\+::pv\+Cont\+Mgt\+Buffer}\label{struct_p_d_m_c_c26_x_x___i2_s___object_a1767920f3e01a87104784c5bc9adebeb}
+Pointer to consecutive buffer in memory. Driver will use this to manage buffer \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}!ui32con\+Mgt\+Buf\+Total\+Size@{ui32con\+Mgt\+Buf\+Total\+Size}}
+\index{ui32con\+Mgt\+Buf\+Total\+Size@{ui32con\+Mgt\+Buf\+Total\+Size}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}}
+\paragraph[{ui32con\+Mgt\+Buf\+Total\+Size}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object\+::ui32con\+Mgt\+Buf\+Total\+Size}\label{struct_p_d_m_c_c26_x_x___i2_s___object_a20491798f24484564defb6418233de28}
+Size of consecutive buffer must match total available sample size\+: wanted number of blocks in and out (must be same number in and out) $\ast$ overhead size () \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}!current\+Stream@{current\+Stream}}
+\index{current\+Stream@{current\+Stream}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}}
+\paragraph[{current\+Stream}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Stream\+Notification}$\ast$ P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object\+::current\+Stream}\label{struct_p_d_m_c_c26_x_x___i2_s___object_a53ae4a933eca22f77f05ddaeb9da6a4d}
+Ptr to information about the current transaction \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}!hwi@{hwi}}
+\index{hwi@{hwi}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}}
+\paragraph[{hwi}]{\setlength{\rightskip}{0pt plus 5cm}ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+Struct P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object\+::hwi}\label{struct_p_d_m_c_c26_x_x___i2_s___object_a66297ce4fec0f8c26e752cf8d1c1aaf2}
+Hwi object handle \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}!block\+Complete@{block\+Complete}}
+\index{block\+Complete@{block\+Complete}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}}
+\paragraph[{block\+Complete}]{\setlength{\rightskip}{0pt plus 5cm}Semaphore\+\_\+\+Struct P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object\+::block\+Complete}\label{struct_p_d_m_c_c26_x_x___i2_s___object_a3619d6776e9d8d9f5856c5fe6713dd95}
+Notify complete P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S block transfer \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}!sem\+Stopping@{sem\+Stopping}}
+\index{sem\+Stopping@{sem\+Stopping}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}}
+\paragraph[{sem\+Stopping}]{\setlength{\rightskip}{0pt plus 5cm}Semaphore\+\_\+\+Struct P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object\+::sem\+Stopping}\label{struct_p_d_m_c_c26_x_x___i2_s___object_a69503841d91a6659e1566bd0617d804c}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S stopping sequence semaphore \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}!pin\+State@{pin\+State}}
+\index{pin\+State@{pin\+State}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}}
+\paragraph[{pin\+State}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+I\+N\+\_\+\+State} P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object\+::pin\+State}\label{struct_p_d_m_c_c26_x_x___i2_s___object_a369c473d24f32e961a4b9d5fe01620fb}
+P\+I\+N driver state object \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}!pin\+Handle@{pin\+Handle}}
+\index{pin\+Handle@{pin\+Handle}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}}
+\paragraph[{pin\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+I\+N\+\_\+\+Handle} P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object\+::pin\+Handle}\label{struct_p_d_m_c_c26_x_x___i2_s___object_a98840eae8f2530e3c263ab66f31c2d8e}
+P\+I\+N driver handle \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}!is\+Open@{is\+Open}}
+\index{is\+Open@{is\+Open}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}}
+\paragraph[{is\+Open}]{\setlength{\rightskip}{0pt plus 5cm}bool P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object\+::is\+Open}\label{struct_p_d_m_c_c26_x_x___i2_s___object_abea7f7d13e225bd7f9a036b78a5cd13c}
+Has the object been opened 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_p_d_m_c_c26_x_x__util_8h}{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}\end{DoxyCompactItemize}

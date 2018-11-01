@@ -1,0 +1,52 @@
+\subsection{U\+A\+R\+T\+\_\+control command and status codes}
+\label{group___u_a_r_t___c_o_n_t_r_o_l}\index{U\+A\+R\+T\+\_\+control command and status codes@{U\+A\+R\+T\+\_\+control command and status codes}}
+Collaboration diagram for U\+A\+R\+T\+\_\+control command and status codes\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=293pt]{group___u_a_r_t___c_o_n_t_r_o_l}
+\end{center}
+\end{figure}
+\subsubsection*{Modules}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group___u_a_r_t___s_t_a_t_u_s}{Status Codes}
+\item 
+\hyperlink{group___u_a_r_t___c_m_d}{Command Codes}
+\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group___u_a_r_t___c_o_n_t_r_o_l_ga0f5a809e0884da33fef102236eb51644}{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~32
+\item 
+\#define \hyperlink{group___u_a_r_t___c_o_n_t_r_o_l_ga8f35027907fbab6a9ee302d2ee52a879}{U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~-\/32
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+These U\+A\+R\+T macros are reservations for \hyperlink{_u_a_r_t_8h}{U\+A\+R\+T.\+h} 
+
+\subsubsection{Macro Definition Documentation}
+\index{U\+A\+R\+T\+\_\+control command and status codes@{U\+A\+R\+T\+\_\+control command and status codes}!U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!U\+A\+R\+T\+\_\+control command and status codes@{U\+A\+R\+T\+\_\+control command and status codes}}
+\paragraph[{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~32}\label{group___u_a_r_t___c_o_n_t_r_o_l_ga0f5a809e0884da33fef102236eb51644}
+Common U\+A\+R\+T\+\_\+control command code reservation offset. U\+A\+R\+T driver implementations should offset command codes with U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing positively
+
+Example implementation specific command codes\+: 
+\begin{DoxyCode}
+1 #define UARTXYZ\_CMD\_COMMAND0     UART\_CMD\_RESERVED + 0
+2 #define UARTXYZ\_CMD\_COMMAND1     UART\_CMD\_RESERVED + 1
+\end{DoxyCode}
+ \index{U\+A\+R\+T\+\_\+control command and status codes@{U\+A\+R\+T\+\_\+control command and status codes}!U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!U\+A\+R\+T\+\_\+control command and status codes@{U\+A\+R\+T\+\_\+control command and status codes}}
+\paragraph[{U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~-\/32}\label{group___u_a_r_t___c_o_n_t_r_o_l_ga8f35027907fbab6a9ee302d2ee52a879}
+Common U\+A\+R\+T\+\_\+control status code reservation offset. U\+A\+R\+T driver implementations should offset status codes with U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing negatively.
+
+Example implementation specific status codes\+: 
+\begin{DoxyCode}
+1 #define UARTXYZ\_STATUS\_ERROR0    UART\_STATUS\_RESERVED - 0
+2 #define UARTXYZ\_STATUS\_ERROR1    UART\_STATUS\_RESERVED - 1
+3 #define UARTXYZ\_STATUS\_ERROR2    UART\_STATUS\_RESERVED - 2
+\end{DoxyCode}
+ 

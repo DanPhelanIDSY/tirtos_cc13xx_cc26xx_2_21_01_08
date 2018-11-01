@@ -1,0 +1,78 @@
+\subsection{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_crypto_c_c26_x_x___h_w_attrs}\index{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+
+
+Crypto\+C\+C26\+X\+X Hardware Attributes.  
+
+
+
+
+{\ttfamily \#include $<$Crypto\+C\+C26\+X\+X.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \hyperlink{struct_crypto_c_c26_x_x___h_w_attrs_a8a6e2dbc65c24f641941ebe3c854e961}{base\+Addr}
+\item 
+int \hyperlink{struct_crypto_c_c26_x_x___h_w_attrs_ac5c27633092355d3606d6d0b240b2091}{power\+Mngr\+Id}
+\item 
+int \hyperlink{struct_crypto_c_c26_x_x___h_w_attrs_a63cdd84637d1e9acca0315cd96d9891b}{int\+Num}
+\item 
+uint8\+\_\+t \hyperlink{struct_crypto_c_c26_x_x___h_w_attrs_af5d64e44258b27d68b380085544ab71f}{int\+Priority}
+\begin{DoxyCompactList}\small\item\em Crypto Peripheral\textquotesingle{}s interrupt priority. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Crypto\+C\+C26\+X\+X Hardware Attributes. 
+
+These fields, with the exception of int\+Priority, are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For C\+C26\+X\+X\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item inc/hw\+\_\+ints.\+h
+\end{DoxyItemize}
+
+int\+Priority is the Crypto peripheral\textquotesingle{}s interrupt priority, as defined by the underlying O\+S. It is passed unmodified to the underlying O\+S\textquotesingle{}s interrupt handler creation code, so you need to refer to the O\+S documentation for usage. For example, for S\+Y\+S/\+B\+I\+O\+S applications, refer to the ti.\+sysbios.\+family.\+arm.\+m3.\+Hwi documentation for S\+Y\+S/\+B\+I\+O\+S usage of interrupt priorities. If the driver uses the ti.\+drivers.\+ports interface instead of making O\+S calls directly, then the Hwi\+P port handles the interrupt priority in an O\+S specific way. In the case of the S\+Y\+S/\+B\+I\+O\+S port, int\+Priority is passed unmodified to Hwi\+\_\+create().
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} CryptoCC26XX_HWAttrs cryptoCC26XXHWAttrs[] = \{
+    \{
+        .baseAddr = CRYPTO\_BASE,
+        .powerMngrId = PERIPH\_CRYPTO,
+        .intNum = INT\_CRYPTO,
+        .intPriority = (~0)
+    \}
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_crypto_c_c26_x_x___h_w_attrs_a8a6e2dbc65c24f641941ebe3c854e961}
+Crypto Peripheral\textquotesingle{}s base address \index{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!power\+Mngr\+Id@{power\+Mngr\+Id}}
+\index{power\+Mngr\+Id@{power\+Mngr\+Id}!Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{power\+Mngr\+Id}]{\setlength{\rightskip}{0pt plus 5cm}int Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::power\+Mngr\+Id}\label{struct_crypto_c_c26_x_x___h_w_attrs_ac5c27633092355d3606d6d0b240b2091}
+Crypto Peripheral\textquotesingle{}s power manager I\+D \index{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!int\+Num@{int\+Num}}
+\index{int\+Num@{int\+Num}!Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Num}]{\setlength{\rightskip}{0pt plus 5cm}int Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::int\+Num}\label{struct_crypto_c_c26_x_x___h_w_attrs_a63cdd84637d1e9acca0315cd96d9891b}
+Crypto Peripheral\textquotesingle{}s interrupt vector \index{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!int\+Priority@{int\+Priority}}
+\index{int\+Priority@{int\+Priority}!Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::int\+Priority}\label{struct_crypto_c_c26_x_x___h_w_attrs_af5d64e44258b27d68b380085544ab71f}
+
+
+Crypto Peripheral\textquotesingle{}s interrupt priority. 
+
+The C\+C26xx uses three of the priority bits, meaning $\sim$0 has the same effect as (7 $<$$<$ 5).
+
+(7 $<$$<$ 5) will apply the lowest priority.
+
+(1 $<$$<$ 5) will apply the highest priority.
+
+Setting the priority to 0 is not supported by this driver.
+
+H\+W\+I\textquotesingle{}s with priority 0 ignore the H\+W\+I dispatcher to support zero-\/latency interrupts, thus invalidating the critical sections in this driver. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_crypto_c_c26_x_x_8h}{Crypto\+C\+C26\+X\+X.\+h}\end{DoxyCompactItemize}

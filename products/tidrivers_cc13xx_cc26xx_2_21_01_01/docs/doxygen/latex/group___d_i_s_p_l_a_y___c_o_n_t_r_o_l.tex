@@ -1,0 +1,52 @@
+\subsection{Display\+\_\+control command and status codes}
+\label{group___d_i_s_p_l_a_y___c_o_n_t_r_o_l}\index{Display\+\_\+control command and status codes@{Display\+\_\+control command and status codes}}
+Collaboration diagram for Display\+\_\+control command and status codes\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=299pt]{group___d_i_s_p_l_a_y___c_o_n_t_r_o_l}
+\end{center}
+\end{figure}
+\subsubsection*{Modules}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group___d_i_s_p_l_a_y___s_t_a_t_u_s}{Status Codes}
+\item 
+\hyperlink{group___d_i_s_p_l_a_y___c_m_d}{Command Codes}
+\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group___d_i_s_p_l_a_y___c_o_n_t_r_o_l_ga99c2401cd11ea3b49e5e3e4ffac5c886}{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~32
+\item 
+\#define \hyperlink{group___d_i_s_p_l_a_y___c_o_n_t_r_o_l_gacb7031dd18c19e3ecb86d97cb7b17abb}{D\+I\+S\+P\+L\+A\+Y\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~-\/32
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+These Displaymacros are reservations for \hyperlink{_display_8h}{Display.\+h} 
+
+\subsubsection{Macro Definition Documentation}
+\index{Display\+\_\+control command and status codes@{Display\+\_\+control command and status codes}!D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!Display\+\_\+control command and status codes@{Display\+\_\+control command and status codes}}
+\paragraph[{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~32}\label{group___d_i_s_p_l_a_y___c_o_n_t_r_o_l_ga99c2401cd11ea3b49e5e3e4ffac5c886}
+Common Display\+\_\+control command code reservation offset. Display driver implementations should offset command codes with D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing positively
+
+Example implementation specific command codes\+: 
+\begin{DoxyCode}
+1 #define DISPLAYXYZ\_CMD\_COMMAND0     DISPLAY\_CMD\_RESERVED + 0
+2 #define DISPLAYXYZ\_CMD\_COMMAND1     DISPLAY\_CMD\_RESERVED + 1
+\end{DoxyCode}
+ \index{Display\+\_\+control command and status codes@{Display\+\_\+control command and status codes}!D\+I\+S\+P\+L\+A\+Y\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{D\+I\+S\+P\+L\+A\+Y\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{D\+I\+S\+P\+L\+A\+Y\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{D\+I\+S\+P\+L\+A\+Y\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!Display\+\_\+control command and status codes@{Display\+\_\+control command and status codes}}
+\paragraph[{D\+I\+S\+P\+L\+A\+Y\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+I\+S\+P\+L\+A\+Y\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~-\/32}\label{group___d_i_s_p_l_a_y___c_o_n_t_r_o_l_gacb7031dd18c19e3ecb86d97cb7b17abb}
+Common Display\+\_\+control status code reservation offset. Display driver implementations should offset status codes with D\+I\+S\+P\+L\+A\+Y\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing negatively.
+
+Example implementation specific status codes\+: 
+\begin{DoxyCode}
+1 #define DISPLAYXYZ\_STATUS\_ERROR0    DISPLAY\_STATUS\_RESERVED - 0
+2 #define DISPLAYXYZ\_STATUS\_ERROR1    DISPLAY\_STATUS\_RESERVED - 1
+3 #define DISPLAYXYZ\_STATUS\_ERROR2    DISPLAY\_STATUS\_RESERVED - 2
+\end{DoxyCode}
+ 

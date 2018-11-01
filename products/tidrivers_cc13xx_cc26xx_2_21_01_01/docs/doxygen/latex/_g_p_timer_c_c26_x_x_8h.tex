@@ -1,0 +1,941 @@
+\subsection{G\+P\+Timer\+C\+C26\+X\+X.\+h File Reference}
+\label{_g_p_timer_c_c26_x_x_8h}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+
+
+\subsubsection{Detailed Description}
+G\+P\+Timer driver implementation for C\+C26\+X\+X/\+C\+C13\+X\+X. 
+
+
+
+ \begin{DoxyVerb}# Overview #
+\end{DoxyVerb}
+ This T\+I R\+T\+O\+S driver can be used to configure G\+P\+Timer modules to the modes supported by the G\+P\+Timer. The board file or application must define the device specific configuration before using the driver. \subsubsection*{Configuration}
+
+The G\+P\+Timer can be used in two different configurations. In 32-\/bit mode the timer will act as a full-\/width timer and is controlled using the Timer A unit. In split (16-\/bit) mode the timer is split into 2x 16-\/bit timers. In 16-\/bit mode a prescaler is available for each timer unit, effectively increasing the resolution in this mode to 24-\/bit. All supported modes by driver in split configuration uses prescaler as timer extension.
+
+\subsubsection*{Modes}
+
+The G\+P\+Timer driver supports the following timer modes\+:
+\begin{DoxyItemize}
+\item Oneshot mode counting upwards. When timer reaches load value, the timer is stopped automatically. Supported in both 16 and 32-\/bit configuration.
+\item Periodic mode counting upwards. When timer reaches load value it wraps and starts counting from 0 again. Supported in both 16 and 32-\/bit configuration.
+\item Input edge-\/count. Timer counts the number of events on its input capture port upwards from 0. Events can be rising-\/edge, falling-\/edge, or both. Supported only in 16-\/bit mode.
+\item Input edge-\/time. Timer counts upwards from 0 and captures the time of an event on its input capture port. This can be used to count the time between events. Events can be rising-\/edge, falling-\/edge or both. Supported only in 16-\/bit mode.
+\item P\+W\+M mode. Timer counts downwards from load value. C\+C\+P is set to 1 when reaching timeout (0) and toggles when reaching match value.
+\end{DoxyItemize}
+
+\subsubsection*{Power Management}
+
+The T\+I-\/\+R\+T\+O\+S power management framework will try to put the device into the most power efficient mode whenever possible. Please see the technical reference manual for further details on each power mode.
+
+The G\+P\+Timer\+C\+C26\+X\+X driver will set constraints on disallowed power modes when needed, removing the need for the application to handle this. The following statements are valid\+:
+\begin{DoxyItemize}
+\item After \hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open()}\+: The device is still allowed to enter Standby. When the device is active the corresponding G\+P\+Timer peripheral will be enabled and clocked.
+\item After \hyperlink{_g_p_timer_c_c26_x_x_8h_a869213ede8949245112fd7ca9c9ebdaa}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+start()}\+: The device will only go to Idle power mode since the high-\/frequency clock is needed for timer operation.
+\item After \hyperlink{_g_p_timer_c_c26_x_x_8h_aebdbd7f83c3824555e4abb7399802765}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+stop()}\+: Conditions are equal as for after G\+P\+Timer\+C\+C26\+X\+X\+\_\+open
+\item After \hyperlink{_g_p_timer_c_c26_x_x_8h_a0a148f2232f5bb4c59015de965c82d43}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+close()}\+: The underlying G\+P\+Timer is turned off and the device is allowed to go to standby.
+\end{DoxyItemize}
+
+\subsubsection*{Accuracy}
+
+The G\+P\+Timer clock is dependent on the M\+C\+U system clock. If very high-\/accuracy outputs are needed, the application should request using the external H\+F crystal\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/sysbios/family/arm/cc26xx/Power.h>}
+\textcolor{preprocessor}{#include <ti/sysbios/family/arm/cc26xx/PowerCC2650.h>}
+Power_setDependency(XOSC\_HF);
+\end{DoxyCode}
+
+
+\subsubsection*{Limitations}
+
+
+\begin{DoxyItemize}
+\item D\+M\+A usage is not supported
+\item Timer synchronization is not supported
+\item Down counting modes (except for P\+W\+M) are not supported by driver
+\end{DoxyItemize}
+
+\subsubsection*{G\+P\+Timer\+C\+C26\+X\+X usage}
+
+\paragraph*{Periodic timer}
+
+The example below will generate an interrupt using the G\+P\+Timer every 1 ms.
+
+
+\begin{DoxyCode}
+GPTimerCC26XX_Handle hTimer;
+\textcolor{keywordtype}{void} timerCallback(GPTimerCC26XX_Handle handle, GPTimerCC26XX_IntMask interruptMask) \{
+    \textcolor{comment}{// interrupt callback code goes here. Minimize processing in interrupt.}
+\}
+
+\textcolor{keywordtype}{void} taskFxn(UArg a0, UArg a1) \{
+  GPTimerCC26XX_Params params;
+  GPTimerCC26XX_Params_init(&params);
+  params.width          = GPT_CONFIG_16BIT;
+  params.mode           = GPT_MODE_PERIODIC_UP;
+  params.debugStallMode = GPTimerCC26XX_DEBUG_STALL_OFF;
+  hTimer = GPTimerCC26XX_open(CC2650\_GPTIMER0A, &params);
+  \textcolor{keywordflow}{if}(hTimer == NULL) \{
+    Log\_error0(\textcolor{stringliteral}{"Failed to open GPTimer"});
+    Task\_exit();
+  \}
+
+  Types\_FreqHz  freq;
+  BIOS\_getCpuFreq(&freq);
+  GPTimerCC26XX_Value loadVal = freq.lo / 1000 - 1; \textcolor{comment}{//47999}
+  GPTimerCC26XX_setLoadValue(hTimer, loadVal);
+  GPTimerCC26XX_registerInterrupt(hTimer, timerCallback, GPT_INT_TIMEOUT);
+
+  GPTimerCC26XX_start(hTimer);
+
+  \textcolor{keywordflow}{while}(1) \{
+    Task\_sleep(BIOS\_WAIT\_FOREVER);
+  \}
+\}
+\end{DoxyCode}
+
+
+\paragraph*{P\+W\+M output}
+
+See the P\+W\+M2\+Timer\+C\+C26\+X\+X driver {\ttfamily \#include $<$xdc/std.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$stddef.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/family/arm/m3/\+Hwi.\+h$>$}\\*
+{\ttfamily \#include $<$driverlib/event.\+h$>$}\\*
+{\ttfamily \#include $<$driverlib/ioc.\+h$>$}\\*
+{\ttfamily \#include $<$driverlib/timer.\+h$>$}\\*
+{\ttfamily \#include $<$inc/hw\+\_\+gpt.\+h$>$}\\*
+Include dependency graph for G\+P\+Timer\+C\+C26\+X\+X.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_g_p_timer_c_c26_x_x_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=265pt]{_g_p_timer_c_c26_x_x_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_g_p_timer_c_c26_x_x___h_w_attrs}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em G\+P\+Timer26\+X\+X Hardware attributes. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_g_p_timer_c_c26_x_x___object}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em G\+P\+Timer26\+X\+X Object. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_g_p_timer_c_c26_x_x___config}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em G\+P\+Timer Global configuration. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_g_p_timer_c_c26_x_x___params}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em G\+P\+Timer\+C\+C26\+X\+X Parameters. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_g_p_timer_c_c26_x_x_8h_ae8166f42d637bc48b784b2524e49d0fe}{G\+P\+T\+\_\+\+N\+U\+M\+\_\+\+I\+N\+T\+S}~4
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \hyperlink{_g_p_timer_c_c26_x_x_8h_a37f7594eb4084eff43d5b80bb6418ec7}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Width} \hyperlink{_g_p_timer_c_c26_x_x_8h_aeb2b955f6dda2b101294c7b521e715b4}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Width}
+\begin{DoxyCompactList}\small\item\em Definitions for specifying the G\+P\+Timer configuration (width) \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_g_p_timer_c_c26_x_x_8h_ac3f0539fd948c59b31df04dff5b7024c}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Mode} \hyperlink{_g_p_timer_c_c26_x_x_8h_a13c88da09d4f9806f5555690bf2e3a49}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Mode}
+\begin{DoxyCompactList}\small\item\em Definitions for supported G\+P\+Timer modes. Driver code assumes only modes using prescaler as timer extension in 16-\/bit configuration are used. Therefore new modes must not be added to the below description without also updating driver. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_g_p_timer_c_c26_x_x_8h_a1e0397cdf2412358dfdf0eb0df40db92}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Interrupt} \hyperlink{_g_p_timer_c_c26_x_x_8h_aa4cc2366361f3ae2d3438d4496e6b184}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Interrupt}
+\begin{DoxyCompactList}\small\item\em Definitions for supported G\+P\+Timer interrupts. G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Int\+Mask arguments should be a bit vector containing these definitions. See description in Technical Reference. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_g_p_timer_c_c26_x_x_8h_aff5462fa33c306f2c8bd29284fd898b0}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Part} \hyperlink{_g_p_timer_c_c26_x_x_8h_a7067a38f9de14af167de8df90dfb18d3}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Part}
+\begin{DoxyCompactList}\small\item\em Definitions for G\+P\+Timer parts (Timer A / Timer B). Used in G\+P\+Timer configuration structure G\+P\+Timer\+C\+C26\+X\+X\+\_\+config to configure the corresponding timer unit. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_g_p_timer_c_c26_x_x_8h_ab4a2e82c659e0ea1fa2ae7a852298359}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Pin\+Mux} \hyperlink{_g_p_timer_c_c26_x_x_8h_a02bcd903a770b3bc9bea666cf5b0bded}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Pin\+Mux}
+\begin{DoxyCompactList}\small\item\em Definitions for input / output ports in I\+O controller to connect G\+P\+Timer to a pin. Used in gptimer\+C\+C26xx\+H\+W\+Attrs for static timer configuration P\+I\+N driver is used to mux a pin to the timer. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_g_p_timer_c_c26_x_x_8h_ab4c80c79c9acaf8e482e8244adbae73e}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Debug\+Mode} \hyperlink{_g_p_timer_c_c26_x_x_8h_a1c5a4b610efe0481e6ebf9575820a6f3}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Debug\+Mode}
+\begin{DoxyCompactList}\small\item\em Definitions for controlling timer debug stall mode. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_g_p_timer_c_c26_x_x_8h_ac72f25419727329702ec162a2b6b9151}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Edge} \hyperlink{_g_p_timer_c_c26_x_x_8h_a32b251408c3c97a16d017a095555aa18}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Edge}
+\begin{DoxyCompactList}\small\item\em Definitions for controlling edges used for timer capture. Used in G\+P\+Timer edge-\/time and edge-\/count modes. \end{DoxyCompactList}\item 
+typedef const struct \hyperlink{struct_g_p_timer_c_c26_x_x___config}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config} \hyperlink{_g_p_timer_c_c26_x_x_8h_aa5a5955bada127ddac4d46b55f86b848}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config}
+\item 
+typedef \hyperlink{struct_g_p_timer_c_c26_x_x___config}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config} $\ast$ \hyperlink{_g_p_timer_c_c26_x_x_8h_ab85403dde5940c587c57ca1a140e655a}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle}
+\item 
+typedef uint16\+\_\+t \hyperlink{_g_p_timer_c_c26_x_x_8h_ac74410bfd92bf89732dd795bbe8769d1}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Int\+Mask}
+\item 
+typedef uint32\+\_\+t \hyperlink{_g_p_timer_c_c26_x_x_8h_ab667a2fd47273a9778f5011774fa55c0}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Value}
+\item 
+typedef void($\ast$ \hyperlink{_g_p_timer_c_c26_x_x_8h_a6b9b95974e20f85ccd3f8463fdda84f1}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Hwi\+Fxn}) (\hyperlink{_g_p_timer_c_c26_x_x_8h_ab85403dde5940c587c57ca1a140e655a}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle} handle, \hyperlink{_g_p_timer_c_c26_x_x_8h_ac74410bfd92bf89732dd795bbe8769d1}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Int\+Mask} interrupt\+Mask)
+\item 
+typedef struct \hyperlink{struct_g_p_timer_c_c26_x_x___h_w_attrs}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs} \hyperlink{_g_p_timer_c_c26_x_x_8h_a415d99f6aca4a4a8bf94a6328021c15c}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em G\+P\+Timer26\+X\+X Hardware attributes. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_g_p_timer_c_c26_x_x___object}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object} \hyperlink{_g_p_timer_c_c26_x_x_8h_a98c0a6722f2d48af3b7c032235181bd1}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em G\+P\+Timer26\+X\+X Object. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_g_p_timer_c_c26_x_x___params}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Params} \hyperlink{_g_p_timer_c_c26_x_x_8h_ad5264b3636e1d40a6cbd64cf150be32d}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em G\+P\+Timer\+C\+C26\+X\+X Parameters. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_g_p_timer_c_c26_x_x_8h_a37f7594eb4084eff43d5b80bb6418ec7}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Width} \{ \\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a37f7594eb4084eff43d5b80bb6418ec7afbeda4c45001e3d32d50f576d6259016}{G\+P\+T\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+32\+B\+I\+T} = G\+P\+T\+\_\+\+C\+F\+G\+\_\+\+C\+F\+G\+\_\+32\+B\+I\+T\+\_\+\+T\+I\+M\+E\+R, 
+\\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a37f7594eb4084eff43d5b80bb6418ec7a2e5a3c43a8c62eeace6b38800d39392f}{G\+P\+T\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+16\+B\+I\+T} = G\+P\+T\+\_\+\+C\+F\+G\+\_\+\+C\+F\+G\+\_\+16\+B\+I\+T\+\_\+\+T\+I\+M\+E\+R
+ \}
+\begin{DoxyCompactList}\small\item\em Definitions for specifying the G\+P\+Timer configuration (width) \end{DoxyCompactList}\item 
+enum \hyperlink{_g_p_timer_c_c26_x_x_8h_ac3f0539fd948c59b31df04dff5b7024c}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Mode} \{ \\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_ac3f0539fd948c59b31df04dff5b7024ca945157a7df9978aef69f2bc5d08328a5}{G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+O\+N\+E\+S\+H\+O\+T\+\_\+\+U\+P}, 
+\\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_ac3f0539fd948c59b31df04dff5b7024ca0c73c880888fc8da201a44bb87980578}{G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+P\+E\+R\+I\+O\+D\+I\+C\+\_\+\+U\+P}, 
+\\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_ac3f0539fd948c59b31df04dff5b7024ca8336182ae5bd6521222c07d159b22459}{G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+E\+D\+G\+E\+\_\+\+C\+O\+U\+N\+T\+\_\+\+U\+P}, 
+\\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_ac3f0539fd948c59b31df04dff5b7024ca3d1702ae14a42f1af112fb88b7fd7c77}{G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+E\+D\+G\+E\+\_\+\+T\+I\+M\+E\+\_\+\+U\+P}, 
+\\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_ac3f0539fd948c59b31df04dff5b7024ca5d09320529435b9b021abd37d4dac117}{G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+P\+W\+M}
+ \}
+\begin{DoxyCompactList}\small\item\em Definitions for supported G\+P\+Timer modes. Driver code assumes only modes using prescaler as timer extension in 16-\/bit configuration are used. Therefore new modes must not be added to the below description without also updating driver. \end{DoxyCompactList}\item 
+enum \hyperlink{_g_p_timer_c_c26_x_x_8h_a1e0397cdf2412358dfdf0eb0df40db92}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Interrupt} \{ \\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a1e0397cdf2412358dfdf0eb0df40db92a6c6f5236dcbe5f37289a4a513451851e}{G\+P\+T\+\_\+\+I\+N\+T\+\_\+\+T\+I\+M\+E\+O\+U\+T} = 1 $<$$<$ 0, 
+\\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a1e0397cdf2412358dfdf0eb0df40db92a438a33e76043ddb51f1c9e93820a8040}{G\+P\+T\+\_\+\+I\+N\+T\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+M\+A\+T\+C\+H} = 1 $<$$<$ 1, 
+\\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a1e0397cdf2412358dfdf0eb0df40db92ae3e86fdcf14f9ff34c92aaf953b159d9}{G\+P\+T\+\_\+\+I\+N\+T\+\_\+\+C\+A\+P\+T\+U\+R\+E} = 1 $<$$<$ 2, 
+\\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a1e0397cdf2412358dfdf0eb0df40db92a87f843ea54618ca92890d4db7f38f242}{G\+P\+T\+\_\+\+I\+N\+T\+\_\+\+M\+A\+T\+C\+H} = 1 $<$$<$ 3
+ \}
+\begin{DoxyCompactList}\small\item\em Definitions for supported G\+P\+Timer interrupts. G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Int\+Mask arguments should be a bit vector containing these definitions. See description in Technical Reference. \end{DoxyCompactList}\item 
+enum \hyperlink{_g_p_timer_c_c26_x_x_8h_aff5462fa33c306f2c8bd29284fd898b0}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Part} \{ \\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_aff5462fa33c306f2c8bd29284fd898b0a0630f8ce6004469fe81ebbc804e7ac2a}{G\+P\+T\+\_\+\+A} = 0, 
+\\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_aff5462fa33c306f2c8bd29284fd898b0a09aae74a0a9878654fa701a70b76387b}{G\+P\+T\+\_\+\+B}, 
+\\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_aff5462fa33c306f2c8bd29284fd898b0a492b59ed96b96d5bddcdee40e78712b0}{G\+P\+T\+\_\+\+P\+A\+R\+T\+S\+\_\+\+C\+O\+U\+N\+T}
+ \}
+\begin{DoxyCompactList}\small\item\em Definitions for G\+P\+Timer parts (Timer A / Timer B). Used in G\+P\+Timer configuration structure G\+P\+Timer\+C\+C26\+X\+X\+\_\+config to configure the corresponding timer unit. \end{DoxyCompactList}\item 
+enum \hyperlink{_g_p_timer_c_c26_x_x_8h_ab4a2e82c659e0ea1fa2ae7a852298359}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Pin\+Mux} \{ \\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_ab4a2e82c659e0ea1fa2ae7a852298359a46af9b3278d2116fd4862c7fe19624b7}{G\+P\+T\+\_\+\+P\+I\+N\+\_\+0\+A} = I\+O\+C\+\_\+\+P\+O\+R\+T\+\_\+\+M\+C\+U\+\_\+\+P\+O\+R\+T\+\_\+\+E\+V\+E\+N\+T0, 
+\\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_ab4a2e82c659e0ea1fa2ae7a852298359a1e7ba339de898f1572f21424ce125f2d}{G\+P\+T\+\_\+\+P\+I\+N\+\_\+0\+B} = I\+O\+C\+\_\+\+P\+O\+R\+T\+\_\+\+M\+C\+U\+\_\+\+P\+O\+R\+T\+\_\+\+E\+V\+E\+N\+T1, 
+\\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_ab4a2e82c659e0ea1fa2ae7a852298359acc7f9d714b4eb87595ebd5a8fdd6ed2f}{G\+P\+T\+\_\+\+P\+I\+N\+\_\+1\+A} = I\+O\+C\+\_\+\+P\+O\+R\+T\+\_\+\+M\+C\+U\+\_\+\+P\+O\+R\+T\+\_\+\+E\+V\+E\+N\+T2, 
+\\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_ab4a2e82c659e0ea1fa2ae7a852298359a69db29a9a9029d1fcfabfbf20ba26ee4}{G\+P\+T\+\_\+\+P\+I\+N\+\_\+1\+B} = I\+O\+C\+\_\+\+P\+O\+R\+T\+\_\+\+M\+C\+U\+\_\+\+P\+O\+R\+T\+\_\+\+E\+V\+E\+N\+T3, 
+\\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_ab4a2e82c659e0ea1fa2ae7a852298359a48b2ab2ad9e83e67d94421adb06f4aa1}{G\+P\+T\+\_\+\+P\+I\+N\+\_\+2\+A} = I\+O\+C\+\_\+\+P\+O\+R\+T\+\_\+\+M\+C\+U\+\_\+\+P\+O\+R\+T\+\_\+\+E\+V\+E\+N\+T4, 
+\\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_ab4a2e82c659e0ea1fa2ae7a852298359a3e1fd803b55127a98c4709cc9e811e70}{G\+P\+T\+\_\+\+P\+I\+N\+\_\+2\+B} = I\+O\+C\+\_\+\+P\+O\+R\+T\+\_\+\+M\+C\+U\+\_\+\+P\+O\+R\+T\+\_\+\+E\+V\+E\+N\+T5, 
+\\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_ab4a2e82c659e0ea1fa2ae7a852298359a4b93799cba930f4b538d0f0b3bfee4be}{G\+P\+T\+\_\+\+P\+I\+N\+\_\+3\+A} = I\+O\+C\+\_\+\+P\+O\+R\+T\+\_\+\+M\+C\+U\+\_\+\+P\+O\+R\+T\+\_\+\+E\+V\+E\+N\+T6, 
+\\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_ab4a2e82c659e0ea1fa2ae7a852298359aca82a1cd0f9e891472b4f5b09998a597}{G\+P\+T\+\_\+\+P\+I\+N\+\_\+3\+B} = I\+O\+C\+\_\+\+P\+O\+R\+T\+\_\+\+M\+C\+U\+\_\+\+P\+O\+R\+T\+\_\+\+E\+V\+E\+N\+T7
+ \}
+\begin{DoxyCompactList}\small\item\em Definitions for input / output ports in I\+O controller to connect G\+P\+Timer to a pin. Used in gptimer\+C\+C26xx\+H\+W\+Attrs for static timer configuration P\+I\+N driver is used to mux a pin to the timer. \end{DoxyCompactList}\item 
+enum \hyperlink{_g_p_timer_c_c26_x_x_8h_ab4c80c79c9acaf8e482e8244adbae73e}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Debug\+Mode} \{ \\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_ab4c80c79c9acaf8e482e8244adbae73ea1aca5e7c45ce80046cc86c309b1500b3}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+D\+E\+B\+U\+G\+\_\+\+S\+T\+A\+L\+L\+\_\+\+O\+F\+F} = 0, 
+\\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_ab4c80c79c9acaf8e482e8244adbae73ea78ecad7414438f969450881393850b8c}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+D\+E\+B\+U\+G\+\_\+\+S\+T\+A\+L\+L\+\_\+\+O\+N}
+ \}
+\begin{DoxyCompactList}\small\item\em Definitions for controlling timer debug stall mode. \end{DoxyCompactList}\item 
+enum \hyperlink{_g_p_timer_c_c26_x_x_8h_ac72f25419727329702ec162a2b6b9151}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Edge} \{ \\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_ac72f25419727329702ec162a2b6b9151a0dda532d331ac235bead20fad3975f4f}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+P\+O\+S\+\_\+\+E\+D\+G\+E} = G\+P\+T\+\_\+\+C\+T\+L\+\_\+\+T\+A\+E\+V\+E\+N\+T\+\_\+\+P\+O\+S, 
+\\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_ac72f25419727329702ec162a2b6b9151a2189f990a1c45892bdfcb31855d7d98f}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+N\+E\+G\+\_\+\+E\+D\+G\+E} = G\+P\+T\+\_\+\+C\+T\+L\+\_\+\+T\+A\+E\+V\+E\+N\+T\+\_\+\+N\+E\+G, 
+\\*
+\hyperlink{_g_p_timer_c_c26_x_x_8h_ac72f25419727329702ec162a2b6b9151a2219c0e15065a692a80b4049036cd20a}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+B\+O\+T\+H\+\_\+\+E\+D\+G\+E\+S} = G\+P\+T\+\_\+\+C\+T\+L\+\_\+\+T\+A\+E\+V\+E\+N\+T\+\_\+\+B\+O\+T\+H
+ \}
+\begin{DoxyCompactList}\small\item\em Definitions for controlling edges used for timer capture. Used in G\+P\+Timer edge-\/time and edge-\/count modes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_g_p_timer_c_c26_x_x_8h_a11e9f3ff24f5f075989f89d99e65e827}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Params\+\_\+init} (\hyperlink{struct_g_p_timer_c_c26_x_x___params}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to initialize the \hyperlink{struct_g_p_timer_c_c26_x_x___params}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Params} struct to its default values. \end{DoxyCompactList}\item 
+\hyperlink{_g_p_timer_c_c26_x_x_8h_ab85403dde5940c587c57ca1a140e655a}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle} \hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open} (unsigned int index, const \hyperlink{struct_g_p_timer_c_c26_x_x___params}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em This function opens a given G\+P\+Timer peripheral. Will set dependency on timer and configure it into specified mode. \end{DoxyCompactList}\item 
+void \hyperlink{_g_p_timer_c_c26_x_x_8h_a0a148f2232f5bb4c59015de965c82d43}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+close} (\hyperlink{_g_p_timer_c_c26_x_x_8h_ab85403dde5940c587c57ca1a140e655a}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to close a G\+P\+Timer peripheral specified by the G\+P\+Timer handle. Closing timer will releae dependency on timer and clear configuration. \end{DoxyCompactList}\item 
+void \hyperlink{_g_p_timer_c_c26_x_x_8h_a869213ede8949245112fd7ca9c9ebdaa}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+start} (\hyperlink{_g_p_timer_c_c26_x_x_8h_ab85403dde5940c587c57ca1a140e655a}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to start the specified G\+P\+Timer with current settings. \end{DoxyCompactList}\item 
+void \hyperlink{_g_p_timer_c_c26_x_x_8h_aebdbd7f83c3824555e4abb7399802765}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+stop} (\hyperlink{_g_p_timer_c_c26_x_x_8h_ab85403dde5940c587c57ca1a140e655a}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to stop the specified G\+P\+Timer. \end{DoxyCompactList}\item 
+void \hyperlink{_g_p_timer_c_c26_x_x_8h_aa365d9e1d6a1b324090510f2748db771}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+set\+Load\+Value} (\hyperlink{_g_p_timer_c_c26_x_x_8h_ab85403dde5940c587c57ca1a140e655a}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle} handle, \hyperlink{_g_p_timer_c_c26_x_x_8h_ab667a2fd47273a9778f5011774fa55c0}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Value} load\+Value)
+\begin{DoxyCompactList}\small\item\em Function to set load value of the specified G\+P\+Timer. Function can be called while G\+P\+Timer is running. \end{DoxyCompactList}\item 
+void \hyperlink{_g_p_timer_c_c26_x_x_8h_a3f83bdcc8482297952f6e08ccadd0e11}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+set\+Match\+Value} (\hyperlink{_g_p_timer_c_c26_x_x_8h_ab85403dde5940c587c57ca1a140e655a}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle} handle, \hyperlink{_g_p_timer_c_c26_x_x_8h_ab667a2fd47273a9778f5011774fa55c0}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Value} match\+Value)
+\begin{DoxyCompactList}\small\item\em Function to set match value of the specified G\+P\+Timer. Function can be called while G\+P\+Timer is running. \end{DoxyCompactList}\item 
+void \hyperlink{_g_p_timer_c_c26_x_x_8h_ae6a091f0962d33a7897ae61b501aedc4}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+set\+Capture\+Edge} (\hyperlink{_g_p_timer_c_c26_x_x_8h_ab85403dde5940c587c57ca1a140e655a}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle} handle, \hyperlink{_g_p_timer_c_c26_x_x_8h_ac72f25419727329702ec162a2b6b9151}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Edge} edge)
+\begin{DoxyCompactList}\small\item\em Function to set which input edge the G\+P\+Timer capture should use. Applies to edge-\/count and edge-\/time modes Function can be called while G\+P\+Timer is running. \end{DoxyCompactList}\item 
+\hyperlink{_g_p_timer_c_c26_x_x_8h_ab667a2fd47273a9778f5011774fa55c0}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Value} \hyperlink{_g_p_timer_c_c26_x_x_8h_af4832251ebc2e81a952bbc1c39d2502e}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+get\+Free\+Run\+Value} (\hyperlink{_g_p_timer_c_c26_x_x_8h_ab85403dde5940c587c57ca1a140e655a}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to retrieve the current free-\/running value of timer. \end{DoxyCompactList}\item 
+\hyperlink{_g_p_timer_c_c26_x_x_8h_ab667a2fd47273a9778f5011774fa55c0}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Value} \hyperlink{_g_p_timer_c_c26_x_x_8h_a553ef86139c25234964c81783aa2cd94}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+get\+Value} (\hyperlink{_g_p_timer_c_c26_x_x_8h_ab85403dde5940c587c57ca1a140e655a}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to retrieve the current value of timer This returns the value of the timer in all modes except for input edge count and input edge time mode. In edge count mode, this register contains the number of edges that have occurred. In input edge time, this register contains the timer value at which the last edge event took place. \end{DoxyCompactList}\item 
+void \hyperlink{_g_p_timer_c_c26_x_x_8h_a4032d544f2b79ae1a999a4faa5ee0884}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+register\+Interrupt} (\hyperlink{_g_p_timer_c_c26_x_x_8h_ab85403dde5940c587c57ca1a140e655a}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle} handle, \hyperlink{_g_p_timer_c_c26_x_x_8h_a6b9b95974e20f85ccd3f8463fdda84f1}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Hwi\+Fxn} callback, \hyperlink{_g_p_timer_c_c26_x_x_8h_ac74410bfd92bf89732dd795bbe8769d1}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Int\+Mask} int\+Mask)
+\begin{DoxyCompactList}\small\item\em Function to register a C\+P\+U interrupt for a given timer handle and enable a set of timer interrupt sources. The interrupt to the C\+P\+U will be a bitwise O\+R of the enabled interrupt sources. When an interrupt occurs, the driver will clear the interrupt source and call the application provided callback. The callback is executed in H\+W interrupt context and processing in callback should be minimized. \end{DoxyCompactList}\item 
+void \hyperlink{_g_p_timer_c_c26_x_x_8h_adf0a8716a4197bba10d67322c3dfe5ac}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+unregister\+Interrupt} (\hyperlink{_g_p_timer_c_c26_x_x_8h_ab85403dde5940c587c57ca1a140e655a}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to disable a C\+P\+U interrupt for a given timer handle and disable all interrupt sources for corresponding G\+P\+Timer unit. \end{DoxyCompactList}\item 
+void \hyperlink{_g_p_timer_c_c26_x_x_8h_af08557caa1e95c615a17428521d22d9d}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+enable\+Interrupt} (\hyperlink{_g_p_timer_c_c26_x_x_8h_ab85403dde5940c587c57ca1a140e655a}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle} handle, \hyperlink{_g_p_timer_c_c26_x_x_8h_ac74410bfd92bf89732dd795bbe8769d1}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Int\+Mask} interrupt\+Mask)
+\begin{DoxyCompactList}\small\item\em Function to enable a set of G\+P\+Timer interrupt sources. The interrupt to the C\+P\+U must be enabled using G\+P\+Timer\+C\+C26\+X\+X\+\_\+register\+Interrupt. \end{DoxyCompactList}\item 
+void \hyperlink{_g_p_timer_c_c26_x_x_8h_a8aca62c518c9ff0347ec09f464b88b26}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+disable\+Interrupt} (\hyperlink{_g_p_timer_c_c26_x_x_8h_ab85403dde5940c587c57ca1a140e655a}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle} handle, \hyperlink{_g_p_timer_c_c26_x_x_8h_ac74410bfd92bf89732dd795bbe8769d1}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Int\+Mask} interrupt\+Mask)
+\begin{DoxyCompactList}\small\item\em Function to disable a set of G\+P\+Timer interrupt sources. \end{DoxyCompactList}\item 
+void \hyperlink{_g_p_timer_c_c26_x_x_8h_a5a8bdc7643305d21dcfcd567d215b7f8}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+configure\+Debug\+Stall} (\hyperlink{_g_p_timer_c_c26_x_x_8h_ab85403dde5940c587c57ca1a140e655a}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle} handle, \hyperlink{_g_p_timer_c_c26_x_x_8h_ab4c80c79c9acaf8e482e8244adbae73e}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Debug\+Mode} mode)
+\begin{DoxyCompactList}\small\item\em Function to control timer debug stall mode. When enabled, the timer will stop when the debugger halts the C\+P\+U. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+T\+\_\+\+N\+U\+M\+\_\+\+I\+N\+T\+S@{G\+P\+T\+\_\+\+N\+U\+M\+\_\+\+I\+N\+T\+S}}
+\index{G\+P\+T\+\_\+\+N\+U\+M\+\_\+\+I\+N\+T\+S@{G\+P\+T\+\_\+\+N\+U\+M\+\_\+\+I\+N\+T\+S}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+T\+\_\+\+N\+U\+M\+\_\+\+I\+N\+T\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+T\+\_\+\+N\+U\+M\+\_\+\+I\+N\+T\+S~4}\label{_g_p_timer_c_c26_x_x_8h_ae8166f42d637bc48b784b2524e49d0fe}
+
+
+\subsubsection{Typedef Documentation}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Width@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Width}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Width@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Width}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Width}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Width}  {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Width}}\label{_g_p_timer_c_c26_x_x_8h_aeb2b955f6dda2b101294c7b521e715b4}
+
+
+Definitions for specifying the G\+P\+Timer configuration (width) 
+
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Mode@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Mode}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Mode@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Mode}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Mode}  {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Mode}}\label{_g_p_timer_c_c26_x_x_8h_a13c88da09d4f9806f5555690bf2e3a49}
+
+
+Definitions for supported G\+P\+Timer modes. Driver code assumes only modes using prescaler as timer extension in 16-\/bit configuration are used. Therefore new modes must not be added to the below description without also updating driver. 
+
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Interrupt@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Interrupt}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Interrupt@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Interrupt}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Interrupt}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Interrupt}  {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Interrupt}}\label{_g_p_timer_c_c26_x_x_8h_aa4cc2366361f3ae2d3438d4496e6b184}
+
+
+Definitions for supported G\+P\+Timer interrupts. G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Int\+Mask arguments should be a bit vector containing these definitions. See description in Technical Reference. 
+
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Part@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Part}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Part@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Part}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Part}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Part}  {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Part}}\label{_g_p_timer_c_c26_x_x_8h_a7067a38f9de14af167de8df90dfb18d3}
+
+
+Definitions for G\+P\+Timer parts (Timer A / Timer B). Used in G\+P\+Timer configuration structure G\+P\+Timer\+C\+C26\+X\+X\+\_\+config to configure the corresponding timer unit. 
+
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Pin\+Mux@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Pin\+Mux}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Pin\+Mux@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Pin\+Mux}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Pin\+Mux}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Pin\+Mux}  {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Pin\+Mux}}\label{_g_p_timer_c_c26_x_x_8h_a02bcd903a770b3bc9bea666cf5b0bded}
+
+
+Definitions for input / output ports in I\+O controller to connect G\+P\+Timer to a pin. Used in gptimer\+C\+C26xx\+H\+W\+Attrs for static timer configuration P\+I\+N driver is used to mux a pin to the timer. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_i_n_c_c26_x_x_8h_ac8cbb649db80dd03d8e8a487aef43294}{P\+I\+N\+C\+C26\+X\+X\+\_\+set\+Mux} 
+
+G\+P\+Timer\+C\+C26\+X\+X\+\_\+get\+Pin\+Mux 
+\end{DoxySeeAlso}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Debug\+Mode@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Debug\+Mode}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Debug\+Mode@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Debug\+Mode}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Debug\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Debug\+Mode}  {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Debug\+Mode}}\label{_g_p_timer_c_c26_x_x_8h_a1c5a4b610efe0481e6ebf9575820a6f3}
+
+
+Definitions for controlling timer debug stall mode. 
+
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Edge@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Edge}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Edge@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Edge}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Edge}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Edge}  {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Edge}}\label{_g_p_timer_c_c26_x_x_8h_a32b251408c3c97a16d017a095555aa18}
+
+
+Definitions for controlling edges used for timer capture. Used in G\+P\+Timer edge-\/time and edge-\/count modes. 
+
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef const struct {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config} {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config}}\label{_g_p_timer_c_c26_x_x_8h_aa5a5955bada127ddac4d46b55f86b848}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Config}$\ast$ {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle}}\label{_g_p_timer_c_c26_x_x_8h_ab85403dde5940c587c57ca1a140e655a}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Int\+Mask@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Int\+Mask}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Int\+Mask@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Int\+Mask}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Int\+Mask}]{\setlength{\rightskip}{0pt plus 5cm}typedef uint16\+\_\+t {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Int\+Mask}}\label{_g_p_timer_c_c26_x_x_8h_ac74410bfd92bf89732dd795bbe8769d1}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Value@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Value}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Value@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Value}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Value}]{\setlength{\rightskip}{0pt plus 5cm}typedef uint32\+\_\+t {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Value}}\label{_g_p_timer_c_c26_x_x_8h_ab667a2fd47273a9778f5011774fa55c0}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Hwi\+Fxn@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Hwi\+Fxn}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Hwi\+Fxn@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Hwi\+Fxn}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Hwi\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Hwi\+Fxn) ({\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle} handle, {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Int\+Mask} interrupt\+Mask)}\label{_g_p_timer_c_c26_x_x_8h_a6b9b95974e20f85ccd3f8463fdda84f1}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}  {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}\label{_g_p_timer_c_c26_x_x_8h_a415d99f6aca4a4a8bf94a6328021c15c}
+
+
+G\+P\+Timer26\+X\+X Hardware attributes. 
+
+These fields are used by the driver to set up underlying G\+P\+Timer driver statically. A sample structure is shown below\+:
+
+
+\begin{DoxyCode}
+1 // GPTimer hardware attributes, one per timer unit (Timer 0A, 0B, 1A, 1B..)
+2 const GPTimerCC26XX\_HWAttrs gptimerCC26xxHWAttrs[CC2650\_GPTIMERPARTSCOUNT] = \{
+3   \{.baseAddr = GPT0\_BASE, .intNum = INT\_TIMER0A, .powerMngrId = PERIPH\_GPT0, .pinMux = GPT\_PIN\_0A, \},
+4   \{.baseAddr = GPT0\_BASE, .intNum = INT\_TIMER0B, .powerMngrId = PERIPH\_GPT0, .pinMux = GPT\_PIN\_0B, \},
+5   \{.baseAddr = GPT1\_BASE, .intNum = INT\_TIMER1A, .powerMngrId = PERIPH\_GPT1, .pinMux = GPT\_PIN\_1A, \},
+6   \{.baseAddr = GPT1\_BASE, .intNum = INT\_TIMER1B, .powerMngrId = PERIPH\_GPT1, .pinMux = GPT\_PIN\_1B, \},
+7   \{.baseAddr = GPT2\_BASE, .intNum = INT\_TIMER2A, .powerMngrId = PERIPH\_GPT2, .pinMux = GPT\_PIN\_2A, \},
+8   \{.baseAddr = GPT2\_BASE, .intNum = INT\_TIMER2B, .powerMngrId = PERIPH\_GPT2, .pinMux = GPT\_PIN\_2B, \},
+9   \{.baseAddr = GPT3\_BASE, .intNum = INT\_TIMER3A, .powerMngrId = PERIPH\_GPT3, .pinMux = GPT\_PIN\_3A, \},
+10   \{.baseAddr = GPT3\_BASE, .intNum = INT\_TIMER3B, .powerMngrId = PERIPH\_GPT3, .pinMux = GPT\_PIN\_3B, \},
+11 \};
+\end{DoxyCode}
+ \index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object}  {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object}}\label{_g_p_timer_c_c26_x_x_8h_a98c0a6722f2d48af3b7c032235181bd1}
+
+
+G\+P\+Timer26\+X\+X Object. 
+
+These fields are used by the driver to store and modify G\+P\+Timer configuration during run-\/time. The application must not edit any member variables of this structure. Appplications should also not access member variables of this structure as backwards compatibility is not guaranteed. An example structure is shown below\+: 
+\begin{DoxyCode}
+1 // GPTimer objects, one per full-width timer (A+B) (Timer 0, Timer 1..)
+2 GPTimerCC26XX\_Object gptimerCC26XXObjects[CC2650\_GPTIMERCOUNT];
+\end{DoxyCode}
+ \index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Params@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Params}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Params@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Params}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Params}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Params}  {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Params}}\label{_g_p_timer_c_c26_x_x_8h_ad5264b3636e1d40a6cbd64cf150be32d}
+
+
+G\+P\+Timer\+C\+C26\+X\+X Parameters. 
+
+G\+P\+Timer parameters are used to with the \hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open()} call. Default values for these parameters are set using \hyperlink{_g_p_timer_c_c26_x_x_8h_a11e9f3ff24f5f075989f89d99e65e827}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Params\+\_\+init()}.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a11e9f3ff24f5f075989f89d99e65e827}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Params\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Enumeration Type Documentation}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Width@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Width}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Width@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Width}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Width}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Width}}\label{_g_p_timer_c_c26_x_x_8h_a37f7594eb4084eff43d5b80bb6418ec7}
+
+
+Definitions for specifying the G\+P\+Timer configuration (width) 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{G\+P\+T\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+32\+B\+I\+T@{G\+P\+T\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+32\+B\+I\+T}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+T\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+32\+B\+I\+T@{G\+P\+T\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+32\+B\+I\+T}}\item[{\em 
+G\+P\+T\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+32\+B\+I\+T\label{_g_p_timer_c_c26_x_x_8h_a37f7594eb4084eff43d5b80bb6418ec7afbeda4c45001e3d32d50f576d6259016}
+}]\index{G\+P\+T\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+16\+B\+I\+T@{G\+P\+T\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+16\+B\+I\+T}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+T\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+16\+B\+I\+T@{G\+P\+T\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+16\+B\+I\+T}}\item[{\em 
+G\+P\+T\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+16\+B\+I\+T\label{_g_p_timer_c_c26_x_x_8h_a37f7594eb4084eff43d5b80bb6418ec7a2e5a3c43a8c62eeace6b38800d39392f}
+}]\end{description}
+\end{Desc}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Mode@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Mode}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Mode@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Mode}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Mode}}\label{_g_p_timer_c_c26_x_x_8h_ac3f0539fd948c59b31df04dff5b7024c}
+
+
+Definitions for supported G\+P\+Timer modes. Driver code assumes only modes using prescaler as timer extension in 16-\/bit configuration are used. Therefore new modes must not be added to the below description without also updating driver. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+O\+N\+E\+S\+H\+O\+T\+\_\+\+U\+P@{G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+O\+N\+E\+S\+H\+O\+T\+\_\+\+U\+P}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+O\+N\+E\+S\+H\+O\+T\+\_\+\+U\+P@{G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+O\+N\+E\+S\+H\+O\+T\+\_\+\+U\+P}}\item[{\em 
+G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+O\+N\+E\+S\+H\+O\+T\+\_\+\+U\+P\label{_g_p_timer_c_c26_x_x_8h_ac3f0539fd948c59b31df04dff5b7024ca945157a7df9978aef69f2bc5d08328a5}
+}]\index{G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+P\+E\+R\+I\+O\+D\+I\+C\+\_\+\+U\+P@{G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+P\+E\+R\+I\+O\+D\+I\+C\+\_\+\+U\+P}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+P\+E\+R\+I\+O\+D\+I\+C\+\_\+\+U\+P@{G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+P\+E\+R\+I\+O\+D\+I\+C\+\_\+\+U\+P}}\item[{\em 
+G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+P\+E\+R\+I\+O\+D\+I\+C\+\_\+\+U\+P\label{_g_p_timer_c_c26_x_x_8h_ac3f0539fd948c59b31df04dff5b7024ca0c73c880888fc8da201a44bb87980578}
+}]\index{G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+E\+D\+G\+E\+\_\+\+C\+O\+U\+N\+T\+\_\+\+U\+P@{G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+E\+D\+G\+E\+\_\+\+C\+O\+U\+N\+T\+\_\+\+U\+P}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+E\+D\+G\+E\+\_\+\+C\+O\+U\+N\+T\+\_\+\+U\+P@{G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+E\+D\+G\+E\+\_\+\+C\+O\+U\+N\+T\+\_\+\+U\+P}}\item[{\em 
+G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+E\+D\+G\+E\+\_\+\+C\+O\+U\+N\+T\+\_\+\+U\+P\label{_g_p_timer_c_c26_x_x_8h_ac3f0539fd948c59b31df04dff5b7024ca8336182ae5bd6521222c07d159b22459}
+}]\index{G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+E\+D\+G\+E\+\_\+\+T\+I\+M\+E\+\_\+\+U\+P@{G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+E\+D\+G\+E\+\_\+\+T\+I\+M\+E\+\_\+\+U\+P}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+E\+D\+G\+E\+\_\+\+T\+I\+M\+E\+\_\+\+U\+P@{G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+E\+D\+G\+E\+\_\+\+T\+I\+M\+E\+\_\+\+U\+P}}\item[{\em 
+G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+E\+D\+G\+E\+\_\+\+T\+I\+M\+E\+\_\+\+U\+P\label{_g_p_timer_c_c26_x_x_8h_ac3f0539fd948c59b31df04dff5b7024ca3d1702ae14a42f1af112fb88b7fd7c77}
+}]\index{G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+P\+W\+M@{G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+P\+W\+M}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+P\+W\+M@{G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+P\+W\+M}}\item[{\em 
+G\+P\+T\+\_\+\+M\+O\+D\+E\+\_\+\+P\+W\+M\label{_g_p_timer_c_c26_x_x_8h_ac3f0539fd948c59b31df04dff5b7024ca5d09320529435b9b021abd37d4dac117}
+}]\end{description}
+\end{Desc}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Interrupt@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Interrupt}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Interrupt@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Interrupt}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Interrupt}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Interrupt}}\label{_g_p_timer_c_c26_x_x_8h_a1e0397cdf2412358dfdf0eb0df40db92}
+
+
+Definitions for supported G\+P\+Timer interrupts. G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Int\+Mask arguments should be a bit vector containing these definitions. See description in Technical Reference. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{G\+P\+T\+\_\+\+I\+N\+T\+\_\+\+T\+I\+M\+E\+O\+U\+T@{G\+P\+T\+\_\+\+I\+N\+T\+\_\+\+T\+I\+M\+E\+O\+U\+T}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+T\+\_\+\+I\+N\+T\+\_\+\+T\+I\+M\+E\+O\+U\+T@{G\+P\+T\+\_\+\+I\+N\+T\+\_\+\+T\+I\+M\+E\+O\+U\+T}}\item[{\em 
+G\+P\+T\+\_\+\+I\+N\+T\+\_\+\+T\+I\+M\+E\+O\+U\+T\label{_g_p_timer_c_c26_x_x_8h_a1e0397cdf2412358dfdf0eb0df40db92a6c6f5236dcbe5f37289a4a513451851e}
+}]\index{G\+P\+T\+\_\+\+I\+N\+T\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+M\+A\+T\+C\+H@{G\+P\+T\+\_\+\+I\+N\+T\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+M\+A\+T\+C\+H}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+T\+\_\+\+I\+N\+T\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+M\+A\+T\+C\+H@{G\+P\+T\+\_\+\+I\+N\+T\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+M\+A\+T\+C\+H}}\item[{\em 
+G\+P\+T\+\_\+\+I\+N\+T\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+M\+A\+T\+C\+H\label{_g_p_timer_c_c26_x_x_8h_a1e0397cdf2412358dfdf0eb0df40db92a438a33e76043ddb51f1c9e93820a8040}
+}]\index{G\+P\+T\+\_\+\+I\+N\+T\+\_\+\+C\+A\+P\+T\+U\+R\+E@{G\+P\+T\+\_\+\+I\+N\+T\+\_\+\+C\+A\+P\+T\+U\+R\+E}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+T\+\_\+\+I\+N\+T\+\_\+\+C\+A\+P\+T\+U\+R\+E@{G\+P\+T\+\_\+\+I\+N\+T\+\_\+\+C\+A\+P\+T\+U\+R\+E}}\item[{\em 
+G\+P\+T\+\_\+\+I\+N\+T\+\_\+\+C\+A\+P\+T\+U\+R\+E\label{_g_p_timer_c_c26_x_x_8h_a1e0397cdf2412358dfdf0eb0df40db92ae3e86fdcf14f9ff34c92aaf953b159d9}
+}]\index{G\+P\+T\+\_\+\+I\+N\+T\+\_\+\+M\+A\+T\+C\+H@{G\+P\+T\+\_\+\+I\+N\+T\+\_\+\+M\+A\+T\+C\+H}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+T\+\_\+\+I\+N\+T\+\_\+\+M\+A\+T\+C\+H@{G\+P\+T\+\_\+\+I\+N\+T\+\_\+\+M\+A\+T\+C\+H}}\item[{\em 
+G\+P\+T\+\_\+\+I\+N\+T\+\_\+\+M\+A\+T\+C\+H\label{_g_p_timer_c_c26_x_x_8h_a1e0397cdf2412358dfdf0eb0df40db92a87f843ea54618ca92890d4db7f38f242}
+}]\end{description}
+\end{Desc}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Part@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Part}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Part@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Part}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Part}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Part}}\label{_g_p_timer_c_c26_x_x_8h_aff5462fa33c306f2c8bd29284fd898b0}
+
+
+Definitions for G\+P\+Timer parts (Timer A / Timer B). Used in G\+P\+Timer configuration structure G\+P\+Timer\+C\+C26\+X\+X\+\_\+config to configure the corresponding timer unit. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{G\+P\+T\+\_\+\+A@{G\+P\+T\+\_\+\+A}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+T\+\_\+\+A@{G\+P\+T\+\_\+\+A}}\item[{\em 
+G\+P\+T\+\_\+\+A\label{_g_p_timer_c_c26_x_x_8h_aff5462fa33c306f2c8bd29284fd898b0a0630f8ce6004469fe81ebbc804e7ac2a}
+}]\index{G\+P\+T\+\_\+\+B@{G\+P\+T\+\_\+\+B}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+T\+\_\+\+B@{G\+P\+T\+\_\+\+B}}\item[{\em 
+G\+P\+T\+\_\+\+B\label{_g_p_timer_c_c26_x_x_8h_aff5462fa33c306f2c8bd29284fd898b0a09aae74a0a9878654fa701a70b76387b}
+}]\index{G\+P\+T\+\_\+\+P\+A\+R\+T\+S\+\_\+\+C\+O\+U\+N\+T@{G\+P\+T\+\_\+\+P\+A\+R\+T\+S\+\_\+\+C\+O\+U\+N\+T}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+T\+\_\+\+P\+A\+R\+T\+S\+\_\+\+C\+O\+U\+N\+T@{G\+P\+T\+\_\+\+P\+A\+R\+T\+S\+\_\+\+C\+O\+U\+N\+T}}\item[{\em 
+G\+P\+T\+\_\+\+P\+A\+R\+T\+S\+\_\+\+C\+O\+U\+N\+T\label{_g_p_timer_c_c26_x_x_8h_aff5462fa33c306f2c8bd29284fd898b0a492b59ed96b96d5bddcdee40e78712b0}
+}]\end{description}
+\end{Desc}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Pin\+Mux@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Pin\+Mux}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Pin\+Mux@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Pin\+Mux}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Pin\+Mux}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Pin\+Mux}}\label{_g_p_timer_c_c26_x_x_8h_ab4a2e82c659e0ea1fa2ae7a852298359}
+
+
+Definitions for input / output ports in I\+O controller to connect G\+P\+Timer to a pin. Used in gptimer\+C\+C26xx\+H\+W\+Attrs for static timer configuration P\+I\+N driver is used to mux a pin to the timer. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_i_n_c_c26_x_x_8h_ac8cbb649db80dd03d8e8a487aef43294}{P\+I\+N\+C\+C26\+X\+X\+\_\+set\+Mux} 
+
+G\+P\+Timer\+C\+C26\+X\+X\+\_\+get\+Pin\+Mux 
+\end{DoxySeeAlso}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{G\+P\+T\+\_\+\+P\+I\+N\+\_\+0\+A@{G\+P\+T\+\_\+\+P\+I\+N\+\_\+0\+A}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+T\+\_\+\+P\+I\+N\+\_\+0\+A@{G\+P\+T\+\_\+\+P\+I\+N\+\_\+0\+A}}\item[{\em 
+G\+P\+T\+\_\+\+P\+I\+N\+\_\+0\+A\label{_g_p_timer_c_c26_x_x_8h_ab4a2e82c659e0ea1fa2ae7a852298359a46af9b3278d2116fd4862c7fe19624b7}
+}]\index{G\+P\+T\+\_\+\+P\+I\+N\+\_\+0\+B@{G\+P\+T\+\_\+\+P\+I\+N\+\_\+0\+B}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+T\+\_\+\+P\+I\+N\+\_\+0\+B@{G\+P\+T\+\_\+\+P\+I\+N\+\_\+0\+B}}\item[{\em 
+G\+P\+T\+\_\+\+P\+I\+N\+\_\+0\+B\label{_g_p_timer_c_c26_x_x_8h_ab4a2e82c659e0ea1fa2ae7a852298359a1e7ba339de898f1572f21424ce125f2d}
+}]\index{G\+P\+T\+\_\+\+P\+I\+N\+\_\+1\+A@{G\+P\+T\+\_\+\+P\+I\+N\+\_\+1\+A}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+T\+\_\+\+P\+I\+N\+\_\+1\+A@{G\+P\+T\+\_\+\+P\+I\+N\+\_\+1\+A}}\item[{\em 
+G\+P\+T\+\_\+\+P\+I\+N\+\_\+1\+A\label{_g_p_timer_c_c26_x_x_8h_ab4a2e82c659e0ea1fa2ae7a852298359acc7f9d714b4eb87595ebd5a8fdd6ed2f}
+}]\index{G\+P\+T\+\_\+\+P\+I\+N\+\_\+1\+B@{G\+P\+T\+\_\+\+P\+I\+N\+\_\+1\+B}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+T\+\_\+\+P\+I\+N\+\_\+1\+B@{G\+P\+T\+\_\+\+P\+I\+N\+\_\+1\+B}}\item[{\em 
+G\+P\+T\+\_\+\+P\+I\+N\+\_\+1\+B\label{_g_p_timer_c_c26_x_x_8h_ab4a2e82c659e0ea1fa2ae7a852298359a69db29a9a9029d1fcfabfbf20ba26ee4}
+}]\index{G\+P\+T\+\_\+\+P\+I\+N\+\_\+2\+A@{G\+P\+T\+\_\+\+P\+I\+N\+\_\+2\+A}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+T\+\_\+\+P\+I\+N\+\_\+2\+A@{G\+P\+T\+\_\+\+P\+I\+N\+\_\+2\+A}}\item[{\em 
+G\+P\+T\+\_\+\+P\+I\+N\+\_\+2\+A\label{_g_p_timer_c_c26_x_x_8h_ab4a2e82c659e0ea1fa2ae7a852298359a48b2ab2ad9e83e67d94421adb06f4aa1}
+}]\index{G\+P\+T\+\_\+\+P\+I\+N\+\_\+2\+B@{G\+P\+T\+\_\+\+P\+I\+N\+\_\+2\+B}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+T\+\_\+\+P\+I\+N\+\_\+2\+B@{G\+P\+T\+\_\+\+P\+I\+N\+\_\+2\+B}}\item[{\em 
+G\+P\+T\+\_\+\+P\+I\+N\+\_\+2\+B\label{_g_p_timer_c_c26_x_x_8h_ab4a2e82c659e0ea1fa2ae7a852298359a3e1fd803b55127a98c4709cc9e811e70}
+}]\index{G\+P\+T\+\_\+\+P\+I\+N\+\_\+3\+A@{G\+P\+T\+\_\+\+P\+I\+N\+\_\+3\+A}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+T\+\_\+\+P\+I\+N\+\_\+3\+A@{G\+P\+T\+\_\+\+P\+I\+N\+\_\+3\+A}}\item[{\em 
+G\+P\+T\+\_\+\+P\+I\+N\+\_\+3\+A\label{_g_p_timer_c_c26_x_x_8h_ab4a2e82c659e0ea1fa2ae7a852298359a4b93799cba930f4b538d0f0b3bfee4be}
+}]\index{G\+P\+T\+\_\+\+P\+I\+N\+\_\+3\+B@{G\+P\+T\+\_\+\+P\+I\+N\+\_\+3\+B}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+T\+\_\+\+P\+I\+N\+\_\+3\+B@{G\+P\+T\+\_\+\+P\+I\+N\+\_\+3\+B}}\item[{\em 
+G\+P\+T\+\_\+\+P\+I\+N\+\_\+3\+B\label{_g_p_timer_c_c26_x_x_8h_ab4a2e82c659e0ea1fa2ae7a852298359aca82a1cd0f9e891472b4f5b09998a597}
+}]\end{description}
+\end{Desc}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Debug\+Mode@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Debug\+Mode}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Debug\+Mode@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Debug\+Mode}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Debug\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Debug\+Mode}}\label{_g_p_timer_c_c26_x_x_8h_ab4c80c79c9acaf8e482e8244adbae73e}
+
+
+Definitions for controlling timer debug stall mode. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+D\+E\+B\+U\+G\+\_\+\+S\+T\+A\+L\+L\+\_\+\+O\+F\+F@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+D\+E\+B\+U\+G\+\_\+\+S\+T\+A\+L\+L\+\_\+\+O\+F\+F}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+D\+E\+B\+U\+G\+\_\+\+S\+T\+A\+L\+L\+\_\+\+O\+F\+F@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+D\+E\+B\+U\+G\+\_\+\+S\+T\+A\+L\+L\+\_\+\+O\+F\+F}}\item[{\em 
+G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+D\+E\+B\+U\+G\+\_\+\+S\+T\+A\+L\+L\+\_\+\+O\+F\+F\label{_g_p_timer_c_c26_x_x_8h_ab4c80c79c9acaf8e482e8244adbae73ea1aca5e7c45ce80046cc86c309b1500b3}
+}]\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+D\+E\+B\+U\+G\+\_\+\+S\+T\+A\+L\+L\+\_\+\+O\+N@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+D\+E\+B\+U\+G\+\_\+\+S\+T\+A\+L\+L\+\_\+\+O\+N}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+D\+E\+B\+U\+G\+\_\+\+S\+T\+A\+L\+L\+\_\+\+O\+N@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+D\+E\+B\+U\+G\+\_\+\+S\+T\+A\+L\+L\+\_\+\+O\+N}}\item[{\em 
+G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+D\+E\+B\+U\+G\+\_\+\+S\+T\+A\+L\+L\+\_\+\+O\+N\label{_g_p_timer_c_c26_x_x_8h_ab4c80c79c9acaf8e482e8244adbae73ea78ecad7414438f969450881393850b8c}
+}]\end{description}
+\end{Desc}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Edge@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Edge}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Edge@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Edge}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Edge}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Edge}}\label{_g_p_timer_c_c26_x_x_8h_ac72f25419727329702ec162a2b6b9151}
+
+
+Definitions for controlling edges used for timer capture. Used in G\+P\+Timer edge-\/time and edge-\/count modes. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+P\+O\+S\+\_\+\+E\+D\+G\+E@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+P\+O\+S\+\_\+\+E\+D\+G\+E}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+P\+O\+S\+\_\+\+E\+D\+G\+E@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+P\+O\+S\+\_\+\+E\+D\+G\+E}}\item[{\em 
+G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+P\+O\+S\+\_\+\+E\+D\+G\+E\label{_g_p_timer_c_c26_x_x_8h_ac72f25419727329702ec162a2b6b9151a0dda532d331ac235bead20fad3975f4f}
+}]\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+N\+E\+G\+\_\+\+E\+D\+G\+E@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+N\+E\+G\+\_\+\+E\+D\+G\+E}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+N\+E\+G\+\_\+\+E\+D\+G\+E@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+N\+E\+G\+\_\+\+E\+D\+G\+E}}\item[{\em 
+G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+N\+E\+G\+\_\+\+E\+D\+G\+E\label{_g_p_timer_c_c26_x_x_8h_ac72f25419727329702ec162a2b6b9151a2189f990a1c45892bdfcb31855d7d98f}
+}]\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+B\+O\+T\+H\+\_\+\+E\+D\+G\+E\+S@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+B\+O\+T\+H\+\_\+\+E\+D\+G\+E\+S}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+B\+O\+T\+H\+\_\+\+E\+D\+G\+E\+S@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+B\+O\+T\+H\+\_\+\+E\+D\+G\+E\+S}}\item[{\em 
+G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+B\+O\+T\+H\+\_\+\+E\+D\+G\+E\+S\label{_g_p_timer_c_c26_x_x_8h_ac72f25419727329702ec162a2b6b9151a2219c0e15065a692a80b4049036cd20a}
+}]\end{description}
+\end{Desc}
+
+
+\subsubsection{Function Documentation}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Params\+\_\+init@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Params\+\_\+init}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Params\+\_\+init@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Params\+\_\+init}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Params\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Params\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_g_p_timer_c_c26_x_x_8h_a11e9f3ff24f5f075989f89d99e65e827}
+
+
+Function to initialize the \hyperlink{struct_g_p_timer_c_c26_x_x___params}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Params} struct to its default values. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & An pointer to \hyperlink{struct_g_p_timer_c_c26_x_x___params}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Params} structure for initialization\\
+\hline
+\end{DoxyParams}
+Defaults values are\+:
+\begin{DoxyItemize}
+\item 32-\/bit configuration
+\item Periodic mode counting upwards
+\item Debug stall mode disabled 
+\end{DoxyItemize}\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+open@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle} G\+P\+Timer\+C\+C26\+X\+X\+\_\+open (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{index, }
+\item[{const {\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}
+
+
+This function opens a given G\+P\+Timer peripheral. Will set dependency on timer and configure it into specified mode. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & Logical peripheral number for the G\+P\+Timer indexed into the G\+P\+Timer\+C\+C26\+X\+X\+\_\+config table\\
+\hline
+{\em params} & Pointer to a parameter block. If N\+U\+L\+L, it will use default values.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle on success or a N\+U\+L\+L on an error or if it has been opened already. If N\+U\+L\+L is returned, further G\+P\+Timer\+C\+C26\+X\+X A\+P\+I calls will result in undefined behaviour.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a0a148f2232f5bb4c59015de965c82d43}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+close()} 
+\end{DoxySeeAlso}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+close@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+close}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+close@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+close}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}void G\+P\+Timer\+C\+C26\+X\+X\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_g_p_timer_c_c26_x_x_8h_a0a148f2232f5bb4c59015de965c82d43}
+
+
+Function to close a G\+P\+Timer peripheral specified by the G\+P\+Timer handle. Closing timer will releae dependency on timer and clear configuration. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open()} has to be called first. 
+
+\hyperlink{_g_p_timer_c_c26_x_x_8h_aebdbd7f83c3824555e4abb7399802765}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+stop()} should to be called first if G\+P\+Timer is started
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A G\+P\+Timer\+C\+C26\+X\+X handle returned from \hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open()}\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open()} 
+
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a869213ede8949245112fd7ca9c9ebdaa}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+start()} 
+
+\hyperlink{_g_p_timer_c_c26_x_x_8h_aebdbd7f83c3824555e4abb7399802765}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+stop()} 
+\end{DoxySeeAlso}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+start@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+start}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+start@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+start}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+start}]{\setlength{\rightskip}{0pt plus 5cm}void G\+P\+Timer\+C\+C26\+X\+X\+\_\+start (
+\begin{DoxyParamCaption}
+\item[{{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_g_p_timer_c_c26_x_x_8h_a869213ede8949245112fd7ca9c9ebdaa}
+
+
+Function to start the specified G\+P\+Timer with current settings. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open()} has to be called first successfully
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A G\+P\+Timer\+C\+C26\+X\+X handle returned from \hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open()}\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open()} 
+
+\hyperlink{_g_p_timer_c_c26_x_x_8h_aebdbd7f83c3824555e4abb7399802765}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+stop()} 
+\end{DoxySeeAlso}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+stop@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+stop}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+stop@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+stop}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+stop}]{\setlength{\rightskip}{0pt plus 5cm}void G\+P\+Timer\+C\+C26\+X\+X\+\_\+stop (
+\begin{DoxyParamCaption}
+\item[{{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_g_p_timer_c_c26_x_x_8h_aebdbd7f83c3824555e4abb7399802765}
+
+
+Function to stop the specified G\+P\+Timer. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open()} has to be called first successfully
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A G\+P\+Timer\+C\+C26\+X\+X handle returned from \hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open()}\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open()} 
+
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a869213ede8949245112fd7ca9c9ebdaa}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+start()} 
+\end{DoxySeeAlso}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+set\+Load\+Value@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+set\+Load\+Value}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+set\+Load\+Value@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+set\+Load\+Value}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+set\+Load\+Value}]{\setlength{\rightskip}{0pt plus 5cm}void G\+P\+Timer\+C\+C26\+X\+X\+\_\+set\+Load\+Value (
+\begin{DoxyParamCaption}
+\item[{{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle, }
+\item[{{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Value}}]{load\+Value}
+\end{DoxyParamCaption}
+)}\label{_g_p_timer_c_c26_x_x_8h_aa365d9e1d6a1b324090510f2748db771}
+
+
+Function to set load value of the specified G\+P\+Timer. Function can be called while G\+P\+Timer is running. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open()} has to be called first successfully
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A G\+P\+Timer\+C\+C26\+X\+X handle returned from G\+P\+Timer\+C\+C26\+X\+X\+\_\+open \\
+\hline
+{\em load\+Value} & Load value to set the G\+P\+Timer to.\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+set\+Match\+Value@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+set\+Match\+Value}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+set\+Match\+Value@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+set\+Match\+Value}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+set\+Match\+Value}]{\setlength{\rightskip}{0pt plus 5cm}void G\+P\+Timer\+C\+C26\+X\+X\+\_\+set\+Match\+Value (
+\begin{DoxyParamCaption}
+\item[{{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle, }
+\item[{{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Value}}]{match\+Value}
+\end{DoxyParamCaption}
+)}\label{_g_p_timer_c_c26_x_x_8h_a3f83bdcc8482297952f6e08ccadd0e11}
+
+
+Function to set match value of the specified G\+P\+Timer. Function can be called while G\+P\+Timer is running. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open()} has to be called first successfully
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A G\+P\+Timer\+C\+C26\+X\+X handle returned from G\+P\+Timer\+C\+C26\+X\+X\+\_\+open \\
+\hline
+{\em match\+Value} & Match value to set the G\+P\+Timer to.\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+set\+Capture\+Edge@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+set\+Capture\+Edge}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+set\+Capture\+Edge@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+set\+Capture\+Edge}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+set\+Capture\+Edge}]{\setlength{\rightskip}{0pt plus 5cm}void G\+P\+Timer\+C\+C26\+X\+X\+\_\+set\+Capture\+Edge (
+\begin{DoxyParamCaption}
+\item[{{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle, }
+\item[{{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Edge}}]{edge}
+\end{DoxyParamCaption}
+)}\label{_g_p_timer_c_c26_x_x_8h_ae6a091f0962d33a7897ae61b501aedc4}
+
+
+Function to set which input edge the G\+P\+Timer capture should use. Applies to edge-\/count and edge-\/time modes Function can be called while G\+P\+Timer is running. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open()} has to be called first successfully
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A G\+P\+Timer\+C\+C26\+X\+X handle returned from G\+P\+Timer\+C\+C26\+X\+X\+\_\+open \\
+\hline
+{\em edge} & The edge that should trigger a capture\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+get\+Free\+Run\+Value@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+get\+Free\+Run\+Value}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+get\+Free\+Run\+Value@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+get\+Free\+Run\+Value}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+get\+Free\+Run\+Value}]{\setlength{\rightskip}{0pt plus 5cm}{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Value} G\+P\+Timer\+C\+C26\+X\+X\+\_\+get\+Free\+Run\+Value (
+\begin{DoxyParamCaption}
+\item[{{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_g_p_timer_c_c26_x_x_8h_af4832251ebc2e81a952bbc1c39d2502e}
+
+
+Function to retrieve the current free-\/running value of timer. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open()} has to be called first successfully
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A G\+P\+Timer\+C\+C26\+X\+X handle returned from G\+P\+Timer\+C\+C26\+X\+X\+\_\+open\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Current free-\/running timer value for all modes
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+get\+Value@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+get\+Value}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+get\+Value@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+get\+Value}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+get\+Value}]{\setlength{\rightskip}{0pt plus 5cm}{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Value} G\+P\+Timer\+C\+C26\+X\+X\+\_\+get\+Value (
+\begin{DoxyParamCaption}
+\item[{{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_g_p_timer_c_c26_x_x_8h_a553ef86139c25234964c81783aa2cd94}
+
+
+Function to retrieve the current value of timer This returns the value of the timer in all modes except for input edge count and input edge time mode. In edge count mode, this register contains the number of edges that have occurred. In input edge time, this register contains the timer value at which the last edge event took place. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open()} has to be called first successfully
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A G\+P\+Timer\+C\+C26\+X\+X handle returned from G\+P\+Timer\+C\+C26\+X\+X\+\_\+open\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Current free-\/running timer value for all modes
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+register\+Interrupt@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+register\+Interrupt}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+register\+Interrupt@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+register\+Interrupt}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+register\+Interrupt}]{\setlength{\rightskip}{0pt plus 5cm}void G\+P\+Timer\+C\+C26\+X\+X\+\_\+register\+Interrupt (
+\begin{DoxyParamCaption}
+\item[{{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle, }
+\item[{{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Hwi\+Fxn}}]{callback, }
+\item[{{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Int\+Mask}}]{int\+Mask}
+\end{DoxyParamCaption}
+)}\label{_g_p_timer_c_c26_x_x_8h_a4032d544f2b79ae1a999a4faa5ee0884}
+
+
+Function to register a C\+P\+U interrupt for a given timer handle and enable a set of timer interrupt sources. The interrupt to the C\+P\+U will be a bitwise O\+R of the enabled interrupt sources. When an interrupt occurs, the driver will clear the interrupt source and call the application provided callback. The callback is executed in H\+W interrupt context and processing in callback should be minimized. 
+
+Interrupt sources can also be individually disabled and enabled by using G\+P\+Timer\+C\+C26\+X\+X\+\_\+enable\+Interrupt / G\+P\+Timer\+C\+C26\+X\+X\+\_\+disable\+Interrupt.
+
+This function should only be called once for a handle after opening the timer. If closing a G\+P\+Timer, interrupts for the timer should be unregistered first using G\+P\+Timer\+C\+C26\+X\+X\+\_\+unregister\+Interrupt.
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open()} has to be called first successfully
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A G\+P\+Timer\+C\+C26\+X\+X handle returned from G\+P\+Timer\+C\+C26\+X\+X\+\_\+open \\
+\hline
+{\em callback} & An application provided callback function \\
+\hline
+{\em int\+Mask} & A bit vector mask containing values from G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Interrupt\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open} 
+
+\hyperlink{_g_p_timer_c_c26_x_x_8h_af08557caa1e95c615a17428521d22d9d}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+enable\+Interrupt} 
+
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a8aca62c518c9ff0347ec09f464b88b26}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+disable\+Interrupt} 
+\end{DoxySeeAlso}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+unregister\+Interrupt@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+unregister\+Interrupt}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+unregister\+Interrupt@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+unregister\+Interrupt}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+unregister\+Interrupt}]{\setlength{\rightskip}{0pt plus 5cm}void G\+P\+Timer\+C\+C26\+X\+X\+\_\+unregister\+Interrupt (
+\begin{DoxyParamCaption}
+\item[{{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_g_p_timer_c_c26_x_x_8h_adf0a8716a4197bba10d67322c3dfe5ac}
+
+
+Function to disable a C\+P\+U interrupt for a given timer handle and disable all interrupt sources for corresponding G\+P\+Timer unit. 
+
+This function should only be called once for a handle after opening the timer and registering the interrupt.
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open()} has to be called first successfully 
+
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a4032d544f2b79ae1a999a4faa5ee0884}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+register\+Interrupt()} has to be called first
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A G\+P\+Timer\+C\+C26\+X\+X handle returned from G\+P\+Timer\+C\+C26\+X\+X\+\_\+open\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open} 
+
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a4032d544f2b79ae1a999a4faa5ee0884}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+register\+Interrupt} 
+\end{DoxySeeAlso}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+enable\+Interrupt@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+enable\+Interrupt}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+enable\+Interrupt@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+enable\+Interrupt}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+enable\+Interrupt}]{\setlength{\rightskip}{0pt plus 5cm}void G\+P\+Timer\+C\+C26\+X\+X\+\_\+enable\+Interrupt (
+\begin{DoxyParamCaption}
+\item[{{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle, }
+\item[{{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Int\+Mask}}]{interrupt\+Mask}
+\end{DoxyParamCaption}
+)}\label{_g_p_timer_c_c26_x_x_8h_af08557caa1e95c615a17428521d22d9d}
+
+
+Function to enable a set of G\+P\+Timer interrupt sources. The interrupt to the C\+P\+U must be enabled using G\+P\+Timer\+C\+C26\+X\+X\+\_\+register\+Interrupt. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open()} has to be called first successfully
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A G\+P\+Timer\+C\+C26\+X\+X handle returned from G\+P\+Timer\+C\+C26\+X\+X\+\_\+open \\
+\hline
+{\em interrupt\+Mask} & A bit vector mask containing values from G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Interrupt\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open} 
+
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a8aca62c518c9ff0347ec09f464b88b26}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+disable\+Interrupt} 
+\end{DoxySeeAlso}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+disable\+Interrupt@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+disable\+Interrupt}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+disable\+Interrupt@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+disable\+Interrupt}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+disable\+Interrupt}]{\setlength{\rightskip}{0pt plus 5cm}void G\+P\+Timer\+C\+C26\+X\+X\+\_\+disable\+Interrupt (
+\begin{DoxyParamCaption}
+\item[{{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle, }
+\item[{{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Int\+Mask}}]{interrupt\+Mask}
+\end{DoxyParamCaption}
+)}\label{_g_p_timer_c_c26_x_x_8h_a8aca62c518c9ff0347ec09f464b88b26}
+
+
+Function to disable a set of G\+P\+Timer interrupt sources. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open()} has to be called first successfully
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A G\+P\+Timer\+C\+C26\+X\+X handle returned from G\+P\+Timer\+C\+C26\+X\+X\+\_\+open \\
+\hline
+{\em interrupt\+Mask} & A bit vector mask containing values from G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Interrupt\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open} 
+
+\hyperlink{_g_p_timer_c_c26_x_x_8h_af08557caa1e95c615a17428521d22d9d}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+enable\+Interrupt} 
+\end{DoxySeeAlso}
+\index{G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+configure\+Debug\+Stall@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+configure\+Debug\+Stall}}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+configure\+Debug\+Stall@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+configure\+Debug\+Stall}!G\+P\+Timer\+C\+C26\+X\+X.\+h@{G\+P\+Timer\+C\+C26\+X\+X.\+h}}
+\paragraph[{G\+P\+Timer\+C\+C26\+X\+X\+\_\+configure\+Debug\+Stall}]{\setlength{\rightskip}{0pt plus 5cm}void G\+P\+Timer\+C\+C26\+X\+X\+\_\+configure\+Debug\+Stall (
+\begin{DoxyParamCaption}
+\item[{{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle, }
+\item[{{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Debug\+Mode}}]{mode}
+\end{DoxyParamCaption}
+)}\label{_g_p_timer_c_c26_x_x_8h_a5a8bdc7643305d21dcfcd567d215b7f8}
+
+
+Function to control timer debug stall mode. When enabled, the timer will stop when the debugger halts the C\+P\+U. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open()} has to be called first successfully
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A G\+P\+Timer\+C\+C26\+X\+X handle returned from G\+P\+Timer\+C\+C26\+X\+X\+\_\+open \\
+\hline
+{\em mode} & Configuration for debug stall mode (enable/disable)\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a30f6c028f0abea0b35c3be3d1609ea9b}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+open} 
+\end{DoxySeeAlso}

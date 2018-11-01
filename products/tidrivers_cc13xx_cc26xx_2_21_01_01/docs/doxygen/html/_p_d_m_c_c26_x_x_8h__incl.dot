@@ -1,0 +1,34 @@
+digraph "PDMCC26XX.h"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="PDMCC26XX.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="ti/sysbios/knl/Semaphore.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="ti/drivers/PIN.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_p_i_n_8h.html",tooltip="Generic PIN & GPIO driver. "];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="xdc/std.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node3 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="stdint.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node3 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="stdbool.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node3 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="stddef.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node1 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="ti/sysbios/family/arm\l/m3/Hwi.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node1 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="ti/drivers/Power.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_power_8h.html",tooltip="Power manager interface. "];
+  Node9 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="ti/drivers/utils/List.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_list_8h.html",tooltip="Linked List interface for use in drivers. "];
+  Node10 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="ti/drivers/power/PowerCC26XX.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_power_c_c26_x_x_8h.html",tooltip="Power manager interface for CC26XX. "];
+  Node11 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="ti/sysbios/knl/Clock.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node11 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

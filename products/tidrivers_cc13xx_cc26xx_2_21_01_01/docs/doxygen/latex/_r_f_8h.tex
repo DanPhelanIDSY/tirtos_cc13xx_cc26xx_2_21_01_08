@@ -1,0 +1,1239 @@
+\subsection{R\+F.\+h File Reference}
+\label{_r_f_8h}\index{R\+F.\+h@{R\+F.\+h}}
+
+
+\subsubsection{Detailed Description}
+R\+F driver for the C\+C26/13xx family. 
+
+============================================================================
+
+\subsubsection*{Driver include}
+
+The R\+F header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/rf/RF.h>}
+\end{DoxyCode}
+
+
+\subsubsection*{Overview}
+
+The R\+F driver allows clients (applications or other drivers) to control the radio of the device. The radio interface can either be blocking or non-\/blocking. Furthermore, the R\+F driver manages the R\+F power domain and tries to power down when the radio is no longer needed. It also allows clients to setup callbacks when radio operations are completed and as such allows for fully interrupt based radio software. Callback is executed in software interrupt (S\+W\+I) context, therefore users should only executed minimum codes inside the callback. When integrated with applications, it is recommended users should set the R\+F software interrupt (S\+W\+I) to the highest priority in order to ensure proper operaton of the R\+F driver.
+
+The R\+F driver can be used in either single mode only or multi-\/mode (dual-\/mode). The same \hyperlink{_r_f_8h}{R\+F.\+h} is used for both modes. R\+F\+C\+C26\+X\+X\+\_\+multi\+Mode.\+c supports both single mode and multi-\/mode operation. R\+F\+C\+C26\+X\+X\+\_\+single\+Mode.\+c supports single mode operation only.
+
+\subsubsection*{Power Management}
+
+The driver sets R\+F Core power constraints (in the Power driver) when radio is required to keep the device out of standby. When the operation has finished, power constraints are released. The power state of the R\+F Core is solely controlled by the R\+F driver based on radio operation state. The following use-\/cases will power down the R\+F Core\+:
+
+
+\begin{DoxyEnumerate}
+\item n\+Inactivity\+Timeout in \hyperlink{struct_r_f___params}{R\+F\+\_\+\+Params} specifies the time R\+F Core will power down after completion of a radio command and no other commands pending in the command queue. The default is B\+I\+O\+S\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R which means infinite timeout and no power down after end of command. ~\newline
+
+\item Schedule (or post) a radio command using \hyperlink{_r_f_8h_a5e7f25943b5f3942bf4c09cb87f9aa76}{R\+F\+\_\+schedule\+Cmd()} or \hyperlink{_r_f_8h_a2b0ee444fcb74917df94eefea804ecbb}{R\+F\+\_\+post\+Cmd()} A\+P\+Is with the start\+Time sufficiently far in the future with start\+Trigger.\+trigger\+Type set to T\+R\+I\+G\+\_\+\+A\+B\+S\+T\+I\+M\+E. This will power down R\+F Core and automatically power up before the start\+Time to execute the scheduled command. ~\newline
+
+\item Force a power down using \hyperlink{_r_f_8h_a299ada7963c727a40466d7d1bb7296a3}{R\+F\+\_\+yield()} A\+P\+I. This will power down R\+F after all pending radio commands are complete. ~\newline
+
+\item \hyperlink{_r_f_8h_a9ff7e64561f7aa5526837521bceb5f88}{R\+F\+\_\+close()} A\+P\+I will power down the radio if all the radio access request from each client is done. ~\newline
+
+\end{DoxyEnumerate}
+
+Note the above three cases will execute power down independently. For example when n\+Inactivity\+Timeout is infinity, if a radio command is scheduled in sufficient future, the R\+F driver will power down and wake up at the scheduled start\+Time. Since R\+A\+T channels are part of the R\+F Core, they will not be available when the R\+F Core is off. The R\+F Driver maintains the sync between the R\+A\+T and R\+T\+C during power-\/up and power-\/down using the C\+M\+D\+\_\+\+S\+Y\+N\+C\+\_\+\+R\+A\+T\+\_\+\+S\+T\+A\+R\+T and C\+M\+D\+\_\+\+S\+Y\+N\+C\+\_\+\+R\+A\+T\+\_\+\+S\+T\+O\+P radio operations.
+
+\subsubsection*{Supported Functions}
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Generic A\+P\+I function }&{\bf Description  }\\\cline{1-2}
+\hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} &Open client connection to R\+F driver \\\cline{1-2}
+\hyperlink{_r_f_8h_a9ff7e64561f7aa5526837521bceb5f88}{R\+F\+\_\+close()} &Close client connection to R\+F driver \\\cline{1-2}
+\hyperlink{_r_f_8h_aedfdf0bdf0f64a071d50a6d78446fef4}{R\+F\+\_\+get\+Current\+Time()} &Return current radio timer value \\\cline{1-2}
+\hyperlink{_r_f_8h_a5e7f25943b5f3942bf4c09cb87f9aa76}{R\+F\+\_\+schedule\+Cmd()} &Schedule an R\+F operation to the command queue \\\cline{1-2}
+\hyperlink{_r_f_8h_a2b0ee444fcb74917df94eefea804ecbb}{R\+F\+\_\+post\+Cmd()} &Post an R\+F operation to the command queue \\\cline{1-2}
+\hyperlink{_r_f_8h_a91c1cb2508311f822acbc08ace568a83}{R\+F\+\_\+pend\+Cmd()} &Wait for posted command to complete \\\cline{1-2}
+\hyperlink{_r_f_8h_a248bebdd1d0bd6e0812cf18116987e54}{R\+F\+\_\+run\+Cmd()} &Runs synchronously a (chain of) R\+F operation(s) \\\cline{1-2}
+\hyperlink{_r_f_8h_ae3ff5c614f4a63cb4e79c90f9229149a}{R\+F\+\_\+flush\+Cmd()} &Abort previously submitted command, clear queue \\\cline{1-2}
+\hyperlink{_r_f_8h_a40a5506c05a11a3cd9d379cedad5b5d0}{R\+F\+\_\+request\+Access()} &Request access to radio resource \\\cline{1-2}
+\hyperlink{_r_f_8h_a299ada7963c727a40466d7d1bb7296a3}{R\+F\+\_\+yield()} &Signal that the radio will not be used for a while \\\cline{1-2}
+\hyperlink{_r_f_8h_aabe22ceae13a372be4ba135318aa849a}{R\+F\+\_\+cancel\+Cmd()} &Abort/stop/cancel single cmd in command queue \\\cline{1-2}
+\hyperlink{_r_f_8h_ac3fe0d39243fb6bbefe0216d958a6779}{R\+F\+\_\+get\+Rssi()} &Get rssi value \\\cline{1-2}
+\hyperlink{_r_f_8h_a6159b409f8d99954529a8ebf6f98cd85}{R\+F\+\_\+run\+Immediate\+Cmd()} &Send any immediate command \\\cline{1-2}
+\hyperlink{_r_f_8h_aafce617271300f2bee1a52ebda6d654e}{R\+F\+\_\+run\+Direct\+Cmd()} &Send any direct command \\\cline{1-2}
+\hyperlink{_r_f_8h_a4bd7985a3e0c5ad2b9f5e94aa945db63}{R\+F\+\_\+get\+Info()} &Get value for some R\+F driver parameters \\\cline{1-2}
+\hyperlink{_r_f_8h_a68013d7c8a5a0eed8add518b30679abe}{R\+F\+\_\+rat\+Capture()} &Run R\+A\+T capture command \\\cline{1-2}
+\hyperlink{_r_f_8h_a8e24e90ec802b1d85d517e2075a4d129}{R\+F\+\_\+rat\+Compare()} &Run R\+A\+T compare command \\\cline{1-2}
+\hyperlink{_r_f_8h_ad55cb257d42afee6a93016a37e7f9027}{R\+F\+\_\+rat\+Hw\+Output()} &Run R\+A\+T H\+W Output command \\\cline{1-2}
+\hyperlink{_r_f_8h_a46e80aefad925b12066a7a94d532dc25}{R\+F\+\_\+rat\+Disable\+Channel()}&Disable R\+A\+T channel \\\cline{1-2}
+\hyperlink{_r_f_8h_aa31772d56afb197fd812d24aa6f07f1b}{R\+F\+\_\+control()} &Set R\+F control parameters \\\cline{1-2}
+\end{TabularC}
+
+
+\paragraph*{Unsupported Functionality}
+
+The R\+F driver does not support\+:
+\begin{DoxyItemize}
+\item I\+R\+Q\+\_\+\+F\+G and I\+R\+Q\+\_\+\+B\+G required by the I\+E\+E\+E 802.\+15.\+4 mode
+\item Feature not implemented for \hyperlink{_r_f_8h_a40a5506c05a11a3cd9d379cedad5b5d0}{R\+F\+\_\+request\+Access()}
+\item Limited feature (n\+Inactivity\+Timeout) available for \hyperlink{_r_f_8h_aa31772d56afb197fd812d24aa6f07f1b}{R\+F\+\_\+control()}
+\item Scheduler not available.
+\end{DoxyItemize}
+
+\paragraph*{Use Cases\label{_r_f_8h_USE_CASES_RF}%
+\hypertarget{_r_f_8h_USE_CASES_RF}{}%
+}
+
+\subparagraph*{Basic Single Mode Operation}
+
+Schedule a proprietary radio command. 
+\begin{DoxyCode}
+RF_Object rfObj;
+RF_Handle handle;
+RF_Params params;
+RF_ScheduleCmdParams schParams;
+
+RF_Mode RF\_prop =
+\{
+    .rfMode      = RF\_MODE\_PROPRIETARY\_SUB\_1,
+    .cpePatchFxn = &rf\_patch\_cpe\_genfsk,
+    .mcePatchFxn = 0,
+    .rfePatchFxn = 0,
+\};
+
+\textcolor{comment}{// Init RF and specify non-default parameters}
+RF_Params_init(&params);
+params.nInactivityTimeout = 500; \textcolor{comment}{// 500us}
+
+\textcolor{comment}{// Open a proprietary RF handle}
+handle = RF_open(rfObj, &RF\_prop, (RF_RadioSetup*)&RF\_cmdPropRadioDivSetup, &params);
+
+\textcolor{comment}{// Run a proprietary Fs command}
+RF_runCmd(handle, (RF_Op*)&RF\_cmdFs, RF_PriorityNormal, NULL, 0);
+
+\textcolor{comment}{// Schedule a proprietary TX command}
+RF_postCmd(handle, (RF_Op*)&RF\_cmdPropTx, RF_PriorityNormal, &callback, 
+      RF_EventLastCmdDone);
+\end{DoxyCode}
+
+
+\subparagraph*{Basic Dual Mode Operation}
+
+Schedule B\+L\+E and proprietary radio commands. 
+\begin{DoxyCode}
+RF_Object ble\_rfObj;
+RF_Object prop\_rfObject;
+
+RF_Handle ble\_handle, prop\_handle;
+RF_Params ble\_params, prop\_params;
+RF_ScheduleCmdParams ble\_schParams, prop\_schParams;
+
+RF_Mode RF\_ble =
+\{
+    .rfMode      = RF\_MODE\_MULTIPLE,  \textcolor{comment}{// rfMode for dual mode}
+    .cpePatchFxn = &rf\_patch\_cpe\_ble,
+    .mcePatchFxn = 0,
+    .rfePatchFxn = &rf\_patch\_rfe\_ble,
+\};
+
+RF_Mode RF\_prop =
+\{
+    .rfMode      = RF\_MODE\_MULTIPLE,  \textcolor{comment}{// rfMode for dual mode}
+    .cpePatchFxn = &rf\_patch\_cpe\_genfsk,
+    .mcePatchFxn = 0,
+    .rfePatchFxn = 0,
+\};
+
+\textcolor{comment}{// Init RF and specify non-default parameters}
+RF_Params_init(&ble\_params);
+ble\_params.nInactivityTimeout = 200;     \textcolor{comment}{// 200us}
+
+RF_Params_init(&prop\_params);
+prop\_params.nInactivityTimeout = 200;    \textcolor{comment}{// 200us}
+
+\textcolor{comment}{// Configure RF schedule command parameters}
+ble\_schParams.priority  = RF_PriorityNormal;
+ble\_schParams.endTime   = 0;
+prop\_schParams.priority = RF_PriorityNormal;
+prop\_schParams.endTime  = 0;
+
+\textcolor{comment}{// Open BLE and proprietary RF handles}
+ble\_handle  = RF_open(ble\_rfObj, &RF\_ble, (RF_RadioSetup*)&RF\_cmdRadioSetup, &ble\_params);
+prop\_handle = RF_open(prop\_rfObj, &RF\_prop, (RF_RadioSetup*)&RF\_cmdPropRadioDivSetup, &prop\_params);
+
+\textcolor{comment}{// Run a proprietary Fs command}
+RF_runCmd(prop\_handle, (RF_Op*)&RF\_cmdFs, RF_PriorityNormal, NULL, 0);
+
+\textcolor{comment}{// Schedule a proprietary RX command}
+RF_scheduleCmd(prop\_handle, (RF_Op*)&RF\_cmdPropRx, &schParams\_prop, &prop\_callback, 
+      RF_EventRxOk);
+
+\textcolor{comment}{// Schedule a BLE advertizer command}
+RF_scheduleCmd(ble\_handle, (RF_Op*)&RF\_cmdBleAdv, &schParams\_ble, &ble\_callback,
+               (RF_EventLastCmdDone | RF_EventRxEntryDone | RF_EventTxEntryDone));
+\end{DoxyCode}
+
+
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/\+B\+I\+O\+S.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/knl/\+Clock.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/knl/\+Semaphore.\+h$>$}\\*
+{\ttfamily \#include $<$driverlib/rf\+\_\+common\+\_\+cmd.\+h$>$}\\*
+{\ttfamily \#include $<$driverlib/rf\+\_\+prop\+\_\+cmd.\+h$>$}\\*
+Include dependency graph for R\+F.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_r_f_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_r_f___mode}{R\+F\+\_\+\+Mode}
+\begin{DoxyCompactList}\small\item\em Struct defining operating mode of R\+F driver. \end{DoxyCompactList}\item 
+union \hyperlink{union_r_f___radio_setup}{R\+F\+\_\+\+Radio\+Setup}
+\begin{DoxyCompactList}\small\item\em Union of the different flavors of R\+A\+D\+I\+O\+\_\+\+S\+E\+T\+U\+P commands. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_r_f_c_c26_x_x___h_w_attrs}{R\+F\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em R\+F Hardware attributes. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_r_f___object}{R\+F\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em Struct used to store R\+F client state and configuration Pointer to an \hyperlink{struct_r_f___object}{R\+F\+\_\+\+Object} is used as handles (\hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle}) in interactions with the R\+F driver. \end{DoxyCompactList}\item 
+union \hyperlink{union_r_f___info_val}{R\+F\+\_\+\+Info\+Val}
+\begin{DoxyCompactList}\small\item\em R\+F\+\_\+get\+Params\+Val used to input and return R\+F driver paramters with R\+F\+\_\+get\+Params() \end{DoxyCompactList}\item 
+struct \hyperlink{struct_r_f___params}{R\+F\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em R\+F parameter struct R\+F parameters are used with the \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} and \hyperlink{_r_f_8h_ab956de3745437cb7a69c4edfb006434e}{R\+F\+\_\+\+Params\+\_\+init()} call. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_r_f___schedule_cmd_params}{R\+F\+\_\+\+Schedule\+Cmd\+Params}
+\begin{DoxyCompactList}\small\item\em R\+F schedule command parameter struct R\+F schedule command parameters are used with the \hyperlink{_r_f_8h_a5e7f25943b5f3942bf4c09cb87f9aa76}{R\+F\+\_\+schedule\+Cmd()} call. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_r_f___access_params}{R\+F\+\_\+\+Access\+Params}
+\begin{DoxyCompactList}\small\item\em R\+F request access parameter struct R\+F request access command parameters are used with the \hyperlink{_r_f_8h_a40a5506c05a11a3cd9d379cedad5b5d0}{R\+F\+\_\+request\+Access()} call. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group___r_f___core___events_gaa1534b443f03187f07f55b0198306a27}{R\+F\+\_\+\+Event\+Cmd\+Done}~(1$<$$<$0)
+\begin{DoxyCompactList}\small\item\em Radio operation command finished. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga2d60db886271cf8e08c7b6b2f5e534f1}{R\+F\+\_\+\+Event\+Last\+Cmd\+Done}~(1$<$$<$1)
+\begin{DoxyCompactList}\small\item\em Last radio operation command in a chain finished. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga4e8f8b70a9cd745561251d61940880f6}{R\+F\+\_\+\+Event\+Tx\+Done}~(1$<$$<$4)
+\begin{DoxyCompactList}\small\item\em Packet transmitted. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_gab1ab01acc148654e8b3dfe42d64785b1}{R\+F\+\_\+\+Event\+T\+X\+Ack}~(1$<$$<$5)
+\begin{DoxyCompactList}\small\item\em A\+C\+K packet transmitted. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga8421bd3a69743f088ac534f85b099a8d}{R\+F\+\_\+\+Event\+Tx\+Ctrl}~(1$<$$<$6)
+\begin{DoxyCompactList}\small\item\em Control packet transmitted. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_gaf15e72a260f7c2d3d659ad76cb876f9a}{R\+F\+\_\+\+Event\+Tx\+Ctrl\+Ack}~(1$<$$<$7)
+\begin{DoxyCompactList}\small\item\em Acknowledgement received on a transmitted control packet. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga00c6a2c502c6b73310d7168d65134728}{R\+F\+\_\+\+Event\+Tx\+Ctrl\+Ack\+Ack}~(1$<$$<$8)
+\begin{DoxyCompactList}\small\item\em Acknowledgement received on a transmitted control packet, and acknowledgement transmitted for that packet. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga2c71299952c2e6f95973f15cd1910012}{R\+F\+\_\+\+Event\+Tx\+Retrans}~(1$<$$<$9)
+\begin{DoxyCompactList}\small\item\em Packet retransmitted. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga2fe4925d81a1b1cf0f081801ccdea5c5}{R\+F\+\_\+\+Event\+Tx\+Entry\+Done}~(1$<$$<$10)
+\begin{DoxyCompactList}\small\item\em Tx queue data entry state changed to Finished. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga595798fcb9995769a5887839567c8ca7}{R\+F\+\_\+\+Event\+Tx\+Buffer\+Change}~(1$<$$<$11)
+\begin{DoxyCompactList}\small\item\em A buffer change is complete. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga8096e854b7ba95ee45054acf8c5d36e4}{R\+F\+\_\+\+Event\+Rx\+Ok}~(1$<$$<$16)
+\begin{DoxyCompactList}\small\item\em Packet received with C\+R\+C O\+K, payload, and not to be ignored. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga0c295aa9a2851efa0ec6309ebab52dc8}{R\+F\+\_\+\+Event\+Rx\+N\+Ok}~(1$<$$<$17)
+\begin{DoxyCompactList}\small\item\em Packet received with C\+R\+C error. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga2dbeb507eec591b320a4b06f36ce8814}{R\+F\+\_\+\+Event\+Rx\+Ignored}~(1$<$$<$18)
+\begin{DoxyCompactList}\small\item\em Packet received with C\+R\+C O\+K, but to be ignored. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga4df2d5bf213600e1bce1c03a1ea950dd}{R\+F\+\_\+\+Event\+Rx\+Empty}~(1$<$$<$19)
+\begin{DoxyCompactList}\small\item\em Packet received with C\+R\+C O\+K, not to be ignored, no payload. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_gafee6f48a825ba7e030ece03eb242e6c2}{R\+F\+\_\+\+Event\+Rx\+Ctrl}~(1$<$$<$20)
+\begin{DoxyCompactList}\small\item\em Control packet received with C\+R\+C O\+K, not to be ignored. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga3c29608b6caa9e380407ee0b3df371b8}{R\+F\+\_\+\+Event\+Rx\+Ctrl\+Ack}~(1$<$$<$21)
+\begin{DoxyCompactList}\small\item\em Control packet received with C\+R\+C O\+K, not to be ignored, then A\+C\+K sent. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga8ddaa54ac8e8721e7e1cee7f0c07c3c1}{R\+F\+\_\+\+Event\+Rx\+Buf\+Full}~(1$<$$<$22)
+\begin{DoxyCompactList}\small\item\em Packet received that did not fit in the Rx queue. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga7051110a4a1fdd459866195be774a2b0}{R\+F\+\_\+\+Event\+Rx\+Entry\+Done}~(1$<$$<$23)
+\begin{DoxyCompactList}\small\item\em Rx queue data entry changing state to Finished. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga8ac187c129b68b4311898a5464aa87e5}{R\+F\+\_\+\+Event\+Data\+Written}~(1$<$$<$24)
+\begin{DoxyCompactList}\small\item\em Data written to partial read Rx buffer. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_gaa9c1eb19ce791f4f9c4b917e10fbabdd}{R\+F\+\_\+\+Event\+N\+Data\+Written}~(1$<$$<$25)
+\begin{DoxyCompactList}\small\item\em Specified number of bytes written to partial read Rx buffer. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_gaf2db331d93e28cdafc4367497a2f6f89}{R\+F\+\_\+\+Event\+Rx\+Aborted}~(1$<$$<$26)
+\begin{DoxyCompactList}\small\item\em Packet reception stopped before packet was done. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_gaaba4e22e27b9ac26244b02c7cfd657d0}{R\+F\+\_\+\+Event\+Rx\+Collision\+Detected}~(1$<$$<$27)
+\begin{DoxyCompactList}\small\item\em A collision was indicated during packet reception. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_gae5cb277f5a7a23bf1d7e6405f3e2253e}{R\+F\+\_\+\+Event\+Modules\+Unlocked}~(1$<$$<$29)
+\begin{DoxyCompactList}\small\item\em As part of the boot process, the C\+M0 has opened access to R\+F core modules and memories. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_gaf872a5a1a47d7401499d7826eea8da98}{R\+F\+\_\+\+Event\+Internal\+Error}~(uint32\+\_\+t)(1$<$$<$31)
+\begin{DoxyCompactList}\small\item\em Internal error observed. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga83edee28803f1b2addc0f8458d0cc657}{R\+F\+\_\+\+Event\+Mdm\+Soft}~0x0000002000000000
+\begin{DoxyCompactList}\small\item\em Modem Sync detected (M\+D\+M\+S\+O\+F\+T I\+F\+G) \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___driver___events_gae6d21f9806a7482a0f324f98bb83aac0}{R\+F\+\_\+\+Event\+Cmd\+Cancelled}~0x1000000000000000
+\begin{DoxyCompactList}\small\item\em Command cancelled \+: R\+F driver event. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___driver___events_ga95a0bf832c19fbdce2c164144ad265ee}{R\+F\+\_\+\+Event\+Cmd\+Aborted}~0x2000000000000000
+\begin{DoxyCompactList}\small\item\em Command aborted \+: R\+F driver event. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___driver___events_gac68cfb0f9c26d275ad990f5da9e6b91f}{R\+F\+\_\+\+Event\+Cmd\+Stopped}~0x4000000000000000
+\begin{DoxyCompactList}\small\item\em Command stopped \+: R\+F driver event. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___driver___events_ga8255e5773828977cb205fd1f856e710e}{R\+F\+\_\+\+Event\+Cmd\+Error}~0x8000000000000000
+\begin{DoxyCompactList}\small\item\em Command error \+: R\+F driver event. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___driver___events_gab0302093e17c587cc4bf2c928c79960e}{R\+F\+\_\+\+Event\+Rat\+Ch}~0x0800000000000000
+\begin{DoxyCompactList}\small\item\em R\+A\+T Channel interrupt \+: R\+F driver event. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___driver___events_ga0e6d5e7d3760a65ba37d8f26823e9a0a}{R\+F\+\_\+\+Event\+Power\+Up}~0x0400000000000000
+\begin{DoxyCompactList}\small\item\em R\+F power up event. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___driver___events_gaa6b858b8b383210049fa3f17dcd95fac}{R\+F\+\_\+\+Event\+Error}~0x0200000000000000
+\begin{DoxyCompactList}\small\item\em R\+F mode error event. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___driver___events_ga267ffc8a08c3ce6ffa82b704dba641be}{R\+F\+\_\+\+Event\+Cmd\+Preempted}~0x0100000000000000
+\begin{DoxyCompactList}\small\item\em Command preempted \+: R\+F Driver event. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___driver___events_ga9742a8b624a11e7033f3c7ec4c283797}{R\+F\+\_\+\+Event\+Radio\+Free}~0x0080000000000000
+\begin{DoxyCompactList}\small\item\em Preemption finiahed, radio available to use. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___c_t_r_l_ga24096530a8da4bde84275bc9c76b2cee}{R\+F\+\_\+\+C\+T\+R\+L\+\_\+\+S\+E\+T\+\_\+\+I\+N\+A\+C\+T\+I\+V\+I\+T\+Y\+\_\+\+T\+I\+M\+E\+O\+U\+T}~0
+\begin{DoxyCompactList}\small\item\em Control code used by R\+F\+\_\+control to set inactivity timeout. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___c_t_r_l_ga74d367afdca187785b17c59b31d1e89a}{R\+F\+\_\+\+C\+T\+R\+L\+\_\+\+U\+P\+D\+A\+T\+E\+\_\+\+S\+E\+T\+U\+P\+\_\+\+C\+M\+D}~1
+\begin{DoxyCompactList}\small\item\em Control code used by R\+F\+\_\+control to update setup command. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___c_t_r_l_ga32bd63d8617c2fde41bbc30d1e8f0db5}{R\+F\+\_\+\+C\+T\+R\+L\+\_\+\+S\+E\+T\+\_\+\+P\+O\+W\+E\+R\+U\+P\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+\+M\+A\+R\+G\+I\+N}~2
+\begin{DoxyCompactList}\small\item\em Control code used by R\+F\+\_\+control to set powerup duration margin. \end{DoxyCompactList}\end{DoxyCompactItemize}
+{\bf }\par
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_r_f_8h_a40e933adc8b5b1c03133451361c5505b}{R\+F\+\_\+\+G\+E\+T\+\_\+\+R\+S\+S\+I\+\_\+\+E\+R\+R\+O\+R\+\_\+\+V\+A\+L}~(-\/128)
+\begin{DoxyCompactList}\small\item\em Error return value for \hyperlink{_r_f_8h_ac3fe0d39243fb6bbefe0216d958a6779}{R\+F\+\_\+get\+Rssi()} \end{DoxyCompactList}\item 
+\#define \hyperlink{_r_f_8h_aacfd2e3e3a2596605cc8b182df438b2f}{R\+F\+\_\+\+C\+M\+D\+H\+A\+N\+D\+L\+E\+\_\+\+F\+L\+U\+S\+H\+\_\+\+A\+L\+L}~(-\/1)
+\begin{DoxyCompactList}\small\item\em R\+F command handle to flush all R\+F commands. \end{DoxyCompactList}\item 
+\#define \hyperlink{_r_f_8h_ad2e517d9efabde3a1868a274ed0f683b}{R\+F\+\_\+\+A\+L\+L\+O\+C\+\_\+\+E\+R\+R\+O\+R}~(-\/2)
+\begin{DoxyCompactList}\small\item\em R\+F command or R\+A\+T channel allocation error. \end{DoxyCompactList}\item 
+\#define \hyperlink{_r_f_8h_a86f899115073dc30d7b528cb0e12a9f1}{R\+F\+\_\+\+E\+R\+R\+O\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+R\+F\+M\+O\+D\+E}~(-\/256)
+\begin{DoxyCompactList}\small\item\em Invalid \hyperlink{struct_r_f___mode}{R\+F\+\_\+\+Mode}. Used in error callback. \end{DoxyCompactList}\item 
+\#define \hyperlink{_r_f_8h_a40a0b1b81a2bebefb91b952d750634dc}{R\+F\+\_\+\+E\+R\+R\+O\+R\+\_\+\+C\+M\+D\+F\+S\+\_\+\+S\+Y\+N\+T\+H\+\_\+\+P\+R\+O\+G}~(-\/257)
+\begin{DoxyCompactList}\small\item\em Synthesizer error with C\+M\+D\+\_\+\+F\+S. Used in error callback. If this error occurred in error callback, user needs to resend C\+M\+D\+\_\+\+Fs to recover. See errata S\+W\+R\+A521. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef rfc\+\_\+radio\+Op\+\_\+t \hyperlink{_r_f_8h_a47ea3dea78019340e8f8ceb854de5f02}{R\+F\+\_\+\+Op}
+\begin{DoxyCompactList}\small\item\em Alias for the data type of the header common to all radio operations. \end{DoxyCompactList}\item 
+typedef uint64\+\_\+t \hyperlink{_r_f_8h_a128c46e18dbbaa781abb7abafc35233a}{R\+F\+\_\+\+Event\+Mask}
+\begin{DoxyCompactList}\small\item\em Event mask type (construct mask with combinations of \hyperlink{_r_f_8h_a128c46e18dbbaa781abb7abafc35233a}{R\+F\+\_\+\+Event\+Mask}) \end{DoxyCompactList}\item 
+typedef int16\+\_\+t \hyperlink{_r_f_8h_acab1f56c62a9fd1ad0a91a46b6da23f1}{R\+F\+\_\+\+Cmd\+Handle}
+\begin{DoxyCompactList}\small\item\em A command handle that is returned from \hyperlink{_r_f_8h_a2b0ee444fcb74917df94eefea804ecbb}{R\+F\+\_\+post\+Cmd()} Used by \hyperlink{_r_f_8h_a91c1cb2508311f822acbc08ace568a83}{R\+F\+\_\+pend\+Cmd()} and \hyperlink{_r_f_8h_ae3ff5c614f4a63cb4e79c90f9229149a}{R\+F\+\_\+flush\+Cmd()}. A negative value indicates an error. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_r_f_c_c26_x_x___h_w_attrs}{R\+F\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs} \hyperlink{_r_f_8h_ac2049f9479d04c217097ca43ffe07c14}{R\+F\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em R\+F Hardware attributes. \end{DoxyCompactList}\item 
+typedef \hyperlink{struct_r_f___object}{R\+F\+\_\+\+Object} $\ast$ \hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle}
+\begin{DoxyCompactList}\small\item\em A handle that is returned from a \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} call Used for further R\+F client interaction with the R\+F driver. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_r_f_8h_a4d2ce6dc70b0f329dc5e249ec10c574a}{R\+F\+\_\+\+Callback}) (\hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle} h, \hyperlink{_r_f_8h_acab1f56c62a9fd1ad0a91a46b6da23f1}{R\+F\+\_\+\+Cmd\+Handle} ch, \hyperlink{_r_f_8h_a128c46e18dbbaa781abb7abafc35233a}{R\+F\+\_\+\+Event\+Mask} e)
+\begin{DoxyCompactList}\small\item\em R\+F callback function pointer type R\+F callbacks can occur at the completion of posted R\+F operation (chain). The callback is called from S\+W\+I context and provides the relevant \hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle}, relevant radio operation command handle \hyperlink{_r_f_8h_acab1f56c62a9fd1ad0a91a46b6da23f1}{R\+F\+\_\+\+Cmd\+Handle}, as well as an \hyperlink{_r_f_8h_a128c46e18dbbaa781abb7abafc35233a}{R\+F\+\_\+\+Event\+Mask} that indicates what has occurred. in the case of error callback the \hyperlink{_r_f_8h_acab1f56c62a9fd1ad0a91a46b6da23f1}{R\+F\+\_\+\+Cmd\+Handle} will indicate the error code. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_r_f_8h_ae5f9a893d178e64e6d0a7a783ea06e32}{R\+F\+\_\+\+Priority} \{ \\*
+\hyperlink{_r_f_8h_ae5f9a893d178e64e6d0a7a783ea06e32a5d716915abbe5a6fad3469c339f4db15}{R\+F\+\_\+\+Priority\+Highest} = 2, 
+\\*
+\hyperlink{_r_f_8h_ae5f9a893d178e64e6d0a7a783ea06e32a8d14673dbb643f2e9571fb5e34aad23d}{R\+F\+\_\+\+Priority\+High} = 1, 
+\\*
+\hyperlink{_r_f_8h_ae5f9a893d178e64e6d0a7a783ea06e32a301d2e5af295d52039b52709952a1c47}{R\+F\+\_\+\+Priority\+Normal} = 0
+ \}
+\begin{DoxyCompactList}\small\item\em Priority of R\+F commands. \end{DoxyCompactList}\item 
+enum \hyperlink{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988f}{R\+F\+\_\+\+Stat} \{ \\*
+\hyperlink{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988faa79a13241903199d3bc25c8f06407de9}{R\+F\+\_\+\+Stat\+Busy\+Error}, 
+\\*
+\hyperlink{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988fa80848b887667038bbfa4a2d14e83b193}{R\+F\+\_\+\+Stat\+Radio\+Inactive\+Error}, 
+\\*
+\hyperlink{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988fa612e247f325ff085321b8e243f6b1d3d}{R\+F\+\_\+\+Stat\+Cmd\+Done\+Error}, 
+\\*
+\hyperlink{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988face124dc75bad005452467d6f29351301}{R\+F\+\_\+\+Stat\+Invalid\+Params\+Error}, 
+\\*
+\hyperlink{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988fac071b8de44aabb8e2354432ce1146b86}{R\+F\+\_\+\+Stat\+Error} = 0x80, 
+\\*
+\hyperlink{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988faa110d04edae5a85a12906d729f97de87}{R\+F\+\_\+\+Stat\+Cmd\+Done\+Success}, 
+\\*
+\hyperlink{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988fabf33d4930fd89cd5ca80220da258d31c}{R\+F\+\_\+\+Stat\+Cmd\+Sch}, 
+\\*
+\hyperlink{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988faa98bd78e437864464cdb2aca1d3e024d}{R\+F\+\_\+\+Stat\+Success}
+ \}
+\begin{DoxyCompactList}\small\item\em R\+F Stat reported as return value for R\+F\+\_\+rat\+Cmd(), \hyperlink{_r_f_8h_ac3fe0d39243fb6bbefe0216d958a6779}{R\+F\+\_\+get\+Rssi()}. R\+F\+\_\+set\+Tx\+Pwr(), \hyperlink{_r_f_8h_aabe22ceae13a372be4ba135318aa849a}{R\+F\+\_\+cancel\+Cmd()} \end{DoxyCompactList}\item 
+enum \hyperlink{_r_f_8h_a22596109459422a7a4d4f386dffbb8fa}{R\+F\+\_\+\+Info\+Type} \{ \\*
+\hyperlink{_r_f_8h_a22596109459422a7a4d4f386dffbb8faa4a4b88384acfaa135421ad57557140e6}{R\+F\+\_\+\+G\+E\+T\+\_\+\+C\+U\+R\+R\+\_\+\+C\+M\+D}, 
+\\*
+\hyperlink{_r_f_8h_a22596109459422a7a4d4f386dffbb8faa19ebdcf12bef1328ce40fec49c0f6864}{R\+F\+\_\+\+G\+E\+T\+\_\+\+A\+V\+A\+I\+L\+\_\+\+R\+A\+T\+\_\+\+C\+H}, 
+\\*
+\hyperlink{_r_f_8h_a22596109459422a7a4d4f386dffbb8faa51ac83691ed47bb591818e2e34e49d44}{R\+F\+\_\+\+G\+E\+T\+\_\+\+R\+A\+D\+I\+O\+\_\+\+S\+T\+A\+T\+E}
+ \}
+\begin{DoxyCompactList}\small\item\em R\+F\+\_\+get\+Params\+Type contains the options available for using the R\+F\+\_\+get\+Params() \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle} \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open} (\hyperlink{struct_r_f___object}{R\+F\+\_\+\+Object} $\ast$p\+Obj, \hyperlink{struct_r_f___mode}{R\+F\+\_\+\+Mode} $\ast$p\+Rf\+Mode, \hyperlink{union_r_f___radio_setup}{R\+F\+\_\+\+Radio\+Setup} $\ast$p\+Op\+Setup, \hyperlink{struct_r_f___params}{R\+F\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Open client connection to R\+F driver. \end{DoxyCompactList}\item 
+void \hyperlink{_r_f_8h_a9ff7e64561f7aa5526837521bceb5f88}{R\+F\+\_\+close} (\hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle} h)
+\begin{DoxyCompactList}\small\item\em Close client connection to R\+F driver. \end{DoxyCompactList}\item 
+uint32\+\_\+t \hyperlink{_r_f_8h_aedfdf0bdf0f64a071d50a6d78446fef4}{R\+F\+\_\+get\+Current\+Time} (void)
+\begin{DoxyCompactList}\small\item\em Return current radio timer value. \end{DoxyCompactList}\item 
+\hyperlink{_r_f_8h_acab1f56c62a9fd1ad0a91a46b6da23f1}{R\+F\+\_\+\+Cmd\+Handle} \hyperlink{_r_f_8h_a2b0ee444fcb74917df94eefea804ecbb}{R\+F\+\_\+post\+Cmd} (\hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle} h, \hyperlink{_r_f_8h_a47ea3dea78019340e8f8ceb854de5f02}{R\+F\+\_\+\+Op} $\ast$p\+Op, \hyperlink{_r_f_8h_ae5f9a893d178e64e6d0a7a783ea06e32}{R\+F\+\_\+\+Priority} e\+Pri, \hyperlink{_r_f_8h_a4d2ce6dc70b0f329dc5e249ec10c574a}{R\+F\+\_\+\+Callback} p\+Cb, \hyperlink{_r_f_8h_a128c46e18dbbaa781abb7abafc35233a}{R\+F\+\_\+\+Event\+Mask} bm\+Event)
+\begin{DoxyCompactList}\small\item\em Post an R\+F operation (chain) to the command queue Post an \hyperlink{_r_f_8h_a47ea3dea78019340e8f8ceb854de5f02}{R\+F\+\_\+\+Op} to the R\+F command queue of the client with handle h. ~\newline
+ The command can be the first in a chain of R\+F operations or a standalone R\+F operation. If a chain of operations are posted they are treated atomically, i.\+e. either all or none of the chained operations are run. ~\newline
+ All operations must be posted in strictly increasing chronological order. Function returns immediately. ~\newline
+ To facilitate code optimization \hyperlink{_r_f_8h_a2b0ee444fcb74917df94eefea804ecbb}{R\+F\+\_\+post\+Cmd()} should be used when running in single client environment. It does not call the internal dual mode functions and the implementation are same across R\+F\+C\+C26\+X\+X\+\_\+multi\+Mode.\+c and R\+F\+C\+C26\+X\+X\+\_\+single\+Mode.\+c files.~\newline
+ Alternately \hyperlink{_r_f_8h_a5e7f25943b5f3942bf4c09cb87f9aa76}{R\+F\+\_\+schedule\+Cmd()} can be used in single or multi client environment. ~\newline
+ \end{DoxyCompactList}\item 
+\hyperlink{_r_f_8h_acab1f56c62a9fd1ad0a91a46b6da23f1}{R\+F\+\_\+\+Cmd\+Handle} \hyperlink{_r_f_8h_a5e7f25943b5f3942bf4c09cb87f9aa76}{R\+F\+\_\+schedule\+Cmd} (\hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle} h, \hyperlink{_r_f_8h_a47ea3dea78019340e8f8ceb854de5f02}{R\+F\+\_\+\+Op} $\ast$p\+Op, \hyperlink{struct_r_f___schedule_cmd_params}{R\+F\+\_\+\+Schedule\+Cmd\+Params} $\ast$p\+Sch\+Params, \hyperlink{_r_f_8h_a4d2ce6dc70b0f329dc5e249ec10c574a}{R\+F\+\_\+\+Callback} p\+Cb, \hyperlink{_r_f_8h_a128c46e18dbbaa781abb7abafc35233a}{R\+F\+\_\+\+Event\+Mask} bm\+Event)
+\begin{DoxyCompactList}\small\item\em Schedule an R\+F operation (chain) to the command queue Schedule an \hyperlink{_r_f_8h_a47ea3dea78019340e8f8ceb854de5f02}{R\+F\+\_\+\+Op} to the R\+F command queue of the client with handle h. ~\newline
+ The command can be the first in a chain of R\+F operations or a standalone R\+F operation. If a chain of operations are posted they are treated atomically, i.\+e. either all or none of the chained operations are run. ~\newline
+ All operations must be posted in strictly increasing chronological order. Function returns immediately. ~\newline
+ \end{DoxyCompactList}\item 
+\hyperlink{_r_f_8h_a128c46e18dbbaa781abb7abafc35233a}{R\+F\+\_\+\+Event\+Mask} \hyperlink{_r_f_8h_a91c1cb2508311f822acbc08ace568a83}{R\+F\+\_\+pend\+Cmd} (\hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle} h, \hyperlink{_r_f_8h_acab1f56c62a9fd1ad0a91a46b6da23f1}{R\+F\+\_\+\+Cmd\+Handle} ch, \hyperlink{_r_f_8h_a128c46e18dbbaa781abb7abafc35233a}{R\+F\+\_\+\+Event\+Mask} bm\+Event)
+\begin{DoxyCompactList}\small\item\em Wait for posted command to complete Wait until completion of R\+F command identified by handle ch for client identified by handle h to complete. ~\newline
+ Some R\+F operations (or chains of operations) use additional events during \hyperlink{_r_f_8h_a2b0ee444fcb74917df94eefea804ecbb}{R\+F\+\_\+post\+Cmd()} which, if enabled in event mask bm\+Event for the \hyperlink{_r_f_8h_a91c1cb2508311f822acbc08ace568a83}{R\+F\+\_\+pend\+Cmd()} will make the \hyperlink{_r_f_8h_a91c1cb2508311f822acbc08ace568a83}{R\+F\+\_\+pend\+Cmd()} return early, when that event occurs. In this case, multiple calls to \hyperlink{_r_f_8h_a91c1cb2508311f822acbc08ace568a83}{R\+F\+\_\+pend\+Cmd()} for a single command can be made. ~\newline
+ If \hyperlink{_r_f_8h_a91c1cb2508311f822acbc08ace568a83}{R\+F\+\_\+pend\+Cmd()} is called for a command that registered a callback function it will take precedence and the callback function will never be called. ~\newline
+ \end{DoxyCompactList}\item 
+\hyperlink{_r_f_8h_a128c46e18dbbaa781abb7abafc35233a}{R\+F\+\_\+\+Event\+Mask} \hyperlink{_r_f_8h_a248bebdd1d0bd6e0812cf18116987e54}{R\+F\+\_\+run\+Cmd} (\hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle} h, \hyperlink{_r_f_8h_a47ea3dea78019340e8f8ceb854de5f02}{R\+F\+\_\+\+Op} $\ast$p\+Op, \hyperlink{_r_f_8h_ae5f9a893d178e64e6d0a7a783ea06e32}{R\+F\+\_\+\+Priority} e\+Pri, \hyperlink{_r_f_8h_a4d2ce6dc70b0f329dc5e249ec10c574a}{R\+F\+\_\+\+Callback} p\+Cb, \hyperlink{_r_f_8h_a128c46e18dbbaa781abb7abafc35233a}{R\+F\+\_\+\+Event\+Mask} bm\+Event)
+\begin{DoxyCompactList}\small\item\em Runs synchronously a (chain of) R\+F operation(s) Allows a (chain of) operation(s) to be posted to the command queue and then waits for it to complete. ~\newline
+ A command is completed if one of the R\+F\+\_\+\+Event\+Last\+Cmd\+Done, R\+F\+\_\+\+Event\+Cmd\+Cancelled, R\+F\+\_\+\+Event\+Cmd\+Aborted, R\+F\+\_\+\+Event\+Cmd\+Stopped or R\+F\+\_\+\+Event\+Cmd\+Error occured. \end{DoxyCompactList}\item 
+\hyperlink{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988f}{R\+F\+\_\+\+Stat} \hyperlink{_r_f_8h_aabe22ceae13a372be4ba135318aa849a}{R\+F\+\_\+cancel\+Cmd} (\hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle} h, \hyperlink{_r_f_8h_acab1f56c62a9fd1ad0a91a46b6da23f1}{R\+F\+\_\+\+Cmd\+Handle} ch, uint8\+\_\+t mode)
+\begin{DoxyCompactList}\small\item\em Abort/stop/cancel single command in command queue If command is running, aborts/stops it and posts callback for the aborted/stopped command. ~\newline
+ If command has not yet run, cancels it it and posts callback for the cancelled command. ~\newline
+ If command has already run or been aborted/stopped/cancelled, has no effect.~\newline
+ \end{DoxyCompactList}\item 
+\hyperlink{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988f}{R\+F\+\_\+\+Stat} \hyperlink{_r_f_8h_ae3ff5c614f4a63cb4e79c90f9229149a}{R\+F\+\_\+flush\+Cmd} (\hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle} h, \hyperlink{_r_f_8h_acab1f56c62a9fd1ad0a91a46b6da23f1}{R\+F\+\_\+\+Cmd\+Handle} ch, uint8\+\_\+t mode)
+\begin{DoxyCompactList}\small\item\em Abort/stop/cancel command and any subsequent commands in command queue If command is running, aborts/stops it and then cancels all later commands in queue.~\newline
+ If command has not yet run, cancels it and all later commands in queue.~\newline
+ If command has already run or been aborted/stopped/cancelled, has no effect.~\newline
+ \end{DoxyCompactList}\item 
+\hyperlink{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988f}{R\+F\+\_\+\+Stat} \hyperlink{_r_f_8h_a6159b409f8d99954529a8ebf6f98cd85}{R\+F\+\_\+run\+Immediate\+Cmd} (\hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle} h, uint32\+\_\+t $\ast$p\+Cmd\+Struct)
+\begin{DoxyCompactList}\small\item\em Send any Immediate command. ~\newline
+ \end{DoxyCompactList}\item 
+\hyperlink{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988f}{R\+F\+\_\+\+Stat} \hyperlink{_r_f_8h_aafce617271300f2bee1a52ebda6d654e}{R\+F\+\_\+run\+Direct\+Cmd} (\hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle} h, uint32\+\_\+t cmd)
+\begin{DoxyCompactList}\small\item\em Send any Direct command. ~\newline
+ \end{DoxyCompactList}\item 
+void \hyperlink{_r_f_8h_a299ada7963c727a40466d7d1bb7296a3}{R\+F\+\_\+yield} (\hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle} h)
+\begin{DoxyCompactList}\small\item\em Signal that radio client is not going to issue more commands in a while. ~\newline
+ \end{DoxyCompactList}\item 
+void \hyperlink{_r_f_8h_ab956de3745437cb7a69c4edfb006434e}{R\+F\+\_\+\+Params\+\_\+init} (\hyperlink{struct_r_f___params}{R\+F\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to initialize the \hyperlink{struct_r_f___params}{R\+F\+\_\+\+Params} struct to its defaults. \end{DoxyCompactList}\item 
+\hyperlink{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988f}{R\+F\+\_\+\+Stat} \hyperlink{_r_f_8h_a4bd7985a3e0c5ad2b9f5e94aa945db63}{R\+F\+\_\+get\+Info} (\hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle} h, \hyperlink{_r_f_8h_a22596109459422a7a4d4f386dffbb8fa}{R\+F\+\_\+\+Info\+Type} type, \hyperlink{union_r_f___info_val}{R\+F\+\_\+\+Info\+Val} $\ast$p\+Value)
+\begin{DoxyCompactList}\small\item\em Get value for some R\+F driver parameters. ~\newline
+ \end{DoxyCompactList}\item 
+int8\+\_\+t \hyperlink{_r_f_8h_ac3fe0d39243fb6bbefe0216d958a6779}{R\+F\+\_\+get\+Rssi} (\hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle} h)
+\begin{DoxyCompactList}\small\item\em Get rssi value. \end{DoxyCompactList}\item 
+\hyperlink{_r_f_8h_a47ea3dea78019340e8f8ceb854de5f02}{R\+F\+\_\+\+Op} $\ast$ \hyperlink{_r_f_8h_abdde833057385980d0ae1b2c844b97b7}{R\+F\+\_\+get\+Cmd\+Op} (\hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle} h, \hyperlink{_r_f_8h_acab1f56c62a9fd1ad0a91a46b6da23f1}{R\+F\+\_\+\+Cmd\+Handle} cmd\+Hnd)
+\begin{DoxyCompactList}\small\item\em Get command structure pointer. \end{DoxyCompactList}\item 
+int8\+\_\+t \hyperlink{_r_f_8h_a8e24e90ec802b1d85d517e2075a4d129}{R\+F\+\_\+rat\+Compare} (\hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle} h, rfc\+\_\+\+C\+M\+D\+\_\+\+S\+E\+T\+\_\+\+R\+A\+T\+\_\+\+C\+M\+P\+\_\+t $\ast$p\+Cmd\+Struct, uint32\+\_\+t compare\+Time, \hyperlink{_r_f_8h_a4d2ce6dc70b0f329dc5e249ec10c574a}{R\+F\+\_\+\+Callback} p\+Rat\+Cb)
+\begin{DoxyCompactList}\small\item\em Setup R\+A\+T compare, and callback when compare matches. Note radio needs to be on for R\+A\+T to operate. If radio is off, this A\+P\+I returns R\+F\+\_\+\+A\+L\+L\+O\+C\+\_\+\+E\+R\+R\+O\+R. \end{DoxyCompactList}\item 
+int8\+\_\+t \hyperlink{_r_f_8h_a68013d7c8a5a0eed8add518b30679abe}{R\+F\+\_\+rat\+Capture} (\hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle} h, uint16\+\_\+t config, \hyperlink{_r_f_8h_a4d2ce6dc70b0f329dc5e249ec10c574a}{R\+F\+\_\+\+Callback} p\+Rat\+Cb)
+\begin{DoxyCompactList}\small\item\em Setup R\+A\+T capture, and callback when capture event happens. Note radio needs to be on for R\+A\+T to operate. If radio is off, this A\+P\+I returns R\+F\+\_\+\+A\+L\+L\+O\+C\+\_\+\+E\+R\+R\+O\+R. \end{DoxyCompactList}\item 
+\hyperlink{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988f}{R\+F\+\_\+\+Stat} \hyperlink{_r_f_8h_ad55cb257d42afee6a93016a37e7f9027}{R\+F\+\_\+rat\+Hw\+Output} (\hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle} h, uint16\+\_\+t config)
+\begin{DoxyCompactList}\small\item\em Setup R\+A\+T H\+W output. Note radio needs to be on for R\+A\+T to operate. If radio is off, this A\+P\+I returns R\+F\+\_\+\+A\+L\+L\+O\+C\+\_\+\+E\+R\+R\+O\+R. \end{DoxyCompactList}\item 
+\hyperlink{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988f}{R\+F\+\_\+\+Stat} \hyperlink{_r_f_8h_a46e80aefad925b12066a7a94d532dc25}{R\+F\+\_\+rat\+Disable\+Channel} (\hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle} h, int8\+\_\+t rat\+Channel\+Num)
+\begin{DoxyCompactList}\small\item\em Disable a R\+A\+T channel. \end{DoxyCompactList}\item 
+\hyperlink{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988f}{R\+F\+\_\+\+Stat} \hyperlink{_r_f_8h_aa31772d56afb197fd812d24aa6f07f1b}{R\+F\+\_\+control} (\hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle} h, int8\+\_\+t ctrl, void $\ast$args)
+\begin{DoxyCompactList}\small\item\em Set R\+F control parameters. \end{DoxyCompactList}\item 
+\hyperlink{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988f}{R\+F\+\_\+\+Stat} \hyperlink{_r_f_8h_a40a5506c05a11a3cd9d379cedad5b5d0}{R\+F\+\_\+request\+Access} (\hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle} h, \hyperlink{struct_r_f___access_params}{R\+F\+\_\+\+Access\+Params} $\ast$p\+Params)
+\begin{DoxyCompactList}\small\item\em Request radio access ~\newline
+ Scope\+: \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+G\+E\+T\+\_\+\+R\+S\+S\+I\+\_\+\+E\+R\+R\+O\+R\+\_\+\+V\+A\+L@{R\+F\+\_\+\+G\+E\+T\+\_\+\+R\+S\+S\+I\+\_\+\+E\+R\+R\+O\+R\+\_\+\+V\+A\+L}}
+\index{R\+F\+\_\+\+G\+E\+T\+\_\+\+R\+S\+S\+I\+\_\+\+E\+R\+R\+O\+R\+\_\+\+V\+A\+L@{R\+F\+\_\+\+G\+E\+T\+\_\+\+R\+S\+S\+I\+\_\+\+E\+R\+R\+O\+R\+\_\+\+V\+A\+L}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+\+G\+E\+T\+\_\+\+R\+S\+S\+I\+\_\+\+E\+R\+R\+O\+R\+\_\+\+V\+A\+L}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+G\+E\+T\+\_\+\+R\+S\+S\+I\+\_\+\+E\+R\+R\+O\+R\+\_\+\+V\+A\+L~(-\/128)}\label{_r_f_8h_a40e933adc8b5b1c03133451361c5505b}
+
+
+Error return value for \hyperlink{_r_f_8h_ac3fe0d39243fb6bbefe0216d958a6779}{R\+F\+\_\+get\+Rssi()} 
+
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+C\+M\+D\+H\+A\+N\+D\+L\+E\+\_\+\+F\+L\+U\+S\+H\+\_\+\+A\+L\+L@{R\+F\+\_\+\+C\+M\+D\+H\+A\+N\+D\+L\+E\+\_\+\+F\+L\+U\+S\+H\+\_\+\+A\+L\+L}}
+\index{R\+F\+\_\+\+C\+M\+D\+H\+A\+N\+D\+L\+E\+\_\+\+F\+L\+U\+S\+H\+\_\+\+A\+L\+L@{R\+F\+\_\+\+C\+M\+D\+H\+A\+N\+D\+L\+E\+\_\+\+F\+L\+U\+S\+H\+\_\+\+A\+L\+L}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+\+C\+M\+D\+H\+A\+N\+D\+L\+E\+\_\+\+F\+L\+U\+S\+H\+\_\+\+A\+L\+L}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+C\+M\+D\+H\+A\+N\+D\+L\+E\+\_\+\+F\+L\+U\+S\+H\+\_\+\+A\+L\+L~(-\/1)}\label{_r_f_8h_aacfd2e3e3a2596605cc8b182df438b2f}
+
+
+R\+F command handle to flush all R\+F commands. 
+
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+A\+L\+L\+O\+C\+\_\+\+E\+R\+R\+O\+R@{R\+F\+\_\+\+A\+L\+L\+O\+C\+\_\+\+E\+R\+R\+O\+R}}
+\index{R\+F\+\_\+\+A\+L\+L\+O\+C\+\_\+\+E\+R\+R\+O\+R@{R\+F\+\_\+\+A\+L\+L\+O\+C\+\_\+\+E\+R\+R\+O\+R}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+\+A\+L\+L\+O\+C\+\_\+\+E\+R\+R\+O\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+A\+L\+L\+O\+C\+\_\+\+E\+R\+R\+O\+R~(-\/2)}\label{_r_f_8h_ad2e517d9efabde3a1868a274ed0f683b}
+
+
+R\+F command or R\+A\+T channel allocation error. 
+
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+E\+R\+R\+O\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+R\+F\+M\+O\+D\+E@{R\+F\+\_\+\+E\+R\+R\+O\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+R\+F\+M\+O\+D\+E}}
+\index{R\+F\+\_\+\+E\+R\+R\+O\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+R\+F\+M\+O\+D\+E@{R\+F\+\_\+\+E\+R\+R\+O\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+R\+F\+M\+O\+D\+E}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+\+E\+R\+R\+O\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+R\+F\+M\+O\+D\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+E\+R\+R\+O\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+R\+F\+M\+O\+D\+E~(-\/256)}\label{_r_f_8h_a86f899115073dc30d7b528cb0e12a9f1}
+
+
+Invalid \hyperlink{struct_r_f___mode}{R\+F\+\_\+\+Mode}. Used in error callback. 
+
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+E\+R\+R\+O\+R\+\_\+\+C\+M\+D\+F\+S\+\_\+\+S\+Y\+N\+T\+H\+\_\+\+P\+R\+O\+G@{R\+F\+\_\+\+E\+R\+R\+O\+R\+\_\+\+C\+M\+D\+F\+S\+\_\+\+S\+Y\+N\+T\+H\+\_\+\+P\+R\+O\+G}}
+\index{R\+F\+\_\+\+E\+R\+R\+O\+R\+\_\+\+C\+M\+D\+F\+S\+\_\+\+S\+Y\+N\+T\+H\+\_\+\+P\+R\+O\+G@{R\+F\+\_\+\+E\+R\+R\+O\+R\+\_\+\+C\+M\+D\+F\+S\+\_\+\+S\+Y\+N\+T\+H\+\_\+\+P\+R\+O\+G}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+\+E\+R\+R\+O\+R\+\_\+\+C\+M\+D\+F\+S\+\_\+\+S\+Y\+N\+T\+H\+\_\+\+P\+R\+O\+G}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+E\+R\+R\+O\+R\+\_\+\+C\+M\+D\+F\+S\+\_\+\+S\+Y\+N\+T\+H\+\_\+\+P\+R\+O\+G~(-\/257)}\label{_r_f_8h_a40a0b1b81a2bebefb91b952d750634dc}
+
+
+Synthesizer error with C\+M\+D\+\_\+\+F\+S. Used in error callback. If this error occurred in error callback, user needs to resend C\+M\+D\+\_\+\+Fs to recover. See errata S\+W\+R\+A521. 
+
+
+
+\subsubsection{Typedef Documentation}
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+Op@{R\+F\+\_\+\+Op}}
+\index{R\+F\+\_\+\+Op@{R\+F\+\_\+\+Op}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+\+Op}]{\setlength{\rightskip}{0pt plus 5cm}typedef rfc\+\_\+radio\+Op\+\_\+t {\bf R\+F\+\_\+\+Op}}\label{_r_f_8h_a47ea3dea78019340e8f8ceb854de5f02}
+
+
+Alias for the data type of the header common to all radio operations. 
+
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+Event\+Mask@{R\+F\+\_\+\+Event\+Mask}}
+\index{R\+F\+\_\+\+Event\+Mask@{R\+F\+\_\+\+Event\+Mask}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+\+Event\+Mask}]{\setlength{\rightskip}{0pt plus 5cm}typedef uint64\+\_\+t {\bf R\+F\+\_\+\+Event\+Mask}}\label{_r_f_8h_a128c46e18dbbaa781abb7abafc35233a}
+
+
+Event mask type (construct mask with combinations of \hyperlink{_r_f_8h_a128c46e18dbbaa781abb7abafc35233a}{R\+F\+\_\+\+Event\+Mask}) 
+
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+Cmd\+Handle@{R\+F\+\_\+\+Cmd\+Handle}}
+\index{R\+F\+\_\+\+Cmd\+Handle@{R\+F\+\_\+\+Cmd\+Handle}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+\+Cmd\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef int16\+\_\+t {\bf R\+F\+\_\+\+Cmd\+Handle}}\label{_r_f_8h_acab1f56c62a9fd1ad0a91a46b6da23f1}
+
+
+A command handle that is returned from \hyperlink{_r_f_8h_a2b0ee444fcb74917df94eefea804ecbb}{R\+F\+\_\+post\+Cmd()} Used by \hyperlink{_r_f_8h_a91c1cb2508311f822acbc08ace568a83}{R\+F\+\_\+pend\+Cmd()} and \hyperlink{_r_f_8h_ae3ff5c614f4a63cb4e79c90f9229149a}{R\+F\+\_\+flush\+Cmd()}. A negative value indicates an error. 
+
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{R\+F\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\index{R\+F\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{R\+F\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf R\+F\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}  {\bf R\+F\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}\label{_r_f_8h_ac2049f9479d04c217097ca43ffe07c14}
+
+
+R\+F Hardware attributes. 
+
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+Handle@{R\+F\+\_\+\+Handle}}
+\index{R\+F\+\_\+\+Handle@{R\+F\+\_\+\+Handle}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf R\+F\+\_\+\+Object}$\ast$ {\bf R\+F\+\_\+\+Handle}}\label{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}
+
+
+A handle that is returned from a \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} call Used for further R\+F client interaction with the R\+F driver. 
+
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+Callback@{R\+F\+\_\+\+Callback}}
+\index{R\+F\+\_\+\+Callback@{R\+F\+\_\+\+Callback}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+\+Callback}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ R\+F\+\_\+\+Callback) ({\bf R\+F\+\_\+\+Handle} h, {\bf R\+F\+\_\+\+Cmd\+Handle} ch, {\bf R\+F\+\_\+\+Event\+Mask} e)}\label{_r_f_8h_a4d2ce6dc70b0f329dc5e249ec10c574a}
+
+
+R\+F callback function pointer type R\+F callbacks can occur at the completion of posted R\+F operation (chain). The callback is called from S\+W\+I context and provides the relevant \hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle}, relevant radio operation command handle \hyperlink{_r_f_8h_acab1f56c62a9fd1ad0a91a46b6da23f1}{R\+F\+\_\+\+Cmd\+Handle}, as well as an \hyperlink{_r_f_8h_a128c46e18dbbaa781abb7abafc35233a}{R\+F\+\_\+\+Event\+Mask} that indicates what has occurred. in the case of error callback the \hyperlink{_r_f_8h_acab1f56c62a9fd1ad0a91a46b6da23f1}{R\+F\+\_\+\+Cmd\+Handle} will indicate the error code. 
+
+
+
+\subsubsection{Enumeration Type Documentation}
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+Priority@{R\+F\+\_\+\+Priority}}
+\index{R\+F\+\_\+\+Priority@{R\+F\+\_\+\+Priority}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf R\+F\+\_\+\+Priority}}\label{_r_f_8h_ae5f9a893d178e64e6d0a7a783ea06e32}
+
+
+Priority of R\+F commands. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{R\+F\+\_\+\+Priority\+Highest@{R\+F\+\_\+\+Priority\+Highest}!R\+F.\+h@{R\+F.\+h}}\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+Priority\+Highest@{R\+F\+\_\+\+Priority\+Highest}}\item[{\em 
+R\+F\+\_\+\+Priority\+Highest\label{_r_f_8h_ae5f9a893d178e64e6d0a7a783ea06e32a5d716915abbe5a6fad3469c339f4db15}
+}]Highest, use sparingly. \index{R\+F\+\_\+\+Priority\+High@{R\+F\+\_\+\+Priority\+High}!R\+F.\+h@{R\+F.\+h}}\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+Priority\+High@{R\+F\+\_\+\+Priority\+High}}\item[{\em 
+R\+F\+\_\+\+Priority\+High\label{_r_f_8h_ae5f9a893d178e64e6d0a7a783ea06e32a8d14673dbb643f2e9571fb5e34aad23d}
+}]High, time-\/critical commands in synchronous protocols. \index{R\+F\+\_\+\+Priority\+Normal@{R\+F\+\_\+\+Priority\+Normal}!R\+F.\+h@{R\+F.\+h}}\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+Priority\+Normal@{R\+F\+\_\+\+Priority\+Normal}}\item[{\em 
+R\+F\+\_\+\+Priority\+Normal\label{_r_f_8h_ae5f9a893d178e64e6d0a7a783ea06e32a301d2e5af295d52039b52709952a1c47}
+}]Normal, usually best choice. \end{description}
+\end{Desc}
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+Stat@{R\+F\+\_\+\+Stat}}
+\index{R\+F\+\_\+\+Stat@{R\+F\+\_\+\+Stat}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+\+Stat}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf R\+F\+\_\+\+Stat}}\label{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988f}
+
+
+R\+F Stat reported as return value for R\+F\+\_\+rat\+Cmd(), \hyperlink{_r_f_8h_ac3fe0d39243fb6bbefe0216d958a6779}{R\+F\+\_\+get\+Rssi()}. R\+F\+\_\+set\+Tx\+Pwr(), \hyperlink{_r_f_8h_aabe22ceae13a372be4ba135318aa849a}{R\+F\+\_\+cancel\+Cmd()} 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{R\+F\+\_\+\+Stat\+Busy\+Error@{R\+F\+\_\+\+Stat\+Busy\+Error}!R\+F.\+h@{R\+F.\+h}}\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+Stat\+Busy\+Error@{R\+F\+\_\+\+Stat\+Busy\+Error}}\item[{\em 
+R\+F\+\_\+\+Stat\+Busy\+Error\label{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988faa79a13241903199d3bc25c8f06407de9}
+}]Cmd not executed as R\+F driver is busy. \index{R\+F\+\_\+\+Stat\+Radio\+Inactive\+Error@{R\+F\+\_\+\+Stat\+Radio\+Inactive\+Error}!R\+F.\+h@{R\+F.\+h}}\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+Stat\+Radio\+Inactive\+Error@{R\+F\+\_\+\+Stat\+Radio\+Inactive\+Error}}\item[{\em 
+R\+F\+\_\+\+Stat\+Radio\+Inactive\+Error\label{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988fa80848b887667038bbfa4a2d14e83b193}
+}]Cmd not executed as radio is inactive. \index{R\+F\+\_\+\+Stat\+Cmd\+Done\+Error@{R\+F\+\_\+\+Stat\+Cmd\+Done\+Error}!R\+F.\+h@{R\+F.\+h}}\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+Stat\+Cmd\+Done\+Error@{R\+F\+\_\+\+Stat\+Cmd\+Done\+Error}}\item[{\em 
+R\+F\+\_\+\+Stat\+Cmd\+Done\+Error\label{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988fa612e247f325ff085321b8e243f6b1d3d}
+}]Cmd done but with error in C\+M\+D\+S\+T\+A. \index{R\+F\+\_\+\+Stat\+Invalid\+Params\+Error@{R\+F\+\_\+\+Stat\+Invalid\+Params\+Error}!R\+F.\+h@{R\+F.\+h}}\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+Stat\+Invalid\+Params\+Error@{R\+F\+\_\+\+Stat\+Invalid\+Params\+Error}}\item[{\em 
+R\+F\+\_\+\+Stat\+Invalid\+Params\+Error\label{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988face124dc75bad005452467d6f29351301}
+}]Invalid A\+P\+I parameters. \index{R\+F\+\_\+\+Stat\+Error@{R\+F\+\_\+\+Stat\+Error}!R\+F.\+h@{R\+F.\+h}}\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+Stat\+Error@{R\+F\+\_\+\+Stat\+Error}}\item[{\em 
+R\+F\+\_\+\+Stat\+Error\label{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988fac071b8de44aabb8e2354432ce1146b86}
+}]General error specifier. \index{R\+F\+\_\+\+Stat\+Cmd\+Done\+Success@{R\+F\+\_\+\+Stat\+Cmd\+Done\+Success}!R\+F.\+h@{R\+F.\+h}}\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+Stat\+Cmd\+Done\+Success@{R\+F\+\_\+\+Stat\+Cmd\+Done\+Success}}\item[{\em 
+R\+F\+\_\+\+Stat\+Cmd\+Done\+Success\label{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988faa110d04edae5a85a12906d729f97de87}
+}]Cmd done and Successful. \index{R\+F\+\_\+\+Stat\+Cmd\+Sch@{R\+F\+\_\+\+Stat\+Cmd\+Sch}!R\+F.\+h@{R\+F.\+h}}\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+Stat\+Cmd\+Sch@{R\+F\+\_\+\+Stat\+Cmd\+Sch}}\item[{\em 
+R\+F\+\_\+\+Stat\+Cmd\+Sch\label{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988fabf33d4930fd89cd5ca80220da258d31c}
+}]Cmd scheduled for execution. \index{R\+F\+\_\+\+Stat\+Success@{R\+F\+\_\+\+Stat\+Success}!R\+F.\+h@{R\+F.\+h}}\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+Stat\+Success@{R\+F\+\_\+\+Stat\+Success}}\item[{\em 
+R\+F\+\_\+\+Stat\+Success\label{_r_f_8h_afdc219ddabc8427ecd552a6c78d9988faa98bd78e437864464cdb2aca1d3e024d}
+}]A\+P\+I ran successfully. \end{description}
+\end{Desc}
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+Info\+Type@{R\+F\+\_\+\+Info\+Type}}
+\index{R\+F\+\_\+\+Info\+Type@{R\+F\+\_\+\+Info\+Type}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+\+Info\+Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf R\+F\+\_\+\+Info\+Type}}\label{_r_f_8h_a22596109459422a7a4d4f386dffbb8fa}
+
+
+R\+F\+\_\+get\+Params\+Type contains the options available for using the R\+F\+\_\+get\+Params() 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{R\+F\+\_\+\+G\+E\+T\+\_\+\+C\+U\+R\+R\+\_\+\+C\+M\+D@{R\+F\+\_\+\+G\+E\+T\+\_\+\+C\+U\+R\+R\+\_\+\+C\+M\+D}!R\+F.\+h@{R\+F.\+h}}\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+G\+E\+T\+\_\+\+C\+U\+R\+R\+\_\+\+C\+M\+D@{R\+F\+\_\+\+G\+E\+T\+\_\+\+C\+U\+R\+R\+\_\+\+C\+M\+D}}\item[{\em 
+R\+F\+\_\+\+G\+E\+T\+\_\+\+C\+U\+R\+R\+\_\+\+C\+M\+D\label{_r_f_8h_a22596109459422a7a4d4f386dffbb8faa4a4b88384acfaa135421ad57557140e6}
+}]Get R\+F\+\_\+\+Cmd\+Handle for current cmd. \index{R\+F\+\_\+\+G\+E\+T\+\_\+\+A\+V\+A\+I\+L\+\_\+\+R\+A\+T\+\_\+\+C\+H@{R\+F\+\_\+\+G\+E\+T\+\_\+\+A\+V\+A\+I\+L\+\_\+\+R\+A\+T\+\_\+\+C\+H}!R\+F.\+h@{R\+F.\+h}}\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+G\+E\+T\+\_\+\+A\+V\+A\+I\+L\+\_\+\+R\+A\+T\+\_\+\+C\+H@{R\+F\+\_\+\+G\+E\+T\+\_\+\+A\+V\+A\+I\+L\+\_\+\+R\+A\+T\+\_\+\+C\+H}}\item[{\em 
+R\+F\+\_\+\+G\+E\+T\+\_\+\+A\+V\+A\+I\+L\+\_\+\+R\+A\+T\+\_\+\+C\+H\label{_r_f_8h_a22596109459422a7a4d4f386dffbb8faa19ebdcf12bef1328ce40fec49c0f6864}
+}]Get bitmap for the avail R\+A\+T channel. \index{R\+F\+\_\+\+G\+E\+T\+\_\+\+R\+A\+D\+I\+O\+\_\+\+S\+T\+A\+T\+E@{R\+F\+\_\+\+G\+E\+T\+\_\+\+R\+A\+D\+I\+O\+\_\+\+S\+T\+A\+T\+E}!R\+F.\+h@{R\+F.\+h}}\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+G\+E\+T\+\_\+\+R\+A\+D\+I\+O\+\_\+\+S\+T\+A\+T\+E@{R\+F\+\_\+\+G\+E\+T\+\_\+\+R\+A\+D\+I\+O\+\_\+\+S\+T\+A\+T\+E}}\item[{\em 
+R\+F\+\_\+\+G\+E\+T\+\_\+\+R\+A\+D\+I\+O\+\_\+\+S\+T\+A\+T\+E\label{_r_f_8h_a22596109459422a7a4d4f386dffbb8faa51ac83691ed47bb591818e2e34e49d44}
+}]Get Radio state 0\+: Radio O\+F\+F, 1\+: Radio O\+N. \end{description}
+\end{Desc}
+
+
+\subsubsection{Function Documentation}
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+open@{R\+F\+\_\+open}}
+\index{R\+F\+\_\+open@{R\+F\+\_\+open}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}{\bf R\+F\+\_\+\+Handle} R\+F\+\_\+open (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+F\+\_\+\+Object} $\ast$}]{p\+Obj, }
+\item[{{\bf R\+F\+\_\+\+Mode} $\ast$}]{p\+Rf\+Mode, }
+\item[{{\bf R\+F\+\_\+\+Radio\+Setup} $\ast$}]{p\+Op\+Setup, }
+\item[{{\bf R\+F\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}
+
+
+Open client connection to R\+F driver. 
+
+Allows a R\+F client (high-\/level driver or application) to request access to R\+F hardware.~\newline
+
+
+\begin{DoxyNote}{Note}
+Calling context \+: Task 
+
+This A\+P\+I does not start the radio. 
+
+For dual mode operation, rf\+Mode in the \hyperlink{struct_r_f___mode}{R\+F\+\_\+\+Mode} struct must be set to R\+F\+\_\+\+M\+O\+D\+E\+\_\+\+M\+U\+L\+T\+I\+P\+L\+E.
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em p\+Obj} & Pointer to a \hyperlink{struct_r_f___object}{R\+F\+\_\+\+Object} that will hold the state for this R\+F client. The object must be in persistent and writeable memory \\
+\hline
+{\em p\+Rf\+Mode} & Pointer to a \hyperlink{struct_r_f___mode}{R\+F\+\_\+\+Mode} struct holding patch information \\
+\hline
+{\em p\+Op\+Setup} & Pointer to the setup command used in this R\+F configuration. This is used by R\+F Driver during power-\/up so the user should allocated setup command in persistent memory. \\
+\hline
+{\em params} & Pointer to an \hyperlink{struct_r_f___params}{R\+F\+\_\+\+Params} object that is initialized with desired R\+F parameters. Can be set to N\+U\+L\+L for defaults \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A handle for further R\+F driver calls or N\+U\+L\+L if a client connection was not possible or the supplied parameters invalid 
+\end{DoxyReturn}
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+close@{R\+F\+\_\+close}}
+\index{R\+F\+\_\+close@{R\+F\+\_\+close}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}void R\+F\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+F\+\_\+\+Handle}}]{h}
+\end{DoxyParamCaption}
+)}\label{_r_f_8h_a9ff7e64561f7aa5526837521bceb5f88}
+
+
+Close client connection to R\+F driver. 
+
+Allows a R\+F client (high-\/level driver or application) to close its connection to the R\+F driver.
+
+\begin{DoxyNote}{Note}
+Calling context \+: Task
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em h} & Handle previously returned by \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} \\
+\hline
+\end{DoxyParams}
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+get\+Current\+Time@{R\+F\+\_\+get\+Current\+Time}}
+\index{R\+F\+\_\+get\+Current\+Time@{R\+F\+\_\+get\+Current\+Time}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+get\+Current\+Time}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t R\+F\+\_\+get\+Current\+Time (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_r_f_8h_aedfdf0bdf0f64a071d50a6d78446fef4}
+
+
+Return current radio timer value. 
+
+If the radio is powered returns the current radio timer value, if not returns a conservative estimate of the current radio timer value
+
+\begin{DoxyNote}{Note}
+Calling context \+: Task/\+S\+W\+I/\+H\+W\+I
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+Current radio timer value 
+\end{DoxyReturn}
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+post\+Cmd@{R\+F\+\_\+post\+Cmd}}
+\index{R\+F\+\_\+post\+Cmd@{R\+F\+\_\+post\+Cmd}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+post\+Cmd}]{\setlength{\rightskip}{0pt plus 5cm}{\bf R\+F\+\_\+\+Cmd\+Handle} R\+F\+\_\+post\+Cmd (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+F\+\_\+\+Handle}}]{h, }
+\item[{{\bf R\+F\+\_\+\+Op} $\ast$}]{p\+Op, }
+\item[{{\bf R\+F\+\_\+\+Priority}}]{e\+Pri, }
+\item[{{\bf R\+F\+\_\+\+Callback}}]{p\+Cb, }
+\item[{{\bf R\+F\+\_\+\+Event\+Mask}}]{bm\+Event}
+\end{DoxyParamCaption}
+)}\label{_r_f_8h_a2b0ee444fcb74917df94eefea804ecbb}
+
+
+Post an R\+F operation (chain) to the command queue Post an \hyperlink{_r_f_8h_a47ea3dea78019340e8f8ceb854de5f02}{R\+F\+\_\+\+Op} to the R\+F command queue of the client with handle h. ~\newline
+ The command can be the first in a chain of R\+F operations or a standalone R\+F operation. If a chain of operations are posted they are treated atomically, i.\+e. either all or none of the chained operations are run. ~\newline
+ All operations must be posted in strictly increasing chronological order. Function returns immediately. ~\newline
+ To facilitate code optimization \hyperlink{_r_f_8h_a2b0ee444fcb74917df94eefea804ecbb}{R\+F\+\_\+post\+Cmd()} should be used when running in single client environment. It does not call the internal dual mode functions and the implementation are same across R\+F\+C\+C26\+X\+X\+\_\+multi\+Mode.\+c and R\+F\+C\+C26\+X\+X\+\_\+single\+Mode.\+c files.~\newline
+ Alternately \hyperlink{_r_f_8h_a5e7f25943b5f3942bf4c09cb87f9aa76}{R\+F\+\_\+schedule\+Cmd()} can be used in single or multi client environment. ~\newline
+ 
+
+Limitations apply to the operations posted\+:
+\begin{DoxyItemize}
+\item The operation must be in the set supported in the chosen radio mode when \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} was called
+\item Only a subset of radio operations are supported
+\item Only some of the trigger modes are supported
+\begin{DoxyItemize}
+\item T\+R\+I\+G\+\_\+\+N\+O\+W, T\+R\+I\+G\+\_\+\+A\+B\+S\+T\+I\+M\+E
+\end{DoxyItemize}
+\item Only some of the conditional execution modes are supported
+\begin{DoxyItemize}
+\item C\+O\+N\+D\+\_\+\+A\+L\+W\+A\+Y\+S, C\+O\+N\+D\+\_\+\+N\+E\+V\+E\+R
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+\begin{DoxyNote}{Note}
+Calling context \+: Task/\+S\+W\+I
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em h} & Handle previously returned by \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} \\
+\hline
+{\em p\+Op} & Pointer to the \hyperlink{_r_f_8h_a47ea3dea78019340e8f8ceb854de5f02}{R\+F\+\_\+\+Op}. Must normally be in persistent and writeable memory \\
+\hline
+{\em e\+Pri} & Priority of this R\+F command (used for arbitration in multi-\/client systems) \\
+\hline
+{\em p\+Cb} & Callback function called upon command completion (and some other events). If \hyperlink{_r_f_8h_a2b0ee444fcb74917df94eefea804ecbb}{R\+F\+\_\+post\+Cmd()} fails no callback is made \\
+\hline
+{\em bm\+Event} & Bitmask of events that will trigger the callback. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A handle to the R\+F command. Return value of R\+F\+\_\+\+A\+L\+L\+O\+C\+\_\+\+E\+R\+R\+O\+R indicates error. 
+\end{DoxyReturn}
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+schedule\+Cmd@{R\+F\+\_\+schedule\+Cmd}}
+\index{R\+F\+\_\+schedule\+Cmd@{R\+F\+\_\+schedule\+Cmd}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+schedule\+Cmd}]{\setlength{\rightskip}{0pt plus 5cm}{\bf R\+F\+\_\+\+Cmd\+Handle} R\+F\+\_\+schedule\+Cmd (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+F\+\_\+\+Handle}}]{h, }
+\item[{{\bf R\+F\+\_\+\+Op} $\ast$}]{p\+Op, }
+\item[{{\bf R\+F\+\_\+\+Schedule\+Cmd\+Params} $\ast$}]{p\+Sch\+Params, }
+\item[{{\bf R\+F\+\_\+\+Callback}}]{p\+Cb, }
+\item[{{\bf R\+F\+\_\+\+Event\+Mask}}]{bm\+Event}
+\end{DoxyParamCaption}
+)}\label{_r_f_8h_a5e7f25943b5f3942bf4c09cb87f9aa76}
+
+
+Schedule an R\+F operation (chain) to the command queue Schedule an \hyperlink{_r_f_8h_a47ea3dea78019340e8f8ceb854de5f02}{R\+F\+\_\+\+Op} to the R\+F command queue of the client with handle h. ~\newline
+ The command can be the first in a chain of R\+F operations or a standalone R\+F operation. If a chain of operations are posted they are treated atomically, i.\+e. either all or none of the chained operations are run. ~\newline
+ All operations must be posted in strictly increasing chronological order. Function returns immediately. ~\newline
+ 
+
+Limitations apply to the operations posted\+:
+\begin{DoxyItemize}
+\item The operation must be in the set supported in the chosen radio mode when \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} was called
+\item Only a subset of radio operations are supported
+\item Only some of the trigger modes are supported with potential power saving (T\+R\+I\+G\+\_\+\+N\+O\+W, T\+R\+I\+G\+\_\+\+A\+B\+S\+T\+I\+M\+E)
+\end{DoxyItemize}
+
+\begin{DoxyNote}{Note}
+Calling context \+: Task/\+S\+W\+I
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em h} & Handle previously returned by \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} \\
+\hline
+{\em p\+Op} & Pointer to the \hyperlink{_r_f_8h_a47ea3dea78019340e8f8ceb854de5f02}{R\+F\+\_\+\+Op}. Must normally be in persistent and writeable memory \\
+\hline
+{\em p\+Sch\+Params} & Pointer to the schdule command parameter structure \\
+\hline
+{\em p\+Cb} & Callback function called upon command completion (and some other events). If \hyperlink{_r_f_8h_a5e7f25943b5f3942bf4c09cb87f9aa76}{R\+F\+\_\+schedule\+Cmd()} fails no callback is made \\
+\hline
+{\em bm\+Event} & Bitmask of events that will trigger the callback. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A handle to the R\+F command. Return value of R\+F\+\_\+\+A\+L\+L\+O\+C\+\_\+\+E\+R\+R\+O\+R indicates error. 
+\end{DoxyReturn}
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+pend\+Cmd@{R\+F\+\_\+pend\+Cmd}}
+\index{R\+F\+\_\+pend\+Cmd@{R\+F\+\_\+pend\+Cmd}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+pend\+Cmd}]{\setlength{\rightskip}{0pt plus 5cm}{\bf R\+F\+\_\+\+Event\+Mask} R\+F\+\_\+pend\+Cmd (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+F\+\_\+\+Handle}}]{h, }
+\item[{{\bf R\+F\+\_\+\+Cmd\+Handle}}]{ch, }
+\item[{{\bf R\+F\+\_\+\+Event\+Mask}}]{bm\+Event}
+\end{DoxyParamCaption}
+)}\label{_r_f_8h_a91c1cb2508311f822acbc08ace568a83}
+
+
+Wait for posted command to complete Wait until completion of R\+F command identified by handle ch for client identified by handle h to complete. ~\newline
+ Some R\+F operations (or chains of operations) use additional events during \hyperlink{_r_f_8h_a2b0ee444fcb74917df94eefea804ecbb}{R\+F\+\_\+post\+Cmd()} which, if enabled in event mask bm\+Event for the \hyperlink{_r_f_8h_a91c1cb2508311f822acbc08ace568a83}{R\+F\+\_\+pend\+Cmd()} will make the \hyperlink{_r_f_8h_a91c1cb2508311f822acbc08ace568a83}{R\+F\+\_\+pend\+Cmd()} return early, when that event occurs. In this case, multiple calls to \hyperlink{_r_f_8h_a91c1cb2508311f822acbc08ace568a83}{R\+F\+\_\+pend\+Cmd()} for a single command can be made. ~\newline
+ If \hyperlink{_r_f_8h_a91c1cb2508311f822acbc08ace568a83}{R\+F\+\_\+pend\+Cmd()} is called for a command that registered a callback function it will take precedence and the callback function will never be called. ~\newline
+ 
+
+\begin{DoxyNote}{Note}
+Calling context \+: Task 
+
+Only one call to \hyperlink{_r_f_8h_a91c1cb2508311f822acbc08ace568a83}{R\+F\+\_\+pend\+Cmd()} or \hyperlink{_r_f_8h_a248bebdd1d0bd6e0812cf18116987e54}{R\+F\+\_\+run\+Cmd()} can be made at a time for each client 
+
+Returns immediately if command has already run or has been aborted/cancelled
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em h} & Handle previously returned by \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} \\
+\hline
+{\em ch} & Command handle previously returned by \hyperlink{_r_f_8h_a2b0ee444fcb74917df94eefea804ecbb}{R\+F\+\_\+post\+Cmd()}. \\
+\hline
+{\em bm\+Event} & Bitmask of events that make \hyperlink{_r_f_8h_a91c1cb2508311f822acbc08ace568a83}{R\+F\+\_\+pend\+Cmd()} return. The command done event can not be masked away. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The relevant R\+F\+\_\+\+Event\+Mask (including R\+F\+\_\+\+Event\+Cmd\+Done) for the command or last command in a chain 
+\end{DoxyReturn}
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+run\+Cmd@{R\+F\+\_\+run\+Cmd}}
+\index{R\+F\+\_\+run\+Cmd@{R\+F\+\_\+run\+Cmd}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+run\+Cmd}]{\setlength{\rightskip}{0pt plus 5cm}{\bf R\+F\+\_\+\+Event\+Mask} R\+F\+\_\+run\+Cmd (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+F\+\_\+\+Handle}}]{h, }
+\item[{{\bf R\+F\+\_\+\+Op} $\ast$}]{p\+Op, }
+\item[{{\bf R\+F\+\_\+\+Priority}}]{e\+Pri, }
+\item[{{\bf R\+F\+\_\+\+Callback}}]{p\+Cb, }
+\item[{{\bf R\+F\+\_\+\+Event\+Mask}}]{bm\+Event}
+\end{DoxyParamCaption}
+)}\label{_r_f_8h_a248bebdd1d0bd6e0812cf18116987e54}
+
+
+Runs synchronously a (chain of) R\+F operation(s) Allows a (chain of) operation(s) to be posted to the command queue and then waits for it to complete. ~\newline
+ A command is completed if one of the R\+F\+\_\+\+Event\+Last\+Cmd\+Done, R\+F\+\_\+\+Event\+Cmd\+Cancelled, R\+F\+\_\+\+Event\+Cmd\+Aborted, R\+F\+\_\+\+Event\+Cmd\+Stopped or R\+F\+\_\+\+Event\+Cmd\+Error occured. 
+
+\begin{DoxyNote}{Note}
+Calling context \+: Task 
+
+Only one call to \hyperlink{_r_f_8h_a91c1cb2508311f822acbc08ace568a83}{R\+F\+\_\+pend\+Cmd()} or \hyperlink{_r_f_8h_a248bebdd1d0bd6e0812cf18116987e54}{R\+F\+\_\+run\+Cmd()} can be made at a time for each client
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em h} & Handle previously returned by \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} \\
+\hline
+{\em p\+Op} & Pointer to the \hyperlink{_r_f_8h_a47ea3dea78019340e8f8ceb854de5f02}{R\+F\+\_\+\+Op}. Must normally be in persistent and writeable memory \\
+\hline
+{\em e\+Pri} & Priority of this R\+F command (used for arbitration in multi-\/client systems) \\
+\hline
+{\em p\+Cb} & Callback function called upon command completion (and some other events). If \hyperlink{_r_f_8h_a248bebdd1d0bd6e0812cf18116987e54}{R\+F\+\_\+run\+Cmd()} fails no callback is made \\
+\hline
+{\em bm\+Event} & Bitmask of events that will trigger the callback. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The relevant commmand completed event. 
+\end{DoxyReturn}
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+cancel\+Cmd@{R\+F\+\_\+cancel\+Cmd}}
+\index{R\+F\+\_\+cancel\+Cmd@{R\+F\+\_\+cancel\+Cmd}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+cancel\+Cmd}]{\setlength{\rightskip}{0pt plus 5cm}{\bf R\+F\+\_\+\+Stat} R\+F\+\_\+cancel\+Cmd (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+F\+\_\+\+Handle}}]{h, }
+\item[{{\bf R\+F\+\_\+\+Cmd\+Handle}}]{ch, }
+\item[{uint8\+\_\+t}]{mode}
+\end{DoxyParamCaption}
+)}\label{_r_f_8h_aabe22ceae13a372be4ba135318aa849a}
+
+
+Abort/stop/cancel single command in command queue If command is running, aborts/stops it and posts callback for the aborted/stopped command. ~\newline
+ If command has not yet run, cancels it it and posts callback for the cancelled command. ~\newline
+ If command has already run or been aborted/stopped/cancelled, has no effect.~\newline
+ 
+
+\begin{DoxyNote}{Note}
+Calling context \+: Task/\+S\+W\+I
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em h} & Handle previously returned by \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} \\
+\hline
+{\em ch} & Command handle previously returned by \hyperlink{_r_f_8h_a2b0ee444fcb74917df94eefea804ecbb}{R\+F\+\_\+post\+Cmd()}. \\
+\hline
+{\em mode} & 1\+: Stop gracefully, 0\+: abort abruptly \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+R\+F\+\_\+\+Stat indicates if command was successfully completed 
+\end{DoxyReturn}
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+flush\+Cmd@{R\+F\+\_\+flush\+Cmd}}
+\index{R\+F\+\_\+flush\+Cmd@{R\+F\+\_\+flush\+Cmd}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+flush\+Cmd}]{\setlength{\rightskip}{0pt plus 5cm}{\bf R\+F\+\_\+\+Stat} R\+F\+\_\+flush\+Cmd (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+F\+\_\+\+Handle}}]{h, }
+\item[{{\bf R\+F\+\_\+\+Cmd\+Handle}}]{ch, }
+\item[{uint8\+\_\+t}]{mode}
+\end{DoxyParamCaption}
+)}\label{_r_f_8h_ae3ff5c614f4a63cb4e79c90f9229149a}
+
+
+Abort/stop/cancel command and any subsequent commands in command queue If command is running, aborts/stops it and then cancels all later commands in queue.~\newline
+ If command has not yet run, cancels it and all later commands in queue.~\newline
+ If command has already run or been aborted/stopped/cancelled, has no effect.~\newline
+ 
+
+The callbacks for all cancelled commands are issued in chronological order.~\newline
+
+
+\begin{DoxyNote}{Note}
+Calling context \+: Task/\+S\+W\+I
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em h} & Handle previously returned by \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} \\
+\hline
+{\em ch} & Command handle previously returned by \hyperlink{_r_f_8h_a2b0ee444fcb74917df94eefea804ecbb}{R\+F\+\_\+post\+Cmd()}. \\
+\hline
+{\em mode} & 1\+: Stop gracefully, 0\+: abort abruptly \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+R\+F\+\_\+\+Stat indicates if command was successfully completed 
+\end{DoxyReturn}
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+run\+Immediate\+Cmd@{R\+F\+\_\+run\+Immediate\+Cmd}}
+\index{R\+F\+\_\+run\+Immediate\+Cmd@{R\+F\+\_\+run\+Immediate\+Cmd}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+run\+Immediate\+Cmd}]{\setlength{\rightskip}{0pt plus 5cm}{\bf R\+F\+\_\+\+Stat} R\+F\+\_\+run\+Immediate\+Cmd (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+F\+\_\+\+Handle}}]{h, }
+\item[{uint32\+\_\+t $\ast$}]{p\+Cmd\+Struct}
+\end{DoxyParamCaption}
+)}\label{_r_f_8h_a6159b409f8d99954529a8ebf6f98cd85}
+
+
+Send any Immediate command. ~\newline
+ 
+
+Immediate Comamnd is send to R\+D\+B\+E\+L\+L, if radio is active and the R\+F\+\_\+\+Handle points to the current client. ~\newline
+ In other appropriate R\+F\+\_\+\+Stat values are returned. ~\newline
+
+
+\begin{DoxyNote}{Note}
+Calling context \+: Task/\+S\+W\+I/\+H\+W\+I
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em h} & Handle previously returned by \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} \\
+\hline
+{\em p\+Cmd\+Struct} & Pointer to the immediate command structure \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+R\+F\+\_\+\+Stat indicates if command was successfully completed 
+\end{DoxyReturn}
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+run\+Direct\+Cmd@{R\+F\+\_\+run\+Direct\+Cmd}}
+\index{R\+F\+\_\+run\+Direct\+Cmd@{R\+F\+\_\+run\+Direct\+Cmd}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+run\+Direct\+Cmd}]{\setlength{\rightskip}{0pt plus 5cm}{\bf R\+F\+\_\+\+Stat} R\+F\+\_\+run\+Direct\+Cmd (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+F\+\_\+\+Handle}}]{h, }
+\item[{uint32\+\_\+t}]{cmd}
+\end{DoxyParamCaption}
+)}\label{_r_f_8h_aafce617271300f2bee1a52ebda6d654e}
+
+
+Send any Direct command. ~\newline
+ 
+
+Direct Comamnd value is send to R\+D\+B\+E\+L\+L immediately, if radio is active and the R\+F\+\_\+\+Handle point to the current client. ~\newline
+ In other appropriate R\+F\+\_\+\+Stat values are returned. ~\newline
+
+
+\begin{DoxyNote}{Note}
+Calling context \+: Task/\+S\+W\+I/\+H\+W\+I
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em h} & Handle previously returned by \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} \\
+\hline
+{\em cmd} & Direct command value. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+R\+F\+\_\+\+Stat indicates if command was successfully completed. 
+\end{DoxyReturn}
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+yield@{R\+F\+\_\+yield}}
+\index{R\+F\+\_\+yield@{R\+F\+\_\+yield}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+yield}]{\setlength{\rightskip}{0pt plus 5cm}void R\+F\+\_\+yield (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+F\+\_\+\+Handle}}]{h}
+\end{DoxyParamCaption}
+)}\label{_r_f_8h_a299ada7963c727a40466d7d1bb7296a3}
+
+
+Signal that radio client is not going to issue more commands in a while. ~\newline
+ 
+
+Hint to R\+F driver that, irrespective of inactivity timeout, no new further commands will be issued for a while and thus the radio can be powered down at the earliest convenience.~\newline
+
+
+\begin{DoxyNote}{Note}
+Calling context \+: Task
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em h} & Handle previously returned by \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} \\
+\hline
+\end{DoxyParams}
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+\+Params\+\_\+init@{R\+F\+\_\+\+Params\+\_\+init}}
+\index{R\+F\+\_\+\+Params\+\_\+init@{R\+F\+\_\+\+Params\+\_\+init}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+\+Params\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void R\+F\+\_\+\+Params\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+F\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_r_f_8h_ab956de3745437cb7a69c4edfb006434e}
+
+
+Function to initialize the \hyperlink{struct_r_f___params}{R\+F\+\_\+\+Params} struct to its defaults. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & An pointer to \hyperlink{struct_r_f___params}{R\+F\+\_\+\+Params} structure for initialization\\
+\hline
+\end{DoxyParams}
+Defaults values are\+: n\+Inactivity\+Timeout = B\+I\+O\+S\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R n\+Power\+Up\+Duration = R\+F\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+P\+O\+W\+E\+R\+\_\+\+U\+P\+\_\+\+T\+I\+M\+E b\+Power\+Up\+X\+O\+S\+C = T\+R\+U\+E \index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+get\+Info@{R\+F\+\_\+get\+Info}}
+\index{R\+F\+\_\+get\+Info@{R\+F\+\_\+get\+Info}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+get\+Info}]{\setlength{\rightskip}{0pt plus 5cm}{\bf R\+F\+\_\+\+Stat} R\+F\+\_\+get\+Info (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+F\+\_\+\+Handle}}]{h, }
+\item[{{\bf R\+F\+\_\+\+Info\+Type}}]{type, }
+\item[{{\bf R\+F\+\_\+\+Info\+Val} $\ast$}]{p\+Value}
+\end{DoxyParamCaption}
+)}\label{_r_f_8h_a4bd7985a3e0c5ad2b9f5e94aa945db63}
+
+
+Get value for some R\+F driver parameters. ~\newline
+ 
+
+\begin{DoxyNote}{Note}
+Calling context \+: Task/\+S\+W\+I/\+H\+W\+I
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em h} & Handle previously returned by \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} \\
+\hline
+{\em type} & Request value paramter defined by R\+F\+\_\+\+Info\+Type \\
+\hline
+{\em p\+Value} & Pointer to return parameter values specified by \hyperlink{union_r_f___info_val}{R\+F\+\_\+\+Info\+Val} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+R\+F\+\_\+\+Stat indicates if command was successfully completed 
+\end{DoxyReturn}
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+get\+Rssi@{R\+F\+\_\+get\+Rssi}}
+\index{R\+F\+\_\+get\+Rssi@{R\+F\+\_\+get\+Rssi}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+get\+Rssi}]{\setlength{\rightskip}{0pt plus 5cm}int8\+\_\+t R\+F\+\_\+get\+Rssi (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+F\+\_\+\+Handle}}]{h}
+\end{DoxyParamCaption}
+)}\label{_r_f_8h_ac3fe0d39243fb6bbefe0216d958a6779}
+
+
+Get rssi value. 
+
+\begin{DoxyNote}{Note}
+Calling context \+: Task/\+S\+W\+I/\+H\+W\+I
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em h} & Handle previously returned by \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+R\+S\+S\+I value. Return value of R\+F\+\_\+\+G\+E\+T\+\_\+\+R\+S\+S\+I\+\_\+\+E\+R\+R\+O\+R\+\_\+\+V\+A\+L indicates error case. 
+\end{DoxyReturn}
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+get\+Cmd\+Op@{R\+F\+\_\+get\+Cmd\+Op}}
+\index{R\+F\+\_\+get\+Cmd\+Op@{R\+F\+\_\+get\+Cmd\+Op}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+get\+Cmd\+Op}]{\setlength{\rightskip}{0pt plus 5cm}{\bf R\+F\+\_\+\+Op}$\ast$ R\+F\+\_\+get\+Cmd\+Op (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+F\+\_\+\+Handle}}]{h, }
+\item[{{\bf R\+F\+\_\+\+Cmd\+Handle}}]{cmd\+Hnd}
+\end{DoxyParamCaption}
+)}\label{_r_f_8h_abdde833057385980d0ae1b2c844b97b7}
+
+
+Get command structure pointer. 
+
+\begin{DoxyNote}{Note}
+Calling context \+: Task/\+S\+W\+I/\+H\+W\+I
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em h} & Handle previously returned by \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} \\
+\hline
+{\em cmd\+Hnd} & Command handle returned by \hyperlink{_r_f_8h_a2b0ee444fcb74917df94eefea804ecbb}{R\+F\+\_\+post\+Cmd()} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the command structure. 
+\end{DoxyReturn}
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+rat\+Compare@{R\+F\+\_\+rat\+Compare}}
+\index{R\+F\+\_\+rat\+Compare@{R\+F\+\_\+rat\+Compare}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+rat\+Compare}]{\setlength{\rightskip}{0pt plus 5cm}int8\+\_\+t R\+F\+\_\+rat\+Compare (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+F\+\_\+\+Handle}}]{h, }
+\item[{rfc\+\_\+\+C\+M\+D\+\_\+\+S\+E\+T\+\_\+\+R\+A\+T\+\_\+\+C\+M\+P\+\_\+t $\ast$}]{p\+Cmd\+Struct, }
+\item[{uint32\+\_\+t}]{compare\+Time, }
+\item[{{\bf R\+F\+\_\+\+Callback}}]{p\+Rat\+Cb}
+\end{DoxyParamCaption}
+)}\label{_r_f_8h_a8e24e90ec802b1d85d517e2075a4d129}
+
+
+Setup R\+A\+T compare, and callback when compare matches. Note radio needs to be on for R\+A\+T to operate. If radio is off, this A\+P\+I returns R\+F\+\_\+\+A\+L\+L\+O\+C\+\_\+\+E\+R\+R\+O\+R. 
+
+\begin{DoxyNote}{Note}
+Calling context \+: Task/\+S\+W\+I
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em h} & Handle previously returned by \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} \\
+\hline
+{\em p\+Cmd\+Struct} & Pointer to the R\+A\+T compare command structure. \\
+\hline
+{\em compare\+Time} & Compare time in R\+A\+T ticks \\
+\hline
+{\em p\+Rat\+Cb} & Callback function when capture event happens \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Allocated R\+A\+T channel. Returned value R\+F\+\_\+\+A\+L\+L\+O\+C\+\_\+\+E\+R\+R\+O\+R indicates error. 
+\end{DoxyReturn}
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+rat\+Capture@{R\+F\+\_\+rat\+Capture}}
+\index{R\+F\+\_\+rat\+Capture@{R\+F\+\_\+rat\+Capture}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+rat\+Capture}]{\setlength{\rightskip}{0pt plus 5cm}int8\+\_\+t R\+F\+\_\+rat\+Capture (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+F\+\_\+\+Handle}}]{h, }
+\item[{uint16\+\_\+t}]{config, }
+\item[{{\bf R\+F\+\_\+\+Callback}}]{p\+Rat\+Cb}
+\end{DoxyParamCaption}
+)}\label{_r_f_8h_a68013d7c8a5a0eed8add518b30679abe}
+
+
+Setup R\+A\+T capture, and callback when capture event happens. Note radio needs to be on for R\+A\+T to operate. If radio is off, this A\+P\+I returns R\+F\+\_\+\+A\+L\+L\+O\+C\+\_\+\+E\+R\+R\+O\+R. 
+
+\begin{DoxyNote}{Note}
+Calling context \+: Task/\+S\+W\+I
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em h} & Handle previously returned by \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} \\
+\hline
+{\em config} & Config field of R\+A\+T capture command structure \\
+\hline
+{\em p\+Rat\+Cb} & Callback function when capture event happens \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Allocated R\+A\+T channel. Returned value R\+F\+\_\+\+A\+L\+L\+O\+C\+\_\+\+E\+R\+R\+O\+R indicates error. 
+\end{DoxyReturn}
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+rat\+Hw\+Output@{R\+F\+\_\+rat\+Hw\+Output}}
+\index{R\+F\+\_\+rat\+Hw\+Output@{R\+F\+\_\+rat\+Hw\+Output}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+rat\+Hw\+Output}]{\setlength{\rightskip}{0pt plus 5cm}{\bf R\+F\+\_\+\+Stat} R\+F\+\_\+rat\+Hw\+Output (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+F\+\_\+\+Handle}}]{h, }
+\item[{uint16\+\_\+t}]{config}
+\end{DoxyParamCaption}
+)}\label{_r_f_8h_ad55cb257d42afee6a93016a37e7f9027}
+
+
+Setup R\+A\+T H\+W output. Note radio needs to be on for R\+A\+T to operate. If radio is off, this A\+P\+I returns R\+F\+\_\+\+A\+L\+L\+O\+C\+\_\+\+E\+R\+R\+O\+R. 
+
+\begin{DoxyNote}{Note}
+Calling context \+: Task/\+S\+W\+I
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em h} & Handle previously returned by \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} \\
+\hline
+{\em config} & Config field of R\+A\+T H\+W output command structure \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+R\+F\+\_\+\+Stat indicates if command was successfully completed 
+\end{DoxyReturn}
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+rat\+Disable\+Channel@{R\+F\+\_\+rat\+Disable\+Channel}}
+\index{R\+F\+\_\+rat\+Disable\+Channel@{R\+F\+\_\+rat\+Disable\+Channel}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+rat\+Disable\+Channel}]{\setlength{\rightskip}{0pt plus 5cm}{\bf R\+F\+\_\+\+Stat} R\+F\+\_\+rat\+Disable\+Channel (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+F\+\_\+\+Handle}}]{h, }
+\item[{int8\+\_\+t}]{rat\+Channel\+Num}
+\end{DoxyParamCaption}
+)}\label{_r_f_8h_a46e80aefad925b12066a7a94d532dc25}
+
+
+Disable a R\+A\+T channel. 
+
+\begin{DoxyNote}{Note}
+Calling context \+: Task/\+S\+W\+I
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em h} & Handle previously returned by \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} \\
+\hline
+{\em rat\+Channel\+Num} & R\+A\+T channel number to be disabled \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+R\+F\+\_\+\+Stat indicates if command was successfully completed. 
+\end{DoxyReturn}
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+control@{R\+F\+\_\+control}}
+\index{R\+F\+\_\+control@{R\+F\+\_\+control}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+control}]{\setlength{\rightskip}{0pt plus 5cm}{\bf R\+F\+\_\+\+Stat} R\+F\+\_\+control (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+F\+\_\+\+Handle}}]{h, }
+\item[{int8\+\_\+t}]{ctrl, }
+\item[{void $\ast$}]{args}
+\end{DoxyParamCaption}
+)}\label{_r_f_8h_aa31772d56afb197fd812d24aa6f07f1b}
+
+
+Set R\+F control parameters. 
+
+\begin{DoxyNote}{Note}
+Calling context \+: Task
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em h} & Handle previously returned by \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} \\
+\hline
+{\em ctrl} & Control codes \\
+\hline
+{\em args} & Pointer to control arguments \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+R\+F\+\_\+\+Stat indicates if A\+P\+I call was successfully completed. 
+\end{DoxyReturn}
+\index{R\+F.\+h@{R\+F.\+h}!R\+F\+\_\+request\+Access@{R\+F\+\_\+request\+Access}}
+\index{R\+F\+\_\+request\+Access@{R\+F\+\_\+request\+Access}!R\+F.\+h@{R\+F.\+h}}
+\paragraph[{R\+F\+\_\+request\+Access}]{\setlength{\rightskip}{0pt plus 5cm}{\bf R\+F\+\_\+\+Stat} R\+F\+\_\+request\+Access (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+F\+\_\+\+Handle}}]{h, }
+\item[{{\bf R\+F\+\_\+\+Access\+Params} $\ast$}]{p\+Params}
+\end{DoxyParamCaption}
+)}\label{_r_f_8h_a40a5506c05a11a3cd9d379cedad5b5d0}
+
+
+Request radio access ~\newline
+ Scope\+: 
+
+
+\begin{DoxyEnumerate}
+\item Only suppports request access which start immediately.~\newline
+
+\item The \hyperlink{struct_r_f___access_params}{R\+F\+\_\+\+Access\+Params} duration should be less than a pre-\/defined value R\+F\+\_\+\+R\+E\+Q\+\_\+\+A\+C\+C\+E\+S\+S\+\_\+\+M\+A\+X\+\_\+\+D\+U\+R\+\_\+\+U\+S in R\+F\+C\+C26\+X\+X\+\_\+multi\+Mode.\+c.~\newline
+
+\item The \hyperlink{struct_r_f___access_params}{R\+F\+\_\+\+Access\+Params} priority should be set R\+F\+\_\+\+Priority\+Highest.~\newline
+
+\item Single request for a client at anytime.~\newline
+
+\item Command from different client are blocked untill the radio access period is completed.~\newline
+
+\end{DoxyEnumerate}
+
+\begin{DoxyNote}{Note}
+Calling context \+: Task
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em h} & Handle previously returned by \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} \\
+\hline
+{\em p\+Params} & Pointer to R\+F\+\_\+\+Access\+Request parameters \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+R\+F\+\_\+\+Stat indicates if A\+P\+I call was successfully completed. 
+\end{DoxyReturn}

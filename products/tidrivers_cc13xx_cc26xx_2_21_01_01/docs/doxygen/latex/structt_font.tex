@@ -1,0 +1,63 @@
+\subsection{t\+Font Struct Reference}
+\label{structt_font}\index{t\+Font@{t\+Font}}
+
+
+This structure describes a font used for drawing text onto the screen.  
+
+
+
+
+{\ttfamily \#include $<$grlib.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \hyperlink{structt_font_ab3d9bf0e614df9f6cc7661e81ddb13bd}{uc\+Format}
+\item 
+uint8\+\_\+t \hyperlink{structt_font_adc3224837f7d59be6fdefe7fd897c8d2}{uc\+Max\+Width}
+\item 
+uint8\+\_\+t \hyperlink{structt_font_a50434353412200d8aff88751c9297a37}{uc\+Height}
+\item 
+uint8\+\_\+t \hyperlink{structt_font_a0602c7d3f8ffe42a5267d4d4ad004690}{uc\+Baseline}
+\item 
+uint16\+\_\+t \hyperlink{structt_font_ad6e46d3ebb0f14342270c9b68a78b39f}{pus\+Offset} \mbox{[}96\mbox{]}
+\begin{DoxyCompactList}\small\item\em The offset within puc\+Data to the data for each character in the font. \end{DoxyCompactList}\item 
+const uint8\+\_\+t $\ast$ \hyperlink{structt_font_a75e07a7c5ae975bc77534b2eebfb2b67}{puc\+Data}
+\begin{DoxyCompactList}\small\item\em A pointer to the data for the font. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+This structure describes a font used for drawing text onto the screen. 
+
+\subsubsection{Field Documentation}
+\index{t\+Font@{t\+Font}!uc\+Format@{uc\+Format}}
+\index{uc\+Format@{uc\+Format}!t\+Font@{t\+Font}}
+\paragraph[{uc\+Format}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t t\+Font\+::uc\+Format}\label{structt_font_ab3d9bf0e614df9f6cc7661e81ddb13bd}
+The format of the font. Can be one of F\+O\+N\+T\+\_\+\+F\+M\+T\+\_\+\+U\+N\+C\+O\+M\+P\+R\+E\+S\+S\+E\+D or F\+O\+N\+T\+\_\+\+F\+M\+T\+\_\+\+P\+I\+X\+E\+L\+\_\+\+R\+L\+E. \index{t\+Font@{t\+Font}!uc\+Max\+Width@{uc\+Max\+Width}}
+\index{uc\+Max\+Width@{uc\+Max\+Width}!t\+Font@{t\+Font}}
+\paragraph[{uc\+Max\+Width}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t t\+Font\+::uc\+Max\+Width}\label{structt_font_adc3224837f7d59be6fdefe7fd897c8d2}
+The maximum width of a character; this is the width of the widest character in the font, though any individual character may be narrower than this width. \index{t\+Font@{t\+Font}!uc\+Height@{uc\+Height}}
+\index{uc\+Height@{uc\+Height}!t\+Font@{t\+Font}}
+\paragraph[{uc\+Height}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t t\+Font\+::uc\+Height}\label{structt_font_a50434353412200d8aff88751c9297a37}
+The height of the character cell; this may be taller than the font data for the characters (to provide inter-\/line spacing). \index{t\+Font@{t\+Font}!uc\+Baseline@{uc\+Baseline}}
+\index{uc\+Baseline@{uc\+Baseline}!t\+Font@{t\+Font}}
+\paragraph[{uc\+Baseline}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t t\+Font\+::uc\+Baseline}\label{structt_font_a0602c7d3f8ffe42a5267d4d4ad004690}
+The offset between the top of the character cell and the baseline of the glyph. The baseline is the bottom row of a capital letter, below which only the descenders of the lower case letters occur. \index{t\+Font@{t\+Font}!pus\+Offset@{pus\+Offset}}
+\index{pus\+Offset@{pus\+Offset}!t\+Font@{t\+Font}}
+\paragraph[{pus\+Offset}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t t\+Font\+::pus\+Offset\mbox{[}96\mbox{]}}\label{structt_font_ad6e46d3ebb0f14342270c9b68a78b39f}
+
+
+The offset within puc\+Data to the data for each character in the font. 
+
+\index{t\+Font@{t\+Font}!puc\+Data@{puc\+Data}}
+\index{puc\+Data@{puc\+Data}!t\+Font@{t\+Font}}
+\paragraph[{puc\+Data}]{\setlength{\rightskip}{0pt plus 5cm}const uint8\+\_\+t$\ast$ t\+Font\+::puc\+Data}\label{structt_font_a75e07a7c5ae975bc77534b2eebfb2b67}
+
+
+A pointer to the data for the font. 
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{grlib_8h}{grlib.\+h}\end{DoxyCompactItemize}

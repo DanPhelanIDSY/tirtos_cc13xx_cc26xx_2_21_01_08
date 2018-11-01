@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.ti.rtsc.TIRTOSCC13XX_CC26XX.product.ui"
+      version="2.21.1.08"
+      label="TI-RTOS for CC13XX and CC26XX (IDE Client)"
+      provider-name="Texas Instruments">
+
+   <description url="http://processors.wiki.ti.com/index.php/TI-RTOS">
+TI-RTOS accelerates development schedules by eliminating the need to create basic system software functions from scratch. TI-RTOS scales from a real-time multitasking kernel - TI-RTOS Kernel (formerly known as SYS/BIOS) - to a complete RTOS solution including additional middleware components, device drivers and power management. The combination of TI-RTOS power management and TI's ultra low-power MCUs enables developers to design applications with much longer battery life. By providing essential system software components pre-tested and pre-integrated, TI-RTOS enables developers to focus on differentiating their application.
+   </description>
+
+   <copyright>
+Copyright (c) 2015, Texas Instruments Incorporated
+   </copyright>
+
+   <license>
+      Released under Eclipse public license(EPL).
+Visit http://www.eclipse.org/legal/epl-v10.html for details of license.
+   </license>
+
+
+   <plugin
+        id="com.ti.rtsc.TIRTOSCC13XX_CC26XX.product.ui"
+        version="2.21.1.08"
+        unpack="false" 
+   />  
+    
+
+</feature>

@@ -1,0 +1,52 @@
+\subsection{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control command and status codes}
+\label{group___u_s_b_m_s_c_h_fat_fs___c_o_n_t_r_o_l}\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control command and status codes@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control command and status codes}}
+Collaboration diagram for U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control command and status codes\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=309pt]{group___u_s_b_m_s_c_h_fat_fs___c_o_n_t_r_o_l}
+\end{center}
+\end{figure}
+\subsubsection*{Modules}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group___u_s_b_m_s_c_h_fat_fs___s_t_a_t_u_s}{Status Codes}
+\item 
+\hyperlink{group___u_s_b_m_s_c_h_fat_fs___c_m_d}{Command Codes}
+\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group___u_s_b_m_s_c_h_fat_fs___c_o_n_t_r_o_l_gad004ac61340295d4d9b03cf1c2e202c4}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~32
+\item 
+\#define \hyperlink{group___u_s_b_m_s_c_h_fat_fs___c_o_n_t_r_o_l_ga545b1522b0f10d6215484ade86b5dcc8}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~-\/32
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+These U\+S\+B\+M\+S\+C\+H\+Fat\+Fs macros are reservations for \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h} 
+
+\subsubsection{Macro Definition Documentation}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control command and status codes@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control command and status codes}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control command and status codes@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control command and status codes}}
+\paragraph[{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~32}\label{group___u_s_b_m_s_c_h_fat_fs___c_o_n_t_r_o_l_gad004ac61340295d4d9b03cf1c2e202c4}
+Common U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control command code reservation offset. U\+S\+B\+M\+S\+C\+H\+Fat\+Fs driver implementations should offset command codes with U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing positively
+
+Example implementation specific command codes\+: 
+\begin{DoxyCode}
+1 #define USBMSCHFatFsXYZ\_CMD\_COMMAND0         USBMSCHFatFs\_CMD\_RESERVED + 0
+2 #define USBMSCHFatFsXYZ\_CMD\_COMMAND1         USBMSCHFatFs\_CMD\_RESERVED + 1
+\end{DoxyCode}
+ \index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control command and status codes@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control command and status codes}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control command and status codes@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control command and status codes}}
+\paragraph[{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~-\/32}\label{group___u_s_b_m_s_c_h_fat_fs___c_o_n_t_r_o_l_ga545b1522b0f10d6215484ade86b5dcc8}
+Common U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control status code reservation offset. U\+S\+B\+M\+S\+C\+H\+Fat\+Fs driver implementations should offset status codes with U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing negatively.
+
+Example implementation specific status codes\+: 
+\begin{DoxyCode}
+1 #define USBMSCHFatFsXYZ\_STATUS\_ERROR0        USBMSCHFatFs\_STATUS\_RESERVED - 0
+2 #define USBMSCHFatFsXYZ\_STATUS\_ERROR1        USBMSCHFatFs\_STATUS\_RESERVED - 1
+3 #define USBMSCHFatFsXYZ\_STATUS\_ERROR2        USBMSCHFatFs\_STATUS\_RESERVED - 2
+\end{DoxyCode}
+ 

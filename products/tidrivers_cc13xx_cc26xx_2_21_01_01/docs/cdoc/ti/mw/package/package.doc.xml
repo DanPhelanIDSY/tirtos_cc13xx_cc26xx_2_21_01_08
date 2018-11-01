@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package kind='package' name='ti.mw' nodoc='0' root='../../' summary='The+ti.mw+package+defines+the+Config+module%2C+used+to+configure+which%0A++TI+Middleware+libraries+are+provided.++It+also+provides+the+TI+Middleware%0A++Grace+page'>
+    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Epackage%3C%2Fspan%3E+%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3Eti.mw%3C%2Fspan%3E%3C%2Fgo%3E+%7B'/>
+    <line tab='0' content='%7D'/>
+    <unit name='Config' kind='module' nodoc='0' metaonly='1' summary=''>
+        <synopSpec>
+            <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Epackage%3C%2Fspan%3E+%3Ca+class%3D%22xdoc-link%22+href%3D%22..%2F..%2Fti%2Fmw%2Fpackage.html%22+title%3D%22ti.mw%22%3Eti.mw%3C%2Fa%3E%3B'/>
+            <line blank='1' always='0'/>
+            <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Emetaonly+%3C%2Fspan%3E%3Cspan+class%3D%22xdoc-kw1%22%3Emodule%3C%2Fspan%3E+%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EConfig%3C%2Fspan%3E%3C%2Fgo%3E+%7B'/>
+            <line tab='0' content='%7D'/>
+        </synopSpec>
+        <specInfo>
+            <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Emetaonly+%3C%2Fspan%3E%3Cspan+class%3D%22xdoc-kw1%22%3Emodule%3C%2Fspan%3E+%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EConfig%3C%2Fspan%3E%3C%2Fgo%3E+%7B%3Cb%3E%26nbsp%3B%26nbsp%3B...%3C%2Fb%3E'/>
+        </specInfo>
+        <synopMeta>
+            <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Evar%3C%2Fspan%3E+Config+%3D+%3Cspan+class%3D%22xdoc-kw3%22%3Exdc.useModule%3C%2Fspan%3E%28%3Cspan+class%3D%22xdoc-id%22%3E%27ti.mw.Config%27%3C%2Fspan%3E%29%3B'/>
+        </synopMeta>
+        <group name='module-wide constants &amp; types'>
+            <decl spacer='1'/>
+        </group>
+        <group name='module-wide config parameters'>
+            <decl spacer='1'/>
+            <decl spacer='1'/>
+            <decl spacer='1'/>
+            <decl kind='config' name='provideDisplayLib' anchor='provide.Display.Lib' altext='ti.mw.Config.provideDisplayLib' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary='Adds+the+Display+middleware+library+to+the+project'>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EprovideDisplayLib%3C%2Fspan%3E%3C%2Fgo%3E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3EConfig.%3Cspan+class%3D%22xdoc-id%22%3EprovideDisplayLib%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%3Cspan+class%3D%22xdoc-kw2%22%3Eundefined%3C%2Fspan%3E%3B'/>
+                </synopMeta>
+                <docSect name='details'>
+                    <docPara content='This+option+is+only+supported+on+CC13XX+%26amp%3B+CC26XX+devices+and+the%0A++default+value+is+true.'/>
+                </docSect>
+            </decl>
+            <decl kind='config' name='provideGrLib' anchor='provide.Gr.Lib' altext='ti.mw.Config.provideGrLib' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary='Adds+the+GrLib+middleware+library+to+the+project'>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EprovideGrLib%3C%2Fspan%3E%3C%2Fgo%3E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3EConfig.%3Cspan+class%3D%22xdoc-id%22%3EprovideGrLib%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%3Cspan+class%3D%22xdoc-kw2%22%3Eundefined%3C%2Fspan%3E%3B'/>
+                </synopMeta>
+                <docSect name='details'>
+                    <docPara content='This+option+is+only+supported+on+CC13XX+%26amp%3B+CC26XX+devices+and+the%0A++default+value+is+true.'/>
+                </docSect>
+            </decl>
+            <decl kind='config' name='provideLCDLib' anchor='provide.L.C.D.Lib' altext='ti.mw.Config.provideLCDLib' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary='Adds+the+LCD+middleware+library+to+the+project'>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EprovideLCDLib%3C%2Fspan%3E%3C%2Fgo%3E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3EConfig.%3Cspan+class%3D%22xdoc-id%22%3EprovideLCDLib%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%3Cspan+class%3D%22xdoc-kw2%22%3Eundefined%3C%2Fspan%3E%3B'/>
+                </synopMeta>
+                <docSect name='details'>
+                    <docPara content='This+option+is+only+supported+on+CC13XX+%26amp%3B+CC26XX+devices+and+the%0A++default+value+is+true.'/>
+                </docSect>
+            </decl>
+            <decl kind='config' name='provideWiFiCC3X00Lib' anchor='provide.Wi.Fi.C.C3.X00.Lib' altext='ti.mw.Config.provideWiFiCC3X00Lib' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary='Adds+the+CC3X00+WiFi+host+driver+middleware+library+%26amp%3B+the+TI-RTOS+WiFi%0A++driver+library+to+the+project'>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EprovideWiFiCC3X00Lib%3C%2Fspan%3E%3C%2Fgo%3E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3EConfig.%3Cspan+class%3D%22xdoc-id%22%3EprovideWiFiCC3X00Lib%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%3Cspan+class%3D%22xdoc-kw2%22%3Eundefined%3C%2Fspan%3E%3B'/>
+                </synopMeta>
+                <docSect name='details'>
+                    <docPara content='This+option+is+only+supported+on+MSP430%2C+MSP432+%26amp%3B+TivaC+devices+and+the%0A++default+value+is+true.'/>
+                </docSect>
+            </decl>
+            <decl kind='config' name='supportsDisplayLib' anchor='supports.Display.Lib' altext='ti.mw.Config.supportsDisplayLib' nodoc='1' external='1' overrides='0' readonly='0' instance='0' summary=''>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EsupportsDisplayLib%3C%2Fspan%3E%3C%2Fgo%3E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3EConfig.%3Cspan+class%3D%22xdoc-id%22%3EsupportsDisplayLib%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%3Cspan+class%3D%22xdoc-kw2%22%3Eundefined%3C%2Fspan%3E%3B'/>
+                </synopMeta>
+            </decl>
+            <decl kind='config' name='supportsGrLib' anchor='supports.Gr.Lib' altext='ti.mw.Config.supportsGrLib' nodoc='1' external='1' overrides='0' readonly='0' instance='0' summary=''>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EsupportsGrLib%3C%2Fspan%3E%3C%2Fgo%3E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3EConfig.%3Cspan+class%3D%22xdoc-id%22%3EsupportsGrLib%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%3Cspan+class%3D%22xdoc-kw2%22%3Eundefined%3C%2Fspan%3E%3B'/>
+                </synopMeta>
+            </decl>
+            <decl kind='config' name='supportsLCDLib' anchor='supports.L.C.D.Lib' altext='ti.mw.Config.supportsLCDLib' nodoc='1' external='1' overrides='0' readonly='0' instance='0' summary=''>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EsupportsLCDLib%3C%2Fspan%3E%3C%2Fgo%3E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3EConfig.%3Cspan+class%3D%22xdoc-id%22%3EsupportsLCDLib%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%3Cspan+class%3D%22xdoc-kw2%22%3Eundefined%3C%2Fspan%3E%3B'/>
+                </synopMeta>
+            </decl>
+            <decl kind='config' name='supportsWiFiCC3X00Lib' anchor='supports.Wi.Fi.C.C3.X00.Lib' altext='ti.mw.Config.supportsWiFiCC3X00Lib' nodoc='1' external='1' overrides='0' readonly='0' instance='0' summary=''>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EsupportsWiFiCC3X00Lib%3C%2Fspan%3E%3C%2Fgo%3E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3EConfig.%3Cspan+class%3D%22xdoc-id%22%3EsupportsWiFiCC3X00Lib%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%3Cspan+class%3D%22xdoc-kw2%22%3Eundefined%3C%2Fspan%3E%3B'/>
+                </synopMeta>
+            </decl>
+        </group>
+        <group name='module-wide data'>
+        </group>
+        <group name='module-wide functions'>
+            <decl spacer='1'/>
+        </group>
+    </unit>
+</package>

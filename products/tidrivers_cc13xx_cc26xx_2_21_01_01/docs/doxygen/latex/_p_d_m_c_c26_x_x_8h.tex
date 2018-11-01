@@ -1,0 +1,680 @@
+\subsection{P\+D\+M\+C\+C26\+X\+X.\+h File Reference}
+\label{_p_d_m_c_c26_x_x_8h}\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+
+
+\subsubsection{Detailed Description}
+P\+D\+M driver implementation for a C\+C26\+X\+X P\+D\+M controller. 
+
+============================================================================
+
+The P\+D\+M header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/pdm/PDMCC26XX.h>}
+\end{DoxyCode}
+
+
+\subsubsection*{Overview}
+
+This driver is written to be able to perform continuous audio streaming of P\+D\+M data from a microphone. It also controls one D\+I\+O to be able to turn on power to the microphone.
+
+This P\+D\+M driver performs two operations that requires processing
+\begin{DoxyItemize}
+\item P\+D\+M to P\+C\+M conversion
+\item P\+C\+M compression (optional)
+\end{DoxyItemize}
+
+This driver is configured to process 256 bytes of P\+D\+M data provided by the I2\+S hardware module at a time, sampled at 1.\+024 Mbps. The P\+D\+M driver consequently receives such a buffer approximately every 2ms. A frame of \hyperlink{struct_p_d_m_c_c26_x_x___params_a05bff0a3c2ddbb3a49c2bc7a47a7fe24}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Params.\+ret\+Buf\+Size\+In\+Bytes} P\+C\+M data bytes minus four metadata bytes is provided to the application after being filled by all or part of one or more 64 byte buffers of P\+C\+M data derived from the 256 bytes of P\+D\+M data. The resulting P\+C\+M frame provided to the application is a 16bit P\+C\+M signal sampled at 16k\+Hz.
+
+The driver creates a separate task to run in.
+
+\begin{DoxyNote}{Note}
+The application must allow for the P\+D\+M driver task to run often enough to process the data received from I2\+S driver approximately every 2ms.
+\end{DoxyNote}
+The driver currently only samples on a single edge of the I2\+S clock.
+
+\subsubsection*{General Behaviour}
+
+Before using P\+D\+M on C\+C26\+X\+X\+:
+\begin{DoxyItemize}
+\item The P\+D\+M driver is initialized by calling \hyperlink{_p_d_m_c_c26_x_x_8h_a8347c3f56db0ad7c3f357f13be098cf2}{P\+D\+M\+C\+C26\+X\+X\+\_\+init()}. This should be done in main before B\+I\+O\+S\+\_\+start() is called.
+\item The P\+D\+M system dependencies are set by calling \hyperlink{_p_d_m_c_c26_x_x_8h_a431d9b71e0d0eebd5ab85960f1c82ee0}{P\+D\+M\+C\+C26\+X\+X\+\_\+open()}. The driver is also marked as taken. Prior to this the system should call \hyperlink{_p_d_m_c_c26_x_x_8h_a8347c3f56db0ad7c3f357f13be098cf2}{P\+D\+M\+C\+C26\+X\+X\+\_\+init()}. The driver also automatically allocates the first \hyperlink{struct_p_d_m_c_c26_x_x__pcm_buffer}{P\+D\+M\+C\+C26\+X\+X\+\_\+pcm\+Buffer} of the size specified by the application in \hyperlink{struct_p_d_m_c_c26_x_x___params_a05bff0a3c2ddbb3a49c2bc7a47a7fe24}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Params.\+ret\+Buf\+Size\+In\+Bytes}. This call also reserves the pins for the microphone signal and power specified in the board file.
+\end{DoxyItemize}
+
+While using P\+D\+M on C\+C26\+X\+X\+:
+\begin{DoxyItemize}
+\item When \hyperlink{_p_d_m_c_c26_x_x_8h_af5fafd7c475117bd3ed6783273c2220d}{P\+D\+M\+C\+C26\+X\+X\+\_\+start\+Stream()} is called, the I2\+S driver starts processing the pdm stream, the P\+D\+M driver resets the internal state of the decimation filter, sets the driver to drop the first M\+A\+X(P\+D\+M\+\_\+\+D\+E\+C\+I\+M\+A\+T\+I\+O\+N\+\_\+\+S\+T\+A\+R\+T\+U\+P\+\_\+\+D\+E\+L\+A\+Y\+\_\+\+I\+N\+\_\+\+S\+A\+M\+P\+L\+E\+S, \hyperlink{struct_p_d_m_c_c26_x_x___params_a1ffbb2852a48ff157c0f58df4dce4a3b}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Params.\+startup\+Delay\+With\+Clock\+In\+Samples}), and resets the meta\+Data (including the sequence number). The driver will keep allocating P\+D\+M\+C\+C26\+X\+X\+\_\+pcm\+Buffers on the heap and keep them in a queue until they are requested by the application. From now on, callbacks are generated every time a buffer is ready; if callbacks are asked for.
+\item Data is acquired by the application by calling \hyperlink{_p_d_m_c_c26_x_x_8h_a15a0017513c13ca244f7e3a0f5761e8d}{P\+D\+M\+C\+C26\+X\+X\+\_\+request\+Buffer()}. After processing the buffer, the application is responsible for freeing the memory allocated for the buffer in a timely manner.
+\item The stream is stopped when \hyperlink{_p_d_m_c_c26_x_x_8h_aebd3b158f38ba1489a56efe5b9a722d2}{P\+D\+M\+C\+C26\+X\+X\+\_\+stop\+Stream()} is called. Note that this is a blocking call that will wait until the I2\+S hardware has gracefully shut down. This will take at most around 2ms, unless an error occurs. The system is allowed to enter standby again after \hyperlink{_p_d_m_c_c26_x_x_8h_aebd3b158f38ba1489a56efe5b9a722d2}{P\+D\+M\+C\+C26\+X\+X\+\_\+stop\+Stream()} is called.
+\end{DoxyItemize}
+
+After P\+D\+M operation has ended\+:
+\begin{DoxyItemize}
+\item Release system dependencies and free up all memory on the heap allocated for the P\+D\+M driver by calling \hyperlink{_p_d_m_c_c26_x_x_8h_afb9597d25d6b2e02f6903bf6652d4371}{P\+D\+M\+C\+C26\+X\+X\+\_\+close()}.
+\end{DoxyItemize}
+
+\subsubsection*{Error Handling}
+
+The application is notified of errors via the registered callback function.
+
+\paragraph*{Lost Frames}
+
+If the application fails to consume buffers in a timely manner and consequently the heap is full when driver tries to allocate a new buffer for new incoming data, the driver will drop all new incoming data until a buffer can be allocated to store it. Data is dropped one P\+C\+M data buffer at a time , even though it is streamed into the device and copied into the buffer in smaller chunks. This is done to keep the data expected in any buffer in sync with the sequence number of the buffer that keeps incrementing even when the buffer is dopped. The application may keep track of lost frames by comparing sequence numbers.
+
+Hence, the P\+D\+M stream will never have a buffer overflow, but if the memory available in the heap is too low it may lose frames because because there is nowhere to put the incoming
+
+If the heap frees up again and the P\+D\+M task runs, it will automatically resume normal operation again. The only application-\/observable difference is the incremented version number.
+
+\paragraph*{P\+D\+M\+C\+C26\+X\+X\+\_\+open Failing}
+
+\hyperlink{_p_d_m_c_c26_x_x_8h_a431d9b71e0d0eebd5ab85960f1c82ee0}{P\+D\+M\+C\+C26\+X\+X\+\_\+open()} returns N\+U\+L\+L and rolls back all prior parts of the initialisation if any part of the initialisation fails. The following can cause \hyperlink{_p_d_m_c_c26_x_x_8h_a431d9b71e0d0eebd5ab85960f1c82ee0}{P\+D\+M\+C\+C26\+X\+X\+\_\+open()} to fail\+:
+\begin{DoxyItemize}
+\item The driver is already open
+\item The heap is full when the application calls \hyperlink{_p_d_m_c_c26_x_x_8h_a431d9b71e0d0eebd5ab85960f1c82ee0}{P\+D\+M\+C\+C26\+X\+X\+\_\+open()}
+\item The P\+I\+N driver could not allocate the requested pins for the P\+D\+M driver
+\item The I2\+S driver failed to initialise
+\end{DoxyItemize}
+
+\paragraph*{P\+D\+M\+C\+C26\+X\+X\+\_\+start\+Stream Failing}
+
+\hyperlink{_p_d_m_c_c26_x_x_8h_af5fafd7c475117bd3ed6783273c2220d}{P\+D\+M\+C\+C26\+X\+X\+\_\+start\+Stream()} returns false if it fails. The following can cause \hyperlink{_p_d_m_c_c26_x_x_8h_af5fafd7c475117bd3ed6783273c2220d}{P\+D\+M\+C\+C26\+X\+X\+\_\+start\+Stream()} to fail\+:
+\begin{DoxyItemize}
+\item The driver is already streaming
+\item The I2\+S driver could not successfully start reading the pdm stream
+\end{DoxyItemize}
+
+\paragraph*{P\+D\+M\+C\+C26\+X\+X\+\_\+stop\+Stream Failing}
+
+\hyperlink{_p_d_m_c_c26_x_x_8h_aebd3b158f38ba1489a56efe5b9a722d2}{P\+D\+M\+C\+C26\+X\+X\+\_\+stop\+Stream()} returns false if it fails. The following can cause \hyperlink{_p_d_m_c_c26_x_x_8h_aebd3b158f38ba1489a56efe5b9a722d2}{P\+D\+M\+C\+C26\+X\+X\+\_\+stop\+Stream()} to fail\+:
+\begin{DoxyItemize}
+\item The driver is not currently streaming
+\item The I2\+S driver could not gracefully shut down
+\end{DoxyItemize}
+
+\subsubsection*{Power Management}
+
+The P\+D\+M\+C\+C26\+X\+X driver sets a power constraint while streaming to keep the device out of standby. When the stream has ended, the power constraint is released.
+
+The following statements are valid\+:
+\begin{DoxyItemize}
+\item After \hyperlink{_p_d_m_c_c26_x_x_8h_a431d9b71e0d0eebd5ab85960f1c82ee0}{P\+D\+M\+C\+C26\+X\+X\+\_\+open()}\+: the device is still allowed to enter standby.
+\item During \hyperlink{_p_d_m_c_c26_x_x_8h_af5fafd7c475117bd3ed6783273c2220d}{P\+D\+M\+C\+C26\+X\+X\+\_\+start\+Stream()}\+: the device cannot enter standby.
+\item After \hyperlink{_p_d_m_c_c26_x_x_8h_aebd3b158f38ba1489a56efe5b9a722d2}{P\+D\+M\+C\+C26\+X\+X\+\_\+stop\+Stream()} succeeds\+: the device can enter standby.
+\item If \hyperlink{_p_d_m_c_c26_x_x_8h_afb9597d25d6b2e02f6903bf6652d4371}{P\+D\+M\+C\+C26\+X\+X\+\_\+close()} is called\+: the device can enter standby.
+\end{DoxyItemize}
+
+\subsubsection*{Supported Functions}
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf A\+P\+I function }&{\bf Description  }\\\cline{1-2}
+\hyperlink{_p_d_m_c_c26_x_x_8h_a8347c3f56db0ad7c3f357f13be098cf2}{P\+D\+M\+C\+C26\+X\+X\+\_\+init()} &Initialize P\+D\+M driver \\\cline{1-2}
+\hyperlink{_p_d_m_c_c26_x_x_8h_a431d9b71e0d0eebd5ab85960f1c82ee0}{P\+D\+M\+C\+C26\+X\+X\+\_\+open()} &Set system dependencies, configure pins \\\cline{1-2}
+\hyperlink{_p_d_m_c_c26_x_x_8h_af5fafd7c475117bd3ed6783273c2220d}{P\+D\+M\+C\+C26\+X\+X\+\_\+start\+Stream()} &Turn on mic, start stream and prevent standby \\\cline{1-2}
+\hyperlink{_p_d_m_c_c26_x_x_8h_aebd3b158f38ba1489a56efe5b9a722d2}{P\+D\+M\+C\+C26\+X\+X\+\_\+stop\+Stream()} &Stop stream and release standby hold, turn off mic \\\cline{1-2}
+\hyperlink{_p_d_m_c_c26_x_x_8h_a15a0017513c13ca244f7e3a0f5761e8d}{P\+D\+M\+C\+C26\+X\+X\+\_\+request\+Buffer()} &Request a buffer from the driver \\\cline{1-2}
+\hyperlink{_p_d_m_c_c26_x_x_8h_afb9597d25d6b2e02f6903bf6652d4371}{P\+D\+M\+C\+C26\+X\+X\+\_\+close()} &Disable H\+W and release system dependencies \\\cline{1-2}
+\end{TabularC}
+\subsubsection*{Standard Use Case}
+
+The standard use case involves calling \hyperlink{_p_d_m_c_c26_x_x_8h_a431d9b71e0d0eebd5ab85960f1c82ee0}{P\+D\+M\+C\+C26\+X\+X\+\_\+open()} once and calling \hyperlink{_p_d_m_c_c26_x_x_8h_af5fafd7c475117bd3ed6783273c2220d}{P\+D\+M\+C\+C26\+X\+X\+\_\+start\+Stream()} and \hyperlink{_p_d_m_c_c26_x_x_8h_aebd3b158f38ba1489a56efe5b9a722d2}{P\+D\+M\+C\+C26\+X\+X\+\_\+stop\+Stream()} to start and stop the stream as needed. \hyperlink{_p_d_m_c_c26_x_x_8h_afb9597d25d6b2e02f6903bf6652d4371}{P\+D\+M\+C\+C26\+X\+X\+\_\+close()} is called when the P\+D\+M driver will no longer be needed again. In order for the P\+D\+M driver task to run, the application pends on a semaphore that is posted in the \hyperlink{struct_p_d_m_c_c26_x_x___params_ada480cae6ca7398efef4293350f92090}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Params\+::callback\+Fxn}. In this example, the application requests 128 buffers. In a real application, the process of pending on a semaphore, requesting a buffer, and freeing it would be repeated as often as required by the use case before stopping the stream. 
+\begin{DoxyCode}
+\textcolor{keywordtype}{void} bufRdy\_callback(PDMCC26XX_Handle handle, PDMCC26XX_StreamNotification *pStreamNotification)
+\{
+    PDMCC26XX_Status streamStatus = pStreamNotification->status;
+
+    \textcolor{keywordflow}{if} (streamStatus == PDMCC26XX_STREAM_BLOCK_READY || streamStatus == 
+      PDMCC26XX_STREAM_BLOCK_READY_BUT_PDM_OVERFLOW)\{
+        Semaphore\_post(Semaphore\_handle(&bufferReadySemaphore));
+    \}
+    \textcolor{keywordflow}{else} \{
+        \textcolor{comment}{// Handle the error}
+    \}
+\}
+
+\textcolor{keyword}{static} \textcolor{keywordtype}{void} applicationTask(UArg a0, UArg a1)\{
+    Semaphore\_Params semParams;
+    PDMCC26XX_BufferRequest bufferRequest;
+    \textcolor{keyword}{const} uint16\_t returnBufferSize = 64;
+    \textcolor{keyword}{const} uint8\_t numberOfPcmBuffersToRequest = 128;
+
+    \textcolor{comment}{// Initialize semaphore}
+    Semaphore\_Params\_init(&semParams);
+    semParams.mode = Semaphore\_Mode\_BINARY;
+    Semaphore\_construct(&bufferReadySemaphore, 0, &semParams);
+
+    \textcolor{comment}{// Set up parameters for PDM streaming with compression}
+    PDMCC26XX_Params pdmParams = \{
+        .callbackFxn = bufRdy\_callback,
+        .useDefaultFilter = \textcolor{keyword}{true},
+        .decimationFilter = NULL,
+        .micGain = PDMCC26XX_GAIN_12,
+        .micPowerActiveHigh = \textcolor{keyword}{true},
+        .applyCompression = \textcolor{keyword}{true},
+        .startupDelayWithClockInSamples = 0,
+        .retBufSizeInBytes = returnBufferSize,
+        .mallocFxn = &malloc,
+        .freeFxn = &free,
+        .custom = NULL
+    \};
+
+    \textcolor{comment}{// Try to open the PDM driver}
+    \textcolor{keywordflow}{if}(pdmHandle = PDMCC26XX_open(&pdmParams) == NULL)\{
+        \textcolor{comment}{// Handle PDMCC26XX\_open() failing}
+    \}
+
+    \textcolor{comment}{// Try to start streaming}
+    \textcolor{keywordflow}{if}(PDMCC26XX_startStream(pdmHandle))\{
+        uint8\_t pcmBuffersRequestedSoFar;
+
+        \textcolor{comment}{// Request numberOfPcmBuffersToRequest buffers and then stop the stream}
+        \textcolor{keywordflow}{for} (pcmBuffersRequestedSoFar = 0; pcmBuffersRequestedSoFar < numberOfPcmBuffersToRequest; 
+      pcmBuffersRequestedSoFar++)\{
+            \textcolor{comment}{// Pend on the semaphore until a buffer is available from the PDM driver}
+            Semaphore\_pend(Semaphore\_handle(&bufferReadySemaphore), BIOS\_WAIT\_FOREVER);
+
+            \textcolor{comment}{// Now request a buffer as it was indicated that one is available}
+            PDMCC26XX_requestBuffer(pdmHandle, &bufferRequest);
+
+            \textcolor{comment}{// Process bufferRequest}
+
+            \textcolor{comment}{// Free the buffer}
+            my\_free(bufferRequest.buffer, returnBufferSize);
+        \}
+
+        \textcolor{comment}{// Try to stop the stream}
+        \textcolor{keywordflow}{if}(!PDMCC26XX_stopStream(pdmHandle))\{
+            \textcolor{comment}{// Handle PDMCC26XX\_stopStream() failing}
+        \}
+    \}
+    \textcolor{keywordflow}{else}\{
+        \textcolor{comment}{// Handle PDMCC26XX\_startStream() failing}
+    \}
+\}
+\end{DoxyCode}
+
+
+\subsubsection*{Instrumentation}
+
+The P\+D\+M driver interface produces log statements if instrumentation is enabled.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Instrumentation }&{\bf Description  }\\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R1 &Logs the start and end of each A\+P\+I call of the P\+D\+M driver and progress through events \\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R2 &Logs occurances in the I2\+S sub-\/module of the P\+D\+M driver \\\cline{1-2}
+Warnings &Logs unexpected events such as initialisations or memory allocations failing \\\cline{1-2}
+\end{TabularC}
+
+
+{\ttfamily \#include $<$ti/sysbios/knl/\+Semaphore.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+P\+I\+N.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/family/arm/m3/\+Hwi.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+Power.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/power/\+Power\+C\+C26\+X\+X.\+h$>$}\\*
+Include dependency graph for P\+D\+M\+C\+C26\+X\+X.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_p_d_m_c_c26_x_x_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_p_d_m_c_c26_x_x__meta_data}{P\+D\+M\+C\+C26\+X\+X\+\_\+meta\+Data}
+\begin{DoxyCompactList}\small\item\em Metadata associated with an array of P\+C\+M data. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_p_d_m_c_c26_x_x__pcm_buffer}{P\+D\+M\+C\+C26\+X\+X\+\_\+pcm\+Buffer}
+\begin{DoxyCompactList}\small\item\em P\+C\+M buffer pointed to in a \hyperlink{struct_p_d_m_c_c26_x_x___buffer_request}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request}. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_p_d_m_c_c26_x_x___config}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em The \hyperlink{struct_p_d_m_c_c26_x_x___config}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Config} structure contains a set of pointers used to characterize the P\+D\+M\+C\+C26\+X\+X driver implementation. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_p_d_m_c_c26_x_x___h_w_attrs}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em P\+D\+M\+C\+C26\+X\+X Hardware attributes. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_p_d_m_c_c26_x_x___stream_notification}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Stream\+Notification}
+\begin{DoxyCompactList}\small\item\em A \hyperlink{struct_p_d_m_c_c26_x_x___stream_notification}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Stream\+Notification} data structure is used with \hyperlink{_p_d_m_c_c26_x_x_8h_ab6fdee59a79029e938e3fbf0e446fa91}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Callback\+Fxn()}. Provides notification about available buffers and potential errors. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_p_d_m_c_c26_x_x___buffer_request}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request}
+\begin{DoxyCompactList}\small\item\em A \hyperlink{struct_p_d_m_c_c26_x_x___buffer_request}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request} data structure is used with \hyperlink{_p_d_m_c_c26_x_x_8h_a15a0017513c13ca244f7e3a0f5761e8d}{P\+D\+M\+C\+C26\+X\+X\+\_\+request\+Buffer()}. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_p_d_m_c_c26_x_x___params}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em P\+D\+M\+C\+C26\+X\+X Parameters are used to with the \hyperlink{_p_d_m_c_c26_x_x_8h_a431d9b71e0d0eebd5ab85960f1c82ee0}{P\+D\+M\+C\+C26\+X\+X\+\_\+open()} call. Default values for these parameters are set using P\+D\+M\+C\+C26\+X\+X\+\_\+\+Params\+\_\+init(). \end{DoxyCompactList}\item 
+struct \hyperlink{struct_p_d_m_c_c26_x_x___object}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em P\+D\+M\+C\+C26\+X\+X Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x_8h_aaa17ecf48f5762e2e1bdb0bab8aacf0c}{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x_8h_adc205204f69ea867c95b30efe1530746}{P\+D\+M\+\_\+\+T\+A\+S\+K\+\_\+\+S\+T\+A\+C\+K\+\_\+\+S\+I\+Z\+E}~500
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x_8h_ac27121ab901a1442bbebbdac45fce296}{P\+D\+M\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+S\+I\+Z\+E\+\_\+\+I\+N\+\_\+\+B\+L\+O\+C\+K\+S}~3
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x_8h_a77f1de681b5b50d6e6db60818b5a481d}{P\+C\+M\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+S\+I\+Z\+E}~16
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x_8h_a98722a106401368b0df3e68c19c7edd3}{P\+C\+M\+\_\+\+C\+O\+M\+P\+R\+E\+S\+S\+I\+O\+N\+\_\+\+R\+A\+T\+E}~4
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x_8h_ae553576c451c4277d4496b5fe7f26e24}{P\+C\+M\+\_\+\+M\+E\+T\+A\+D\+A\+T\+A\+\_\+\+S\+I\+Z\+E}~sizeof(\hyperlink{struct_p_d_m_c_c26_x_x__meta_data}{P\+D\+M\+C\+C26\+X\+X\+\_\+meta\+Data})
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef void $\ast$($\ast$ \hyperlink{_p_d_m_c_c26_x_x_8h_acce02978ce536ea3b98a673587a6e75c}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Malloc\+Fxn}) (size\+\_\+t mem\+Size)
+\begin{DoxyCompactList}\small\item\em P\+D\+M\+C\+C26\+X\+X\+\_\+\+Malloc\+Fxn is a function pointer for the malloc function to be used by the driver. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_p_d_m_c_c26_x_x_8h_af95e29fbea1fadfb011e4ceaa36f1ab0}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Free\+Fxn}) (void $\ast$ptr, size\+\_\+t mem\+Size)
+\begin{DoxyCompactList}\small\item\em P\+D\+M\+C\+C26\+X\+X\+\_\+\+Free\+Fxn is a function pointer for the free function to be used by the driver. This is needed for memory clean up, if something goes wrong. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_p_d_m_c_c26_x_x___config}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Config} \hyperlink{_p_d_m_c_c26_x_x_8h_acfb1c3839ec53d02703f67f884760119}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em The \hyperlink{struct_p_d_m_c_c26_x_x___config}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Config} structure contains a set of pointers used to characterize the P\+D\+M\+C\+C26\+X\+X driver implementation. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_p_d_m_c_c26_x_x___h_w_attrs}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs} \hyperlink{_p_d_m_c_c26_x_x_8h_a0188ef7df22961ba87b588d2913e793e}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em P\+D\+M\+C\+C26\+X\+X Hardware attributes. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_p_d_m_c_c26_x_x___config}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Config} $\ast$ \hyperlink{_p_d_m_c_c26_x_x_8h_ae5b9ecc0f8eb494e162b4a0a49c0636a}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Handle}
+\begin{DoxyCompactList}\small\item\em A handle that is returned from a \hyperlink{_p_d_m_c_c26_x_x_8h_a431d9b71e0d0eebd5ab85960f1c82ee0}{P\+D\+M\+C\+C26\+X\+X\+\_\+open()} call. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_p_d_m_c_c26_x_x_8h_afbfe993e790be75708df00186070a779}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Status} \hyperlink{_p_d_m_c_c26_x_x_8h_affb09af7b7de674b100b1170d574f86c}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Status}
+\begin{DoxyCompactList}\small\item\em Status codes that are set by the P\+D\+M driver. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_p_d_m_c_c26_x_x_8h_a8c2d67aee547a2c8228465034ae0267f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Gain} \hyperlink{_p_d_m_c_c26_x_x_8h_a62dc3dc8663629a376fc5e4e546bfd05}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Gain}
+\begin{DoxyCompactList}\small\item\em Predefined gain settings. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_p_d_m_c_c26_x_x___stream_notification}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Stream\+Notification} \hyperlink{_p_d_m_c_c26_x_x_8h_abebd17c183efa14ae0ebe9c229f6c577}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Stream\+Notification}
+\begin{DoxyCompactList}\small\item\em A \hyperlink{struct_p_d_m_c_c26_x_x___stream_notification}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Stream\+Notification} data structure is used with \hyperlink{_p_d_m_c_c26_x_x_8h_ab6fdee59a79029e938e3fbf0e446fa91}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Callback\+Fxn()}. Provides notification about available buffers and potential errors. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_p_d_m_c_c26_x_x_8h_ab6fdee59a79029e938e3fbf0e446fa91}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Callback\+Fxn}) (\hyperlink{_p_d_m_c_c26_x_x_8h_ae5b9ecc0f8eb494e162b4a0a49c0636a}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Handle} handle, \hyperlink{struct_p_d_m_c_c26_x_x___stream_notification}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Stream\+Notification} $\ast$stream\+Notification)
+\begin{DoxyCompactList}\small\item\em The definition of a callback function used when buffers are ready. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_p_d_m_c_c26_x_x___buffer_request}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request} \hyperlink{_p_d_m_c_c26_x_x_8h_ae8cebf1f4b5897234e3be6744eb26997}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request}
+\begin{DoxyCompactList}\small\item\em A \hyperlink{struct_p_d_m_c_c26_x_x___buffer_request}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request} data structure is used with \hyperlink{_p_d_m_c_c26_x_x_8h_a15a0017513c13ca244f7e3a0f5761e8d}{P\+D\+M\+C\+C26\+X\+X\+\_\+request\+Buffer()}. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_p_d_m_c_c26_x_x___params}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Params} \hyperlink{_p_d_m_c_c26_x_x_8h_a31104648f1849f5eef36ef1d98465a6b}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em P\+D\+M\+C\+C26\+X\+X Parameters are used to with the \hyperlink{_p_d_m_c_c26_x_x_8h_a431d9b71e0d0eebd5ab85960f1c82ee0}{P\+D\+M\+C\+C26\+X\+X\+\_\+open()} call. Default values for these parameters are set using P\+D\+M\+C\+C26\+X\+X\+\_\+\+Params\+\_\+init(). \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_p_d_m_c_c26_x_x___object}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Object} \hyperlink{_p_d_m_c_c26_x_x_8h_a8faebd80770af564015834b59c2d3414}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em P\+D\+M\+C\+C26\+X\+X Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_p_d_m_c_c26_x_x_8h_afbfe993e790be75708df00186070a779}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Status} \{ \\*
+\hyperlink{_p_d_m_c_c26_x_x_8h_afbfe993e790be75708df00186070a779a6541acf36472a5a4bae1e918532f5bab}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+I\+D\+L\+E}, 
+\\*
+\hyperlink{_p_d_m_c_c26_x_x_8h_afbfe993e790be75708df00186070a779a7fbacf5e84041b2a8b635df5cf1789a6}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+B\+L\+O\+C\+K\+\_\+\+R\+E\+A\+D\+Y}, 
+\\*
+\hyperlink{_p_d_m_c_c26_x_x_8h_afbfe993e790be75708df00186070a779a3bb09525b04c787e27fa7ce2505ebcbe}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+B\+L\+O\+C\+K\+\_\+\+R\+E\+A\+D\+Y\+\_\+\+B\+U\+T\+\_\+\+P\+D\+M\+\_\+\+O\+V\+E\+R\+F\+L\+O\+W}, 
+\\*
+\hyperlink{_p_d_m_c_c26_x_x_8h_afbfe993e790be75708df00186070a779addbca577e199cd8cad66eb880d81896b}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+E\+R\+R\+O\+R}, 
+\\*
+\hyperlink{_p_d_m_c_c26_x_x_8h_afbfe993e790be75708df00186070a779a57716d15faf09d4f066fe77f473de9db}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+O\+P\+P\+I\+N\+G}, 
+\\*
+\hyperlink{_p_d_m_c_c26_x_x_8h_afbfe993e790be75708df00186070a779a772c35528b1c577ee8702c064c37554f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+O\+P\+P\+E\+D}, 
+\\*
+\hyperlink{_p_d_m_c_c26_x_x_8h_afbfe993e790be75708df00186070a779addce783eed694cb817cd67ae51d036d5}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+F\+A\+I\+L\+E\+D\+\_\+\+T\+O\+\_\+\+S\+T\+O\+P}
+ \}
+\begin{DoxyCompactList}\small\item\em Status codes that are set by the P\+D\+M driver. \end{DoxyCompactList}\item 
+enum \hyperlink{_p_d_m_c_c26_x_x_8h_a8c2d67aee547a2c8228465034ae0267f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Gain} \{ \\*
+\hyperlink{_p_d_m_c_c26_x_x_8h_a8c2d67aee547a2c8228465034ae0267fad32df2e2c24bdb0d67c3ec63c0c46178}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+24}, 
+\\*
+\hyperlink{_p_d_m_c_c26_x_x_8h_a8c2d67aee547a2c8228465034ae0267fa332b4d0aeb82669190f2b2bcfa9ea6c8}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+18}, 
+\\*
+\hyperlink{_p_d_m_c_c26_x_x_8h_a8c2d67aee547a2c8228465034ae0267fa5929463bec3b2bb2da1e240c8a3a2aad}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+12}, 
+\\*
+\hyperlink{_p_d_m_c_c26_x_x_8h_a8c2d67aee547a2c8228465034ae0267faa10d346442b2427f47bd7939a0f0dc6a}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+6}, 
+\\*
+\hyperlink{_p_d_m_c_c26_x_x_8h_a8c2d67aee547a2c8228465034ae0267fa78540d7f8b49c98ee87afaaaba1f9c36}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+0}, 
+\\*
+\hyperlink{_p_d_m_c_c26_x_x_8h_a8c2d67aee547a2c8228465034ae0267faa4811cff958da5ec7ee700237beacb3b}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+\+E\+N\+D}
+ \}
+\begin{DoxyCompactList}\small\item\em Predefined gain settings. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_p_d_m_c_c26_x_x_8h_a8347c3f56db0ad7c3f357f13be098cf2}{P\+D\+M\+C\+C26\+X\+X\+\_\+init} (\hyperlink{_p_d_m_c_c26_x_x_8h_ae5b9ecc0f8eb494e162b4a0a49c0636a}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em P\+D\+M C\+C26\+X\+X initialization. \end{DoxyCompactList}\item 
+\hyperlink{_p_d_m_c_c26_x_x_8h_ae5b9ecc0f8eb494e162b4a0a49c0636a}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Handle} \hyperlink{_p_d_m_c_c26_x_x_8h_a431d9b71e0d0eebd5ab85960f1c82ee0}{P\+D\+M\+C\+C26\+X\+X\+\_\+open} (\hyperlink{struct_p_d_m_c_c26_x_x___params}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to initialize the C\+C26\+X\+X P\+D\+M peripheral specified by the particular handle. The parameter specifies which mode the P\+D\+M will operate. \end{DoxyCompactList}\item 
+void \hyperlink{_p_d_m_c_c26_x_x_8h_afb9597d25d6b2e02f6903bf6652d4371}{P\+D\+M\+C\+C26\+X\+X\+\_\+close} (\hyperlink{_p_d_m_c_c26_x_x_8h_ae5b9ecc0f8eb494e162b4a0a49c0636a}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to close a given C\+C26\+X\+X P\+D\+M peripheral specified by the P\+D\+M handle. \end{DoxyCompactList}\item 
+bool \hyperlink{_p_d_m_c_c26_x_x_8h_af5fafd7c475117bd3ed6783273c2220d}{P\+D\+M\+C\+C26\+X\+X\+\_\+start\+Stream} (\hyperlink{_p_d_m_c_c26_x_x_8h_ae5b9ecc0f8eb494e162b4a0a49c0636a}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to start streaming P\+D\+M data. \end{DoxyCompactList}\item 
+bool \hyperlink{_p_d_m_c_c26_x_x_8h_aebd3b158f38ba1489a56efe5b9a722d2}{P\+D\+M\+C\+C26\+X\+X\+\_\+stop\+Stream} (\hyperlink{_p_d_m_c_c26_x_x_8h_ae5b9ecc0f8eb494e162b4a0a49c0636a}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to stop streaming P\+D\+M data. \end{DoxyCompactList}\item 
+bool \hyperlink{_p_d_m_c_c26_x_x_8h_a15a0017513c13ca244f7e3a0f5761e8d}{P\+D\+M\+C\+C26\+X\+X\+\_\+request\+Buffer} (\hyperlink{_p_d_m_c_c26_x_x_8h_ae5b9ecc0f8eb494e162b4a0a49c0636a}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Handle} handle, \hyperlink{struct_p_d_m_c_c26_x_x___buffer_request}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request} $\ast$buffer\+Request)
+\begin{DoxyCompactList}\small\item\em Function for requesting buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_p_d_m_c_c26_x_x___config}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Config} \hyperlink{_p_d_m_c_c26_x_x_8h_affba2052183dd56aa6315608a6ec2633}{P\+D\+M\+C\+C26\+X\+X\+\_\+config} \mbox{[}$\,$\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames@{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}}
+\index{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames@{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}]{\setlength{\rightskip}{0pt plus 5cm}\#define ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}\label{_p_d_m_c_c26_x_x_8h_aaa17ecf48f5762e2e1bdb0bab8aacf0c}
+The following allows this header file to be included in an application file which also includes ti/sysbios/hal/\+Hwi.\+h. \index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+\_\+\+T\+A\+S\+K\+\_\+\+S\+T\+A\+C\+K\+\_\+\+S\+I\+Z\+E@{P\+D\+M\+\_\+\+T\+A\+S\+K\+\_\+\+S\+T\+A\+C\+K\+\_\+\+S\+I\+Z\+E}}
+\index{P\+D\+M\+\_\+\+T\+A\+S\+K\+\_\+\+S\+T\+A\+C\+K\+\_\+\+S\+I\+Z\+E@{P\+D\+M\+\_\+\+T\+A\+S\+K\+\_\+\+S\+T\+A\+C\+K\+\_\+\+S\+I\+Z\+E}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{P\+D\+M\+\_\+\+T\+A\+S\+K\+\_\+\+S\+T\+A\+C\+K\+\_\+\+S\+I\+Z\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+\_\+\+T\+A\+S\+K\+\_\+\+S\+T\+A\+C\+K\+\_\+\+S\+I\+Z\+E~500}\label{_p_d_m_c_c26_x_x_8h_adc205204f69ea867c95b30efe1530746}
+Defines T\+I-\/\+R\+T\+O\+S stack size allocation. It is a conservative estimate. Change this to save a few bytes of R\+A\+M on stack allocation. The stack usage is independent of the P\+C\+M return buffer size specified by the application. \index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+S\+I\+Z\+E\+\_\+\+I\+N\+\_\+\+B\+L\+O\+C\+K\+S@{P\+D\+M\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+S\+I\+Z\+E\+\_\+\+I\+N\+\_\+\+B\+L\+O\+C\+K\+S}}
+\index{P\+D\+M\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+S\+I\+Z\+E\+\_\+\+I\+N\+\_\+\+B\+L\+O\+C\+K\+S@{P\+D\+M\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+S\+I\+Z\+E\+\_\+\+I\+N\+\_\+\+B\+L\+O\+C\+K\+S}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{P\+D\+M\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+S\+I\+Z\+E\+\_\+\+I\+N\+\_\+\+B\+L\+O\+C\+K\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+S\+I\+Z\+E\+\_\+\+I\+N\+\_\+\+B\+L\+O\+C\+K\+S~3}\label{_p_d_m_c_c26_x_x_8h_ac27121ab901a1442bbebbdac45fce296}
+P\+D\+M buffer size in number of blocks. We assume that we will be able to consume P\+D\+M samples in a timely manner. This allows us to use the minium number of blocks (3) for the P\+D\+M\+C\+C26\+X\+X driver. If the application can not service the P\+D\+M task in time, increase this value to permit more latency in processing incoming P\+D\+M data at the cost of increased R\+A\+M useage. \index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+C\+M\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+S\+I\+Z\+E@{P\+C\+M\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+S\+I\+Z\+E}}
+\index{P\+C\+M\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+S\+I\+Z\+E@{P\+C\+M\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+S\+I\+Z\+E}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{P\+C\+M\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+S\+I\+Z\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+C\+M\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+S\+I\+Z\+E~16}\label{_p_d_m_c_c26_x_x_8h_a77f1de681b5b50d6e6db60818b5a481d}
+Uncompressed P\+C\+M sample size in bits \begin{DoxyNote}{Note}
+Internal use only since only 16 bits are supported 
+\end{DoxyNote}
+\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+C\+M\+\_\+\+C\+O\+M\+P\+R\+E\+S\+S\+I\+O\+N\+\_\+\+R\+A\+T\+E@{P\+C\+M\+\_\+\+C\+O\+M\+P\+R\+E\+S\+S\+I\+O\+N\+\_\+\+R\+A\+T\+E}}
+\index{P\+C\+M\+\_\+\+C\+O\+M\+P\+R\+E\+S\+S\+I\+O\+N\+\_\+\+R\+A\+T\+E@{P\+C\+M\+\_\+\+C\+O\+M\+P\+R\+E\+S\+S\+I\+O\+N\+\_\+\+R\+A\+T\+E}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{P\+C\+M\+\_\+\+C\+O\+M\+P\+R\+E\+S\+S\+I\+O\+N\+\_\+\+R\+A\+T\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+C\+M\+\_\+\+C\+O\+M\+P\+R\+E\+S\+S\+I\+O\+N\+\_\+\+R\+A\+T\+E~4}\label{_p_d_m_c_c26_x_x_8h_a98722a106401368b0df3e68c19c7edd3}
+Compression rate if compression is enabled \index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+C\+M\+\_\+\+M\+E\+T\+A\+D\+A\+T\+A\+\_\+\+S\+I\+Z\+E@{P\+C\+M\+\_\+\+M\+E\+T\+A\+D\+A\+T\+A\+\_\+\+S\+I\+Z\+E}}
+\index{P\+C\+M\+\_\+\+M\+E\+T\+A\+D\+A\+T\+A\+\_\+\+S\+I\+Z\+E@{P\+C\+M\+\_\+\+M\+E\+T\+A\+D\+A\+T\+A\+\_\+\+S\+I\+Z\+E}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{P\+C\+M\+\_\+\+M\+E\+T\+A\+D\+A\+T\+A\+\_\+\+S\+I\+Z\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+C\+M\+\_\+\+M\+E\+T\+A\+D\+A\+T\+A\+\_\+\+S\+I\+Z\+E~sizeof({\bf P\+D\+M\+C\+C26\+X\+X\+\_\+meta\+Data})}\label{_p_d_m_c_c26_x_x_8h_ae553576c451c4277d4496b5fe7f26e24}
+P\+C\+M data metadata size. When a buffer is requested there will be metadata prepended. In other words the pointer returned points to the metadata header. Depending on the mode, this contains different information. The first byte is always an 8-\/bit sequence number. 
+
+\subsubsection{Typedef Documentation}
+\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+Malloc\+Fxn@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Malloc\+Fxn}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Malloc\+Fxn@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Malloc\+Fxn}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Malloc\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void$\ast$($\ast$ P\+D\+M\+C\+C26\+X\+X\+\_\+\+Malloc\+Fxn) (size\+\_\+t mem\+Size)}\label{_p_d_m_c_c26_x_x_8h_acce02978ce536ea3b98a673587a6e75c}
+
+
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+Malloc\+Fxn is a function pointer for the malloc function to be used by the driver. 
+
+\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+Free\+Fxn@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Free\+Fxn}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Free\+Fxn@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Free\+Fxn}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Free\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ P\+D\+M\+C\+C26\+X\+X\+\_\+\+Free\+Fxn) (void $\ast$ptr, size\+\_\+t mem\+Size)}\label{_p_d_m_c_c26_x_x_8h_af95e29fbea1fadfb011e4ceaa36f1ab0}
+
+
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+Free\+Fxn is a function pointer for the free function to be used by the driver. This is needed for memory clean up, if something goes wrong. 
+
+\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Config}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Config}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Config}  {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Config}}\label{_p_d_m_c_c26_x_x_8h_acfb1c3839ec53d02703f67f884760119}
+
+
+The \hyperlink{struct_p_d_m_c_c26_x_x___config}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Config} structure contains a set of pointers used to characterize the P\+D\+M\+C\+C26\+X\+X driver implementation. 
+
+\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}  {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}\label{_p_d_m_c_c26_x_x_8h_a0188ef7df22961ba87b588d2913e793e}
+
+
+P\+D\+M\+C\+C26\+X\+X Hardware attributes. 
+
+These fields are used by the P\+D\+M driver \index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+Handle@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Handle}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Handle@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Handle}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Config}$\ast$ {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Handle}}\label{_p_d_m_c_c26_x_x_8h_ae5b9ecc0f8eb494e162b4a0a49c0636a}
+
+
+A handle that is returned from a \hyperlink{_p_d_m_c_c26_x_x_8h_a431d9b71e0d0eebd5ab85960f1c82ee0}{P\+D\+M\+C\+C26\+X\+X\+\_\+open()} call. 
+
+\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+Status@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Status}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Status@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Status}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Status}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Status}  {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Status}}\label{_p_d_m_c_c26_x_x_8h_affb09af7b7de674b100b1170d574f86c}
+
+
+Status codes that are set by the P\+D\+M driver. 
+
+\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+Gain@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Gain}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Gain@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Gain}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Gain}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Gain}  {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Gain}}\label{_p_d_m_c_c26_x_x_8h_a62dc3dc8663629a376fc5e4e546bfd05}
+
+
+Predefined gain settings. 
+
+Gain is controlled by modifying the first coefficient of the P\+D\+M filter. Use these defines to get correct gain setting. All these values are in d\+B. Default filter will add 12d\+B gain. In fact this is not an amplification, this setting uses all the information in the P\+D\+M samples, so if use case allows it this will have the least compromised range. P\+D\+M2\+P\+C\+M algotrithm returns false if any of the samples decimated goes above 2$^\wedge$16 -\/ 1, i.\+e. the sample clipped during decimation. This information can be used for automatic gain control. \index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+Stream\+Notification@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Stream\+Notification}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Stream\+Notification@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Stream\+Notification}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Stream\+Notification}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Stream\+Notification}  {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Stream\+Notification}}\label{_p_d_m_c_c26_x_x_8h_abebd17c183efa14ae0ebe9c229f6c577}
+
+
+A \hyperlink{struct_p_d_m_c_c26_x_x___stream_notification}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Stream\+Notification} data structure is used with \hyperlink{_p_d_m_c_c26_x_x_8h_ab6fdee59a79029e938e3fbf0e446fa91}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Callback\+Fxn()}. Provides notification about available buffers and potential errors. 
+
+\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+Callback\+Fxn@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Callback\+Fxn}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Callback\+Fxn@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Callback\+Fxn}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Callback\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ P\+D\+M\+C\+C26\+X\+X\+\_\+\+Callback\+Fxn) ({\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Handle} handle, {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Stream\+Notification} $\ast$stream\+Notification)}\label{_p_d_m_c_c26_x_x_8h_ab6fdee59a79029e938e3fbf0e446fa91}
+
+
+The definition of a callback function used when buffers are ready. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em P\+D\+M\+C\+C26\+X\+X\+\_\+\+Handle} & P\+D\+M\+C\+C26\+X\+X\+\_\+\+Handle \\
+\hline
+\end{DoxyParams}
+\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request}  {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request}}\label{_p_d_m_c_c26_x_x_8h_ae8cebf1f4b5897234e3be6744eb26997}
+
+
+A \hyperlink{struct_p_d_m_c_c26_x_x___buffer_request}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request} data structure is used with \hyperlink{_p_d_m_c_c26_x_x_8h_a15a0017513c13ca244f7e3a0f5761e8d}{P\+D\+M\+C\+C26\+X\+X\+\_\+request\+Buffer()}. 
+
+buffer is a pointer to the requested buffer. It is N\+U\+L\+L if no buffer is available. Each buffer contains a metadata header of size P\+C\+M\+\_\+\+M\+E\+T\+A\+D\+A\+T\+A\+\_\+\+S\+I\+Z\+E. The first byte of the metadata is always an 8 bit sequence number. The other bytes depends on mode.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Mode }&{\bf Interpretation of buffer\+In being N\+U\+L\+L after returning  }\\\cline{1-2}
+Blocking mode &Request timed out and still no buffer available \\\cline{1-2}
+Non-\/\+Blocking mode &No buffer available \\\cline{1-2}
+\end{TabularC}
+\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+Params@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Params}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Params@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Params}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Params}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Params}  {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Params}}\label{_p_d_m_c_c26_x_x_8h_a31104648f1849f5eef36ef1d98465a6b}
+
+
+P\+D\+M\+C\+C26\+X\+X Parameters are used to with the \hyperlink{_p_d_m_c_c26_x_x_8h_a431d9b71e0d0eebd5ab85960f1c82ee0}{P\+D\+M\+C\+C26\+X\+X\+\_\+open()} call. Default values for these parameters are set using P\+D\+M\+C\+C26\+X\+X\+\_\+\+Params\+\_\+init(). 
+
+\begin{DoxySeeAlso}{See also}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+Params\+\_\+init 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Object}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Object}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Object}  {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Object}}\label{_p_d_m_c_c26_x_x_8h_a8faebd80770af564015834b59c2d3414}
+
+
+P\+D\+M\+C\+C26\+X\+X Object. 
+
+The application must not access any member variables of this structure! 
+
+\subsubsection{Enumeration Type Documentation}
+\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+Status@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Status}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Status@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Status}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Status}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Status}}\label{_p_d_m_c_c26_x_x_8h_afbfe993e790be75708df00186070a779}
+
+
+Status codes that are set by the P\+D\+M driver. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+I\+D\+L\+E@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+I\+D\+L\+E}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+I\+D\+L\+E@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+I\+D\+L\+E}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+I\+D\+L\+E\label{_p_d_m_c_c26_x_x_8h_afbfe993e790be75708df00186070a779a6541acf36472a5a4bae1e918532f5bab}
+}]Idle mode. Stream not started \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+B\+L\+O\+C\+K\+\_\+\+R\+E\+A\+D\+Y@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+B\+L\+O\+C\+K\+\_\+\+R\+E\+A\+D\+Y}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+B\+L\+O\+C\+K\+\_\+\+R\+E\+A\+D\+Y@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+B\+L\+O\+C\+K\+\_\+\+R\+E\+A\+D\+Y}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+B\+L\+O\+C\+K\+\_\+\+R\+E\+A\+D\+Y\label{_p_d_m_c_c26_x_x_8h_afbfe993e790be75708df00186070a779a7fbacf5e84041b2a8b635df5cf1789a6}
+}]Buffer ready \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+B\+L\+O\+C\+K\+\_\+\+R\+E\+A\+D\+Y\+\_\+\+B\+U\+T\+\_\+\+P\+D\+M\+\_\+\+O\+V\+E\+R\+F\+L\+O\+W@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+B\+L\+O\+C\+K\+\_\+\+R\+E\+A\+D\+Y\+\_\+\+B\+U\+T\+\_\+\+P\+D\+M\+\_\+\+O\+V\+E\+R\+F\+L\+O\+W}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+B\+L\+O\+C\+K\+\_\+\+R\+E\+A\+D\+Y\+\_\+\+B\+U\+T\+\_\+\+P\+D\+M\+\_\+\+O\+V\+E\+R\+F\+L\+O\+W@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+B\+L\+O\+C\+K\+\_\+\+R\+E\+A\+D\+Y\+\_\+\+B\+U\+T\+\_\+\+P\+D\+M\+\_\+\+O\+V\+E\+R\+F\+L\+O\+W}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+B\+L\+O\+C\+K\+\_\+\+R\+E\+A\+D\+Y\+\_\+\+B\+U\+T\+\_\+\+P\+D\+M\+\_\+\+O\+V\+E\+R\+F\+L\+O\+W\label{_p_d_m_c_c26_x_x_8h_afbfe993e790be75708df00186070a779a3bb09525b04c787e27fa7ce2505ebcbe}
+}]Buffer ready, but the P\+D\+M\+C\+C26\+X\+X driver is impending failure if not serviced in time. Stream is likely to stop now. \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+E\+R\+R\+O\+R@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+E\+R\+R\+O\+R}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+E\+R\+R\+O\+R@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+E\+R\+R\+O\+R}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+E\+R\+R\+O\+R\label{_p_d_m_c_c26_x_x_8h_afbfe993e790be75708df00186070a779addbca577e199cd8cad66eb880d81896b}
+}]Driver error \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+O\+P\+P\+I\+N\+G@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+O\+P\+P\+I\+N\+G}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+O\+P\+P\+I\+N\+G@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+O\+P\+P\+I\+N\+G}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+O\+P\+P\+I\+N\+G\label{_p_d_m_c_c26_x_x_8h_afbfe993e790be75708df00186070a779a57716d15faf09d4f066fe77f473de9db}
+}]A stop was requested and this is the last buffer to be produced. \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+O\+P\+P\+E\+D@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+O\+P\+P\+E\+D}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+O\+P\+P\+E\+D@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+O\+P\+P\+E\+D}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+O\+P\+P\+E\+D\label{_p_d_m_c_c26_x_x_8h_afbfe993e790be75708df00186070a779a772c35528b1c577ee8702c064c37554f}
+}]Unused \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+F\+A\+I\+L\+E\+D\+\_\+\+T\+O\+\_\+\+S\+T\+O\+P@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+F\+A\+I\+L\+E\+D\+\_\+\+T\+O\+\_\+\+S\+T\+O\+P}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+F\+A\+I\+L\+E\+D\+\_\+\+T\+O\+\_\+\+S\+T\+O\+P@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+F\+A\+I\+L\+E\+D\+\_\+\+T\+O\+\_\+\+S\+T\+O\+P}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+F\+A\+I\+L\+E\+D\+\_\+\+T\+O\+\_\+\+S\+T\+O\+P\label{_p_d_m_c_c26_x_x_8h_afbfe993e790be75708df00186070a779addce783eed694cb817cd67ae51d036d5}
+}]Buffer ready \end{description}
+\end{Desc}
+\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+Gain@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Gain}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Gain@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Gain}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Gain}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Gain}}\label{_p_d_m_c_c26_x_x_8h_a8c2d67aee547a2c8228465034ae0267f}
+
+
+Predefined gain settings. 
+
+Gain is controlled by modifying the first coefficient of the P\+D\+M filter. Use these defines to get correct gain setting. All these values are in d\+B. Default filter will add 12d\+B gain. In fact this is not an amplification, this setting uses all the information in the P\+D\+M samples, so if use case allows it this will have the least compromised range. P\+D\+M2\+P\+C\+M algotrithm returns false if any of the samples decimated goes above 2$^\wedge$16 -\/ 1, i.\+e. the sample clipped during decimation. This information can be used for automatic gain control. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+24@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+24}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+24@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+24}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+24\label{_p_d_m_c_c26_x_x_8h_a8c2d67aee547a2c8228465034ae0267fad32df2e2c24bdb0d67c3ec63c0c46178}
+}]24d\+B gain \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+18@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+18}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+18@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+18}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+18\label{_p_d_m_c_c26_x_x_8h_a8c2d67aee547a2c8228465034ae0267fa332b4d0aeb82669190f2b2bcfa9ea6c8}
+}]18d\+B gain \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+12@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+12}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+12@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+12}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+12\label{_p_d_m_c_c26_x_x_8h_a8c2d67aee547a2c8228465034ae0267fa5929463bec3b2bb2da1e240c8a3a2aad}
+}]12d\+B gain. Default \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+6@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+6}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+6@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+6}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+6\label{_p_d_m_c_c26_x_x_8h_a8c2d67aee547a2c8228465034ae0267faa10d346442b2427f47bd7939a0f0dc6a}
+}]6d\+B gain \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+0@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+0}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+0@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+0}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+0\label{_p_d_m_c_c26_x_x_8h_a8c2d67aee547a2c8228465034ae0267fa78540d7f8b49c98ee87afaaaba1f9c36}
+}]0d\+B gain \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+\+E\+N\+D@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+\+E\+N\+D}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+\+E\+N\+D@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+\+E\+N\+D}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+G\+A\+I\+N\+\_\+\+E\+N\+D\label{_p_d_m_c_c26_x_x_8h_a8c2d67aee547a2c8228465034ae0267faa4811cff958da5ec7ee700237beacb3b}
+}]Internal use only \end{description}
+\end{Desc}
+
+
+\subsubsection{Function Documentation}
+\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+init@{P\+D\+M\+C\+C26\+X\+X\+\_\+init}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+init@{P\+D\+M\+C\+C26\+X\+X\+\_\+init}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void P\+D\+M\+C\+C26\+X\+X\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_p_d_m_c_c26_x_x_8h_a8347c3f56db0ad7c3f357f13be098cf2}
+
+
+P\+D\+M C\+C26\+X\+X initialization. 
+
+\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+open@{P\+D\+M\+C\+C26\+X\+X\+\_\+open}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+open@{P\+D\+M\+C\+C26\+X\+X\+\_\+open}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Handle} P\+D\+M\+C\+C26\+X\+X\+\_\+open (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_p_d_m_c_c26_x_x_8h_a431d9b71e0d0eebd5ab85960f1c82ee0}
+
+
+Function to initialize the C\+C26\+X\+X P\+D\+M peripheral specified by the particular handle. The parameter specifies which mode the P\+D\+M will operate. 
+
+The function will set a dependency on the P\+D\+M module, which in turn powers up the module and enables the clock. I\+Os are also allocated, however the P\+D\+M driver will not begin streaming audio until \hyperlink{_p_d_m_c_c26_x_x_8h_af5fafd7c475117bd3ed6783273c2220d}{P\+D\+M\+C\+C26\+X\+X\+\_\+start\+Stream()} is called.
+
+\begin{DoxyPrecond}{Precondition}
+P\+D\+M controller has been initialized
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em params} & Pointer to a parameter block. Will use default parameters if N\+U\+L\+L\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A P\+D\+M\+C\+C26\+X\+X\+\_\+\+Handle on success or a N\+U\+L\+L on an error or if it has been already opened
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x_8h_afb9597d25d6b2e02f6903bf6652d4371}{P\+D\+M\+C\+C26\+X\+X\+\_\+close()} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+close@{P\+D\+M\+C\+C26\+X\+X\+\_\+close}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+close@{P\+D\+M\+C\+C26\+X\+X\+\_\+close}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}void P\+D\+M\+C\+C26\+X\+X\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_p_d_m_c_c26_x_x_8h_afb9597d25d6b2e02f6903bf6652d4371}
+
+
+Function to close a given C\+C26\+X\+X P\+D\+M peripheral specified by the P\+D\+M handle. 
+
+Posts an event that shuts down the I2\+S hardware, frees all memory used by the driver on the heap, releases the pins back to the P\+I\+N driver, and releases the dependency on the corresponding power domain.
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_p_d_m_c_c26_x_x_8h_a431d9b71e0d0eebd5ab85960f1c82ee0}{P\+D\+M\+C\+C26\+X\+X\+\_\+open()} has to be called first.
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+The P\+D\+M task must be allowed to run to synchronously shut down the driver
+\end{DoxyPostcond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A P\+D\+M\+C\+C26\+X\+X\+\_\+\+Handle returned from \hyperlink{_p_d_m_c_c26_x_x_8h_a431d9b71e0d0eebd5ab85960f1c82ee0}{P\+D\+M\+C\+C26\+X\+X\+\_\+open()}\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x_8h_a431d9b71e0d0eebd5ab85960f1c82ee0}{P\+D\+M\+C\+C26\+X\+X\+\_\+open} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+start\+Stream@{P\+D\+M\+C\+C26\+X\+X\+\_\+start\+Stream}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+start\+Stream@{P\+D\+M\+C\+C26\+X\+X\+\_\+start\+Stream}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+start\+Stream}]{\setlength{\rightskip}{0pt plus 5cm}bool P\+D\+M\+C\+C26\+X\+X\+\_\+start\+Stream (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_p_d_m_c_c26_x_x_8h_af5fafd7c475117bd3ed6783273c2220d}
+
+
+Function to start streaming P\+D\+M data. 
+
+Posts an event that tells the I2\+S hardware to start streaming and the P\+D\+M task to start processing incoming data.
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_p_d_m_c_c26_x_x_8h_a431d9b71e0d0eebd5ab85960f1c82ee0}{P\+D\+M\+C\+C26\+X\+X\+\_\+open()} has to be called first.
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+The P\+D\+M task must be allowed to run (by e.\+g. pending on a semaphore in the application task) to process incoming P\+D\+M data from the I2\+S module.
+\end{DoxyPostcond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A P\+D\+M handle returned from \hyperlink{_p_d_m_c_c26_x_x_8h_a431d9b71e0d0eebd5ab85960f1c82ee0}{P\+D\+M\+C\+C26\+X\+X\+\_\+open()}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if transfer is successful and false if not
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x_8h_a431d9b71e0d0eebd5ab85960f1c82ee0}{P\+D\+M\+C\+C26\+X\+X\+\_\+open()}, \hyperlink{_p_d_m_c_c26_x_x_8h_aebd3b158f38ba1489a56efe5b9a722d2}{P\+D\+M\+C\+C26\+X\+X\+\_\+stop\+Stream()} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+stop\+Stream@{P\+D\+M\+C\+C26\+X\+X\+\_\+stop\+Stream}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+stop\+Stream@{P\+D\+M\+C\+C26\+X\+X\+\_\+stop\+Stream}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+stop\+Stream}]{\setlength{\rightskip}{0pt plus 5cm}bool P\+D\+M\+C\+C26\+X\+X\+\_\+stop\+Stream (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_p_d_m_c_c26_x_x_8h_aebd3b158f38ba1489a56efe5b9a722d2}
+
+
+Function to stop streaming P\+D\+M data. 
+
+Blocks while the I2\+S module shuts down gracefully. Subsequently posts an event to let the P\+D\+M task process any remaining data.
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_p_d_m_c_c26_x_x_8h_af5fafd7c475117bd3ed6783273c2220d}{P\+D\+M\+C\+C26\+X\+X\+\_\+start\+Stream()} has to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A P\+D\+M handle returned from \hyperlink{_p_d_m_c_c26_x_x_8h_a431d9b71e0d0eebd5ab85960f1c82ee0}{P\+D\+M\+C\+C26\+X\+X\+\_\+open()}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if stream stopped successfully and false if not
+\end{DoxyReturn}
+\begin{DoxyPostcond}{Postcondition}
+Process all available P\+C\+M buffers by calling \hyperlink{_p_d_m_c_c26_x_x_8h_a15a0017513c13ca244f7e3a0f5761e8d}{P\+D\+M\+C\+C26\+X\+X\+\_\+request\+Buffer()} until it returns false. Otherwise, the available P\+C\+M buffers will take up space on the heap until \hyperlink{_p_d_m_c_c26_x_x_8h_afb9597d25d6b2e02f6903bf6652d4371}{P\+D\+M\+C\+C26\+X\+X\+\_\+close()} or \hyperlink{_p_d_m_c_c26_x_x_8h_af5fafd7c475117bd3ed6783273c2220d}{P\+D\+M\+C\+C26\+X\+X\+\_\+start\+Stream()} are called.
+\end{DoxyPostcond}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x_8h_a431d9b71e0d0eebd5ab85960f1c82ee0}{P\+D\+M\+C\+C26\+X\+X\+\_\+open()}, \hyperlink{_p_d_m_c_c26_x_x_8h_af5fafd7c475117bd3ed6783273c2220d}{P\+D\+M\+C\+C26\+X\+X\+\_\+start\+Stream()} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+request\+Buffer@{P\+D\+M\+C\+C26\+X\+X\+\_\+request\+Buffer}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+request\+Buffer@{P\+D\+M\+C\+C26\+X\+X\+\_\+request\+Buffer}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+request\+Buffer}]{\setlength{\rightskip}{0pt plus 5cm}bool P\+D\+M\+C\+C26\+X\+X\+\_\+request\+Buffer (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle, }
+\item[{{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request} $\ast$}]{buffer\+Request}
+\end{DoxyParamCaption}
+)}\label{_p_d_m_c_c26_x_x_8h_a15a0017513c13ca244f7e3a0f5761e8d}
+
+
+Function for requesting buffer. 
+
+P\+D\+M\+C\+C26\+X\+X\+\_\+request\+Buffer returns immediately even if no buffer is available. The caller is notified through events each time a buffer is available. However, more than one buffer may be available. Hence, the caller should request even without notification if the caller is ready to process.
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_p_d_m_c_c26_x_x_8h_a431d9b71e0d0eebd5ab85960f1c82ee0}{P\+D\+M\+C\+C26\+X\+X\+\_\+open()} and \hyperlink{_p_d_m_c_c26_x_x_8h_af5fafd7c475117bd3ed6783273c2220d}{P\+D\+M\+C\+C26\+X\+X\+\_\+start\+Stream()} has to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A P\+D\+M handle returned from \hyperlink{_p_d_m_c_c26_x_x_8h_a431d9b71e0d0eebd5ab85960f1c82ee0}{P\+D\+M\+C\+C26\+X\+X\+\_\+open()}\\
+\hline
+{\em $\ast$buffer\+Request} & Pointer to \hyperlink{struct_p_d_m_c_c26_x_x___buffer_request}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Buffer\+Request} struct\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if request is successful and false if not
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x_8h_a431d9b71e0d0eebd5ab85960f1c82ee0}{P\+D\+M\+C\+C26\+X\+X\+\_\+open()}, \hyperlink{_p_d_m_c_c26_x_x_8h_af5fafd7c475117bd3ed6783273c2220d}{P\+D\+M\+C\+C26\+X\+X\+\_\+start\+Stream()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Variable Documentation}
+\index{P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+config@{P\+D\+M\+C\+C26\+X\+X\+\_\+config}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+config@{P\+D\+M\+C\+C26\+X\+X\+\_\+config}!P\+D\+M\+C\+C26\+X\+X.\+h@{P\+D\+M\+C\+C26\+X\+X.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+config}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+Config} P\+D\+M\+C\+C26\+X\+X\+\_\+config\mbox{[}$\,$\mbox{]}}\label{_p_d_m_c_c26_x_x_8h_affba2052183dd56aa6315608a6ec2633}
+\hyperlink{struct_p_d_m_c_c26_x_x___config}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+Config} struct defined in the board file 

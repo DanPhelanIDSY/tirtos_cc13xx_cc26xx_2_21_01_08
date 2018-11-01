@@ -1,0 +1,135 @@
+\subsection{Display\+Uart.\+h File Reference}
+\label{_display_uart_8h}\index{Display\+Uart.\+h@{Display\+Uart.\+h}}
+{\ttfamily \#include $<$ti/sysbios/knl/\+Semaphore.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+U\+A\+R\+T.\+h$>$}\\*
+{\ttfamily \#include $<$ti/mw/display/\+Display.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+Include dependency graph for Display\+Uart.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_display_uart_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_display_uart___h_w_attrs}{Display\+Uart\+\_\+\+H\+W\+Attrs}
+\item 
+struct \hyperlink{struct_display_uart___object}{Display\+Uart\+\_\+\+Object}
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_display_uart___h_w_attrs}{Display\+Uart\+\_\+\+H\+W\+Attrs} \hyperlink{_display_uart_8h_a39d1c3ae2b6e69378e721a2730b5b8eb}{Display\+Uart\+\_\+\+H\+W\+Attrs}
+\item 
+typedef struct \hyperlink{struct_display_uart___object}{Display\+Uart\+\_\+\+Object} \hyperlink{_display_uart_8h_ae0a2eead2881eb2daaeb792fb471c8ef}{Display\+Uart\+\_\+\+Object}
+\item 
+typedef struct \hyperlink{struct_display_uart___object}{Display\+Uart\+\_\+\+Object} $\ast$ \hyperlink{_display_uart_8h_af5f02e5764d31e98b6c9862c07fa1d0b}{Display\+Uart\+\_\+\+Handle}
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} \hyperlink{_display_uart_8h_a58c8e11f0be124287ada48de65c848d9}{Display\+Uart\+\_\+open} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle}, \hyperlink{struct_display___params}{Display\+\_\+\+Params} $\ast$params)
+\item 
+void \hyperlink{_display_uart_8h_a3adb09a819a500fb7c236747067bea0c}{Display\+Uart\+\_\+clear} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle)
+\item 
+void \hyperlink{_display_uart_8h_aefc6253ba3fefbe78c19f5f412297e6d}{Display\+Uart\+\_\+clear\+Lines} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle, uint8\+\_\+t from\+Line, uint8\+\_\+t to\+Line)
+\item 
+void \hyperlink{_display_uart_8h_a7077c4aa704496057a17e156851cc9f8}{Display\+Uart\+\_\+put5} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle, uint8\+\_\+t line, uint8\+\_\+t column, uintptr\+\_\+t fmt, uintptr\+\_\+t a0, uintptr\+\_\+t a1, uintptr\+\_\+t a2, uintptr\+\_\+t a3, uintptr\+\_\+t a4)
+\item 
+void \hyperlink{_display_uart_8h_a815c5303af098b7fe30725cdbb3456c0}{Display\+Uart\+\_\+close} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle})
+\item 
+int \hyperlink{_display_uart_8h_ac7d0522532a79aa97c808f1a01d40b04}{Display\+Uart\+\_\+control} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)
+\item 
+unsigned int \hyperlink{_display_uart_8h_aa7e1e84aec144b836ae9ccc26cadb60c}{Display\+Uart\+\_\+get\+Type} (void)
+\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_display___fxn_table}{Display\+\_\+\+Fxn\+Table} \hyperlink{_display_uart_8h_a10c6aa83bc55d8ebc6f8ff01da3fde4e}{Display\+Uart\+\_\+fxn\+Table}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Typedef Documentation}
+\index{Display\+Uart.\+h@{Display\+Uart.\+h}!Display\+Uart\+\_\+\+H\+W\+Attrs@{Display\+Uart\+\_\+\+H\+W\+Attrs}}
+\index{Display\+Uart\+\_\+\+H\+W\+Attrs@{Display\+Uart\+\_\+\+H\+W\+Attrs}!Display\+Uart.\+h@{Display\+Uart.\+h}}
+\paragraph[{Display\+Uart\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Display\+Uart\+\_\+\+H\+W\+Attrs}  {\bf Display\+Uart\+\_\+\+H\+W\+Attrs}}\label{_display_uart_8h_a39d1c3ae2b6e69378e721a2730b5b8eb}
+\index{Display\+Uart.\+h@{Display\+Uart.\+h}!Display\+Uart\+\_\+\+Object@{Display\+Uart\+\_\+\+Object}}
+\index{Display\+Uart\+\_\+\+Object@{Display\+Uart\+\_\+\+Object}!Display\+Uart.\+h@{Display\+Uart.\+h}}
+\paragraph[{Display\+Uart\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Display\+Uart\+\_\+\+Object}  {\bf Display\+Uart\+\_\+\+Object}}\label{_display_uart_8h_ae0a2eead2881eb2daaeb792fb471c8ef}
+\index{Display\+Uart.\+h@{Display\+Uart.\+h}!Display\+Uart\+\_\+\+Handle@{Display\+Uart\+\_\+\+Handle}}
+\index{Display\+Uart\+\_\+\+Handle@{Display\+Uart\+\_\+\+Handle}!Display\+Uart.\+h@{Display\+Uart.\+h}}
+\paragraph[{Display\+Uart\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Display\+Uart\+\_\+\+Object} $\ast$ {\bf Display\+Uart\+\_\+\+Handle}}\label{_display_uart_8h_af5f02e5764d31e98b6c9862c07fa1d0b}
+
+
+\subsubsection{Function Documentation}
+\index{Display\+Uart.\+h@{Display\+Uart.\+h}!Display\+Uart\+\_\+open@{Display\+Uart\+\_\+open}}
+\index{Display\+Uart\+\_\+open@{Display\+Uart\+\_\+open}!Display\+Uart.\+h@{Display\+Uart.\+h}}
+\paragraph[{Display\+Uart\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Display\+\_\+\+Handle} Display\+Uart\+\_\+open (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{, }
+\item[{{\bf Display\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_display_uart_8h_a58c8e11f0be124287ada48de65c848d9}
+\index{Display\+Uart.\+h@{Display\+Uart.\+h}!Display\+Uart\+\_\+clear@{Display\+Uart\+\_\+clear}}
+\index{Display\+Uart\+\_\+clear@{Display\+Uart\+\_\+clear}!Display\+Uart.\+h@{Display\+Uart.\+h}}
+\paragraph[{Display\+Uart\+\_\+clear}]{\setlength{\rightskip}{0pt plus 5cm}void Display\+Uart\+\_\+clear (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_display_uart_8h_a3adb09a819a500fb7c236747067bea0c}
+\index{Display\+Uart.\+h@{Display\+Uart.\+h}!Display\+Uart\+\_\+clear\+Lines@{Display\+Uart\+\_\+clear\+Lines}}
+\index{Display\+Uart\+\_\+clear\+Lines@{Display\+Uart\+\_\+clear\+Lines}!Display\+Uart.\+h@{Display\+Uart.\+h}}
+\paragraph[{Display\+Uart\+\_\+clear\+Lines}]{\setlength{\rightskip}{0pt plus 5cm}void Display\+Uart\+\_\+clear\+Lines (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{handle, }
+\item[{uint8\+\_\+t}]{from\+Line, }
+\item[{uint8\+\_\+t}]{to\+Line}
+\end{DoxyParamCaption}
+)}\label{_display_uart_8h_aefc6253ba3fefbe78c19f5f412297e6d}
+\index{Display\+Uart.\+h@{Display\+Uart.\+h}!Display\+Uart\+\_\+put5@{Display\+Uart\+\_\+put5}}
+\index{Display\+Uart\+\_\+put5@{Display\+Uart\+\_\+put5}!Display\+Uart.\+h@{Display\+Uart.\+h}}
+\paragraph[{Display\+Uart\+\_\+put5}]{\setlength{\rightskip}{0pt plus 5cm}void Display\+Uart\+\_\+put5 (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{handle, }
+\item[{uint8\+\_\+t}]{line, }
+\item[{uint8\+\_\+t}]{column, }
+\item[{uintptr\+\_\+t}]{fmt, }
+\item[{uintptr\+\_\+t}]{a0, }
+\item[{uintptr\+\_\+t}]{a1, }
+\item[{uintptr\+\_\+t}]{a2, }
+\item[{uintptr\+\_\+t}]{a3, }
+\item[{uintptr\+\_\+t}]{a4}
+\end{DoxyParamCaption}
+)}\label{_display_uart_8h_a7077c4aa704496057a17e156851cc9f8}
+\index{Display\+Uart.\+h@{Display\+Uart.\+h}!Display\+Uart\+\_\+close@{Display\+Uart\+\_\+close}}
+\index{Display\+Uart\+\_\+close@{Display\+Uart\+\_\+close}!Display\+Uart.\+h@{Display\+Uart.\+h}}
+\paragraph[{Display\+Uart\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}void Display\+Uart\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{}
+\end{DoxyParamCaption}
+)}\label{_display_uart_8h_a815c5303af098b7fe30725cdbb3456c0}
+\index{Display\+Uart.\+h@{Display\+Uart.\+h}!Display\+Uart\+\_\+control@{Display\+Uart\+\_\+control}}
+\index{Display\+Uart\+\_\+control@{Display\+Uart\+\_\+control}!Display\+Uart.\+h@{Display\+Uart.\+h}}
+\paragraph[{Display\+Uart\+\_\+control}]{\setlength{\rightskip}{0pt plus 5cm}int Display\+Uart\+\_\+control (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{cmd, }
+\item[{void $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}\label{_display_uart_8h_ac7d0522532a79aa97c808f1a01d40b04}
+\index{Display\+Uart.\+h@{Display\+Uart.\+h}!Display\+Uart\+\_\+get\+Type@{Display\+Uart\+\_\+get\+Type}}
+\index{Display\+Uart\+\_\+get\+Type@{Display\+Uart\+\_\+get\+Type}!Display\+Uart.\+h@{Display\+Uart.\+h}}
+\paragraph[{Display\+Uart\+\_\+get\+Type}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int Display\+Uart\+\_\+get\+Type (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_display_uart_8h_aa7e1e84aec144b836ae9ccc26cadb60c}
+
+
+\subsubsection{Variable Documentation}
+\index{Display\+Uart.\+h@{Display\+Uart.\+h}!Display\+Uart\+\_\+fxn\+Table@{Display\+Uart\+\_\+fxn\+Table}}
+\index{Display\+Uart\+\_\+fxn\+Table@{Display\+Uart\+\_\+fxn\+Table}!Display\+Uart.\+h@{Display\+Uart.\+h}}
+\paragraph[{Display\+Uart\+\_\+fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Display\+\_\+\+Fxn\+Table} Display\+Uart\+\_\+fxn\+Table}\label{_display_uart_8h_a10c6aa83bc55d8ebc6f8ff01da3fde4e}

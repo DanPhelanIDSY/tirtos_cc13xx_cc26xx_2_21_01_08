@@ -1,0 +1,80 @@
+\subsection{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params Struct Reference}
+\label{struct_p_d_m_c_c26_x_x___i2_s___params}\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params}}
+
+
+P\+D\+M\+C\+C26\+X\+X I2\+S Parameters are used when calling \hyperlink{_p_d_m_c_c26_x_x__util_8h_a8168bcdab9f1e46c26823555df6f797f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open()}.  
+
+
+
+
+{\ttfamily \#include $<$P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h$>$}
+
+
+
+Collaboration diagram for P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{struct_p_d_m_c_c26_x_x___i2_s___params__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_aef896b2a7fc07d3b145f8d02eaa9e377}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Request\+Mode} \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___params_a2bd373c5a35eb5708499735ad1d1b0bb}{request\+Mode}
+\item 
+uint32\+\_\+t \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___params_a26074008d5b2519b42820cc9602d3710}{ui32request\+Timeout}
+\item 
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a82786f08d1b22895c79dcd8880fb92f3}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Callback\+Fxn} \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___params_a00d6ad911e30febe21d265d9808859b3}{callback\+Fxn}
+\item 
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a5b4e6b7c39c913bc6ae97261a5f2a226}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Transfer\+Size} \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___params_a2e982ff324a5a27b0cefb2bb8687b6dc}{block\+Size}
+\item 
+void $\ast$ \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___params_a5298f177d4658f5322a28ef42dc0149d}{pv\+Cont\+Buffer}
+\item 
+uint32\+\_\+t \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___params_aa602775d0906685e522eb949562bf613}{ui32con\+Buf\+Total\+Size}
+\item 
+void $\ast$ \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___params_ac8f783b111a55c3297e970504612e05a}{pv\+Cont\+Mgt\+Buffer}
+\item 
+uint32\+\_\+t \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___params_aac40d4e38985144bfe1bddc9b42ac04a}{ui32con\+Mgt\+Buf\+Total\+Size}
+\item 
+\hyperlink{struct_p_d_m_c_c26_x_x___i2_s___stream_notification}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Stream\+Notification} $\ast$ \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___params_aaabb96f9076a3e32f28c22164ab32159}{current\+Stream}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+P\+D\+M\+C\+C26\+X\+X I2\+S Parameters are used when calling \hyperlink{_p_d_m_c_c26_x_x__util_8h_a8168bcdab9f1e46c26823555df6f797f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open()}. 
+
+\subsubsection{Field Documentation}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params}!request\+Mode@{request\+Mode}}
+\index{request\+Mode@{request\+Mode}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params}}
+\paragraph[{request\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Request\+Mode} P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params\+::request\+Mode}\label{struct_p_d_m_c_c26_x_x___i2_s___params_a2bd373c5a35eb5708499735ad1d1b0bb}
+Blocking or Callback mode \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params}!ui32request\+Timeout@{ui32request\+Timeout}}
+\index{ui32request\+Timeout@{ui32request\+Timeout}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params}}
+\paragraph[{ui32request\+Timeout}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params\+::ui32request\+Timeout}\label{struct_p_d_m_c_c26_x_x___i2_s___params_a26074008d5b2519b42820cc9602d3710}
+Timeout for the request when in blocking mode \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params}!callback\+Fxn@{callback\+Fxn}}
+\index{callback\+Fxn@{callback\+Fxn}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params}}
+\paragraph[{callback\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Callback\+Fxn} P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params\+::callback\+Fxn}\label{struct_p_d_m_c_c26_x_x___i2_s___params_a00d6ad911e30febe21d265d9808859b3}
+Callback function pointer \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params}!block\+Size@{block\+Size}}
+\index{block\+Size@{block\+Size}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params}}
+\paragraph[{block\+Size}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Transfer\+Size} P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params\+::block\+Size}\label{struct_p_d_m_c_c26_x_x___i2_s___params_a2e982ff324a5a27b0cefb2bb8687b6dc}
+I2\+S D\+M\+A transfer size in number of samples. Each sample consumes either 16 or 24 bits per channel, set by \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___audio_format_config_aa6310978bb3efcf50aab7226f34597b1}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Format\+Config.\+mem\+Len}. Number of channels are set in \hyperlink{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_aefb4fcc1a8af0204f4daf2dd82b6498a}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config.\+ad0\+Num\+Of\+Channels} and \hyperlink{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_aabec0b0c95bf1757afb8fd80e06ef515}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config.\+ad1\+Num\+Of\+Channels} \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params}!pv\+Cont\+Buffer@{pv\+Cont\+Buffer}}
+\index{pv\+Cont\+Buffer@{pv\+Cont\+Buffer}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params}}
+\paragraph[{pv\+Cont\+Buffer}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params\+::pv\+Cont\+Buffer}\label{struct_p_d_m_c_c26_x_x___i2_s___params_a5298f177d4658f5322a28ef42dc0149d}
+Pointer to consecutive buffer in memory. Driver will chunk it into the queue. Make sure to provide correct buffer size \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___params_aa602775d0906685e522eb949562bf613}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params.\+ui32con\+Buf\+Total\+Size} \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params}!ui32con\+Buf\+Total\+Size@{ui32con\+Buf\+Total\+Size}}
+\index{ui32con\+Buf\+Total\+Size@{ui32con\+Buf\+Total\+Size}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params}}
+\paragraph[{ui32con\+Buf\+Total\+Size}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params\+::ui32con\+Buf\+Total\+Size}\label{struct_p_d_m_c_c26_x_x___i2_s___params_aa602775d0906685e522eb949562bf613}
+Size of consecutive buffer must match total available sample size\+: (wanted number of blocks) $\ast$ (number of samples per block) $\ast$ (samplesize(in bytes)) $\ast$ number of channels \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params}!pv\+Cont\+Mgt\+Buffer@{pv\+Cont\+Mgt\+Buffer}}
+\index{pv\+Cont\+Mgt\+Buffer@{pv\+Cont\+Mgt\+Buffer}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params}}
+\paragraph[{pv\+Cont\+Mgt\+Buffer}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params\+::pv\+Cont\+Mgt\+Buffer}\label{struct_p_d_m_c_c26_x_x___i2_s___params_ac8f783b111a55c3297e970504612e05a}
+Pointer to consecutive buffer in memory. Driver will use this to manage buffer. Make sure to provide correct buffer size \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___params_aac40d4e38985144bfe1bddc9b42ac04a}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params.\+ui32con\+Mgt\+Buf\+Total\+Size} \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params}!ui32con\+Mgt\+Buf\+Total\+Size@{ui32con\+Mgt\+Buf\+Total\+Size}}
+\index{ui32con\+Mgt\+Buf\+Total\+Size@{ui32con\+Mgt\+Buf\+Total\+Size}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params}}
+\paragraph[{ui32con\+Mgt\+Buf\+Total\+Size}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params\+::ui32con\+Mgt\+Buf\+Total\+Size}\label{struct_p_d_m_c_c26_x_x___i2_s___params_aac40d4e38985144bfe1bddc9b42ac04a}
+Size of consecutive buffer must match total available sample size\+: (wanted number of blocks I\+N and O\+U\+T, it must be same number I\+N and O\+U\+T) $\ast$ overhead size \hyperlink{_p_d_m_c_c26_x_x__util_8h_a8b3b29f28fba7618e60409457a14f6f8}{I2\+S\+\_\+\+B\+L\+O\+C\+K\+\_\+\+O\+V\+E\+R\+H\+E\+A\+D\+\_\+\+I\+N\+\_\+\+B\+Y\+T\+E\+S} \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params}!current\+Stream@{current\+Stream}}
+\index{current\+Stream@{current\+Stream}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params}}
+\paragraph[{current\+Stream}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Stream\+Notification}$\ast$ P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params\+::current\+Stream}\label{struct_p_d_m_c_c26_x_x___i2_s___params_aaabb96f9076a3e32f28c22164ab32159}
+Pointer to information about the current state of the stream 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_p_d_m_c_c26_x_x__util_8h}{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}\end{DoxyCompactItemize}

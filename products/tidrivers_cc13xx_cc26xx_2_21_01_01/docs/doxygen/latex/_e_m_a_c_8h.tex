@@ -1,0 +1,147 @@
+\subsection{E\+M\+A\+C.\+h File Reference}
+\label{_e_m_a_c_8h}\index{E\+M\+A\+C.\+h@{E\+M\+A\+C.\+h}}
+
+
+\subsubsection{Detailed Description}
+E\+M\+A\+C driver interface. 
+
+============================================================================
+
+The E\+M\+A\+C header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/EMAC.h>}
+\end{DoxyCode}
+
+
+\subsubsection*{Implementation}
+
+The E\+M\+A\+C driver interface module is joined (at link time) to a N\+U\+L\+L-\/terminated array of \hyperlink{struct_e_m_a_c___config}{E\+M\+A\+C\+\_\+\+Config} data structures named {\itshape E\+M\+A\+C\+\_\+config}. {\itshape E\+M\+A\+C\+\_\+config} is implemented in the application with each entry being an instance of a E\+M\+A\+C peripheral. Each entry in {\itshape E\+M\+A\+C\+\_\+config} contains a\+:
+\begin{DoxyItemize}
+\item (\hyperlink{struct_e_m_a_c___fxn_table}{E\+M\+A\+C\+\_\+\+Fxn\+Table} $\ast$) to a set of functions that implement a E\+M\+A\+C peripheral
+\item (void $\ast$) data object that is associated with the \hyperlink{struct_e_m_a_c___fxn_table}{E\+M\+A\+C\+\_\+\+Fxn\+Table}
+\item (void $\ast$) hardware attributes that are associated to the \hyperlink{struct_e_m_a_c___fxn_table}{E\+M\+A\+C\+\_\+\+Fxn\+Table}
+\end{DoxyItemize}
+
+\subsubsection*{Instrumentation}
+
+The E\+M\+A\+C driver interface produces log statements if instrumentation is enabled.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Diagnostics Mask }&{\bf Log details  }\\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R1 &basic operations \\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R2 &detailed operations \\\cline{1-2}
+\end{TabularC}
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+Include dependency graph for E\+M\+A\+C.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=159pt]{_e_m_a_c_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_e_m_a_c___fxn_table}{E\+M\+A\+C\+\_\+\+Fxn\+Table}
+\begin{DoxyCompactList}\small\item\em E\+M\+A\+C Function table structure. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_e_m_a_c___config}{E\+M\+A\+C\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em E\+M\+A\+C Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group___e_m_a_c___c_o_n_t_r_o_l_ga56f3e93517d362f44d638f1e7ecbcfdb}{E\+M\+A\+C\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~32
+\item 
+\#define \hyperlink{group___e_m_a_c___c_o_n_t_r_o_l_gada65346f7e4d230ac1998870744f6161}{E\+M\+A\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~-\/32
+\item 
+\#define \hyperlink{group___e_m_a_c___s_t_a_t_u_s_ga335affc31a69a1af1f5ea215936d60f7}{E\+M\+A\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}~0
+\begin{DoxyCompactList}\small\item\em Successful status code returned by E\+M\+A\+C\+\_\+control(). \end{DoxyCompactList}\item 
+\#define \hyperlink{group___e_m_a_c___s_t_a_t_u_s_gac1c4139ae6d9551aa60f3af3ea6fc519}{E\+M\+A\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}~-\/1
+\begin{DoxyCompactList}\small\item\em Generic error status code returned by E\+M\+A\+C\+\_\+control(). \end{DoxyCompactList}\item 
+\#define \hyperlink{group___e_m_a_c___s_t_a_t_u_s_gade69656b299f95b8286b4d39e6ee10da}{E\+M\+A\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}~-\/2
+\begin{DoxyCompactList}\small\item\em An error status code returned by E\+M\+A\+C\+\_\+control() for undefined command codes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef void($\ast$ \hyperlink{_e_m_a_c_8h_a19871b9b03b14b33916f313969f7c275}{E\+M\+A\+C\+\_\+\+Init\+Fxn}) (uint32\+\_\+t)
+\item 
+typedef bool($\ast$ \hyperlink{_e_m_a_c_8h_a16a68c18205d9338eb80ba15d5c503ae}{E\+M\+A\+C\+\_\+is\+Link\+Up\+Fxn}) (uint32\+\_\+t)
+\item 
+typedef struct \hyperlink{struct_e_m_a_c___fxn_table}{E\+M\+A\+C\+\_\+\+Fxn\+Table} \hyperlink{_e_m_a_c_8h_a78246359973b8c33dd0758d38da4a120}{E\+M\+A\+C\+\_\+\+Fxn\+Table}
+\begin{DoxyCompactList}\small\item\em E\+M\+A\+C Function table structure. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_e_m_a_c___config}{E\+M\+A\+C\+\_\+\+Config} \hyperlink{_e_m_a_c_8h_af03639779a3a76b335ac6a4e0329a229}{E\+M\+A\+C\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em E\+M\+A\+C Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_e_m_a_c_8h_a48ca15f3164b615bacbe55d60c54a79d}{E\+M\+A\+C\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em This function initializes the E\+M\+A\+C driver. \end{DoxyCompactList}\item 
+bool \hyperlink{_e_m_a_c_8h_aea3d89085131b81641c68dc72b9e3388}{E\+M\+A\+C\+\_\+is\+Link\+Up} (unsigned int index)
+\begin{DoxyCompactList}\small\item\em This function returns if the link is up. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Typedef Documentation}
+\index{E\+M\+A\+C.\+h@{E\+M\+A\+C.\+h}!E\+M\+A\+C\+\_\+\+Init\+Fxn@{E\+M\+A\+C\+\_\+\+Init\+Fxn}}
+\index{E\+M\+A\+C\+\_\+\+Init\+Fxn@{E\+M\+A\+C\+\_\+\+Init\+Fxn}!E\+M\+A\+C.\+h@{E\+M\+A\+C.\+h}}
+\paragraph[{E\+M\+A\+C\+\_\+\+Init\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ E\+M\+A\+C\+\_\+\+Init\+Fxn) (uint32\+\_\+t)}\label{_e_m_a_c_8h_a19871b9b03b14b33916f313969f7c275}
+\index{E\+M\+A\+C.\+h@{E\+M\+A\+C.\+h}!E\+M\+A\+C\+\_\+is\+Link\+Up\+Fxn@{E\+M\+A\+C\+\_\+is\+Link\+Up\+Fxn}}
+\index{E\+M\+A\+C\+\_\+is\+Link\+Up\+Fxn@{E\+M\+A\+C\+\_\+is\+Link\+Up\+Fxn}!E\+M\+A\+C.\+h@{E\+M\+A\+C.\+h}}
+\paragraph[{E\+M\+A\+C\+\_\+is\+Link\+Up\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef bool($\ast$ E\+M\+A\+C\+\_\+is\+Link\+Up\+Fxn) (uint32\+\_\+t)}\label{_e_m_a_c_8h_a16a68c18205d9338eb80ba15d5c503ae}
+\index{E\+M\+A\+C.\+h@{E\+M\+A\+C.\+h}!E\+M\+A\+C\+\_\+\+Fxn\+Table@{E\+M\+A\+C\+\_\+\+Fxn\+Table}}
+\index{E\+M\+A\+C\+\_\+\+Fxn\+Table@{E\+M\+A\+C\+\_\+\+Fxn\+Table}!E\+M\+A\+C.\+h@{E\+M\+A\+C.\+h}}
+\paragraph[{E\+M\+A\+C\+\_\+\+Fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf E\+M\+A\+C\+\_\+\+Fxn\+Table}  {\bf E\+M\+A\+C\+\_\+\+Fxn\+Table}}\label{_e_m_a_c_8h_a78246359973b8c33dd0758d38da4a120}
+
+
+E\+M\+A\+C Function table structure. 
+
+\index{E\+M\+A\+C.\+h@{E\+M\+A\+C.\+h}!E\+M\+A\+C\+\_\+\+Config@{E\+M\+A\+C\+\_\+\+Config}}
+\index{E\+M\+A\+C\+\_\+\+Config@{E\+M\+A\+C\+\_\+\+Config}!E\+M\+A\+C.\+h@{E\+M\+A\+C.\+h}}
+\paragraph[{E\+M\+A\+C\+\_\+\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf E\+M\+A\+C\+\_\+\+Config}  {\bf E\+M\+A\+C\+\_\+\+Config}}\label{_e_m_a_c_8h_af03639779a3a76b335ac6a4e0329a229}
+
+
+E\+M\+A\+C Global configuration. 
+
+The \hyperlink{struct_e_m_a_c___config}{E\+M\+A\+C\+\_\+\+Config} structure contains a set of pointers used to characterize the E\+M\+A\+C driver implementation.
+
+This structure needs to be defined before calling \hyperlink{_e_m_a_c_8h_a48ca15f3164b615bacbe55d60c54a79d}{E\+M\+A\+C\+\_\+init()} and it must not be changed thereafter.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_e_m_a_c_8h_a48ca15f3164b615bacbe55d60c54a79d}{E\+M\+A\+C\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Function Documentation}
+\index{E\+M\+A\+C.\+h@{E\+M\+A\+C.\+h}!E\+M\+A\+C\+\_\+init@{E\+M\+A\+C\+\_\+init}}
+\index{E\+M\+A\+C\+\_\+init@{E\+M\+A\+C\+\_\+init}!E\+M\+A\+C.\+h@{E\+M\+A\+C.\+h}}
+\paragraph[{E\+M\+A\+C\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void E\+M\+A\+C\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_e_m_a_c_8h_a48ca15f3164b615bacbe55d60c54a79d}
+
+
+This function initializes the E\+M\+A\+C driver. 
+
+This function must be called by the application before the N\+D\+K stack thread is started.
+
+\begin{DoxyPrecond}{Precondition}
+The E\+M\+A\+C\+\_\+config structure must exist and be persistent before this function can be called. This function must also be called before any other E\+M\+A\+C driver A\+P\+Is. This function call does not modify any peripheral registers. 
+\end{DoxyPrecond}
+\index{E\+M\+A\+C.\+h@{E\+M\+A\+C.\+h}!E\+M\+A\+C\+\_\+is\+Link\+Up@{E\+M\+A\+C\+\_\+is\+Link\+Up}}
+\index{E\+M\+A\+C\+\_\+is\+Link\+Up@{E\+M\+A\+C\+\_\+is\+Link\+Up}!E\+M\+A\+C.\+h@{E\+M\+A\+C.\+h}}
+\paragraph[{E\+M\+A\+C\+\_\+is\+Link\+Up}]{\setlength{\rightskip}{0pt plus 5cm}bool E\+M\+A\+C\+\_\+is\+Link\+Up (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{index}
+\end{DoxyParamCaption}
+)}\label{_e_m_a_c_8h_aea3d89085131b81641c68dc72b9e3388}
+
+
+This function returns if the link is up. 
+
+\begin{DoxyReturn}{Returns}
+true is the link is up. false if it is down. 
+\end{DoxyReturn}

@@ -1,0 +1,180 @@
+\subsection{Power\+C\+C26\+X\+X\+\_\+\+Module\+State Struct Reference}
+\label{struct_power_c_c26_x_x___module_state}\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+
+
+Internal module state.  
+
+
+
+
+{\ttfamily \#include $<$Power\+C\+C26\+X\+X.\+h$>$}
+
+
+
+Collaboration diagram for Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=181pt]{struct_power_c_c26_x_x___module_state__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_list___list}{List\+\_\+\+List} \hyperlink{struct_power_c_c26_x_x___module_state_ab7a30da55e342a00e49baab649ad1fc0}{notify\+List}
+\item 
+uint32\+\_\+t \hyperlink{struct_power_c_c26_x_x___module_state_ad500e504e794086911ecad33c3134f37}{constraint\+Mask}
+\item 
+Clock\+\_\+\+Struct \hyperlink{struct_power_c_c26_x_x___module_state_a9a7e3273e7717d152d90816efded773e}{clock\+Obj}
+\item 
+Clock\+\_\+\+Struct \hyperlink{struct_power_c_c26_x_x___module_state_a390c88b1cf057a96455b0b0e2d0c1b9f}{xosc\+Clock\+Obj}
+\item 
+Clock\+\_\+\+Struct \hyperlink{struct_power_c_c26_x_x___module_state_ac692ad2a24589c37d4c2e5918a9b29ec}{lf\+Clock\+Obj}
+\item 
+Clock\+\_\+\+Struct \hyperlink{struct_power_c_c26_x_x___module_state_a3b3efe9eda8024f9c8eb1abb05acb8e3}{cal\+Clock\+Struct}
+\item 
+Hwi\+\_\+\+Struct \hyperlink{struct_power_c_c26_x_x___module_state_a234289c39d94951e2950b425d152c140}{hwi\+Struct}
+\item 
+int32\+\_\+t \hyperlink{struct_power_c_c26_x_x___module_state_aa85213d5686bba5b7b214207deb27637}{n\+Delta\+Freq\+Curr}
+\item 
+int32\+\_\+t \hyperlink{struct_power_c_c26_x_x___module_state_a964421fa101fbf783bcaf061380614ef}{n\+Ctrim\+Curr}
+\item 
+int32\+\_\+t \hyperlink{struct_power_c_c26_x_x___module_state_afa3ea38f50ef03b11159820b2ea40385}{n\+Ctrim\+Fract\+Curr}
+\item 
+int32\+\_\+t \hyperlink{struct_power_c_c26_x_x___module_state_a88f64a21ba0bf629a4a053acc7437b4d}{n\+Ctrim\+New}
+\item 
+int32\+\_\+t \hyperlink{struct_power_c_c26_x_x___module_state_ae73577d0ac8b0e0ac6066a51da2e2069}{n\+Ctrim\+Fract\+New}
+\item 
+int32\+\_\+t \hyperlink{struct_power_c_c26_x_x___module_state_a72a304c2f61537e3419cf94ae9428dcc}{n\+Rtrim\+New}
+\item 
+int32\+\_\+t \hyperlink{struct_power_c_c26_x_x___module_state_a71ecdf485b5ac83bda9f50683912cf80}{n\+Rtrim\+Curr}
+\item 
+int32\+\_\+t \hyperlink{struct_power_c_c26_x_x___module_state_a5ba698f9b08cd1fa921a376c386f4002}{n\+Delta\+Freq\+New}
+\item 
+bool \hyperlink{struct_power_c_c26_x_x___module_state_abbeb88a5424af553d50baa10acad9804}{b\+Refine}
+\item 
+uint32\+\_\+t \hyperlink{struct_power_c_c26_x_x___module_state_a94573418a672016214ff7c62dc27bc8f}{state}
+\item 
+bool \hyperlink{struct_power_c_c26_x_x___module_state_a89a7943515d2c6eb7da22a2017c3891c}{xosc\+Pending}
+\item 
+bool \hyperlink{struct_power_c_c26_x_x___module_state_aac1b3efea8ce636fe2ccfdc97fe03aa3}{cal\+L\+F}
+\item 
+uint8\+\_\+t \hyperlink{struct_power_c_c26_x_x___module_state_ae1e7421cc42f5181b00720174d81ede7}{hwi\+State}
+\item 
+bool \hyperlink{struct_power_c_c26_x_x___module_state_a9311e19be396a5ab3c8b2d5f6bfff6f3}{busy\+Cal}
+\item 
+uint8\+\_\+t \hyperlink{struct_power_c_c26_x_x___module_state_a45966e49f7fc38e3006ef3aa68761188}{cal\+Step}
+\item 
+bool \hyperlink{struct_power_c_c26_x_x___module_state_a702ec4760d50a0bcb6577ff029938ae5}{first\+L\+F}
+\item 
+bool \hyperlink{struct_power_c_c26_x_x___module_state_ad1d986fdb2bc8fe27a4d5341eaa059ef}{enable\+Policy}
+\item 
+bool \hyperlink{struct_power_c_c26_x_x___module_state_a587f4424044334445086b426953a3e5c}{initialized}
+\item 
+uint8\+\_\+t \hyperlink{struct_power_c_c26_x_x___module_state_af141040006ff722deab0a60947de14c9}{constraint\+Counts} \mbox{[}\hyperlink{_power_c_c26_x_x_8h_a08e787d2a1ff1b373b209e68fc797e31}{Power\+C\+C26\+X\+X\+\_\+\+N\+U\+M\+C\+O\+N\+S\+T\+R\+A\+I\+N\+T\+S}\mbox{]}
+\item 
+uint8\+\_\+t \hyperlink{struct_power_c_c26_x_x___module_state_af13aa7f8e1d035365a1f2b8b30e57a61}{resource\+Counts} \mbox{[}\hyperlink{_power_c_c26_x_x_8h_af422d71a354f486c975a44e0dddd5845}{Power\+C\+C26\+X\+X\+\_\+\+N\+U\+M\+R\+E\+S\+O\+U\+R\+C\+E\+S}\mbox{]}
+\item 
+unsigned int($\ast$ \hyperlink{struct_power_c_c26_x_x___module_state_ac8d49a96f7ae612895080a07378d3dbd}{resource\+Handlers} \mbox{[}3\mbox{]})(unsigned int)
+\item 
+\hyperlink{_power_8h_a333038d1e9cd5f93dda7b83f8a1afa8b}{Power\+\_\+\+Policy\+Fxn} \hyperlink{struct_power_c_c26_x_x___module_state_a11876366e8d0d07879231d033ab31e57}{policy\+Fxn}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Internal module state. 
+
+\subsubsection{Field Documentation}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!notify\+List@{notify\+List}}
+\index{notify\+List@{notify\+List}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{notify\+List}]{\setlength{\rightskip}{0pt plus 5cm}{\bf List\+\_\+\+List} Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::notify\+List}\label{struct_power_c_c26_x_x___module_state_ab7a30da55e342a00e49baab649ad1fc0}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!constraint\+Mask@{constraint\+Mask}}
+\index{constraint\+Mask@{constraint\+Mask}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{constraint\+Mask}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::constraint\+Mask}\label{struct_power_c_c26_x_x___module_state_ad500e504e794086911ecad33c3134f37}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!clock\+Obj@{clock\+Obj}}
+\index{clock\+Obj@{clock\+Obj}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{clock\+Obj}]{\setlength{\rightskip}{0pt plus 5cm}Clock\+\_\+\+Struct Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::clock\+Obj}\label{struct_power_c_c26_x_x___module_state_a9a7e3273e7717d152d90816efded773e}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!xosc\+Clock\+Obj@{xosc\+Clock\+Obj}}
+\index{xosc\+Clock\+Obj@{xosc\+Clock\+Obj}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{xosc\+Clock\+Obj}]{\setlength{\rightskip}{0pt plus 5cm}Clock\+\_\+\+Struct Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::xosc\+Clock\+Obj}\label{struct_power_c_c26_x_x___module_state_a390c88b1cf057a96455b0b0e2d0c1b9f}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!lf\+Clock\+Obj@{lf\+Clock\+Obj}}
+\index{lf\+Clock\+Obj@{lf\+Clock\+Obj}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{lf\+Clock\+Obj}]{\setlength{\rightskip}{0pt plus 5cm}Clock\+\_\+\+Struct Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::lf\+Clock\+Obj}\label{struct_power_c_c26_x_x___module_state_ac692ad2a24589c37d4c2e5918a9b29ec}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!cal\+Clock\+Struct@{cal\+Clock\+Struct}}
+\index{cal\+Clock\+Struct@{cal\+Clock\+Struct}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{cal\+Clock\+Struct}]{\setlength{\rightskip}{0pt plus 5cm}Clock\+\_\+\+Struct Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::cal\+Clock\+Struct}\label{struct_power_c_c26_x_x___module_state_a3b3efe9eda8024f9c8eb1abb05acb8e3}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!hwi\+Struct@{hwi\+Struct}}
+\index{hwi\+Struct@{hwi\+Struct}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{hwi\+Struct}]{\setlength{\rightskip}{0pt plus 5cm}Hwi\+\_\+\+Struct Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::hwi\+Struct}\label{struct_power_c_c26_x_x___module_state_a234289c39d94951e2950b425d152c140}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!n\+Delta\+Freq\+Curr@{n\+Delta\+Freq\+Curr}}
+\index{n\+Delta\+Freq\+Curr@{n\+Delta\+Freq\+Curr}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{n\+Delta\+Freq\+Curr}]{\setlength{\rightskip}{0pt plus 5cm}int32\+\_\+t Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::n\+Delta\+Freq\+Curr}\label{struct_power_c_c26_x_x___module_state_aa85213d5686bba5b7b214207deb27637}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!n\+Ctrim\+Curr@{n\+Ctrim\+Curr}}
+\index{n\+Ctrim\+Curr@{n\+Ctrim\+Curr}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{n\+Ctrim\+Curr}]{\setlength{\rightskip}{0pt plus 5cm}int32\+\_\+t Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::n\+Ctrim\+Curr}\label{struct_power_c_c26_x_x___module_state_a964421fa101fbf783bcaf061380614ef}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!n\+Ctrim\+Fract\+Curr@{n\+Ctrim\+Fract\+Curr}}
+\index{n\+Ctrim\+Fract\+Curr@{n\+Ctrim\+Fract\+Curr}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{n\+Ctrim\+Fract\+Curr}]{\setlength{\rightskip}{0pt plus 5cm}int32\+\_\+t Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::n\+Ctrim\+Fract\+Curr}\label{struct_power_c_c26_x_x___module_state_afa3ea38f50ef03b11159820b2ea40385}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!n\+Ctrim\+New@{n\+Ctrim\+New}}
+\index{n\+Ctrim\+New@{n\+Ctrim\+New}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{n\+Ctrim\+New}]{\setlength{\rightskip}{0pt plus 5cm}int32\+\_\+t Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::n\+Ctrim\+New}\label{struct_power_c_c26_x_x___module_state_a88f64a21ba0bf629a4a053acc7437b4d}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!n\+Ctrim\+Fract\+New@{n\+Ctrim\+Fract\+New}}
+\index{n\+Ctrim\+Fract\+New@{n\+Ctrim\+Fract\+New}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{n\+Ctrim\+Fract\+New}]{\setlength{\rightskip}{0pt plus 5cm}int32\+\_\+t Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::n\+Ctrim\+Fract\+New}\label{struct_power_c_c26_x_x___module_state_ae73577d0ac8b0e0ac6066a51da2e2069}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!n\+Rtrim\+New@{n\+Rtrim\+New}}
+\index{n\+Rtrim\+New@{n\+Rtrim\+New}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{n\+Rtrim\+New}]{\setlength{\rightskip}{0pt plus 5cm}int32\+\_\+t Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::n\+Rtrim\+New}\label{struct_power_c_c26_x_x___module_state_a72a304c2f61537e3419cf94ae9428dcc}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!n\+Rtrim\+Curr@{n\+Rtrim\+Curr}}
+\index{n\+Rtrim\+Curr@{n\+Rtrim\+Curr}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{n\+Rtrim\+Curr}]{\setlength{\rightskip}{0pt plus 5cm}int32\+\_\+t Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::n\+Rtrim\+Curr}\label{struct_power_c_c26_x_x___module_state_a71ecdf485b5ac83bda9f50683912cf80}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!n\+Delta\+Freq\+New@{n\+Delta\+Freq\+New}}
+\index{n\+Delta\+Freq\+New@{n\+Delta\+Freq\+New}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{n\+Delta\+Freq\+New}]{\setlength{\rightskip}{0pt plus 5cm}int32\+\_\+t Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::n\+Delta\+Freq\+New}\label{struct_power_c_c26_x_x___module_state_a5ba698f9b08cd1fa921a376c386f4002}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!b\+Refine@{b\+Refine}}
+\index{b\+Refine@{b\+Refine}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{b\+Refine}]{\setlength{\rightskip}{0pt plus 5cm}bool Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::b\+Refine}\label{struct_power_c_c26_x_x___module_state_abbeb88a5424af553d50baa10acad9804}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!state@{state}}
+\index{state@{state}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{state}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::state}\label{struct_power_c_c26_x_x___module_state_a94573418a672016214ff7c62dc27bc8f}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!xosc\+Pending@{xosc\+Pending}}
+\index{xosc\+Pending@{xosc\+Pending}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{xosc\+Pending}]{\setlength{\rightskip}{0pt plus 5cm}bool Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::xosc\+Pending}\label{struct_power_c_c26_x_x___module_state_a89a7943515d2c6eb7da22a2017c3891c}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!cal\+L\+F@{cal\+L\+F}}
+\index{cal\+L\+F@{cal\+L\+F}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{cal\+L\+F}]{\setlength{\rightskip}{0pt plus 5cm}bool Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::cal\+L\+F}\label{struct_power_c_c26_x_x___module_state_aac1b3efea8ce636fe2ccfdc97fe03aa3}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!hwi\+State@{hwi\+State}}
+\index{hwi\+State@{hwi\+State}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{hwi\+State}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::hwi\+State}\label{struct_power_c_c26_x_x___module_state_ae1e7421cc42f5181b00720174d81ede7}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!busy\+Cal@{busy\+Cal}}
+\index{busy\+Cal@{busy\+Cal}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{busy\+Cal}]{\setlength{\rightskip}{0pt plus 5cm}bool Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::busy\+Cal}\label{struct_power_c_c26_x_x___module_state_a9311e19be396a5ab3c8b2d5f6bfff6f3}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!cal\+Step@{cal\+Step}}
+\index{cal\+Step@{cal\+Step}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{cal\+Step}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::cal\+Step}\label{struct_power_c_c26_x_x___module_state_a45966e49f7fc38e3006ef3aa68761188}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!first\+L\+F@{first\+L\+F}}
+\index{first\+L\+F@{first\+L\+F}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{first\+L\+F}]{\setlength{\rightskip}{0pt plus 5cm}bool Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::first\+L\+F}\label{struct_power_c_c26_x_x___module_state_a702ec4760d50a0bcb6577ff029938ae5}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!enable\+Policy@{enable\+Policy}}
+\index{enable\+Policy@{enable\+Policy}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{enable\+Policy}]{\setlength{\rightskip}{0pt plus 5cm}bool Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::enable\+Policy}\label{struct_power_c_c26_x_x___module_state_ad1d986fdb2bc8fe27a4d5341eaa059ef}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!initialized@{initialized}}
+\index{initialized@{initialized}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{initialized}]{\setlength{\rightskip}{0pt plus 5cm}bool Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::initialized}\label{struct_power_c_c26_x_x___module_state_a587f4424044334445086b426953a3e5c}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!constraint\+Counts@{constraint\+Counts}}
+\index{constraint\+Counts@{constraint\+Counts}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{constraint\+Counts}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::constraint\+Counts\mbox{[}{\bf Power\+C\+C26\+X\+X\+\_\+\+N\+U\+M\+C\+O\+N\+S\+T\+R\+A\+I\+N\+T\+S}\mbox{]}}\label{struct_power_c_c26_x_x___module_state_af141040006ff722deab0a60947de14c9}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!resource\+Counts@{resource\+Counts}}
+\index{resource\+Counts@{resource\+Counts}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{resource\+Counts}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::resource\+Counts\mbox{[}{\bf Power\+C\+C26\+X\+X\+\_\+\+N\+U\+M\+R\+E\+S\+O\+U\+R\+C\+E\+S}\mbox{]}}\label{struct_power_c_c26_x_x___module_state_af13aa7f8e1d035365a1f2b8b30e57a61}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!resource\+Handlers@{resource\+Handlers}}
+\index{resource\+Handlers@{resource\+Handlers}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{resource\+Handlers}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int($\ast$ Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::resource\+Handlers\mbox{[}3\mbox{]})(unsigned int)}\label{struct_power_c_c26_x_x___module_state_ac8d49a96f7ae612895080a07378d3dbd}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}!policy\+Fxn@{policy\+Fxn}}
+\index{policy\+Fxn@{policy\+Fxn}!Power\+C\+C26\+X\+X\+\_\+\+Module\+State@{Power\+C\+C26\+X\+X\+\_\+\+Module\+State}}
+\paragraph[{policy\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Power\+\_\+\+Policy\+Fxn} Power\+C\+C26\+X\+X\+\_\+\+Module\+State\+::policy\+Fxn}\label{struct_power_c_c26_x_x___module_state_a11876366e8d0d07879231d033ab31e57}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_power_c_c26_x_x_8h}{Power\+C\+C26\+X\+X.\+h}\end{DoxyCompactItemize}

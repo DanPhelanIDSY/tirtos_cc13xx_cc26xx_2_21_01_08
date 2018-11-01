@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectSpec>
+    <applicability>
+        <when>
+            <context
+                deviceFamily="ARM"
+                deviceId=".*(TM4C|TM4E|P401R).*"
+            />
+        </when>
+    </applicability>
+
+    <project
+        title="Stairstep JTAG StopMode"
+        name="stairstepStopMode"
+        toolChain="GNU"
+        linkerCommandFile="ti/platforms/tiva/include_gnu/$DeviceId$.lds"
+        compilerBuildOptions=" -mcpu=cortex-m4 -march=armv7e-m -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -ffunction-sections -fdata-sections -g -gstrict-dwarf -Wall"
+        linkerBuildOptions=" -march=armv7e-m -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -nostartfiles -static -Wl,--gc-sections -L${xdc_find:gnu/targets/arm/libs/install-native/arm-none-eabi/lib/armv7e-m/fpu:${ProjName}} -lgcc -lc -lm -lnosys"
+        description="The stairstep example runs continuously and periodically generates log events. Different threads (Hwi, Swi, Task) run to present a CPU load to the system.  The Log data is obtained when the target is halted.  The sizes of the loggers in LoggingSetup might need to be decreased if your target does not have enough memory.">
+
+        <property name="type" value="rtsc"/>
+        <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+        <property name="target" value="gnu.targets.arm.M4F"/>
+        <property name="platform" value="ti.platforms.tiva:$DeviceId$"/>
+        <property name="buildProfile" value="release"/>
+        <property name="isHybrid" value="true"/>
+        <group id="ti.uia.examples.root.uia.targetsGNU.singlecoreGNU"/>
+        <file path="ti/uia/examples/single/stairstep.c" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="ti/uia/examples/single/cortexm/stairstep_JTAGStopMode.cfg" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="ti/uia/examples/makefile.defs" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+    </project>
+</projectSpec>
+

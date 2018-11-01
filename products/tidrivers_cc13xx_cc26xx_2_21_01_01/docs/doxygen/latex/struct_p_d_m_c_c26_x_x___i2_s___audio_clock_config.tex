@@ -1,0 +1,88 @@
+\subsection{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config Struct Reference}
+\label{struct_p_d_m_c_c26_x_x___i2_s___audio_clock_config}\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config}}
+
+
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Audio Clock configuration.  
+
+
+
+
+{\ttfamily \#include $<$P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint16\+\_\+t \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___audio_clock_config_ade00c43db3086dd3ecefb9fe7ccd3388}{wclk\+Div}
+\item 
+uint16\+\_\+t \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___audio_clock_config_a2279f907affa09272498993fbeae89d0}{sample\+On\+Positive\+Edge}\+:1
+\item 
+uint16\+\_\+t \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___audio_clock_config_a9331d100be715d25c802d26ce4c994ad}{wclk\+Phase}\+:2
+\item 
+uint16\+\_\+t \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___audio_clock_config_a64a761c3713ca2df6e3f4e5a06b77e13}{wclk\+Inverted}\+:1
+\item 
+uint16\+\_\+t \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___audio_clock_config_a4af2c2583820a348b3b6ec9061fd21c0}{wclk\+Source}\+:2
+\item 
+uint16\+\_\+t \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___audio_clock_config_a5dd6e5158b7e1a285b271f255db2fc20}{bclk\+Div}\+:10
+\item 
+uint16\+\_\+t \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___audio_clock_config_ad5468b30f2eea667d53831ee2a81ed1e}{reserved}\+:5
+\item 
+uint16\+\_\+t \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___audio_clock_config_a393fa4b3cb3ce807911ff7b623e42bfd}{bclk\+Source}\+:1
+\item 
+uint16\+\_\+t \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___audio_clock_config_a4c695f4c6e3933bacc7c1abab4eb379a}{mclk\+Div}\+:10
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Audio Clock configuration. 
+
+These fields are used by the driver to set up the I2\+S module
+
+A sample structure is shown below (single P\+D\+M microphone)\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} PDMCC26XX_I2S_AudioClockConfig PDMCC26XX\_I2Sobjects[] = \{
+        16, \textcolor{comment}{// Word clock division}
+        PDMCC26XX_I2S_SampleEdge_Negative,
+        PDMCC26XX_I2S_WordClockPhase_Dual,
+        PDMCC26XX_I2S_ClockSource_Inverted,
+        PDMCC26XX_I2S_WordClockSource_Int,
+        47, \textcolor{comment}{// Bit clock division}
+        0, \textcolor{comment}{// Reserved}
+        PDMCC26XX_I2S_BitClockSource_Int
+        6, \textcolor{comment}{// Master clock division}
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config}!wclk\+Div@{wclk\+Div}}
+\index{wclk\+Div@{wclk\+Div}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config}}
+\paragraph[{wclk\+Div}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config\+::wclk\+Div}\label{struct_p_d_m_c_c26_x_x___i2_s___audio_clock_config_ade00c43db3086dd3ecefb9fe7ccd3388}
+I2\+S Word Clock divider override \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config}!sample\+On\+Positive\+Edge@{sample\+On\+Positive\+Edge}}
+\index{sample\+On\+Positive\+Edge@{sample\+On\+Positive\+Edge}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config}}
+\paragraph[{sample\+On\+Positive\+Edge}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config\+::sample\+On\+Positive\+Edge}\label{struct_p_d_m_c_c26_x_x___i2_s___audio_clock_config_a2279f907affa09272498993fbeae89d0}
+I2\+S Sample Edge. 0 -\/ data and W\+C\+L\+K are sampled on the negative edge and clocked out on the positive edge. 1 -\/ data and W\+C\+L\+K are sampled on the positive edge and clocked out on the negative edge \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config}!wclk\+Phase@{wclk\+Phase}}
+\index{wclk\+Phase@{wclk\+Phase}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config}}
+\paragraph[{wclk\+Phase}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config\+::wclk\+Phase}\label{struct_p_d_m_c_c26_x_x___i2_s___audio_clock_config_a9331d100be715d25c802d26ce4c994ad}
+I2\+S Word Clock Phase(\+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+Dual, P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+Single or P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+User\+Defined) \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config}!wclk\+Inverted@{wclk\+Inverted}}
+\index{wclk\+Inverted@{wclk\+Inverted}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config}}
+\paragraph[{wclk\+Inverted}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config\+::wclk\+Inverted}\label{struct_p_d_m_c_c26_x_x___i2_s___audio_clock_config_a64a761c3713ca2df6e3f4e5a06b77e13}
+I2\+S Invert Word Clock (P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Clock\+Source\+\_\+\+Inverted or P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Clock\+Source\+\_\+\+Normal) \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config}!wclk\+Source@{wclk\+Source}}
+\index{wclk\+Source@{wclk\+Source}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config}}
+\paragraph[{wclk\+Source}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config\+::wclk\+Source}\label{struct_p_d_m_c_c26_x_x___i2_s___audio_clock_config_a4af2c2583820a348b3b6ec9061fd21c0}
+I2\+S Word Clock source (P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Source\+\_\+\+Ext or P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Source\+\_\+\+Int) \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config}!bclk\+Div@{bclk\+Div}}
+\index{bclk\+Div@{bclk\+Div}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config}}
+\paragraph[{bclk\+Div}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config\+::bclk\+Div}\label{struct_p_d_m_c_c26_x_x___i2_s___audio_clock_config_a5dd6e5158b7e1a285b271f255db2fc20}
+I2\+S Bit Clock divider override \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config}!reserved@{reserved}}
+\index{reserved@{reserved}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config}}
+\paragraph[{reserved}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config\+::reserved}\label{struct_p_d_m_c_c26_x_x___i2_s___audio_clock_config_ad5468b30f2eea667d53831ee2a81ed1e}
+Reserved bit field \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config}!bclk\+Source@{bclk\+Source}}
+\index{bclk\+Source@{bclk\+Source}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config}}
+\paragraph[{bclk\+Source}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config\+::bclk\+Source}\label{struct_p_d_m_c_c26_x_x___i2_s___audio_clock_config_a393fa4b3cb3ce807911ff7b623e42bfd}
+I2\+S Bit Clock source (P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Bit\+Clock\+Source\+\_\+\+Ext or P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Bit\+Clock\+Source\+\_\+\+Int) \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config}!mclk\+Div@{mclk\+Div}}
+\index{mclk\+Div@{mclk\+Div}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config}}
+\paragraph[{mclk\+Div}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config\+::mclk\+Div}\label{struct_p_d_m_c_c26_x_x___i2_s___audio_clock_config_a4c695f4c6e3933bacc7c1abab4eb379a}
+I2\+S Master Clock divider override 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_p_d_m_c_c26_x_x__util_8h}{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}\end{DoxyCompactItemize}

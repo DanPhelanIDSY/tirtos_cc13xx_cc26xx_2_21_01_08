@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin
+    name="System Analyzer (UIA Target) Target Content"
+    id="com.ti.uia.product_2.1.0.01"
+    version="2.1.0.01"
+    provider-name="Texas Instruments">
+
+    <extension point="org.eclipse.rtsc.xdctools.ui.productInfo">
+        <repository location="../../../packages"/>
+        <docs location="../../../."/>
+        <docs location="../../../docs"/>
+        <docs location="../../../docs/cdoc"/>
+        <info
+            installLocation="../../.."
+            productName="System Analyzer (UIA Target)"
+            versionNumber="2.1.0.01"
+        />
+    </extension>
+
+    <extension point="org.eclipse.rtsc.xdctools.model.productView">
+        <productview
+            moduleName="ti.uia.productview.UiaProductView"
+         />
+    </extension>
+
+    <extension point="org.eclipse.rtsc.xdctools.managedbuild.core.rtscProductTypes">
+        <productType
+            id="com.ti.uia"
+            name="System Analyzer (UIA Target)"
+            folderPrefix="uia"
+            rootMacroName="COM_TI_UIA_INSTALL_DIR"/>
+    </extension>
+
+    <extension point="org.eclipse.rtsc.xdctools.managedbuild.core.rtscProducts">
+        <product
+            productTypeId="com.ti.uia"
+            version="2.1.0.01">
+            <resources location="resources"/>
+        </product>
+    </extension>
+</plugin>

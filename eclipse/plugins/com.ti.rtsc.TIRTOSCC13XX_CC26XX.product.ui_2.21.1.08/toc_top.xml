@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="TI-RTOS for CC13XX and CC26XX 2.21.01.08"
+>
+    <topic label="Release Notes" href="release_notes_tirtos_cc13xx_cc26xx_2_21_01_08.html"/>            
+    <topic label="Documentation Links" href="docs/Documentation_Overview_cc13xx_cc26xx.html"/>            
+    <topic label="Kernel Runtime APIs and Configuration (cdoc)">
+        <link toc="bios_eclipse_cdoc_toc.xml"/>
+    </topic>
+    <topic label="TI Drivers Runtime APIs (doxygen)">
+        <link toc="toc.xml"/>
+    </topic>
+    <topic label="TI-RTOS Configuration (cdoc)">
+        <link toc="tirtos_eclipse_cdoc_toc.xml"/>
+    </topic>
+    <topic label="Instrumentation Runtime APIs and Configuration (cdoc)">
+        <link toc="uia_eclipse_cdoc_toc.xml"/>
+    </topic>
+</toc>

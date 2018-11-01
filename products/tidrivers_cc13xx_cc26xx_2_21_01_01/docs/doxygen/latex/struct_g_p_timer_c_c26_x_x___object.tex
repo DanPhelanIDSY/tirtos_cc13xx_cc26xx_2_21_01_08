@@ -1,0 +1,67 @@
+\subsection{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object Struct Reference}
+\label{struct_g_p_timer_c_c26_x_x___object}\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object}}
+
+
+G\+P\+Timer26\+X\+X Object.  
+
+
+
+
+{\ttfamily \#include $<$G\+P\+Timer\+C\+C26\+X\+X.\+h$>$}
+
+
+
+Collaboration diagram for G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=321pt]{struct_g_p_timer_c_c26_x_x___object__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a37f7594eb4084eff43d5b80bb6418ec7}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Width} \hyperlink{struct_g_p_timer_c_c26_x_x___object_a81ee4bac962aee8e9d7289822d1e8005}{width}
+\item 
+bool \hyperlink{struct_g_p_timer_c_c26_x_x___object_a142063414eb9531ee48f69383a008e53}{is\+Open} \mbox{[}\hyperlink{_g_p_timer_c_c26_x_x_8h_aff5462fa33c306f2c8bd29284fd898b0a492b59ed96b96d5bddcdee40e78712b0}{G\+P\+T\+\_\+\+P\+A\+R\+T\+S\+\_\+\+C\+O\+U\+N\+T}\mbox{]}
+\item 
+Hwi\+\_\+\+Struct \hyperlink{struct_g_p_timer_c_c26_x_x___object_a44cb93de115e2d6407c07aef920082c3}{hwi} \mbox{[}\hyperlink{_g_p_timer_c_c26_x_x_8h_aff5462fa33c306f2c8bd29284fd898b0a492b59ed96b96d5bddcdee40e78712b0}{G\+P\+T\+\_\+\+P\+A\+R\+T\+S\+\_\+\+C\+O\+U\+N\+T}\mbox{]}
+\item 
+\hyperlink{_g_p_timer_c_c26_x_x_8h_a6b9b95974e20f85ccd3f8463fdda84f1}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Hwi\+Fxn} \hyperlink{struct_g_p_timer_c_c26_x_x___object_aee0902921b94b4630636c02026b1a2cf}{hwi\+Callback\+Fxn} \mbox{[}\hyperlink{_g_p_timer_c_c26_x_x_8h_aff5462fa33c306f2c8bd29284fd898b0a492b59ed96b96d5bddcdee40e78712b0}{G\+P\+T\+\_\+\+P\+A\+R\+T\+S\+\_\+\+C\+O\+U\+N\+T}\mbox{]}
+\item 
+volatile bool \hyperlink{struct_g_p_timer_c_c26_x_x___object_a780da20c760fc5ff1d9dca2cc63efeca}{power\+Constraint} \mbox{[}\hyperlink{_g_p_timer_c_c26_x_x_8h_aff5462fa33c306f2c8bd29284fd898b0a492b59ed96b96d5bddcdee40e78712b0}{G\+P\+T\+\_\+\+P\+A\+R\+T\+S\+\_\+\+C\+O\+U\+N\+T}\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+G\+P\+Timer26\+X\+X Object. 
+
+These fields are used by the driver to store and modify G\+P\+Timer configuration during run-\/time. The application must not edit any member variables of this structure. Appplications should also not access member variables of this structure as backwards compatibility is not guaranteed. An example structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{comment}{// GPTimer objects, one per full-width timer (A+B) (Timer 0, Timer 1..)}
+GPTimerCC26XX_Object gptimerCC26XXObjects[CC2650\_GPTIMERCOUNT];
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object}!width@{width}}
+\index{width@{width}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{width}]{\setlength{\rightskip}{0pt plus 5cm}{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Width} G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object\+::width}\label{struct_g_p_timer_c_c26_x_x___object_a81ee4bac962aee8e9d7289822d1e8005}
+Timer width configuration (16/32bit) \index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object}!is\+Open@{is\+Open}}
+\index{is\+Open@{is\+Open}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{is\+Open}]{\setlength{\rightskip}{0pt plus 5cm}bool G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object\+::is\+Open\mbox{[}{\bf G\+P\+T\+\_\+\+P\+A\+R\+T\+S\+\_\+\+C\+O\+U\+N\+T}\mbox{]}}\label{struct_g_p_timer_c_c26_x_x___object_a142063414eb9531ee48f69383a008e53}
+Object is opened flag \index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object}!hwi@{hwi}}
+\index{hwi@{hwi}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{hwi}]{\setlength{\rightskip}{0pt plus 5cm}Hwi\+\_\+\+Struct G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object\+::hwi\mbox{[}{\bf G\+P\+T\+\_\+\+P\+A\+R\+T\+S\+\_\+\+C\+O\+U\+N\+T}\mbox{]}}\label{struct_g_p_timer_c_c26_x_x___object_a44cb93de115e2d6407c07aef920082c3}
+Hardware interrupt struct \index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object}!hwi\+Callback\+Fxn@{hwi\+Callback\+Fxn}}
+\index{hwi\+Callback\+Fxn@{hwi\+Callback\+Fxn}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{hwi\+Callback\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Hwi\+Fxn} G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object\+::hwi\+Callback\+Fxn\mbox{[}{\bf G\+P\+T\+\_\+\+P\+A\+R\+T\+S\+\_\+\+C\+O\+U\+N\+T}\mbox{]}}\label{struct_g_p_timer_c_c26_x_x___object_aee0902921b94b4630636c02026b1a2cf}
+Hardware interrupt callback function \index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object}!power\+Constraint@{power\+Constraint}}
+\index{power\+Constraint@{power\+Constraint}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{power\+Constraint}]{\setlength{\rightskip}{0pt plus 5cm}volatile bool G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Object\+::power\+Constraint\mbox{[}{\bf G\+P\+T\+\_\+\+P\+A\+R\+T\+S\+\_\+\+C\+O\+U\+N\+T}\mbox{]}}\label{struct_g_p_timer_c_c26_x_x___object_a780da20c760fc5ff1d9dca2cc63efeca}
+Standby power constraint flag 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_g_p_timer_c_c26_x_x_8h}{G\+P\+Timer\+C\+C26\+X\+X.\+h}\end{DoxyCompactItemize}

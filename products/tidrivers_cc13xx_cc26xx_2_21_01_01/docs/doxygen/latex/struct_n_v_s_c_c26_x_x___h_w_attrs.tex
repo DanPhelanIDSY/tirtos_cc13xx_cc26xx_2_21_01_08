@@ -1,0 +1,51 @@
+\subsection{N\+V\+S\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_n_v_s_c_c26_x_x___h_w_attrs}\index{N\+V\+S\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{N\+V\+S\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+
+
+N\+V\+S\+C\+C26\+X\+X attributes.  
+
+
+
+
+{\ttfamily \#include $<$N\+V\+S\+C\+C26\+X\+X.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+void $\ast$ \hyperlink{struct_n_v_s_c_c26_x_x___h_w_attrs_ab2e63975579a87dcf24b3a18b04bc479}{block}
+\item 
+size\+\_\+t \hyperlink{struct_n_v_s_c_c26_x_x___h_w_attrs_aed65c7ea3cd519eb9d9736d27e38088c}{block\+Size}
+\item 
+void $\ast$ \hyperlink{struct_n_v_s_c_c26_x_x___h_w_attrs_a223a3b1a3e5b2fbf51eb913ecc2ec018}{copy\+Block}
+\item 
+bool \hyperlink{struct_n_v_s_c_c26_x_x___h_w_attrs_a4cec181505b26bbbacabf9c021189c95}{is\+Ram}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+N\+V\+S\+C\+C26\+X\+X attributes. 
+
+The block is the address of a region in flash of size block\+Size bytes.
+
+For C\+C26\+X\+X devices, the smallest erase page size is 4\+K\+B, so in most cases, block\+Size should be set to 4\+K\+B for this device. If the block\+Size is less than the page size, care should be taken not to use the rest of the page. A write to the block will cause the entire page to be erased! A block\+Size greater than the page size is not supported. The page size for the device can be obtained through \hyperlink{_n_v_s_8h_a6b92f45097f377824524f7a4f33f02b1}{N\+V\+S\+\_\+get\+Attrs()}.
+
+When the block is written to, a scratch region is needed to preserve the unmodified data in the block. This scratch region, referred to as copy\+Block, can be a page in flash or a buffer in R\+A\+M. The application can set copy\+Block in the H\+W\+Attrs directly, if it is known at compile time, or set copy\+Block through \hyperlink{_n_v_s_8h_adb26bd05e4f063191411ac5ad968b1d9}{N\+V\+S\+\_\+control()}, for example, if it is allocated on the heap. The copy\+Block can be shared accross multiple N\+V\+S instances. It is up to the application to ensure that copy\+Block is set before the first call to \hyperlink{_n_v_s_8h_a2c0acbdec0a65dc725019adb65ad282a}{N\+V\+S\+\_\+write()}. Using a block\+Size less than the page size decreases R\+A\+M or heap only if copy\+Block is not in flash. 
+
+\subsubsection{Field Documentation}
+\index{N\+V\+S\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{N\+V\+S\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!block@{block}}
+\index{block@{block}!N\+V\+S\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{N\+V\+S\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{block}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ N\+V\+S\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::block}\label{struct_n_v_s_c_c26_x_x___h_w_attrs_ab2e63975579a87dcf24b3a18b04bc479}
+Address of flash block to manage \index{N\+V\+S\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{N\+V\+S\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!block\+Size@{block\+Size}}
+\index{block\+Size@{block\+Size}!N\+V\+S\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{N\+V\+S\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{block\+Size}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t N\+V\+S\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::block\+Size}\label{struct_n_v_s_c_c26_x_x___h_w_attrs_aed65c7ea3cd519eb9d9736d27e38088c}
+The size of block \index{N\+V\+S\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{N\+V\+S\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!copy\+Block@{copy\+Block}}
+\index{copy\+Block@{copy\+Block}!N\+V\+S\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{N\+V\+S\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{copy\+Block}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ N\+V\+S\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::copy\+Block}\label{struct_n_v_s_c_c26_x_x___h_w_attrs_a223a3b1a3e5b2fbf51eb913ecc2ec018}
+A R\+A\+M buffer or flash block to use for scratch when writing to the block. \index{N\+V\+S\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{N\+V\+S\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!is\+Ram@{is\+Ram}}
+\index{is\+Ram@{is\+Ram}!N\+V\+S\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{N\+V\+S\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{is\+Ram}]{\setlength{\rightskip}{0pt plus 5cm}bool N\+V\+S\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::is\+Ram}\label{struct_n_v_s_c_c26_x_x___h_w_attrs_a4cec181505b26bbbacabf9c021189c95}
+T\+R\+U\+E if copy\+Block is a R\+A\+M buffer 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_n_v_s_c_c26_x_x_8h}{N\+V\+S\+C\+C26\+X\+X.\+h}\end{DoxyCompactItemize}

@@ -1,0 +1,131 @@
+\subsection{Codec1.\+h File Reference}
+\label{_codec1_8h}\index{Codec1.\+h@{Codec1.\+h}}
+
+
+\subsubsection{Detailed Description}
+Implementation of T\+I Codec Type 1 (I\+M\+A A\+D\+P\+C\+M) encoding and decoding. 
+
+============================================================================
+
+This module provides functions for encoding and decoding data using A\+D\+P\+C\+M encoding. 
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+Include dependency graph for Codec1.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=95pt]{_codec1_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \hyperlink{_codec1_8h_aacb6c3a21abe774e4c4de11f1d896b93}{Codec1\+\_\+encode\+Single} (int16\+\_\+t aud\+Sample)
+\begin{DoxyCompactList}\small\item\em This routine encodes one int16 sample with T\+I Codec Type 1. \end{DoxyCompactList}\item 
+int16\+\_\+t \hyperlink{_codec1_8h_a2760bbc776c902b16aac59faac057e2d}{Codec1\+\_\+decode\+Single} (uint8\+\_\+t nibble\+\_\+4bits)
+\begin{DoxyCompactList}\small\item\em This routine decode a 4-\/bit nibble sample to a uint16 P\+C\+M audio sample. \end{DoxyCompactList}\item 
+uint8\+\_\+t \hyperlink{_codec1_8h_abc06b2377cab0c2dc9d81603af17fdc5}{Codec1\+\_\+encode\+Buff} (uint8\+\_\+t $\ast$dst, int16\+\_\+t $\ast$src, int16\+\_\+t src\+Size, int8\+\_\+t $\ast$si, int16\+\_\+t $\ast$pv)
+\begin{DoxyCompactList}\small\item\em This routine encode a buffer with T\+I codec Type 1. \end{DoxyCompactList}\item 
+void \hyperlink{_codec1_8h_a77a63b5410a7d5feea0b56808b6c7b96}{Codec1\+\_\+decode\+Buff} (int16\+\_\+t $\ast$dst, uint8\+\_\+t $\ast$src, unsigned src\+Size, int8\+\_\+t $\ast$si, int16\+\_\+t $\ast$pv)
+\begin{DoxyCompactList}\small\item\em This routine decodes a buffer with T\+I codec Type 1. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Function Documentation}
+\index{Codec1.\+h@{Codec1.\+h}!Codec1\+\_\+encode\+Single@{Codec1\+\_\+encode\+Single}}
+\index{Codec1\+\_\+encode\+Single@{Codec1\+\_\+encode\+Single}!Codec1.\+h@{Codec1.\+h}}
+\paragraph[{Codec1\+\_\+encode\+Single}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t Codec1\+\_\+encode\+Single (
+\begin{DoxyParamCaption}
+\item[{int16\+\_\+t}]{aud\+Sample}
+\end{DoxyParamCaption}
+)}\label{_codec1_8h_aacb6c3a21abe774e4c4de11f1d896b93}
+
+
+This routine encodes one int16 sample with T\+I Codec Type 1. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em aud\+Sample} & The audtion sample to encode\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The encoded result as a 4-\/bit nibble 
+\end{DoxyReturn}
+\index{Codec1.\+h@{Codec1.\+h}!Codec1\+\_\+decode\+Single@{Codec1\+\_\+decode\+Single}}
+\index{Codec1\+\_\+decode\+Single@{Codec1\+\_\+decode\+Single}!Codec1.\+h@{Codec1.\+h}}
+\paragraph[{Codec1\+\_\+decode\+Single}]{\setlength{\rightskip}{0pt plus 5cm}int16\+\_\+t Codec1\+\_\+decode\+Single (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{nibble\+\_\+4bits}
+\end{DoxyParamCaption}
+)}\label{_codec1_8h_a2760bbc776c902b16aac59faac057e2d}
+
+
+This routine decode a 4-\/bit nibble sample to a uint16 P\+C\+M audio sample. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nibble\+\_\+4bits} & A 4-\/bit nibble to decode\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The decoded value as a 16-\/bit P\+C\+M sample 
+\end{DoxyReturn}
+\index{Codec1.\+h@{Codec1.\+h}!Codec1\+\_\+encode\+Buff@{Codec1\+\_\+encode\+Buff}}
+\index{Codec1\+\_\+encode\+Buff@{Codec1\+\_\+encode\+Buff}!Codec1.\+h@{Codec1.\+h}}
+\paragraph[{Codec1\+\_\+encode\+Buff}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t Codec1\+\_\+encode\+Buff (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t $\ast$}]{dst, }
+\item[{int16\+\_\+t $\ast$}]{src, }
+\item[{int16\+\_\+t}]{src\+Size, }
+\item[{int8\+\_\+t $\ast$}]{si, }
+\item[{int16\+\_\+t $\ast$}]{pv}
+\end{DoxyParamCaption}
+)}\label{_codec1_8h_abc06b2377cab0c2dc9d81603af17fdc5}
+
+
+This routine encode a buffer with T\+I codec Type 1. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dst} & Pointer to the buffer where encoding result will be written to\\
+\hline
+{\em src} & Pointer to the buffer that should be encoded. Must be a multiple of 4 bytes\\
+\hline
+{\em src\+Size} & The number of samples (int16) in the src buffer. Must be a multiple of 2.\\
+\hline
+{\em si} & Pointer to the current step index\\
+\hline
+{\em pv} & Pointer to the current predicted-\/value\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of bytes written to the destination buffer 
+\end{DoxyReturn}
+\index{Codec1.\+h@{Codec1.\+h}!Codec1\+\_\+decode\+Buff@{Codec1\+\_\+decode\+Buff}}
+\index{Codec1\+\_\+decode\+Buff@{Codec1\+\_\+decode\+Buff}!Codec1.\+h@{Codec1.\+h}}
+\paragraph[{Codec1\+\_\+decode\+Buff}]{\setlength{\rightskip}{0pt plus 5cm}void Codec1\+\_\+decode\+Buff (
+\begin{DoxyParamCaption}
+\item[{int16\+\_\+t $\ast$}]{dst, }
+\item[{uint8\+\_\+t $\ast$}]{src, }
+\item[{unsigned}]{src\+Size, }
+\item[{int8\+\_\+t $\ast$}]{si, }
+\item[{int16\+\_\+t $\ast$}]{pv}
+\end{DoxyParamCaption}
+)}\label{_codec1_8h_a77a63b5410a7d5feea0b56808b6c7b96}
+
+
+This routine decodes a buffer with T\+I codec Type 1. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dst} & Pointer to the buffer where decoded result will be written to\\
+\hline
+{\em src} & Pointer to the buffer that should be decoded. Must be a multiple of 4 bytes\\
+\hline
+{\em src\+Size} & Number of byte that will be generated by the encoder (4$\ast$ (src buffer size in byte))\\
+\hline
+{\em si} & Pointer to the current step index\\
+\hline
+{\em pv} & Pointer to the current predicted-\/value \\
+\hline
+\end{DoxyParams}

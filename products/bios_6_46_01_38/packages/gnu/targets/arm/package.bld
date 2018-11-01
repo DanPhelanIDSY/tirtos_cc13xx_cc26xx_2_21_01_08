@@ -1,0 +1,12 @@
+/*
+ *  Copyright 2016 by Texas Instruments Incorporated.
+ *
+ */
+
+Pkg.otherSrcs = ["linkcmd.xdt", "linkcmd_bm_v7a.xdt"];
+
+/*
+ *  @(#) gnu.targets.arm; 1, 0, 0,0; 8-18-2016 15:55:47; /db/ztree/library/trees/xdctargets/xdctargets-l06/src/ xlibrary
+
+ */
+

@@ -1,0 +1,59 @@
+\subsection{A\+D\+C\+Buf\+\_\+\+Config Struct Reference}
+\label{struct_a_d_c_buf___config}\index{A\+D\+C\+Buf\+\_\+\+Config@{A\+D\+C\+Buf\+\_\+\+Config}}
+
+
+A\+D\+C\+Buf Global configuration.  
+
+
+
+
+{\ttfamily \#include $<$A\+D\+C\+Buf.\+h$>$}
+
+
+
+Collaboration diagram for A\+D\+C\+Buf\+\_\+\+Config\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=238pt]{struct_a_d_c_buf___config__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_a_d_c_buf___fxn_table}{A\+D\+C\+Buf\+\_\+\+Fxn\+Table} $\ast$ \hyperlink{struct_a_d_c_buf___config_a473ad7e4d4c1d2ad9c4e96768447f6c7}{fxn\+Table\+Ptr}
+\item 
+void $\ast$ \hyperlink{struct_a_d_c_buf___config_a07b5e2c4dd87d3356c825f51aacb496a}{object}
+\item 
+void const $\ast$ \hyperlink{struct_a_d_c_buf___config_addb6e02b3b790b7123af2d7b7d1a1cf1}{hw\+Attrs}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+A\+D\+C\+Buf Global configuration. 
+
+The \hyperlink{struct_a_d_c_buf___config}{A\+D\+C\+Buf\+\_\+\+Config} structure contains a set of pointers used to characterise the A\+D\+C driver implementation.
+
+This structure needs to be defined before calling \hyperlink{_a_d_c_buf_8h_a88a0ab421304465b22417a7adef6c0c2}{A\+D\+C\+Buf\+\_\+init()} and it must not be changed thereafter.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_a_d_c_buf_8h_a88a0ab421304465b22417a7adef6c0c2}{A\+D\+C\+Buf\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Field Documentation}
+\index{A\+D\+C\+Buf\+\_\+\+Config@{A\+D\+C\+Buf\+\_\+\+Config}!fxn\+Table\+Ptr@{fxn\+Table\+Ptr}}
+\index{fxn\+Table\+Ptr@{fxn\+Table\+Ptr}!A\+D\+C\+Buf\+\_\+\+Config@{A\+D\+C\+Buf\+\_\+\+Config}}
+\paragraph[{fxn\+Table\+Ptr}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf A\+D\+C\+Buf\+\_\+\+Fxn\+Table}$\ast$ A\+D\+C\+Buf\+\_\+\+Config\+::fxn\+Table\+Ptr}\label{struct_a_d_c_buf___config_a473ad7e4d4c1d2ad9c4e96768447f6c7}
+Pointer to a table of driver-\/specific implementations of A\+D\+C A\+P\+Is \index{A\+D\+C\+Buf\+\_\+\+Config@{A\+D\+C\+Buf\+\_\+\+Config}!object@{object}}
+\index{object@{object}!A\+D\+C\+Buf\+\_\+\+Config@{A\+D\+C\+Buf\+\_\+\+Config}}
+\paragraph[{object}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ A\+D\+C\+Buf\+\_\+\+Config\+::object}\label{struct_a_d_c_buf___config_a07b5e2c4dd87d3356c825f51aacb496a}
+Pointer to a driver specific data object \index{A\+D\+C\+Buf\+\_\+\+Config@{A\+D\+C\+Buf\+\_\+\+Config}!hw\+Attrs@{hw\+Attrs}}
+\index{hw\+Attrs@{hw\+Attrs}!A\+D\+C\+Buf\+\_\+\+Config@{A\+D\+C\+Buf\+\_\+\+Config}}
+\paragraph[{hw\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}void const$\ast$ A\+D\+C\+Buf\+\_\+\+Config\+::hw\+Attrs}\label{struct_a_d_c_buf___config_addb6e02b3b790b7123af2d7b7d1a1cf1}
+Pointer to a driver specific hardware attributes structure 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_a_d_c_buf_8h}{A\+D\+C\+Buf.\+h}\end{DoxyCompactItemize}

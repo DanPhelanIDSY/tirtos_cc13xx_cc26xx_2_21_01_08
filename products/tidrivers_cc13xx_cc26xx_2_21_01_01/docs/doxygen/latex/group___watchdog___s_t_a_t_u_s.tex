@@ -1,0 +1,53 @@
+\subsection{Status Codes}
+\label{group___watchdog___s_t_a_t_u_s}\index{Status Codes@{Status Codes}}
+Collaboration diagram for Status Codes\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=293pt]{group___watchdog___s_t_a_t_u_s}
+\end{center}
+\end{figure}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group___watchdog___s_t_a_t_u_s_gaa8dd490de97398b1da33798d8e54b53f}{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}~0
+\begin{DoxyCompactList}\small\item\em Successful status code returned by \hyperlink{_watchdog_8h_aa98a75361edb1e476432669169f2950e}{Watchdog\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___watchdog___s_t_a_t_u_s_ga7cc28c1119ebecae88a5ae0735228489}{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}~-\/1
+\begin{DoxyCompactList}\small\item\em Generic error status code returned by \hyperlink{_watchdog_8h_aa98a75361edb1e476432669169f2950e}{Watchdog\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___watchdog___s_t_a_t_u_s_ga589be79a7f8ce642863f231e1dae7577}{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}~-\/2
+\begin{DoxyCompactList}\small\item\em An error status code returned by \hyperlink{_watchdog_8h_aa98a75361edb1e476432669169f2950e}{Watchdog\+\_\+control()} for undefined command codes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+$\ast$ macros are general status codes returned by \hyperlink{_watchdog_8h_aa98a75361edb1e476432669169f2950e}{Watchdog\+\_\+control()}
+
+Watchdog\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+$\ast$ macros are command codes only defined in the \hyperlink{_watchdog_c_c26_x_x_8h}{Watchdog\+C\+C26\+X\+X.\+h} driver implementation and need to\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/watchdog/WatchdogCC26XX.h>}
+\end{DoxyCode}
+ 
+
+\subsubsection{Macro Definition Documentation}
+\index{Status Codes@{Status Codes}!Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S@{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}}
+\index{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S@{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}!Status Codes@{Status Codes}}
+\paragraph[{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S~0}\label{group___watchdog___s_t_a_t_u_s_gaa8dd490de97398b1da33798d8e54b53f}
+
+
+Successful status code returned by \hyperlink{_watchdog_8h_aa98a75361edb1e476432669169f2950e}{Watchdog\+\_\+control()}. 
+
+\hyperlink{_watchdog_8h_aa98a75361edb1e476432669169f2950e}{Watchdog\+\_\+control()} returns Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S if the control code was executed successfully. \index{Status Codes@{Status Codes}!Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R@{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}}
+\index{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R@{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}!Status Codes@{Status Codes}}
+\paragraph[{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R~-\/1}\label{group___watchdog___s_t_a_t_u_s_ga7cc28c1119ebecae88a5ae0735228489}
+
+
+Generic error status code returned by \hyperlink{_watchdog_8h_aa98a75361edb1e476432669169f2950e}{Watchdog\+\_\+control()}. 
+
+\hyperlink{_watchdog_8h_aa98a75361edb1e476432669169f2950e}{Watchdog\+\_\+control()} returns Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R if the control code was not executed successfully. \index{Status Codes@{Status Codes}!Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D@{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}}
+\index{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D@{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}!Status Codes@{Status Codes}}
+\paragraph[{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D~-\/2}\label{group___watchdog___s_t_a_t_u_s_ga589be79a7f8ce642863f231e1dae7577}
+
+
+An error status code returned by \hyperlink{_watchdog_8h_aa98a75361edb1e476432669169f2950e}{Watchdog\+\_\+control()} for undefined command codes. 
+
+\hyperlink{_watchdog_8h_aa98a75361edb1e476432669169f2950e}{Watchdog\+\_\+control()} returns Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D if the control code is not recognized by the driver implementation. 

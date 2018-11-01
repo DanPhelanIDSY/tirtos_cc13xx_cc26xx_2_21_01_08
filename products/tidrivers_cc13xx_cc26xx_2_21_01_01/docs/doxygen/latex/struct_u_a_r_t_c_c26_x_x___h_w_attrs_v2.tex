@@ -1,0 +1,126 @@
+\subsection{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2 Struct Reference}
+\label{struct_u_a_r_t_c_c26_x_x___h_w_attrs_v2}\index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2}}
+
+
+U\+A\+R\+T\+C\+C26\+X\+X Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$U\+A\+R\+T\+C\+C26\+X\+X.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \hyperlink{struct_u_a_r_t_c_c26_x_x___h_w_attrs_v2_aba311f9c5938c83e262a0e5144013acc}{base\+Addr}
+\item 
+uint32\+\_\+t \hyperlink{struct_u_a_r_t_c_c26_x_x___h_w_attrs_v2_a4bb5070acbfb10be326b27ffd783ed2f}{power\+Mngr\+Id}
+\item 
+int \hyperlink{struct_u_a_r_t_c_c26_x_x___h_w_attrs_v2_a241735d20617487c5a12db2f481b4ddc}{int\+Num}
+\item 
+uint8\+\_\+t \hyperlink{struct_u_a_r_t_c_c26_x_x___h_w_attrs_v2_a154b4300357fcc365090a970b17aa67a}{int\+Priority}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T Peripheral\textquotesingle{}s interrupt priority. \end{DoxyCompactList}\item 
+uint32\+\_\+t \hyperlink{struct_u_a_r_t_c_c26_x_x___h_w_attrs_v2_a6a8b6d625ad061be7e354ce1db08e86e}{swi\+Priority}
+\begin{DoxyCompactList}\small\item\em S\+P\+I S\+W\+I priority. The higher the number, the higher the priority. The minimum is 0 and the maximum is 15 by default. The maximum can be reduced to save R\+A\+M by adding or modifying Swi.\+num\+Priorities in the kernel configuration file. \end{DoxyCompactList}\item 
+uint8\+\_\+t \hyperlink{struct_u_a_r_t_c_c26_x_x___h_w_attrs_v2_a44ce413fed4b61b66f5155a4b90c2769}{tx\+Pin}
+\item 
+uint8\+\_\+t \hyperlink{struct_u_a_r_t_c_c26_x_x___h_w_attrs_v2_ab904bcffce2f8243d02af985809f6e65}{rx\+Pin}
+\item 
+uint8\+\_\+t \hyperlink{struct_u_a_r_t_c_c26_x_x___h_w_attrs_v2_ad999164f2ccf4f229fa56e19711e93e5}{cts\+Pin}
+\item 
+uint8\+\_\+t \hyperlink{struct_u_a_r_t_c_c26_x_x___h_w_attrs_v2_a7c7c0bf162bb8518251e683e0665e5c3}{rts\+Pin}
+\item 
+unsigned char $\ast$ \hyperlink{struct_u_a_r_t_c_c26_x_x___h_w_attrs_v2_aefd6d29db9c97680fae7de8c9ecc0cc3}{ring\+Buf\+Ptr}
+\item 
+size\+\_\+t \hyperlink{struct_u_a_r_t_c_c26_x_x___h_w_attrs_v2_a63f6ad063feb518a1d453e550b0a4dcb}{ring\+Buf\+Size}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+U\+A\+R\+T\+C\+C26\+X\+X Hardware attributes. 
+
+These fields, with the exception of int\+Priority, are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For C\+C26xx\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item inc/hw\+\_\+ints.\+h
+\end{DoxyItemize}
+
+int\+Priority is the U\+A\+R\+T peripheral\textquotesingle{}s interrupt priority, as defined by the underlying O\+S. It is passed unmodified to the underlying O\+S\textquotesingle{}s interrupt handler creation code, so you need to refer to the O\+S documentation for usage. For example, for S\+Y\+S/\+B\+I\+O\+S applications, refer to the ti.\+sysbios.\+family.\+arm.\+m3.\+Hwi documentation for S\+Y\+S/\+B\+I\+O\+S usage of interrupt priorities. If the driver uses the ti.\+drivers.\+ports interface instead of making O\+S calls directly, then the Hwi\+P port handles the interrupt priority in an O\+S specific way. In the case of the S\+Y\+S/\+B\+I\+O\+S port, int\+Priority is passed unmodified to Hwi\+\_\+create().
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} UARTCC26XX_HWAttrsV2 uartCC26xxHWAttrs[] = \{
+    \{
+        .baseAddr    = UART0\_BASE,
+        .powerMngrId = PERIPH\_UART0,
+        .intNum      = INT\_UART0,
+        .intPriority = ~0,
+        .swiPriority = 0,
+        .txPin       = Board\_UART\_TX,
+        .rxPin       = Board\_UART\_RX,
+        .ctsPin      = PIN_UNASSIGNED,
+        .rtsPin      = PIN_UNASSIGNED,
+        .ringBufPtr  = uartCC26XXRingBuffer[0],
+        .ringBufSize = \textcolor{keyword}{sizeof}(uartCC26XXRingBuffer[0])
+    \}
+\};
+\end{DoxyCode}
+
+
+The .cts\+Pin and .rts\+Pin must be assigned to enable flow control. 
+
+\subsubsection{Field Documentation}
+\index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2\+::base\+Addr}\label{struct_u_a_r_t_c_c26_x_x___h_w_attrs_v2_aba311f9c5938c83e262a0e5144013acc}
+U\+A\+R\+T Peripheral\textquotesingle{}s base address \index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2}!power\+Mngr\+Id@{power\+Mngr\+Id}}
+\index{power\+Mngr\+Id@{power\+Mngr\+Id}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2}}
+\paragraph[{power\+Mngr\+Id}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2\+::power\+Mngr\+Id}\label{struct_u_a_r_t_c_c26_x_x___h_w_attrs_v2_a4bb5070acbfb10be326b27ffd783ed2f}
+U\+A\+R\+T Peripheral\textquotesingle{}s power manager I\+D \index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2}!int\+Num@{int\+Num}}
+\index{int\+Num@{int\+Num}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2}}
+\paragraph[{int\+Num}]{\setlength{\rightskip}{0pt plus 5cm}int U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2\+::int\+Num}\label{struct_u_a_r_t_c_c26_x_x___h_w_attrs_v2_a241735d20617487c5a12db2f481b4ddc}
+U\+A\+R\+T Peripheral\textquotesingle{}s interrupt vector \index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2}!int\+Priority@{int\+Priority}}
+\index{int\+Priority@{int\+Priority}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2}}
+\paragraph[{int\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2\+::int\+Priority}\label{struct_u_a_r_t_c_c26_x_x___h_w_attrs_v2_a154b4300357fcc365090a970b17aa67a}
+
+
+U\+A\+R\+T Peripheral\textquotesingle{}s interrupt priority. 
+
+The C\+C26xx uses three of the priority bits, meaning $\sim$0 has the same effect as (7 $<$$<$ 5).
+
+(7 $<$$<$ 5) will apply the lowest priority.
+
+(1 $<$$<$ 5) will apply the highest priority.
+
+Setting the priority to 0 is not supported by this driver.
+
+H\+W\+I\textquotesingle{}s with priority 0 ignore the H\+W\+I dispatcher to support zero-\/latency interrupts, thus invalidating the critical sections in this driver. \index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2}!swi\+Priority@{swi\+Priority}}
+\index{swi\+Priority@{swi\+Priority}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2}}
+\paragraph[{swi\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2\+::swi\+Priority}\label{struct_u_a_r_t_c_c26_x_x___h_w_attrs_v2_a6a8b6d625ad061be7e354ce1db08e86e}
+
+
+S\+P\+I S\+W\+I priority. The higher the number, the higher the priority. The minimum is 0 and the maximum is 15 by default. The maximum can be reduced to save R\+A\+M by adding or modifying Swi.\+num\+Priorities in the kernel configuration file. 
+
+\index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2}!tx\+Pin@{tx\+Pin}}
+\index{tx\+Pin@{tx\+Pin}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2}}
+\paragraph[{tx\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2\+::tx\+Pin}\label{struct_u_a_r_t_c_c26_x_x___h_w_attrs_v2_a44ce413fed4b61b66f5155a4b90c2769}
+U\+A\+R\+T T\+X pin \index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2}!rx\+Pin@{rx\+Pin}}
+\index{rx\+Pin@{rx\+Pin}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2}}
+\paragraph[{rx\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2\+::rx\+Pin}\label{struct_u_a_r_t_c_c26_x_x___h_w_attrs_v2_ab904bcffce2f8243d02af985809f6e65}
+U\+A\+R\+T R\+X pin \index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2}!cts\+Pin@{cts\+Pin}}
+\index{cts\+Pin@{cts\+Pin}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2}}
+\paragraph[{cts\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2\+::cts\+Pin}\label{struct_u_a_r_t_c_c26_x_x___h_w_attrs_v2_ad999164f2ccf4f229fa56e19711e93e5}
+U\+A\+R\+T C\+T\+S pin \index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2}!rts\+Pin@{rts\+Pin}}
+\index{rts\+Pin@{rts\+Pin}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2}}
+\paragraph[{rts\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2\+::rts\+Pin}\label{struct_u_a_r_t_c_c26_x_x___h_w_attrs_v2_a7c7c0bf162bb8518251e683e0665e5c3}
+U\+A\+R\+T R\+T\+S pin \index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2}!ring\+Buf\+Ptr@{ring\+Buf\+Ptr}}
+\index{ring\+Buf\+Ptr@{ring\+Buf\+Ptr}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2}}
+\paragraph[{ring\+Buf\+Ptr}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char$\ast$ U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2\+::ring\+Buf\+Ptr}\label{struct_u_a_r_t_c_c26_x_x___h_w_attrs_v2_aefd6d29db9c97680fae7de8c9ecc0cc3}
+\index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2}!ring\+Buf\+Size@{ring\+Buf\+Size}}
+\index{ring\+Buf\+Size@{ring\+Buf\+Size}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2}}
+\paragraph[{ring\+Buf\+Size}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V2\+::ring\+Buf\+Size}\label{struct_u_a_r_t_c_c26_x_x___h_w_attrs_v2_a63f6ad063feb518a1d453e550b0a4dcb}
+Pointer to an application ring buffer 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_u_a_r_t_c_c26_x_x_8h}{U\+A\+R\+T\+C\+C26\+X\+X.\+h}\end{DoxyCompactItemize}

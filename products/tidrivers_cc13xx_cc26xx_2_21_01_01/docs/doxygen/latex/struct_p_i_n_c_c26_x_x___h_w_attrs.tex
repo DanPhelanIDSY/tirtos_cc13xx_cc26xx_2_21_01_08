@@ -1,0 +1,55 @@
+\subsection{P\+I\+N\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_p_i_n_c_c26_x_x___h_w_attrs}\index{P\+I\+N\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{P\+I\+N\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+
+
+P\+I\+N\+C\+C26\+X\+X Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$P\+I\+N\+C\+C26\+X\+X.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \hyperlink{struct_p_i_n_c_c26_x_x___h_w_attrs_a6e4e12f10aa905a5e6a7cf566c1dfe44}{int\+Priority}
+\begin{DoxyCompactList}\small\item\em S\+P\+I C\+C26\+X\+X\+D\+M\+A Peripheral\textquotesingle{}s interrupt priority. \end{DoxyCompactList}\item 
+uint32\+\_\+t \hyperlink{struct_p_i_n_c_c26_x_x___h_w_attrs_af7aa538ec5ac9d067fd7eb9fce31f0f9}{swi\+Priority}
+\begin{DoxyCompactList}\small\item\em S\+P\+I S\+W\+I priority. The higher the number, the higher the priority. The minimum is 0 and the maximum is 15 by default. The maximum can be reduced to save R\+A\+M by adding or modifying Swi.\+num\+Priorities in the kernel configuration file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+P\+I\+N\+C\+C26\+X\+X Hardware attributes. 
+
+int\+Priority is the P\+I\+N driver\textquotesingle{}s interrupt priority, as defined by the underlying O\+S. It is passed unmodified to the underlying O\+S\textquotesingle{}s interrupt handler creation code, so you need to refer to the O\+S documentation for usage. For example, for S\+Y\+S/\+B\+I\+O\+S applications, refer to the ti.\+sysbios.\+family.\+arm.\+m3.\+Hwi documentation for S\+Y\+S/\+B\+I\+O\+S usage of interrupt priorities. If the driver uses the ti.\+drivers.\+ports interface instead of making O\+S calls directly, then the Hwi\+P port handles the interrupt priority in an O\+S specific way. In the case of the S\+Y\+S/\+B\+I\+O\+S port, int\+Priority is passed unmodified to Hwi\+\_\+create().
+
+swi\+Priority defines the priority of the S\+W\+I the registered callback function will be called in. 
+
+\subsubsection{Field Documentation}
+\index{P\+I\+N\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{P\+I\+N\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!int\+Priority@{int\+Priority}}
+\index{int\+Priority@{int\+Priority}!P\+I\+N\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{P\+I\+N\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t P\+I\+N\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::int\+Priority}\label{struct_p_i_n_c_c26_x_x___h_w_attrs_a6e4e12f10aa905a5e6a7cf566c1dfe44}
+
+
+S\+P\+I C\+C26\+X\+X\+D\+M\+A Peripheral\textquotesingle{}s interrupt priority. 
+
+The C\+C26xx uses three of the priority bits, meaning $\sim$0 has the same effect as (7 $<$$<$ 5).
+
+(7 $<$$<$ 5) will apply the lowest priority.
+
+(1 $<$$<$ 5) will apply the highest priority.
+
+Setting the priority to 0 is not supported by this driver.
+
+H\+W\+I\textquotesingle{}s with priority 0 ignore the H\+W\+I dispatcher to support zero-\/latency interrupts, thus invalidating the critical sections in this driver. \index{P\+I\+N\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{P\+I\+N\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!swi\+Priority@{swi\+Priority}}
+\index{swi\+Priority@{swi\+Priority}!P\+I\+N\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{P\+I\+N\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{swi\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t P\+I\+N\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::swi\+Priority}\label{struct_p_i_n_c_c26_x_x___h_w_attrs_af7aa538ec5ac9d067fd7eb9fce31f0f9}
+
+
+S\+P\+I S\+W\+I priority. The higher the number, the higher the priority. The minimum is 0 and the maximum is 15 by default. The maximum can be reduced to save R\+A\+M by adding or modifying Swi.\+num\+Priorities in the kernel configuration file. 
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_p_i_n_c_c26_x_x_8h}{P\+I\+N\+C\+C26\+X\+X.\+h}\end{DoxyCompactItemize}

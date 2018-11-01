@@ -1,0 +1,11 @@
+digraph "RF_EventMask"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir=LR;
+  Node0 [label="RF_EventMask",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 [label="RF_Core_Events",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group___r_f___core___events.html"];
+  Node2 [label="RF_Driver_Events",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group___r_f___driver___events.html"];
+  Node0->Node1 [shape=plaintext, dir="back", style="solid"];
+  Node0->Node2 [shape=plaintext, dir="back", style="solid"];
+}

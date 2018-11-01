@@ -1,0 +1,55 @@
+\subsection{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension Struct Reference}
+\label{struct_a_d_c_buf_c_c26_x_x___params_extension}\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension}}
+
+
+C\+C26\+X\+X specfic extension to \hyperlink{struct_a_d_c_buf___params}{A\+D\+C\+Buf\+\_\+\+Params}.  
+
+
+
+
+{\ttfamily \#include $<$A\+D\+C\+Buf\+C\+C26\+X\+X.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fb}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration} \hyperlink{struct_a_d_c_buf_c_c26_x_x___params_extension_a13ae8ecf30cf89b0961f1c0dae0f8fae}{sampling\+Duration}
+\item 
+\hyperlink{_a_d_c_buf_c_c26_x_x_8h_a816f299f98f8fc3cc1124cda74a18d10}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Mode} \hyperlink{struct_a_d_c_buf_c_c26_x_x___params_extension_af857a78cd52526e581e82d154793a221}{sampling\+Mode}
+\item 
+\hyperlink{_a_d_c_buf_c_c26_x_x_8h_a31a41d718712f3d4ff936bb566da0d0a}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source} \hyperlink{struct_a_d_c_buf_c_c26_x_x___params_extension_ac969cbedfed803be061feb5c82d58c66}{ref\+Source}
+\item 
+bool \hyperlink{struct_a_d_c_buf_c_c26_x_x___params_extension_a2fc973ed16c05717691222fe517691a3}{input\+Scaling\+Enabled}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+C\+C26\+X\+X specfic extension to \hyperlink{struct_a_d_c_buf___params}{A\+D\+C\+Buf\+\_\+\+Params}. 
+
+To use non-\/default C\+C26\+X\+X specific parameters when calling \hyperlink{_a_d_c_buf_8h_a0b63bca2e8f8e5b58f0c657ac662c97b}{A\+D\+C\+Buf\+\_\+open()}, a pointer to an instance of this struct must be specified in \hyperlink{struct_a_d_c_buf___params_a72c7ec51318ec2f8fcf5d2ff37de33e3}{A\+D\+C\+Buf\+\_\+\+Params\+::custom}. Alternatively, these values can be set using the control function after calling \hyperlink{_a_d_c_buf_8h_a0b63bca2e8f8e5b58f0c657ac662c97b}{A\+D\+C\+Buf\+\_\+open()}. 
+
+\subsubsection{Field Documentation}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension}!sampling\+Duration@{sampling\+Duration}}
+\index{sampling\+Duration@{sampling\+Duration}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension}}
+\paragraph[{sampling\+Duration}]{\setlength{\rightskip}{0pt plus 5cm}{\bf A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration} A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension\+::sampling\+Duration}\label{struct_a_d_c_buf_c_c26_x_x___params_extension_a13ae8ecf30cf89b0961f1c0dae0f8fae}
+Amount of time the A\+D\+C spends sampling the analogue input \index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension}!sampling\+Mode@{sampling\+Mode}}
+\index{sampling\+Mode@{sampling\+Mode}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension}}
+\paragraph[{sampling\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Mode} A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension\+::sampling\+Mode}\label{struct_a_d_c_buf_c_c26_x_x___params_extension_af857a78cd52526e581e82d154793a221}
+Specifies whether the A\+D\+C spends a fixed amount of time sampling or the entire time since the last conversion \index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension}!ref\+Source@{ref\+Source}}
+\index{ref\+Source@{ref\+Source}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension}}
+\paragraph[{ref\+Source}]{\setlength{\rightskip}{0pt plus 5cm}{\bf A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source} A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension\+::ref\+Source}\label{struct_a_d_c_buf_c_c26_x_x___params_extension_ac969cbedfed803be061feb5c82d58c66}
+Specifies whether the internal reference of the A\+D\+C is sourced from the battery voltage or a fixed internal source \index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension}!input\+Scaling\+Enabled@{input\+Scaling\+Enabled}}
+\index{input\+Scaling\+Enabled@{input\+Scaling\+Enabled}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension}}
+\paragraph[{input\+Scaling\+Enabled}]{\setlength{\rightskip}{0pt plus 5cm}bool A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension\+::input\+Scaling\+Enabled}\label{struct_a_d_c_buf_c_c26_x_x___params_extension_a2fc973ed16c05717691222fe517691a3}
+Disable input scaling. Input scaling scales an external analogue signal between 0 and 4.\+3\+V to an internal signal of 0 to $\sim$1.4785\+V. Since the largest permissible input to any pin is V\+D\+D\+S, the maximum range of the A\+D\+C is effectively less than 3.\+8\+V and continues to shrink as the battery voltage drops. With input scaling disabled, the external analogue signal is passed on directly to the internal electronics. Signals larger than $\sim$1.4785\+V will damage the device with input scaling disabled.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Input scaling status }&{\bf Maximum permissible A\+D\+C input voltage  }\\\cline{1-2}
+Enabled &V\+D\+D\+S (Battery voltage level) \\\cline{1-2}
+Disabled &1.\+4785\+V \\\cline{1-2}
+\end{TabularC}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_a_d_c_buf_c_c26_x_x_8h}{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}\end{DoxyCompactItemize}

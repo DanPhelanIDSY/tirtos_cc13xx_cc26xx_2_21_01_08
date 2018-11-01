@@ -1,0 +1,38 @@
+%%{
+    var tirtosVersion = $args[0];
+    var exampleRoot   = $args[1];
+    var prodList      = $args[2];
+    var products      = [];
+    var xdcPath       = "";
+
+    /* Add supported products to create XDCPATH */
+    for each (var prod in prodList) {
+      if (prod.absPath && (prod.iarPath.indexOf("/packages") >= 0)) {
+        products.push(prod.iarPath);
+      }
+    }
+
+    xdcPath = products.join(";");
+%%}
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<iarUserArgVars>
+  <group active="true" name="`tirtosVersion`">
+    <variable>
+      <name>XDCPATH</name>
+      <value>`xdcPath`</value>
+    </variable>
+% for each (var prod in prodList) {
+%     if (prod.iarName && prod.iarPath && prod.absPath) {
+    <variable>
+      <name>`prod.iarName`</name>
+      <value>`prod.iarPath`</value>
+    </variable>
+%     }
+% }
+    <variable>
+      <name>EXAMPLE_ROOT</name>
+      <value>`exampleRoot`</value>
+    </variable>
+  </group>
+</iarUserArgVars>

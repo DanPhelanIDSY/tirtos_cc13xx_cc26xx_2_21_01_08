@@ -1,0 +1,88 @@
+\subsection{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_p_d_m_c_c26_x_x___i2_s___h_w_attrs}\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs}}
+
+
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___h_w_attrs_af1366b2ec99c0c4b6f99a4f35eb0b1f5}{base\+Addr}
+\item 
+uint8\+\_\+t \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___h_w_attrs_acaa31ac5c7fdd2274bc81f4aba780301}{int\+Num}
+\item 
+uint8\+\_\+t \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___h_w_attrs_a3f0d4c4111cb613831d61d0d1b66956c}{int\+Priority}
+\item 
+\hyperlink{_power_c_c26_x_x_8h_a2e11676879f87f39c099719d717dd04e}{Power\+C\+C26\+X\+X\+\_\+\+Resource} \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___h_w_attrs_a1d03e81015e5838b4ac5156f9f4c66a0}{power\+Mngr\+Id}
+\item 
+\hyperlink{_p_i_n_8h_a9ae8197f460bb76ea09a84f47d09921f}{P\+I\+N\+\_\+\+Id} \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___h_w_attrs_a8afea4d9f2354f268bd41e8cbd741a2e}{mclk\+Pin}
+\item 
+\hyperlink{_p_i_n_8h_a9ae8197f460bb76ea09a84f47d09921f}{P\+I\+N\+\_\+\+Id} \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___h_w_attrs_a62627ff326a8ba803bca75d85a04c217}{bclk\+Pin}
+\item 
+\hyperlink{_p_i_n_8h_a9ae8197f460bb76ea09a84f47d09921f}{P\+I\+N\+\_\+\+Id} \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___h_w_attrs_a521d8c38b647738c7fbb4ef89058da0d}{wclk\+Pin}
+\item 
+\hyperlink{_p_i_n_8h_a9ae8197f460bb76ea09a84f47d09921f}{P\+I\+N\+\_\+\+Id} \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___h_w_attrs_a42b84a967e7257dda186a3a10b28089a}{ad0\+Pin}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For C\+C26xx\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item inc/hw\+\_\+ints.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} PDMCC26XX_I2S_HWAttrs PDMCC26XX\_I2SHWAttrs = \{
+    \{
+        I2S0\_BASE,
+        INT\_I2S,
+        PERIPH\_I2S,
+        Board\_I2S\_MCLK,
+        Board\_I2S\_BCLK,
+        Board\_I2S\_WCLK,
+        Board\_I2S\_ADI,
+        Board\_I2S\_ADO
+    \},
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_p_d_m_c_c26_x_x___i2_s___h_w_attrs_af1366b2ec99c0c4b6f99a4f35eb0b1f5}
+I2\+S Peripheral\textquotesingle{}s base address \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs}!int\+Num@{int\+Num}}
+\index{int\+Num@{int\+Num}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Num}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs\+::int\+Num}\label{struct_p_d_m_c_c26_x_x___i2_s___h_w_attrs_acaa31ac5c7fdd2274bc81f4aba780301}
+I2\+S Peripheral\textquotesingle{}s interrupt vector \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs}!int\+Priority@{int\+Priority}}
+\index{int\+Priority@{int\+Priority}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs\+::int\+Priority}\label{struct_p_d_m_c_c26_x_x___i2_s___h_w_attrs_a3f0d4c4111cb613831d61d0d1b66956c}
+I2\+S Peripheral\textquotesingle{}s interrupt priority \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs}!power\+Mngr\+Id@{power\+Mngr\+Id}}
+\index{power\+Mngr\+Id@{power\+Mngr\+Id}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs}}
+\paragraph[{power\+Mngr\+Id}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Power\+C\+C26\+X\+X\+\_\+\+Resource} P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs\+::power\+Mngr\+Id}\label{struct_p_d_m_c_c26_x_x___i2_s___h_w_attrs_a1d03e81015e5838b4ac5156f9f4c66a0}
+I2\+S Peripheral\textquotesingle{}s power manager I\+D \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs}!mclk\+Pin@{mclk\+Pin}}
+\index{mclk\+Pin@{mclk\+Pin}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs}}
+\paragraph[{mclk\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+I\+N\+\_\+\+Id} P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs\+::mclk\+Pin}\label{struct_p_d_m_c_c26_x_x___i2_s___h_w_attrs_a8afea4d9f2354f268bd41e8cbd741a2e}
+I2\+S M\+C\+L\+K pin \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs}!bclk\+Pin@{bclk\+Pin}}
+\index{bclk\+Pin@{bclk\+Pin}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs}}
+\paragraph[{bclk\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+I\+N\+\_\+\+Id} P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs\+::bclk\+Pin}\label{struct_p_d_m_c_c26_x_x___i2_s___h_w_attrs_a62627ff326a8ba803bca75d85a04c217}
+I2\+S B\+C\+L\+K pin \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs}!wclk\+Pin@{wclk\+Pin}}
+\index{wclk\+Pin@{wclk\+Pin}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs}}
+\paragraph[{wclk\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+I\+N\+\_\+\+Id} P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs\+::wclk\+Pin}\label{struct_p_d_m_c_c26_x_x___i2_s___h_w_attrs_a521d8c38b647738c7fbb4ef89058da0d}
+I2\+S W\+C\+L\+K pin \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs}!ad0\+Pin@{ad0\+Pin}}
+\index{ad0\+Pin@{ad0\+Pin}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs}}
+\paragraph[{ad0\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+I\+N\+\_\+\+Id} P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs\+::ad0\+Pin}\label{struct_p_d_m_c_c26_x_x___i2_s___h_w_attrs_a42b84a967e7257dda186a3a10b28089a}
+I2\+S A\+D0 pin 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_p_d_m_c_c26_x_x__util_8h}{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}\end{DoxyCompactItemize}

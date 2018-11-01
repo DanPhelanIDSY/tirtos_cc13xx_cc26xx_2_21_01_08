@@ -1,0 +1,54 @@
+\subsection{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request Struct Reference}
+\label{struct_p_d_m_c_c26_x_x___i2_s___buffer_request}\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request}}
+
+
+A \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___buffer_request}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request} data structure is used with \hyperlink{_p_d_m_c_c26_x_x__util_8h_a69561b9a6f07a82bfe3b18f3c51fcd19}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer()}.  
+
+
+
+
+{\ttfamily \#include $<$P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+void $\ast$ \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___buffer_request_a03f357f8dc39622a3c1fa7ca73584184}{buffer\+In}
+\item 
+void $\ast$ \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___buffer_request_a0d0c0185f7c71df36df0cf4949c25d0c}{buffer\+Handle\+In}
+\item 
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_ac1e4fbeb33409a874015d4e0609ddff1}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Status} \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___buffer_request_a41c2f850d9390251550c4c7defd6a6a3}{status}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+A \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___buffer_request}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request} data structure is used with \hyperlink{_p_d_m_c_c26_x_x__util_8h_a69561b9a6f07a82bfe3b18f3c51fcd19}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer()}. 
+
+buffer\+In is a pointer to the requested buffer. It is N\+U\+L\+L if no buffer is available~\newline
+ \begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Input Mode }&{\bf Interpretation of buffer\+In being N\+U\+L\+L after returning  }\\\cline{1-2}
+Blocking mode &Request timed out and still no buffer available \\\cline{1-2}
+Non-\/\+Blocking mode &No buffer available \\\cline{1-2}
+\end{TabularC}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer will also return {\bfseries false} if there are no buffers available.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a69561b9a6f07a82bfe3b18f3c51fcd19}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Field Documentation}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request}!buffer\+In@{buffer\+In}}
+\index{buffer\+In@{buffer\+In}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request}}
+\paragraph[{buffer\+In}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request\+::buffer\+In}\label{struct_p_d_m_c_c26_x_x___i2_s___buffer_request_a03f357f8dc39622a3c1fa7ca73584184}
+Pointer to requested In buffer \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request}!buffer\+Handle\+In@{buffer\+Handle\+In}}
+\index{buffer\+Handle\+In@{buffer\+Handle\+In}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request}}
+\paragraph[{buffer\+Handle\+In}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request\+::buffer\+Handle\+In}\label{struct_p_d_m_c_c26_x_x___i2_s___buffer_request_a0d0c0185f7c71df36df0cf4949c25d0c}
+Pointer to requested In buffers handle \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request}!status@{status}}
+\index{status@{status}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request}}
+\paragraph[{status}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Status} P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request\+::status}\label{struct_p_d_m_c_c26_x_x___i2_s___buffer_request_a41c2f850d9390251550c4c7defd6a6a3}
+Status code set by P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_p_d_m_c_c26_x_x__util_8h}{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}\end{DoxyCompactItemize}

@@ -1,0 +1,52 @@
+\subsection{E\+M\+A\+C\+\_\+control command and status codes}
+\label{group___e_m_a_c___c_o_n_t_r_o_l}\index{E\+M\+A\+C\+\_\+control command and status codes@{E\+M\+A\+C\+\_\+control command and status codes}}
+Collaboration diagram for E\+M\+A\+C\+\_\+control command and status codes\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=295pt]{group___e_m_a_c___c_o_n_t_r_o_l}
+\end{center}
+\end{figure}
+\subsubsection*{Modules}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group___e_m_a_c___s_t_a_t_u_s}{Status Codes}
+\item 
+\hyperlink{group___e_m_a_c___c_m_d}{Command Codes}
+\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group___e_m_a_c___c_o_n_t_r_o_l_ga56f3e93517d362f44d638f1e7ecbcfdb}{E\+M\+A\+C\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~32
+\item 
+\#define \hyperlink{group___e_m_a_c___c_o_n_t_r_o_l_gada65346f7e4d230ac1998870744f6161}{E\+M\+A\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~-\/32
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+These E\+M\+A\+C macros are reservations for \hyperlink{_e_m_a_c_8h}{E\+M\+A\+C.\+h} 
+
+\subsubsection{Macro Definition Documentation}
+\index{E\+M\+A\+C\+\_\+control command and status codes@{E\+M\+A\+C\+\_\+control command and status codes}!E\+M\+A\+C\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{E\+M\+A\+C\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{E\+M\+A\+C\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{E\+M\+A\+C\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!E\+M\+A\+C\+\_\+control command and status codes@{E\+M\+A\+C\+\_\+control command and status codes}}
+\paragraph[{E\+M\+A\+C\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+M\+A\+C\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~32}\label{group___e_m_a_c___c_o_n_t_r_o_l_ga56f3e93517d362f44d638f1e7ecbcfdb}
+Common E\+M\+A\+C\+\_\+control command code reservation offset. E\+M\+A\+C driver implementations should offset command codes with E\+M\+A\+C\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing positively
+
+Example implementation specific command codes\+: 
+\begin{DoxyCode}
+1 #define EMACXYZ\_CMD\_COMMAND0     EMAC\_CMD\_RESERVED + 0
+2 #define EMACXYZ\_CMD\_COMMAND1     EMAC\_CMD\_RESERVED + 1
+\end{DoxyCode}
+ \index{E\+M\+A\+C\+\_\+control command and status codes@{E\+M\+A\+C\+\_\+control command and status codes}!E\+M\+A\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{E\+M\+A\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{E\+M\+A\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{E\+M\+A\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!E\+M\+A\+C\+\_\+control command and status codes@{E\+M\+A\+C\+\_\+control command and status codes}}
+\paragraph[{E\+M\+A\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+M\+A\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~-\/32}\label{group___e_m_a_c___c_o_n_t_r_o_l_gada65346f7e4d230ac1998870744f6161}
+Common E\+M\+A\+C\+\_\+control status code reservation offset. E\+M\+A\+C driver implementations should offset status codes with E\+M\+A\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing negatively.
+
+Example implementation specific status codes\+: 
+\begin{DoxyCode}
+1 #define EMACXYZ\_STATUS\_ERROR0    EMAC\_STATUS\_RESERVED - 0
+2 #define EMACXYZ\_STATUS\_ERROR1    EMAC\_STATUS\_RESERVED - 1
+3 #define EMACXYZ\_STATUS\_ERROR2    EMAC\_STATUS\_RESERVED - 2
+\end{DoxyCode}
+ 

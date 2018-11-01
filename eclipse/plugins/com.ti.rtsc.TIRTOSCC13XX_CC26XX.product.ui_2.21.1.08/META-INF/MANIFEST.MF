@@ -1,0 +1,253 @@
+Manifest-Version: 1.0
+Require-Bundle: org.eclipse.ui,org.eclipse.core.runtime,org.eclipse.he
+ lp,org.eclipse.rtsc.xdctools.ui;resolution:=optional
+Bundle-Vendor: Texas Instruments
+Eclipse-LazyStart: true
+Bundle-Version: 2.21.1.08
+Bundle-Name: TI-RTOS for CC13XX and CC26XX IDE Tooling
+Bundle-Localization: plugin
+Bundle-ManifestVersion: 2
+Bundle-Activator: org.eclipse.rtsc.xdctools.ui.cdt.CCSActivator;resolu
+ tion:=optional
+Created-By: 1.7.0_60 (Oracle Corporation)
+Bundle-SymbolicName: com.ti.rtsc.TIRTOSCC13XX_CC26XX.product.ui;single
+ ton:=true
+
+Name: uia_eclipse_cdoc_toc.xml
+SHA-256-Digest: EZa0Kde3UCqZbrmbnHdbUoueTyUK31Evh8OTiP/UHjo=
+
+Name: resources/ti/boards/CC1350STK/CC1350STK.cmd
+SHA-256-Digest: k0w6K3UwO2ARwhA2+OF+KgEZnshGw8/QT+Wk0Bw2jLQ=
+
+Name: resources/ti/boards/CC2650_LAUNCHXL/CC2650_LAUNCHXL.lds
+SHA-256-Digest: 676POPQXmLRez3Plsno8/7OfbDij21zIYSODJIRf4Go=
+
+Name: resources/examples/source/adcbufcontinuous/lprf/adcBufContinuous
+ Sampling.c
+SHA-256-Digest: oIPgSeTSNRRbniaCMU2hIX0Foo3rq87VyXLdSRtqvf0=
+
+Name: resources/ti/boards/CC1350STK/ccfg.c
+SHA-256-Digest: +hfAyWue9kONk1Vu4mRNJICMU1o0iFn9psx6mcxSibM=
+
+Name: resources/ti/boards/CC1350_LAUNCHXL/ccfg.c
+SHA-256-Digest: +hfAyWue9kONk1Vu4mRNJICMU1o0iFn9psx6mcxSibM=
+
+Name: resources/ti/boards/CC2650DK_4XS/Board.h
+SHA-256-Digest: ZcJBr9Ey7lQzFw8CFvLDHi+XWRdxhCAxuavu6vdRCMM=
+
+Name: resources/examples/source/empty/lprf/empty.cfg
+SHA-256-Digest: QGFAUNWHZlx7qJnYKgWpr2oyfL1gBrEMsZe/99vmJXw=
+
+Name: resources/ti/boards/CC2650DK_7ID/CC2650DK_7ID.cmd
+SHA-256-Digest: U859V08R6lHWYFtVJAIXhpXgcl0RWOdIhdRF831vAyc=
+
+Name: resources/ti/boards/CC2650_LAUNCHXL/CC2650_LAUNCHXL.cmd
+SHA-256-Digest: POuem/VOZg6lR/ovkrq2WHaCXLoRkxZIQOZRsCsCLmI=
+
+Name: resources/ti/boards/CC2650STK/CC2650STK.lds
+SHA-256-Digest: ok8iNQP5CtDfd2m4lhLgjvAmJ5QiUxeh3MOVshmdba0=
+
+Name: resources/examples/source/empty/lprf/README.html
+SHA-256-Digest: 5cIMlAq7/DOwHfN7JBOsIT5OKLhejMX27o3YNvzSD2I=
+
+Name: resources/ti/boards/CC2650DK_7ID/Board.h
+SHA-256-Digest: RmeeIRJxQJ13W1JBoR2TYJWOJ9Scel1pUXaQOE9CqzE=
+
+Name: resources/ti/boards/CC2650DK_5XD/ccfg.c
+SHA-256-Digest: +hfAyWue9kONk1Vu4mRNJICMU1o0iFn9psx6mcxSibM=
+
+Name: resources/ti/boards/CC2650_LAUNCHXL/ccfg.c
+SHA-256-Digest: +hfAyWue9kONk1Vu4mRNJICMU1o0iFn9psx6mcxSibM=
+
+Name: resources/examples/source/adcsinglechannel/README.html
+SHA-256-Digest: hycyRdhJ1izwNzimy1CmbIOKHTnEDW2PNnnwFcl61/w=
+
+Name: resources/ti/boards/CC2650DK_4XS/CC2650DK_4XS.lds
+SHA-256-Digest: Q1ttlUxBrqwavKbM7sHJI4J8rcTsqlqI4MK///GPZug=
+
+Name: resources/ti/boards/CC2650DK_4XS/CC2650DK_4XS.h
+SHA-256-Digest: PAqRwTjSXCPLrmAEh9I4HZ8jZVLSpn2jr/7SSVujbqA=
+
+Name: resources/ti/boards/CC2650_LAUNCHXL/Board.h
+SHA-256-Digest: HKCmGippv8NPZoDKszusisxuVGXr+iwiw0nlT+Dk0vo=
+
+Name: toc_top.xml
+SHA-256-Digest: SX++UR/dhzKpa4geVi26YQLp6ybea3J71NOGNuMOf9I=
+
+Name: resources/ti/boards/CC2650STK/Board.h
+SHA-256-Digest: 63186CyBbZQgAc4u+bXuewr45fgWr+GmOUYOo2IEcI8=
+
+Name: resources/ti/boards/CC2650DK_4XS/CC2650DK_4XS.c
+SHA-256-Digest: HO3+k9OKt5lfLRtsDYA50/y+GA2gm2ulzrDuGZ4EldE=
+
+Name: resources/examples/source/empty_min/lprf/empty_min.c
+SHA-256-Digest: /w2L4rkd/Uo414a0sdENeaAkcdpf/CgtQCokWjxOa04=
+
+Name: resources/ti/boards/CC2650DK_7ID/CC2650DK_7ID.lds
+SHA-256-Digest: CJEx5FdrWZtYrK8vDJqn5c8zyCEEfeMWi4zx/1cB2D8=
+
+Name: resources/ti/boards/CC1310DK_7XD/CC1310DK_7XD.cmd
+SHA-256-Digest: 18WZV7slAA40Gfccd4jRvpuqCsH29jCmO09/HrI69V4=
+
+Name: resources/ti/boards/CC1310DK_7XD/CC1310DK_7XD.lds
+SHA-256-Digest: 1WLRlnCAbYB6ev44H5mjaNrP8X77EtT7R3iCtLsLPhs=
+
+Name: resources/ti/boards/CC2650STK/CC2650STK.cmd
+SHA-256-Digest: ilXjdH+yTCUkHohCNktRvQvDz7JnEqurC6P4CBOtQ3U=
+
+Name: resources/ti/boards/CC1310DK_7XD/CC1310DK_7XD.c
+SHA-256-Digest: JIhT3dVKRYqNfMhbeuwjTJvKbWqI2IrgSpzaQX0w5yk=
+
+Name: resources/ti/boards/CC2650DK_4XS/CC2650DK_4XS.cmd
+SHA-256-Digest: VLTOg4Vfk0zxyUg7gmbKaYueuyHmEBcE8ua3TAJZXAo=
+
+Name: resources/ti/boards/CC1310DK_7XD/CC1310DK_7XD.h
+SHA-256-Digest: uPWdXinfg0BDNgOC9vStZjnbZYexL8YxK1aibVAwtYI=
+
+Name: resources/ti/boards/CC1310_LAUNCHXL/ccfg.c
+SHA-256-Digest: +hfAyWue9kONk1Vu4mRNJICMU1o0iFn9psx6mcxSibM=
+
+Name: plugin.properties
+SHA-256-Digest: BoJNiyyYD7y3gtc7Z+ytgxAY95g/kLVOd1w6uUe11Pk=
+
+Name: resources/ti/boards/CC2650DK_5XD/CC2650DK_5XD.h
+SHA-256-Digest: xb1GH4n5eKhbCDjKIl3Co+nx0ecwtHbOssB+BEYWui4=
+
+Name: resources/examples/source/empty_min/lprf/README.html
+SHA-256-Digest: MUW0cMk/p/ZGh8CDSxWWi0pkXCxLRapPy8B4lBqGaPA=
+
+Name: resources/examples/source/adcsinglechannel/lprf/adcsinglechannel
+ .c
+SHA-256-Digest: CDXyWpa6m3A55bSQikCBdqgBZ5EVlxppZDsCxQfpW2g=
+
+Name: resources/ti/boards/CC1310DK_7XD/Board.h
+SHA-256-Digest: Jm7bJW4/jZusbcUQ+8jAUWVMC/h4D7wogfbM4KKY1rU=
+
+Name: resources/examples/source/adcbufcontinuous/lprf/adcBufContinuous
+ Sampling.cfg
+SHA-256-Digest: QGFAUNWHZlx7qJnYKgWpr2oyfL1gBrEMsZe/99vmJXw=
+
+Name: resources/ti/boards/CC2650DK_5XD/CC2650DK_5XD.c
+SHA-256-Digest: jhk2y9EfpRFgPE5tU6cy+2dM9NNDjiwVr+qe9e8BQzI=
+
+Name: resources/ti/boards/CC2650DK_7ID/CC2650DK_7ID.c
+SHA-256-Digest: w029ThmbUoW//pJtuAoeAQFSiPqa0LCGd+Y7e5K4jUY=
+
+Name: resources/ti/boards/CC1350_LAUNCHXL/CC1350_LAUNCHXL.lds
+SHA-256-Digest: 3v+Gpuoqy9UvNKDtbrl3eDUeXAod8itAP95A1xTD7bQ=
+
+Name: tirtos_eclipse_cdoc_toc.xml
+SHA-256-Digest: j77sgofslCyBNdVLTuCwePSrkEPT1kwl6/tvYkRX8kE=
+
+Name: resources/ti/boards/CC2650DK_7ID/CC2650DK_7ID.h
+SHA-256-Digest: N+uwrur1xweyn8amMoE3sENoWxnbo6Js3NDTbfsTFyU=
+
+Name: resources/ti/boards/CC1350STK/CC1350STK.lds
+SHA-256-Digest: 2CG4grEjtub3lz+XZFqhyguYrJJHlG1D/w3MuUmaN+Q=
+
+Name: resources/ti/boards/CC1350STK/Board.h
+SHA-256-Digest: yWhUzk2l/QL9t/S8vUrApoQYigCazyDtyyG9Wq8+6JU=
+
+Name: resources/examples/source/empty_min/lprf/empty_min.cfg
+SHA-256-Digest: QyQSFxnCQa/IKBMocnQJg+/eSD+ejZbe8AqolTgi8Ys=
+
+Name: resources/ti/boards/CC2650DK_5XD/CC2650DK_5XD.lds
+SHA-256-Digest: GCxvKzfApYorlokYKNA7zrsNaE2BDf2DUq6VxVf/1PU=
+
+Name: resources/examples/source/empty/lprf/README.md
+SHA-256-Digest: 61iwKbY3t+nxvYFLdsXbRYmK/jL0+tfVVg4AOy8z/2Q=
+
+Name: resources/ti/boards/CC1350_LAUNCHXL/Board.h
+SHA-256-Digest: /omZfkG4VSxH8pijHPuVSLiWYR6RLfnNclAZ2axU9ao=
+
+Name: resources/ti/boards/CC1350_LAUNCHXL/CC1350_LAUNCHXL.c
+SHA-256-Digest: Tl551BoYUQeMjGOn4/zmDXDcMeJvpNUy83LdsaUP6CU=
+
+Name: resources/ti/boards/CC1310_LAUNCHXL/CC1310_LAUNCHXL.c
+SHA-256-Digest: gpXM1G55GJ3Hq+DLJ5glWJS3/a/plu4oqmx+TVLBRD4=
+
+Name: resources/ti/boards/CC1350_LAUNCHXL/CC1350_LAUNCHXL.h
+SHA-256-Digest: 4VYDBlItMDB0cM5ioMpYI2e7jS6oLabCuW6+bM3GdtI=
+
+Name: resources/examples/makefile.defs
+SHA-256-Digest: QEpZH6IOXJLpCVph1giMlv50rVbAYAQwZzHHt+pk9Wo=
+
+Name: resources/ti/boards/CC1350_LAUNCHXL/CC1350_LAUNCHXL.cmd
+SHA-256-Digest: REHrql+SF2/QRoIQ5EsErJFM+/DNpqYbCzE6Avdl4As=
+
+Name: bios_eclipse_cdoc_toc.xml
+SHA-256-Digest: ZPRmiNq0KwoQ1fqC+3a4W7giy0XbGEKjaLxk0YlSmbU=
+
+Name: resources/examples/source/adcbufcontinuous/README.md
+SHA-256-Digest: 7FueTiC7s0oQPjS8LCEy9ehEVQ+ZFN3NEfzvVr5XQEM=
+
+Name: resources/ti/boards/CC2650STK/ccfg.c
+SHA-256-Digest: +hfAyWue9kONk1Vu4mRNJICMU1o0iFn9psx6mcxSibM=
+
+Name: resources/ti/boards/CC1310_LAUNCHXL/CC1310_LAUNCHXL.cmd
+SHA-256-Digest: +pkoxFGPTsQ3tMjxxdEw37zN3d1pAtifrG+r4M4uJ7I=
+
+Name: resources/ti/boards/CC1310DK_7XD/ccfg.c
+SHA-256-Digest: +hfAyWue9kONk1Vu4mRNJICMU1o0iFn9psx6mcxSibM=
+
+Name: resources/ti/boards/CC2650_LAUNCHXL/CC2650_LAUNCHXL.h
+SHA-256-Digest: 9QmkBpyBS9rw/7RvcUIlw+2tT8nQdvHFwwh9VvYNjvc=
+
+Name: resources/ti/boards/CC2650DK_5XD/Board.h
+SHA-256-Digest: KHZEsYXBYI7Z5FjtRZAn98E0RvlQYNXOaXlICdiP1Bw=
+
+Name: resources/examples/source/adcsinglechannel/lprf/adcsinglechannel
+ .cfg
+SHA-256-Digest: QGFAUNWHZlx7qJnYKgWpr2oyfL1gBrEMsZe/99vmJXw=
+
+Name: resources/ti/boards/CC2650DK_5XD/CC2650DK_5XD.cmd
+SHA-256-Digest: CPL9kElN38kHMTyIdQe64CWOmm9IS5oaRZrYYqgLuds=
+
+Name: resources/examples/source/adcsinglechannel/README.md
+SHA-256-Digest: OoQjrei8a3I6d+7K3R1JSRn4brgJjpv1MYmA//6j3tU=
+
+Name: resources/ti/boards/CC2650_LAUNCHXL/CC2650_LAUNCHXL.c
+SHA-256-Digest: 8LDvTMU+OiTWIqSwjS3HjWplwg3Hu5k8O+kiIy86sJM=
+
+Name: resources/ti/boards/CC2650STK/CC2650STK.h
+SHA-256-Digest: Xc6Kxj0/p7KZDZMNQFyL/tn2BpPBwIPplkU61E6K3Gc=
+
+Name: resources/ti/boards/CC1350STK/CC1350STK.c
+SHA-256-Digest: FLVyPDqeei7JboUUL4nikXY321NpV745m1GNYIfMQG0=
+
+Name: resources/examples/source/adcbufcontinuous/README.html
+SHA-256-Digest: 6NeF11fWknDCkp7dFn6kvUKVpcytX9qd8dHq5C9oEOw=
+
+Name: resources/examples/source/empty/lprf/empty.c
+SHA-256-Digest: vRDFQg2+fJKSecqYV2vTb49ys2wdv1Slu4/1wChPznc=
+
+Name: resources/ti/boards/CC1310_LAUNCHXL/Board.h
+SHA-256-Digest: Cz5Cqq8fz2j7K/rAx9TfJi7kkYBg1/2mFbO8/sBKSQM=
+
+Name: resources/ti/boards/CC2650STK/CC2650STK.c
+SHA-256-Digest: DHPHC3hOIcbbsVblnrMLDROBgIXLbHH9z5hPhVZ4URA=
+
+Name: toc.xml
+SHA-256-Digest: qSI6XUjTqUmH4TwNEi1ROqCraqFKMi31ILuFI2ljAI4=
+
+Name: resources/ti/boards/CC1310_LAUNCHXL/CC1310_LAUNCHXL.lds
+SHA-256-Digest: aoXErjUy1rTBTYfaB8ItV3rw5tNCHHWsUGvBFOkEJJo=
+
+Name: resources/ti/boards/CC2650DK_4XS/ccfg.c
+SHA-256-Digest: +hfAyWue9kONk1Vu4mRNJICMU1o0iFn9psx6mcxSibM=
+
+Name: resources/examples/source/empty_min/lprf/README.md
+SHA-256-Digest: nSm2QkY3kmFKiAoqZmgttPntX3IoyZ8ZdlRAb/Lig4E=
+
+Name: resources/ti/boards/CC2650DK_7ID/ccfg.c
+SHA-256-Digest: +hfAyWue9kONk1Vu4mRNJICMU1o0iFn9psx6mcxSibM=
+
+Name: resources/ti/boards/CC1310_LAUNCHXL/CC1310_LAUNCHXL.h
+SHA-256-Digest: fJqL40DgbVVHwYgUVRA/hYTUgHl/MPufGZcsUXfLCho=
+
+Name: plugin.xml
+SHA-256-Digest: LeMExm0d5z/ZDkZVBcyGnuB9hAxRIU1N3eF4CoiCNFA=
+
+Name: resources/ti/boards/CC1350STK/CC1350STK.h
+SHA-256-Digest: cV6MrhgfppET003GtFHMdspQd2vMhjgVWq3uSDcYTac=
+

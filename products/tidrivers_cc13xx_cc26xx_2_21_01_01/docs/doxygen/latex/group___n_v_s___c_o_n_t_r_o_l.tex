@@ -1,0 +1,52 @@
+\subsection{N\+V\+S\+\_\+control command and status codes}
+\label{group___n_v_s___c_o_n_t_r_o_l}\index{N\+V\+S\+\_\+control command and status codes@{N\+V\+S\+\_\+control command and status codes}}
+Collaboration diagram for N\+V\+S\+\_\+control command and status codes\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=287pt]{group___n_v_s___c_o_n_t_r_o_l}
+\end{center}
+\end{figure}
+\subsubsection*{Modules}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group___n_v_s___s_t_a_t_u_s}{Status Codes}
+\item 
+\hyperlink{group___n_v_s___c_m_d}{Command Codes}
+\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group___n_v_s___c_o_n_t_r_o_l_gaa9fa1c41660d17139bce63ff34cd774f}{N\+V\+S\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~32
+\item 
+\#define \hyperlink{group___n_v_s___c_o_n_t_r_o_l_gad82fd139152ca14946c80c6c91edb4a0}{N\+V\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~-\/32
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+These N\+V\+S macros are reservations for \hyperlink{_n_v_s_8h}{N\+V\+S.\+h} 
+
+\subsubsection{Macro Definition Documentation}
+\index{N\+V\+S\+\_\+control command and status codes@{N\+V\+S\+\_\+control command and status codes}!N\+V\+S\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{N\+V\+S\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{N\+V\+S\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{N\+V\+S\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!N\+V\+S\+\_\+control command and status codes@{N\+V\+S\+\_\+control command and status codes}}
+\paragraph[{N\+V\+S\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define N\+V\+S\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~32}\label{group___n_v_s___c_o_n_t_r_o_l_gaa9fa1c41660d17139bce63ff34cd774f}
+Common N\+V\+S\+\_\+control command code reservation offset. N\+V\+S driver implementations should offset command codes with N\+V\+S\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing positively
+
+Example implementation specific command codes\+: 
+\begin{DoxyCode}
+1 #define NVSXYZ\_CMD\_COMMAND0     NVS\_CMD\_RESERVED + 0
+2 #define NVSXYZ\_CMD\_COMMAND1     NVS\_CMD\_RESERVED + 1
+\end{DoxyCode}
+ \index{N\+V\+S\+\_\+control command and status codes@{N\+V\+S\+\_\+control command and status codes}!N\+V\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{N\+V\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{N\+V\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{N\+V\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!N\+V\+S\+\_\+control command and status codes@{N\+V\+S\+\_\+control command and status codes}}
+\paragraph[{N\+V\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define N\+V\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~-\/32}\label{group___n_v_s___c_o_n_t_r_o_l_gad82fd139152ca14946c80c6c91edb4a0}
+Common N\+V\+S\+\_\+control status code reservation offset. N\+V\+S driver implementations should offset status codes with N\+V\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing negatively.
+
+Example implementation specific status codes\+: 
+\begin{DoxyCode}
+1 #define NVSXYZ\_STATUS\_ERROR0    NVS\_STATUS\_RESERVED - 0
+2 #define NVSXYZ\_STATUS\_ERROR1    NVS\_STATUS\_RESERVED - 1
+3 #define NVSXYZ\_STATUS\_ERROR2    NVS\_STATUS\_RESERVED - 2
+\end{DoxyCode}
+ 

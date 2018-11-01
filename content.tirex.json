@@ -1,0 +1,4931 @@
+[
+    {
+        "package": "TI-RTOS for CC13XX and CC26XX",
+        "rootCategory": [
+            "TI-RTOS for CC13XX and CC26XX"
+        ],
+        "version": "2.21.01.08",
+        "description": "TI-RTOS accelerates development schedules by eliminating the need to create basic system software functions from scratch. TI-RTOS scales from a real-time multitasking kernel - TI-RTOS Kernel (formerly known as SYS/BIOS) - to a complete RTOS solution including additional middleware components, device drivers and power management. The combination of TI-RTOS power management and TI's ultra low-power MCUs enables developers to design applications with much longer battery life. By providing essential system software components pre-tested and pre-integrated, TI-RTOS enables developers to focus on differentiating their application.",
+        "image": "docs/icons/tirtos_cc13xx_cc26xx.png"
+    },
+    {
+        "name": "Release Notes",
+        "resourceType": "file",
+        "location": "./release_notes_tirtos_cc13xx_cc26xx_2_21_01_08.html",
+        "categories": [
+            [
+                "Documents"
+            ]
+        ]
+    },
+    {
+        "name": "Documentation Links",
+        "resourceType": "file",
+        "location": "./docs/Documentation_Overview_cc13xx_cc26xx.html",
+        "categories": [
+            [
+                "Documents"
+            ]
+        ]
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/driverExamples/tiDriverExamples/emptyExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_3.projectspec",
+        "name": "Empty Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "An empty TI-RTOS project",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Empty Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/driverExamples/tiDriverExamples/emptyExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_4.projectspec",
+        "name": "Empty (Minimal) Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "An empty TI-RTOS project with minimal footprint",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Empty Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/driverExamples/tiDriverExamples/displayExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_0.projectspec",
+        "name": "Display",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "An example demonstrating how to use the display driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Display Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/driverExamples/tiDriverExamples/displayExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_5.projectspec",
+        "name": "LCD SmartRF06EB",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "An example demonstrating how to use the LCD on the SmartRF06 Evaluation Board",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Display Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_6.projectspec",
+        "name": "Pin Interrupt",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "An example using interrupts to toggle an LED after a button press",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_7.projectspec",
+        "name": "Pin Shutdown",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "An example using the PIN driver and the Power module to put the device in shutdown mode",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_8.projectspec",
+        "name": "Pin Standby",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "An example using the PIN driver and the Power module to put the device in standby mode",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/driverExamples/tiDriverExamples/pwmExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_9.projectspec",
+        "name": "PWM LED",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "An example on how to use the PWM driver to control on-board LEDs",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PWM Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_10.projectspec",
+        "name": "RF Packet TX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "A transmitter example on how to use the RF driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_11.projectspec",
+        "name": "RF Packet RX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "A receiver example on how to use the RF driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_12.projectspec",
+        "name": "RF Carrier Wave",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "An example that uses the RF driver to generate a carrier wave",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_13.projectspec",
+        "name": "RF EasyLink TX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "An EasyLink transmit example",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_14.projectspec",
+        "name": "RF EasyLink RX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "An EasyLink receive example",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_15.projectspec",
+        "name": "RF EasyLink Network Processor",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "An EasyLink AT Command Network Processor example",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_16.projectspec",
+        "name": "RF Packet Error Rate Test",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "Showcases different RF transfer modes and measures the packet error rate.",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_17.projectspec",
+        "name": "RF Wireless Sensor Network Concentrator",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "A wireless sensor network concentrator which collects data from sensor nodes",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_18.projectspec",
+        "name": "RF Wireless Sensor Network Node",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "A wireless sensor network node that sends data to the collector",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_19.projectspec",
+        "name": "RF Wake-on-Radio TX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "A packet TX example that sends a long preamble.",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_20.projectspec",
+        "name": "RF Wake-on-Radio RX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "A packet RX example that uses carrier sense to detect the presence of a signal.",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_21.projectspec",
+        "name": "RF Listen Before Talk",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "Sends a packet after performing carrier sense and shows command chaining",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/driverExamples/tiDriverExamples/uartExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_22.projectspec",
+        "name": "UART Echo",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "Echoes characters back using the UART driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "UART Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/driverExamples/tiDriverExamples/adcbufExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_2.projectspec",
+        "name": "ADCBuf Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "An ADCBuf continuous sampling TI-RTOS project",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "ADCBuf Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/driverExamples/tiDriverExamples/adcExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_1.projectspec",
+        "name": "ADC Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "An ADC single channel TI-RTOS project",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "ADC Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_23.projectspec",
+        "name": "Benchmark Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "This example gathers and prints benchmark timing data for some representative SYS/BIOS APIs.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_24.projectspec",
+        "name": "C++ Example (bigtime)",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "In this program, C++ is used to create a real-time clock/calendar.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_25.projectspec",
+        "name": "Clock Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "The clock example shows how to use the ti.sysbios.knl.Clock module to create one-shot and periodic Clock Instances. Clock Instances are essentially functions that run after a certain number of Clock ticks.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_26.projectspec",
+        "name": "Error Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "This example shows how to use Error_Blocks to catch runtime errors. An Error_Block is passed to Task_create() and then checked for create failure. When no Error_Block is passed, the application will terminate when an error occurs. The error.cfg file shows how to plug an error hook.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_27.projectspec",
+        "name": "Hello Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "The hello example serves as a basic sanity check program for SYS/BIOS. It demonstrates how to print the string 'hello world' to stdout.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_28.projectspec",
+        "name": "Memory Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "This example shows the use of xdc.runtime.Memory module and different xdc.runtime.IHeap implementations to manage memory. A system heap is created statically using ti.sysbios.heaps.HeapMem.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_29.projectspec",
+        "name": "Task Mutex Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "This example shows the use of two tasks and one semaphore to protect data access.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310DevelopmentKit/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_30.projectspec",
+        "name": "Swi Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310DK_7XD"
+        ],
+        "description": "The swi example shows how to use the ti.sysbios.knl.Swi module. It demonstrates how the various Swi APIs work.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/driverExamples/tiDriverExamples/emptyExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_66.projectspec",
+        "name": "Empty Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "An empty TI-RTOS project",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Empty Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/driverExamples/tiDriverExamples/emptyExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_67.projectspec",
+        "name": "Empty (Minimal) Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "An empty TI-RTOS project with minimal footprint",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Empty Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/driverExamples/tiDriverExamples/displayExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_63.projectspec",
+        "name": "Display",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "An example demonstrating how to use the display driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Display Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_68.projectspec",
+        "name": "Pin Interrupt",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "An example using interrupts to toggle an LED after a button press",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_69.projectspec",
+        "name": "Pin Shutdown",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "An example using the PIN driver and the Power module to put the device in shutdown mode",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_70.projectspec",
+        "name": "Pin Standby",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "An example using the PIN driver and the Power module to put the device in standby mode",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/driverExamples/tiDriverExamples/pwmExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_71.projectspec",
+        "name": "PWM LED",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "An example on how to use the PWM driver to control on-board LEDs",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PWM Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_72.projectspec",
+        "name": "RF Packet TX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "A transmitter example on how to use the RF driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_73.projectspec",
+        "name": "RF Packet RX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "A receiver example on how to use the RF driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_74.projectspec",
+        "name": "RF Carrier Wave",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "An example that uses the RF driver to generate a carrier wave",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_75.projectspec",
+        "name": "RF EasyLink TX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "An EasyLink transmit example",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_76.projectspec",
+        "name": "RF EasyLink RX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "An EasyLink receive example",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_77.projectspec",
+        "name": "RF EasyLink Network Processor",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "An EasyLink AT Command Network Processor example",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_78.projectspec",
+        "name": "RF Packet Error Rate Test",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "Showcases different RF transfer modes and measures the packet error rate.",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_79.projectspec",
+        "name": "RF Wireless Sensor Network Concentrator",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "A wireless sensor network concentrator which collects data from sensor nodes",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_80.projectspec",
+        "name": "RF Wireless Sensor Network Node",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "A wireless sensor network node that sends data to the collector",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_81.projectspec",
+        "name": "RF Wake-on-Radio TX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "A packet TX example that sends a long preamble.",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_82.projectspec",
+        "name": "RF Wake-on-Radio RX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "A packet RX example that uses carrier sense to detect the presence of a signal.",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_83.projectspec",
+        "name": "RF Listen Before Talk",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "Sends a packet after performing carrier sense and shows command chaining",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/driverExamples/tiDriverExamples/uartExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_84.projectspec",
+        "name": "UART Echo",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "Echoes characters back using the UART driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "UART Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/driverExamples/tiDriverExamples/adcbufExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_65.projectspec",
+        "name": "ADCBuf Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "An ADCBuf continuous sampling TI-RTOS project",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "ADCBuf Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/driverExamples/tiDriverExamples/adcExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_64.projectspec",
+        "name": "ADC Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "An ADC single channel TI-RTOS project",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "ADC Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_85.projectspec",
+        "name": "Benchmark Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "This example gathers and prints benchmark timing data for some representative SYS/BIOS APIs.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_86.projectspec",
+        "name": "C++ Example (bigtime)",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "In this program, C++ is used to create a real-time clock/calendar.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_87.projectspec",
+        "name": "Clock Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "The clock example shows how to use the ti.sysbios.knl.Clock module to create one-shot and periodic Clock Instances. Clock Instances are essentially functions that run after a certain number of Clock ticks.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_88.projectspec",
+        "name": "Error Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "This example shows how to use Error_Blocks to catch runtime errors. An Error_Block is passed to Task_create() and then checked for create failure. When no Error_Block is passed, the application will terminate when an error occurs. The error.cfg file shows how to plug an error hook.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_89.projectspec",
+        "name": "Hello Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "The hello example serves as a basic sanity check program for SYS/BIOS. It demonstrates how to print the string 'hello world' to stdout.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_90.projectspec",
+        "name": "Memory Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "This example shows the use of xdc.runtime.Memory module and different xdc.runtime.IHeap implementations to manage memory. A system heap is created statically using ti.sysbios.heaps.HeapMem.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_91.projectspec",
+        "name": "Task Mutex Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "This example shows the use of two tasks and one semaphore to protect data access.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1310LaunchPad/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_92.projectspec",
+        "name": "Swi Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1310F128"
+        ],
+        "devtools": [
+            "CC1310-LAUNCHXL"
+        ],
+        "description": "The swi example shows how to use the ti.sysbios.knl.Swi module. It demonstrates how the various Swi APIs work.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/driverExamples/tiDriverExamples/emptyExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_127.projectspec",
+        "name": "Empty Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "An empty TI-RTOS project",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Empty Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/driverExamples/tiDriverExamples/emptyExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_128.projectspec",
+        "name": "Empty (Minimal) Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "An empty TI-RTOS project with minimal footprint",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Empty Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/driverExamples/tiDriverExamples/displayExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_124.projectspec",
+        "name": "Display",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "An example demonstrating how to use the display driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Display Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_129.projectspec",
+        "name": "Pin Interrupt",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "An example using interrupts to toggle an LED after a button press",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_130.projectspec",
+        "name": "Pin Shutdown",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "An example using the PIN driver and the Power module to put the device in shutdown mode",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_131.projectspec",
+        "name": "Pin Standby",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "An example using the PIN driver and the Power module to put the device in standby mode",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/driverExamples/tiDriverExamples/pwmExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_132.projectspec",
+        "name": "PWM LED",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "An example on how to use the PWM driver to control on-board LEDs",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PWM Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_133.projectspec",
+        "name": "RF Packet TX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "A transmitter example on how to use the RF driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_134.projectspec",
+        "name": "RF Packet RX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "A receiver example on how to use the RF driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_135.projectspec",
+        "name": "RF Carrier Wave",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "An example that uses the RF driver to generate a carrier wave",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_136.projectspec",
+        "name": "RF EasyLink TX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "An EasyLink transmit example",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_137.projectspec",
+        "name": "RF EasyLink RX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "An EasyLink receive example",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_138.projectspec",
+        "name": "RF EasyLink Network Processor",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "An EasyLink AT Command Network Processor example",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_139.projectspec",
+        "name": "RF Packet Error Rate Test",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "Showcases different RF transfer modes and measures the packet error rate.",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_140.projectspec",
+        "name": "RF Dual Mode Wireless Sensor Network Concentrator",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "A wireless sensor network concentrator which collects data from Sub 1GHz sensor nodes and advertises data in a 2.4Ghz BLE Eddystone Beacon",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_141.projectspec",
+        "name": "RF Dual Mode Wireless Sensor Network Node",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "A wireless sensor network node that sends data to the Sub 1GHz collector and advertises data in a 2.4Ghz BLE Eddystone Beacon",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_142.projectspec",
+        "name": "RF Wake-on-Radio TX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "A packet TX example that sends a long preamble.",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_143.projectspec",
+        "name": "RF Wake-on-Radio RX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "A packet RX example that uses carrier sense to detect the presence of a signal.",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_144.projectspec",
+        "name": "RF Listen Before Talk",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "Sends a packet after performing carrier sense and shows command chaining",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/driverExamples/tiDriverExamples/uartExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_145.projectspec",
+        "name": "UART Echo",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "Echoes characters back using the UART driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "UART Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/driverExamples/tiDriverExamples/adcbufExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_126.projectspec",
+        "name": "ADCBuf Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "An ADCBuf continuous sampling TI-RTOS project",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "ADCBuf Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/driverExamples/tiDriverExamples/adcExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_125.projectspec",
+        "name": "ADC Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "An ADC single channel TI-RTOS project",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "ADC Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_146.projectspec",
+        "name": "Benchmark Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "This example gathers and prints benchmark timing data for some representative SYS/BIOS APIs.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_147.projectspec",
+        "name": "C++ Example (bigtime)",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "In this program, C++ is used to create a real-time clock/calendar.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_148.projectspec",
+        "name": "Clock Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "The clock example shows how to use the ti.sysbios.knl.Clock module to create one-shot and periodic Clock Instances. Clock Instances are essentially functions that run after a certain number of Clock ticks.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_149.projectspec",
+        "name": "Error Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "This example shows how to use Error_Blocks to catch runtime errors. An Error_Block is passed to Task_create() and then checked for create failure. When no Error_Block is passed, the application will terminate when an error occurs. The error.cfg file shows how to plug an error hook.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_150.projectspec",
+        "name": "Hello Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "The hello example serves as a basic sanity check program for SYS/BIOS. It demonstrates how to print the string 'hello world' to stdout.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_151.projectspec",
+        "name": "Memory Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "This example shows the use of xdc.runtime.Memory module and different xdc.runtime.IHeap implementations to manage memory. A system heap is created statically using ti.sysbios.heaps.HeapMem.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_152.projectspec",
+        "name": "Task Mutex Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "This example shows the use of two tasks and one semaphore to protect data access.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350LaunchPad/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_153.projectspec",
+        "name": "Swi Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350-LAUNCHXL"
+        ],
+        "description": "The swi example shows how to use the ti.sysbios.knl.Swi module. It demonstrates how the various Swi APIs work.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/driverExamples/tiDriverExamples/emptyExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_186.projectspec",
+        "name": "Empty Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "An empty TI-RTOS project",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Empty Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/driverExamples/tiDriverExamples/emptyExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_187.projectspec",
+        "name": "Empty (Minimal) Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "An empty TI-RTOS project with minimal footprint",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Empty Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/driverExamples/tiDriverExamples/i2CExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_188.projectspec",
+        "name": "I2C TMP007",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "An example on how to use the I2C driver with the TMP007 boosterpack",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "I2C Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/driverExamples/tiDriverExamples/displayExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_185.projectspec",
+        "name": "Display",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "An example demonstrating how to use the display driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Display Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_190.projectspec",
+        "name": "Pin Interrupt",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "An example using interrupts to toggle an LED after a button press",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_191.projectspec",
+        "name": "Pin Shutdown",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "An example using the PIN driver and the Power module to put the device in shutdown mode",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_192.projectspec",
+        "name": "Pin Standby",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "An example using the PIN driver and the Power module to put the device in standby mode",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/driverExamples/tiDriverExamples/pwmExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_193.projectspec",
+        "name": "PWM LED",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "An example on how to use the PWM driver to control on-board LEDs",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PWM Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_194.projectspec",
+        "name": "RF Packet TX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "A transmitter example on how to use the RF driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_195.projectspec",
+        "name": "RF Packet RX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "A receiver example on how to use the RF driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_196.projectspec",
+        "name": "RF Carrier Wave",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "An example that uses the RF driver to generate a carrier wave",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_197.projectspec",
+        "name": "RF EasyLink TX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "An EasyLink transmit example",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_198.projectspec",
+        "name": "RF EasyLink RX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "An EasyLink receive example",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_199.projectspec",
+        "name": "RF EasyLink Network Processor",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "An EasyLink AT Command Network Processor example",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_200.projectspec",
+        "name": "RF Packet Error Rate Test",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "Showcases different RF transfer modes and measures the packet error rate.",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_201.projectspec",
+        "name": "RF Dual Mode Wireless Sensor Network Concentrator",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "A wireless sensor network concentrator which collects data from Sub 1GHz sensor nodes and advertises data in a 2.4Ghz BLE Eddystone Beacon",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_202.projectspec",
+        "name": "RF Dual Mode Wireless Sensor Network Node",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "A wireless sensor network node for Sensor Tag that sends data to the Sub 1GHz collector and advertises data in a 2.4Ghz BLE Eddystone Beacon",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_203.projectspec",
+        "name": "RF Wake-on-Radio TX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "A packet TX example that sends a long preamble.",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_204.projectspec",
+        "name": "RF Wake-on-Radio RX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "A packet RX example that uses carrier sense to detect the presence of a signal.",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_205.projectspec",
+        "name": "RF Listen Before Talk",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "Sends a packet after performing carrier sense and shows command chaining",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/driverExamples/tiDriverExamples/uartExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_206.projectspec",
+        "name": "UART Echo",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "Echoes characters back using the UART driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "UART Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/driverExamples/tiDriverExamples/pdmExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_189.projectspec",
+        "name": "PDM Stream",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "An example which takes audio from a digital microphone and transmits it on UART",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PDM Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_207.projectspec",
+        "name": "Benchmark Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "This example gathers and prints benchmark timing data for some representative SYS/BIOS APIs.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_208.projectspec",
+        "name": "C++ Example (bigtime)",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "In this program, C++ is used to create a real-time clock/calendar.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_209.projectspec",
+        "name": "Clock Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "The clock example shows how to use the ti.sysbios.knl.Clock module to create one-shot and periodic Clock Instances. Clock Instances are essentially functions that run after a certain number of Clock ticks.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_210.projectspec",
+        "name": "Error Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "This example shows how to use Error_Blocks to catch runtime errors. An Error_Block is passed to Task_create() and then checked for create failure. When no Error_Block is passed, the application will terminate when an error occurs. The error.cfg file shows how to plug an error hook.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_211.projectspec",
+        "name": "Hello Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "The hello example serves as a basic sanity check program for SYS/BIOS. It demonstrates how to print the string 'hello world' to stdout.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_212.projectspec",
+        "name": "Memory Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "This example shows the use of xdc.runtime.Memory module and different xdc.runtime.IHeap implementations to manage memory. A system heap is created statically using ti.sysbios.heaps.HeapMem.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_213.projectspec",
+        "name": "Task Mutex Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "This example shows the use of two tasks and one semaphore to protect data access.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc1350SensorTag/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_214.projectspec",
+        "name": "Swi Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC1350F128"
+        ],
+        "devtools": [
+            "CC1350 SensorTag"
+        ],
+        "description": "The swi example shows how to use the ti.sysbios.knl.Swi module. It demonstrates how the various Swi APIs work.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/driverExamples/tiDriverExamples/emptyExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_249.projectspec",
+        "name": "Empty Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "An empty TI-RTOS project",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Empty Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/driverExamples/tiDriverExamples/emptyExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_250.projectspec",
+        "name": "Empty (Minimal) Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "An empty TI-RTOS project with minimal footprint",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Empty Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/driverExamples/tiDriverExamples/displayExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_246.projectspec",
+        "name": "Display",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "An example demonstrating how to use the display driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Display Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_251.projectspec",
+        "name": "Pin Interrupt",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "An example using interrupts to toggle an LED after a button press",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_252.projectspec",
+        "name": "Pin Shutdown",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "An example using the PIN driver and the Power module to put the device in shutdown mode",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_253.projectspec",
+        "name": "Pin Standby",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "An example using the PIN driver and the Power module to put the device in standby mode",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/driverExamples/tiDriverExamples/pwmExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_254.projectspec",
+        "name": "PWM LED",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "An example on how to use the PWM driver to control on-board LEDs",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PWM Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_255.projectspec",
+        "name": "RF Packet TX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "A transmitter example on how to use the RF driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_256.projectspec",
+        "name": "RF Packet RX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "A receiver example on how to use the RF driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_257.projectspec",
+        "name": "RF Carrier Wave",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "An example that uses the RF driver to generate a carrier wave",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_258.projectspec",
+        "name": "RF EasyLink TX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "An EasyLink transmit example",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_259.projectspec",
+        "name": "RF EasyLink RX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "An EasyLink receive example",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_260.projectspec",
+        "name": "RF EasyLink Network Processor",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "An EasyLink AT Command Network Processor example",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_261.projectspec",
+        "name": "RF Packet Error Rate Test",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "Showcases different RF transfer modes and measures the packet error rate.",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_262.projectspec",
+        "name": "RF Wireless Sensor Network Concentrator",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "A wireless sensor network concentrator which collects data from sensor nodes",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_263.projectspec",
+        "name": "RF Wireless Sensor Network Node",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "A wireless sensor network node that sends data to the collector",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/driverExamples/tiDriverExamples/uartExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_264.projectspec",
+        "name": "UART Echo",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "Echoes characters back using the UART driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "UART Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/driverExamples/tiDriverExamples/adcbufExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_248.projectspec",
+        "name": "ADCBuf Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "An ADCBuf continuous sampling TI-RTOS project",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "ADCBuf Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/driverExamples/tiDriverExamples/adcExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_247.projectspec",
+        "name": "ADC Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "An ADC single channel TI-RTOS project",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "ADC Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_265.projectspec",
+        "name": "Benchmark Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "This example gathers and prints benchmark timing data for some representative SYS/BIOS APIs.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_266.projectspec",
+        "name": "C++ Example (bigtime)",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "In this program, C++ is used to create a real-time clock/calendar.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_267.projectspec",
+        "name": "Clock Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "The clock example shows how to use the ti.sysbios.knl.Clock module to create one-shot and periodic Clock Instances. Clock Instances are essentially functions that run after a certain number of Clock ticks.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_268.projectspec",
+        "name": "Error Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "This example shows how to use Error_Blocks to catch runtime errors. An Error_Block is passed to Task_create() and then checked for create failure. When no Error_Block is passed, the application will terminate when an error occurs. The error.cfg file shows how to plug an error hook.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_269.projectspec",
+        "name": "Hello Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "The hello example serves as a basic sanity check program for SYS/BIOS. It demonstrates how to print the string 'hello world' to stdout.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_270.projectspec",
+        "name": "Memory Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "This example shows the use of xdc.runtime.Memory module and different xdc.runtime.IHeap implementations to manage memory. A system heap is created statically using ti.sysbios.heaps.HeapMem.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_271.projectspec",
+        "name": "Task Mutex Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "This example shows the use of two tasks and one semaphore to protect data access.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650LaunchPad/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_272.projectspec",
+        "name": "Swi Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650-LAUNCHXL"
+        ],
+        "description": "The swi example shows how to use the ti.sysbios.knl.Swi module. It demonstrates how the various Swi APIs work.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_4XS_/driverExamples/tiDriverExamples/emptyExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_302.projectspec",
+        "name": "Empty Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_4XS"
+        ],
+        "description": "An empty TI-RTOS project",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Empty Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_4XS_/driverExamples/tiDriverExamples/emptyExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_303.projectspec",
+        "name": "Empty (Minimal) Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_4XS"
+        ],
+        "description": "An empty TI-RTOS project with minimal footprint",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Empty Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_4XS_/driverExamples/tiDriverExamples/displayExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_301.projectspec",
+        "name": "Display",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_4XS"
+        ],
+        "description": "An example demonstrating how to use the display driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Display Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_4XS_/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_304.projectspec",
+        "name": "Pin Interrupt",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_4XS"
+        ],
+        "description": "An example using interrupts to toggle an LED after a button press",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_4XS_/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_305.projectspec",
+        "name": "Pin Shutdown",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_4XS"
+        ],
+        "description": "An example using the PIN driver and the Power module to put the device in shutdown mode",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_4XS_/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_306.projectspec",
+        "name": "Pin Standby",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_4XS"
+        ],
+        "description": "An example using the PIN driver and the Power module to put the device in standby mode",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_4XS_/driverExamples/tiDriverExamples/pwmExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_307.projectspec",
+        "name": "PWM LED",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_4XS"
+        ],
+        "description": "An example on how to use the PWM driver to control on-board LEDs",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PWM Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_4XS_/driverExamples/tiDriverExamples/uartExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_308.projectspec",
+        "name": "UART Echo",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_4XS"
+        ],
+        "description": "Echoes characters back using the UART driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "UART Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_4XS_/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_309.projectspec",
+        "name": "Benchmark Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_4XS"
+        ],
+        "description": "This example gathers and prints benchmark timing data for some representative SYS/BIOS APIs.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_4XS_/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_310.projectspec",
+        "name": "C++ Example (bigtime)",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_4XS"
+        ],
+        "description": "In this program, C++ is used to create a real-time clock/calendar.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_4XS_/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_311.projectspec",
+        "name": "Clock Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_4XS"
+        ],
+        "description": "The clock example shows how to use the ti.sysbios.knl.Clock module to create one-shot and periodic Clock Instances. Clock Instances are essentially functions that run after a certain number of Clock ticks.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_4XS_/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_312.projectspec",
+        "name": "Error Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_4XS"
+        ],
+        "description": "This example shows how to use Error_Blocks to catch runtime errors. An Error_Block is passed to Task_create() and then checked for create failure. When no Error_Block is passed, the application will terminate when an error occurs. The error.cfg file shows how to plug an error hook.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_4XS_/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_313.projectspec",
+        "name": "Hello Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_4XS"
+        ],
+        "description": "The hello example serves as a basic sanity check program for SYS/BIOS. It demonstrates how to print the string 'hello world' to stdout.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_4XS_/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_314.projectspec",
+        "name": "Memory Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_4XS"
+        ],
+        "description": "This example shows the use of xdc.runtime.Memory module and different xdc.runtime.IHeap implementations to manage memory. A system heap is created statically using ti.sysbios.heaps.HeapMem.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_4XS_/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_315.projectspec",
+        "name": "Task Mutex Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_4XS"
+        ],
+        "description": "This example shows the use of two tasks and one semaphore to protect data access.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_4XS_/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_316.projectspec",
+        "name": "Swi Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_4XS"
+        ],
+        "description": "The swi example shows how to use the ti.sysbios.knl.Swi module. It demonstrates how the various Swi APIs work.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_5XD_/driverExamples/tiDriverExamples/emptyExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_335.projectspec",
+        "name": "Empty Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_5XD"
+        ],
+        "description": "An empty TI-RTOS project",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Empty Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_5XD_/driverExamples/tiDriverExamples/emptyExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_336.projectspec",
+        "name": "Empty (Minimal) Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_5XD"
+        ],
+        "description": "An empty TI-RTOS project with minimal footprint",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Empty Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_5XD_/driverExamples/tiDriverExamples/displayExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_334.projectspec",
+        "name": "Display",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_5XD"
+        ],
+        "description": "An example demonstrating how to use the display driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Display Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_5XD_/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_337.projectspec",
+        "name": "Pin Interrupt",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_5XD"
+        ],
+        "description": "An example using interrupts to toggle an LED after a button press",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_5XD_/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_338.projectspec",
+        "name": "Pin Shutdown",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_5XD"
+        ],
+        "description": "An example using the PIN driver and the Power module to put the device in shutdown mode",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_5XD_/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_339.projectspec",
+        "name": "Pin Standby",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_5XD"
+        ],
+        "description": "An example using the PIN driver and the Power module to put the device in standby mode",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_5XD_/driverExamples/tiDriverExamples/pwmExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_340.projectspec",
+        "name": "PWM LED",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_5XD"
+        ],
+        "description": "An example on how to use the PWM driver to control on-board LEDs",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PWM Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_5XD_/driverExamples/tiDriverExamples/uartExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_341.projectspec",
+        "name": "UART Echo",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_5XD"
+        ],
+        "description": "Echoes characters back using the UART driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "UART Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_5XD_/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_342.projectspec",
+        "name": "Benchmark Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_5XD"
+        ],
+        "description": "This example gathers and prints benchmark timing data for some representative SYS/BIOS APIs.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_5XD_/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_343.projectspec",
+        "name": "C++ Example (bigtime)",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_5XD"
+        ],
+        "description": "In this program, C++ is used to create a real-time clock/calendar.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_5XD_/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_344.projectspec",
+        "name": "Clock Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_5XD"
+        ],
+        "description": "The clock example shows how to use the ti.sysbios.knl.Clock module to create one-shot and periodic Clock Instances. Clock Instances are essentially functions that run after a certain number of Clock ticks.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_5XD_/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_345.projectspec",
+        "name": "Error Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_5XD"
+        ],
+        "description": "This example shows how to use Error_Blocks to catch runtime errors. An Error_Block is passed to Task_create() and then checked for create failure. When no Error_Block is passed, the application will terminate when an error occurs. The error.cfg file shows how to plug an error hook.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_5XD_/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_346.projectspec",
+        "name": "Hello Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_5XD"
+        ],
+        "description": "The hello example serves as a basic sanity check program for SYS/BIOS. It demonstrates how to print the string 'hello world' to stdout.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_5XD_/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_347.projectspec",
+        "name": "Memory Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_5XD"
+        ],
+        "description": "This example shows the use of xdc.runtime.Memory module and different xdc.runtime.IHeap implementations to manage memory. A system heap is created statically using ti.sysbios.heaps.HeapMem.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_5XD_/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_348.projectspec",
+        "name": "Task Mutex Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_5XD"
+        ],
+        "description": "This example shows the use of two tasks and one semaphore to protect data access.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_5XD_/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_349.projectspec",
+        "name": "Swi Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_5XD"
+        ],
+        "description": "The swi example shows how to use the ti.sysbios.knl.Swi module. It demonstrates how the various Swi APIs work.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/driverExamples/tiDriverExamples/emptyExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_370.projectspec",
+        "name": "Empty Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "An empty TI-RTOS project",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Empty Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/driverExamples/tiDriverExamples/emptyExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_371.projectspec",
+        "name": "Empty (Minimal) Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "An empty TI-RTOS project with minimal footprint",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Empty Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/driverExamples/tiDriverExamples/displayExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_367.projectspec",
+        "name": "Display",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "An example demonstrating how to use the display driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Display Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/driverExamples/tiDriverExamples/displayExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_372.projectspec",
+        "name": "LCD SmartRF06EB",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "An example demonstrating how to use the LCD on the SmartRF06 Evaluation Board",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Display Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_373.projectspec",
+        "name": "Pin Interrupt",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "An example using interrupts to toggle an LED after a button press",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_374.projectspec",
+        "name": "Pin Shutdown",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "An example using the PIN driver and the Power module to put the device in shutdown mode",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_375.projectspec",
+        "name": "Pin Standby",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "An example using the PIN driver and the Power module to put the device in standby mode",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/driverExamples/tiDriverExamples/pwmExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_376.projectspec",
+        "name": "PWM LED",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "An example on how to use the PWM driver to control on-board LEDs",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PWM Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_377.projectspec",
+        "name": "RF Packet TX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "A transmitter example on how to use the RF driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_378.projectspec",
+        "name": "RF Packet RX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "A receiver example on how to use the RF driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_379.projectspec",
+        "name": "RF Carrier Wave",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "An example that uses the RF driver to generate a carrier wave",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_380.projectspec",
+        "name": "RF EasyLink TX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "An EasyLink transmit example",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_381.projectspec",
+        "name": "RF EasyLink RX",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "An EasyLink receive example",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_382.projectspec",
+        "name": "RF EasyLink Network Processor",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "An EasyLink AT Command Network Processor example",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_383.projectspec",
+        "name": "RF Packet Error Rate Test",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "Showcases different RF transfer modes and measures the packet error rate.",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_384.projectspec",
+        "name": "RF Wireless Sensor Network Concentrator",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "A wireless sensor network concentrator which collects data from sensor nodes",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/driverExamples/tiDriverExamples/rfExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_385.projectspec",
+        "name": "RF Wireless Sensor Network Node",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "A wireless sensor network node that sends data to the collector",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "RF Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/driverExamples/tiDriverExamples/uartExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_386.projectspec",
+        "name": "UART Echo",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "Echoes characters back using the UART driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "UART Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/driverExamples/tiDriverExamples/adcbufExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_369.projectspec",
+        "name": "ADCBuf Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "An ADCBuf continuous sampling TI-RTOS project",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "ADCBuf Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/driverExamples/tiDriverExamples/adcExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_368.projectspec",
+        "name": "ADC Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "An ADC single channel TI-RTOS project",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "ADC Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_387.projectspec",
+        "name": "Benchmark Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "This example gathers and prints benchmark timing data for some representative SYS/BIOS APIs.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_388.projectspec",
+        "name": "C++ Example (bigtime)",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "In this program, C++ is used to create a real-time clock/calendar.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_389.projectspec",
+        "name": "Clock Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "The clock example shows how to use the ti.sysbios.knl.Clock module to create one-shot and periodic Clock Instances. Clock Instances are essentially functions that run after a certain number of Clock ticks.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_390.projectspec",
+        "name": "Error Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "This example shows how to use Error_Blocks to catch runtime errors. An Error_Block is passed to Task_create() and then checked for create failure. When no Error_Block is passed, the application will terminate when an error occurs. The error.cfg file shows how to plug an error hook.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_391.projectspec",
+        "name": "Hello Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "The hello example serves as a basic sanity check program for SYS/BIOS. It demonstrates how to print the string 'hello world' to stdout.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_392.projectspec",
+        "name": "Memory Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "This example shows the use of xdc.runtime.Memory module and different xdc.runtime.IHeap implementations to manage memory. A system heap is created statically using ti.sysbios.heaps.HeapMem.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_393.projectspec",
+        "name": "Task Mutex Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "This example shows the use of two tasks and one semaphore to protect data access.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650DevelopmentKit_7ID_/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_394.projectspec",
+        "name": "Swi Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650DK_7ID"
+        ],
+        "description": "The swi example shows how to use the ti.sysbios.knl.Swi module. It demonstrates how the various Swi APIs work.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650SensorTag/driverExamples/tiDriverExamples/emptyExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_425.projectspec",
+        "name": "Empty Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650 SensorTag"
+        ],
+        "description": "An empty TI-RTOS project",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Empty Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650SensorTag/driverExamples/tiDriverExamples/emptyExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_426.projectspec",
+        "name": "Empty (Minimal) Project",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650 SensorTag"
+        ],
+        "description": "An empty TI-RTOS project with minimal footprint",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Empty Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650SensorTag/driverExamples/tiDriverExamples/displayExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_424.projectspec",
+        "name": "Display",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650 SensorTag"
+        ],
+        "description": "An example demonstrating how to use the display driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "Display Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650SensorTag/driverExamples/tiDriverExamples/i2CExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_427.projectspec",
+        "name": "I2C TMP007",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650 SensorTag"
+        ],
+        "description": "An example on how to use the I2C driver with the TMP007 boosterpack",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "I2C Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650SensorTag/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_429.projectspec",
+        "name": "Pin Interrupt",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650 SensorTag"
+        ],
+        "description": "An example using interrupts to toggle an LED after a button press",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650SensorTag/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_430.projectspec",
+        "name": "Pin Shutdown",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650 SensorTag"
+        ],
+        "description": "An example using the PIN driver and the Power module to put the device in shutdown mode",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650SensorTag/driverExamples/tiDriverExamples/pinExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_431.projectspec",
+        "name": "Pin Standby",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650 SensorTag"
+        ],
+        "description": "An example using the PIN driver and the Power module to put the device in standby mode",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PIN Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650SensorTag/driverExamples/tiDriverExamples/pwmExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_432.projectspec",
+        "name": "PWM LED",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650 SensorTag"
+        ],
+        "description": "An example on how to use the PWM driver to control on-board LEDs",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PWM Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650SensorTag/driverExamples/tiDriverExamples/uartExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_433.projectspec",
+        "name": "UART Echo",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650 SensorTag"
+        ],
+        "description": "Echoes characters back using the UART driver",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "UART Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650SensorTag/driverExamples/tiDriverExamples/pdmExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_428.projectspec",
+        "name": "PDM Stream",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650 SensorTag"
+        ],
+        "description": "An example which takes audio from a digital microphone and transmits it on UART",
+        "categories": [
+            [
+                "Development Tools",
+                "Driver Examples",
+                "PDM Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650SensorTag/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_434.projectspec",
+        "name": "Benchmark Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650 SensorTag"
+        ],
+        "description": "This example gathers and prints benchmark timing data for some representative SYS/BIOS APIs.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650SensorTag/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_435.projectspec",
+        "name": "C++ Example (bigtime)",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650 SensorTag"
+        ],
+        "description": "In this program, C++ is used to create a real-time clock/calendar.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650SensorTag/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_436.projectspec",
+        "name": "Clock Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650 SensorTag"
+        ],
+        "description": "The clock example shows how to use the ti.sysbios.knl.Clock module to create one-shot and periodic Clock Instances. Clock Instances are essentially functions that run after a certain number of Clock ticks.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650SensorTag/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_437.projectspec",
+        "name": "Error Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650 SensorTag"
+        ],
+        "description": "This example shows how to use Error_Blocks to catch runtime errors. An Error_Block is passed to Task_create() and then checked for create failure. When no Error_Block is passed, the application will terminate when an error occurs. The error.cfg file shows how to plug an error hook.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650SensorTag/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_438.projectspec",
+        "name": "Hello Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650 SensorTag"
+        ],
+        "description": "The hello example serves as a basic sanity check program for SYS/BIOS. It demonstrates how to print the string 'hello world' to stdout.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650SensorTag/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_439.projectspec",
+        "name": "Memory Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650 SensorTag"
+        ],
+        "description": "This example shows the use of xdc.runtime.Memory module and different xdc.runtime.IHeap implementations to manage memory. A system heap is created statically using ti.sysbios.heaps.HeapMem.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650SensorTag/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_440.projectspec",
+        "name": "Task Mutex Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650 SensorTag"
+        ],
+        "description": "This example shows the use of two tasks and one semaphore to protect data access.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    },
+    {
+        "location": ".//resources/cc2650SensorTag/kernelExamples/tiKernelExamples/com_ti_rtsc_tirtoscc13XX_CC26XX_example_441.projectspec",
+        "name": "Swi Example",
+        "resourceType": "project.ccs",
+        "coreTypes": [
+            "Cortex M.CC2650F128"
+        ],
+        "devtools": [
+            "CC2650 SensorTag"
+        ],
+        "description": "The swi example shows how to use the ti.sysbios.knl.Swi module. It demonstrates how the various Swi APIs work.",
+        "categories": [
+            [
+                "Development Tools",
+                "Kernel Examples"
+            ]
+        ],
+        "advanced": {
+            "overrideProjectSpecDeviceId": true
+        }
+    }
+]

@@ -1,0 +1,465 @@
+\subsection{A\+D\+C.\+h File Reference}
+\label{_a_d_c_8h}\index{A\+D\+C.\+h@{A\+D\+C.\+h}}
+
+
+\subsubsection{Detailed Description}
+A\+D\+C driver interface. 
+
+============================================================================
+
+The A\+D\+C header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/ADC.h>}
+\end{DoxyCode}
+
+
+\subsubsection*{Operation}
+
+The A\+D\+C driver operates as a simplified A\+D\+C module with only single channel sampling support. It also operates on blocking only mode which means users have to wait the current sampling finished before starting another sampling. The sampling channel needs to be specified in the \hyperlink{_a_d_c_8h_a9f3e5f311cda4df63e70660651b9314e}{A\+D\+C\+\_\+open()} before calling \hyperlink{_a_d_c_8h_afcac5582b8be42a7740091d150aef05c}{A\+D\+C\+\_\+convert()}.
+
+The A\+P\+Is in this driver serve as an interface to a typical T\+I-\/\+R\+T\+O\+S application. The specific peripheral implementations are responsible to create all the S\+Y\+S/\+B\+I\+O\+S specific primitives to allow for thread-\/safe operation.
+
+\paragraph*{Opening the driver}
+
+
+\begin{DoxyCode}
+ADC_Handle adc;
+ADC_Params params;
+
+ADC_Params_init(&params);
+adc = ADC_open(Board\_ADCCHANNEL\_A0, &params);
+\textcolor{keywordflow}{if} (adc != NULL) \{
+    ADC_close(adc);
+\}
+\end{DoxyCode}
+
+
+\paragraph*{Converting}
+
+A A\+D\+C conversion with a A\+D\+C peripheral is started by calling \hyperlink{_a_d_c_8h_afcac5582b8be42a7740091d150aef05c}{A\+D\+C\+\_\+convert()}. The result value is returned by \hyperlink{_a_d_c_8h_afcac5582b8be42a7740091d150aef05c}{A\+D\+C\+\_\+convert()} once the conversion is finished.
+
+
+\begin{DoxyCode}
+int\_fast16\_t res;
+uint\_fast16\_t adcValue;
+
+res = ADC_convert(adc, &adcValue);
+\textcolor{keywordflow}{if} (res == ADC_STATUS_SUCCESS) \{
+    \textcolor{comment}{//use adcValue}
+\}
+\end{DoxyCode}
+
+
+\subsubsection*{Implementation}
+
+This module serves as the main interface for T\+I-\/\+R\+T\+O\+S applications. Its purpose is to redirect the module\textquotesingle{}s A\+P\+Is to specific peripheral implementations which are specified using a pointer to a \hyperlink{struct_a_d_c___fxn_table}{A\+D\+C\+\_\+\+Fxn\+Table}.
+
+The A\+D\+C driver interface module is joined (at link time) to a N\+U\+L\+L-\/terminated array of \hyperlink{struct_a_d_c___config}{A\+D\+C\+\_\+\+Config} data structures named {\itshape A\+D\+C\+\_\+config}. {\itshape A\+D\+C\+\_\+config} is implemented in the application with each entry being an instance of a A\+D\+C peripheral. Each entry in {\itshape A\+D\+C\+\_\+config} contains a\+:
+\begin{DoxyItemize}
+\item (\hyperlink{struct_a_d_c___fxn_table}{A\+D\+C\+\_\+\+Fxn\+Table} $\ast$) to a set of functions that implement a A\+D\+C peripheral
+\item (void $\ast$) data object that is associated with the \hyperlink{struct_a_d_c___fxn_table}{A\+D\+C\+\_\+\+Fxn\+Table}
+\item (void $\ast$) hardware attributes that are associated to the \hyperlink{struct_a_d_c___fxn_table}{A\+D\+C\+\_\+\+Fxn\+Table}
+\end{DoxyItemize}
+
+\subsubsection*{Instrumentation}
+
+The A\+D\+C driver interface produces log statements if instrumentation is enabled.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Diagnostics Mask }&{\bf Log details  }\\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R1 &basic operations performed \\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R2 &detailed operations performed \\\cline{1-2}
+\end{TabularC}
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$stddef.\+h$>$}\\*
+Include dependency graph for A\+D\+C.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{_a_d_c_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=121pt]{_a_d_c_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_a_d_c___params}{A\+D\+C\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em A\+D\+C Parameters. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_a_d_c___fxn_table}{A\+D\+C\+\_\+\+Fxn\+Table}
+\begin{DoxyCompactList}\small\item\em The definition of a A\+D\+C function table that contains the required set of functions to control a specific A\+D\+C driver implementation. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_a_d_c___config}{A\+D\+C\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em A\+D\+C Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_a_d_c_8h_a1850e2c1e2791103d1102917d1e5b01b}{A\+D\+C\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~(32)
+\item 
+\#define \hyperlink{_a_d_c_8h_a5a8bd7786df22349b1a5434f48b08581}{A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~(-\/32)
+\item 
+\#define \hyperlink{_a_d_c_8h_aee02c8883a7e443d36ea47f9696730ec}{A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}~(0)
+\begin{DoxyCompactList}\small\item\em Successful status code returned by \hyperlink{_a_d_c_8h_af4be7e5e4f5cc931f4501a542d689c32}{A\+D\+C\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{_a_d_c_8h_a33ce323c3bbdc8a3f4e018f99a92b09d}{A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}~(-\/1)
+\begin{DoxyCompactList}\small\item\em Generic error status code returned by \hyperlink{_a_d_c_8h_af4be7e5e4f5cc931f4501a542d689c32}{A\+D\+C\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{_a_d_c_8h_a704a8cd95bdee94b0f61f06566062e8c}{A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}~(-\/2)
+\begin{DoxyCompactList}\small\item\em An error status code returned by \hyperlink{_a_d_c_8h_af4be7e5e4f5cc931f4501a542d689c32}{A\+D\+C\+\_\+control()} for undefined command codes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_a_d_c___config}{A\+D\+C\+\_\+\+Config} $\ast$ \hyperlink{_a_d_c_8h_ac98b1222559c172df43505d672e1376c}{A\+D\+C\+\_\+\+Handle}
+\begin{DoxyCompactList}\small\item\em A handle that is returned from a \hyperlink{_a_d_c_8h_a9f3e5f311cda4df63e70660651b9314e}{A\+D\+C\+\_\+open()} call. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_a_d_c___params}{A\+D\+C\+\_\+\+Params} \hyperlink{_a_d_c_8h_a1cd6c9decc95ce2f6acb5eeb3cc72eb2}{A\+D\+C\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em A\+D\+C Parameters. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_a_d_c_8h_a42f6ff234d06fb71647510e04be8a3bf}{A\+D\+C\+\_\+\+Close\+Fxn}) (\hyperlink{_a_d_c_8h_ac98b1222559c172df43505d672e1376c}{A\+D\+C\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_a_d_c_8h_adb49f74bdef5e3e45ee5de306c5dfc08}{A\+D\+C\+\_\+close()}. \end{DoxyCompactList}\item 
+typedef int\+\_\+fast16\+\_\+t($\ast$ \hyperlink{_a_d_c_8h_af9c178e22b377d9cf5eb7d2a1a072f12}{A\+D\+C\+\_\+\+Control\+Fxn}) (\hyperlink{_a_d_c_8h_ac98b1222559c172df43505d672e1376c}{A\+D\+C\+\_\+\+Handle} handle, uint\+\_\+fast16\+\_\+t cmd, void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_a_d_c_8h_af4be7e5e4f5cc931f4501a542d689c32}{A\+D\+C\+\_\+control()}. \end{DoxyCompactList}\item 
+typedef int\+\_\+fast16\+\_\+t($\ast$ \hyperlink{_a_d_c_8h_a552f2f752fbfc1b2af7551e55e392a42}{A\+D\+C\+\_\+\+Convert\+Fxn}) (\hyperlink{_a_d_c_8h_ac98b1222559c172df43505d672e1376c}{A\+D\+C\+\_\+\+Handle} handle, uint16\+\_\+t $\ast$value)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_a_d_c_8h_a552f2f752fbfc1b2af7551e55e392a42}{A\+D\+C\+\_\+\+Convert\+Fxn()}. \end{DoxyCompactList}\item 
+typedef uint32\+\_\+t($\ast$ \hyperlink{_a_d_c_8h_ab1b64068b8e0e3a26fa4b470cff92bf7}{A\+D\+C\+\_\+\+Convert\+Raw\+To\+Micro\+Volts}) (\hyperlink{_a_d_c_8h_ac98b1222559c172df43505d672e1376c}{A\+D\+C\+\_\+\+Handle} handle, uint16\+\_\+t raw\+Adc\+Value)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_a_d_c_8h_a81e762c06c3957c01d3271bdecef358d}{A\+D\+C\+\_\+convert\+Raw\+To\+Micro\+Volts()}. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_a_d_c_8h_af5f90e5268e88d0bb56d40d53542b1da}{A\+D\+C\+\_\+\+Init\+Fxn}) (\hyperlink{_a_d_c_8h_ac98b1222559c172df43505d672e1376c}{A\+D\+C\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_a_d_c_8h_a4b4a2ddcb45df0c8497c47d4ed800e2a}{A\+D\+C\+\_\+init()}. \end{DoxyCompactList}\item 
+typedef \hyperlink{_a_d_c_8h_ac98b1222559c172df43505d672e1376c}{A\+D\+C\+\_\+\+Handle}($\ast$ \hyperlink{_a_d_c_8h_a753af5a6a07905e109bbdecb785ac44d}{A\+D\+C\+\_\+\+Open\+Fxn}) (\hyperlink{_a_d_c_8h_ac98b1222559c172df43505d672e1376c}{A\+D\+C\+\_\+\+Handle} handle, \hyperlink{struct_a_d_c___params}{A\+D\+C\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_a_d_c_8h_a9f3e5f311cda4df63e70660651b9314e}{A\+D\+C\+\_\+open()}. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_a_d_c___fxn_table}{A\+D\+C\+\_\+\+Fxn\+Table} \hyperlink{_a_d_c_8h_a587cff1a3914cf624037cf8a01649380}{A\+D\+C\+\_\+\+Fxn\+Table}
+\begin{DoxyCompactList}\small\item\em The definition of a A\+D\+C function table that contains the required set of functions to control a specific A\+D\+C driver implementation. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_a_d_c___config}{A\+D\+C\+\_\+\+Config} \hyperlink{_a_d_c_8h_af334849657f87b79a31392f89828299a}{A\+D\+C\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em A\+D\+C Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_a_d_c_8h_adb49f74bdef5e3e45ee5de306c5dfc08}{A\+D\+C\+\_\+close} (\hyperlink{_a_d_c_8h_ac98b1222559c172df43505d672e1376c}{A\+D\+C\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to close a A\+D\+C driver. \end{DoxyCompactList}\item 
+int\+\_\+fast16\+\_\+t \hyperlink{_a_d_c_8h_af4be7e5e4f5cc931f4501a542d689c32}{A\+D\+C\+\_\+control} (\hyperlink{_a_d_c_8h_ac98b1222559c172df43505d672e1376c}{A\+D\+C\+\_\+\+Handle} handle, uint\+\_\+fast16\+\_\+t cmd, void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em Function performs implementation specific features on a given A\+D\+C\+\_\+\+Handle. \end{DoxyCompactList}\item 
+int\+\_\+fast16\+\_\+t \hyperlink{_a_d_c_8h_afcac5582b8be42a7740091d150aef05c}{A\+D\+C\+\_\+convert} (\hyperlink{_a_d_c_8h_ac98b1222559c172df43505d672e1376c}{A\+D\+C\+\_\+\+Handle} handle, uint16\+\_\+t $\ast$value)
+\begin{DoxyCompactList}\small\item\em Function to perform A\+D\+C conversion. \end{DoxyCompactList}\item 
+uint32\+\_\+t \hyperlink{_a_d_c_8h_a81e762c06c3957c01d3271bdecef358d}{A\+D\+C\+\_\+convert\+Raw\+To\+Micro\+Volts} (\hyperlink{_a_d_c_8h_ac98b1222559c172df43505d672e1376c}{A\+D\+C\+\_\+\+Handle} handle, uint16\+\_\+t raw\+Adc\+Value)
+\begin{DoxyCompactList}\small\item\em Function performs conversion from raw A\+D\+C result to actual value in microvolts. \end{DoxyCompactList}\item 
+void \hyperlink{_a_d_c_8h_a4b4a2ddcb45df0c8497c47d4ed800e2a}{A\+D\+C\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em Function to initializes the A\+D\+C driver. \end{DoxyCompactList}\item 
+\hyperlink{_a_d_c_8h_ac98b1222559c172df43505d672e1376c}{A\+D\+C\+\_\+\+Handle} \hyperlink{_a_d_c_8h_a9f3e5f311cda4df63e70660651b9314e}{A\+D\+C\+\_\+open} (uint\+\_\+fast16\+\_\+t index, \hyperlink{struct_a_d_c___params}{A\+D\+C\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to initialize the A\+D\+C peripheral. \end{DoxyCompactList}\item 
+void \hyperlink{_a_d_c_8h_a21df1c0987f5cecb660581ae081c4dc7}{A\+D\+C\+\_\+\+Params\+\_\+init} (\hyperlink{struct_a_d_c___params}{A\+D\+C\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to initialize the \hyperlink{struct_a_d_c___params}{A\+D\+C\+\_\+\+Params} struct to its defaults. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{A\+D\+C.\+h@{A\+D\+C.\+h}!A\+D\+C\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{A\+D\+C\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{A\+D\+C\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{A\+D\+C\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!A\+D\+C.\+h@{A\+D\+C.\+h}}
+\paragraph[{A\+D\+C\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+D\+C\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~(32)}\label{_a_d_c_8h_a1850e2c1e2791103d1102917d1e5b01b}
+Common A\+D\+C\+\_\+control command code reservation offset. A\+D\+C driver implementations should offset command codes with A\+D\+C\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing positively
+
+Example implementation specific command codes\+: 
+\begin{DoxyCode}
+1 #define ADCXYZ\_CMD\_COMMAND0      ADC\_CMD\_RESERVED + 0
+2 #define ADCXYZ\_CMD\_COMMAND1      ADC\_CMD\_RESERVED + 1
+\end{DoxyCode}
+ \index{A\+D\+C.\+h@{A\+D\+C.\+h}!A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!A\+D\+C.\+h@{A\+D\+C.\+h}}
+\paragraph[{A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~(-\/32)}\label{_a_d_c_8h_a5a8bd7786df22349b1a5434f48b08581}
+Common A\+D\+C\+\_\+control status code reservation offset. A\+D\+C driver implementations should offset status codes with A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing negatively.
+
+Example implementation specific status codes\+: 
+\begin{DoxyCode}
+1 #define ADCXYZ\_STATUS\_ERROR0     ADC\_STATUS\_RESERVED - 0
+2 #define ADCXYZ\_STATUS\_ERROR1     ADC\_STATUS\_RESERVED - 1
+3 #define ADCXYZ\_STATUS\_ERROR2     ADC\_STATUS\_RESERVED - 2
+\end{DoxyCode}
+ \index{A\+D\+C.\+h@{A\+D\+C.\+h}!A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S@{A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}}
+\index{A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S@{A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}!A\+D\+C.\+h@{A\+D\+C.\+h}}
+\paragraph[{A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S~(0)}\label{_a_d_c_8h_aee02c8883a7e443d36ea47f9696730ec}
+
+
+Successful status code returned by \hyperlink{_a_d_c_8h_af4be7e5e4f5cc931f4501a542d689c32}{A\+D\+C\+\_\+control()}. 
+
+\hyperlink{_a_d_c_8h_af4be7e5e4f5cc931f4501a542d689c32}{A\+D\+C\+\_\+control()} returns A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S if the control code was executed successfully. \index{A\+D\+C.\+h@{A\+D\+C.\+h}!A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R@{A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}}
+\index{A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R@{A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}!A\+D\+C.\+h@{A\+D\+C.\+h}}
+\paragraph[{A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R~(-\/1)}\label{_a_d_c_8h_a33ce323c3bbdc8a3f4e018f99a92b09d}
+
+
+Generic error status code returned by \hyperlink{_a_d_c_8h_af4be7e5e4f5cc931f4501a542d689c32}{A\+D\+C\+\_\+control()}. 
+
+\hyperlink{_a_d_c_8h_af4be7e5e4f5cc931f4501a542d689c32}{A\+D\+C\+\_\+control()} returns A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R if the control code was not executed successfully. \index{A\+D\+C.\+h@{A\+D\+C.\+h}!A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D@{A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}}
+\index{A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D@{A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}!A\+D\+C.\+h@{A\+D\+C.\+h}}
+\paragraph[{A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D~(-\/2)}\label{_a_d_c_8h_a704a8cd95bdee94b0f61f06566062e8c}
+
+
+An error status code returned by \hyperlink{_a_d_c_8h_af4be7e5e4f5cc931f4501a542d689c32}{A\+D\+C\+\_\+control()} for undefined command codes. 
+
+\hyperlink{_a_d_c_8h_af4be7e5e4f5cc931f4501a542d689c32}{A\+D\+C\+\_\+control()} returns A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D if the control code is not recognized by the driver implementation. 
+
+\subsubsection{Typedef Documentation}
+\index{A\+D\+C.\+h@{A\+D\+C.\+h}!A\+D\+C\+\_\+\+Handle@{A\+D\+C\+\_\+\+Handle}}
+\index{A\+D\+C\+\_\+\+Handle@{A\+D\+C\+\_\+\+Handle}!A\+D\+C.\+h@{A\+D\+C.\+h}}
+\paragraph[{A\+D\+C\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf A\+D\+C\+\_\+\+Config}$\ast$ {\bf A\+D\+C\+\_\+\+Handle}}\label{_a_d_c_8h_ac98b1222559c172df43505d672e1376c}
+
+
+A handle that is returned from a \hyperlink{_a_d_c_8h_a9f3e5f311cda4df63e70660651b9314e}{A\+D\+C\+\_\+open()} call. 
+
+\index{A\+D\+C.\+h@{A\+D\+C.\+h}!A\+D\+C\+\_\+\+Params@{A\+D\+C\+\_\+\+Params}}
+\index{A\+D\+C\+\_\+\+Params@{A\+D\+C\+\_\+\+Params}!A\+D\+C.\+h@{A\+D\+C.\+h}}
+\paragraph[{A\+D\+C\+\_\+\+Params}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf A\+D\+C\+\_\+\+Params}  {\bf A\+D\+C\+\_\+\+Params}}\label{_a_d_c_8h_a1cd6c9decc95ce2f6acb5eeb3cc72eb2}
+
+
+A\+D\+C Parameters. 
+
+A\+D\+C parameters are used to with the \hyperlink{_a_d_c_8h_a9f3e5f311cda4df63e70660651b9314e}{A\+D\+C\+\_\+open()} call. Only custom argument is supported in the parameters. Default values for these parameters are set using \hyperlink{_a_d_c_8h_a21df1c0987f5cecb660581ae081c4dc7}{A\+D\+C\+\_\+\+Params\+\_\+init()}.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_a_d_c_8h_a21df1c0987f5cecb660581ae081c4dc7}{A\+D\+C\+\_\+\+Params\+\_\+init()} 
+\end{DoxySeeAlso}
+\index{A\+D\+C.\+h@{A\+D\+C.\+h}!A\+D\+C\+\_\+\+Close\+Fxn@{A\+D\+C\+\_\+\+Close\+Fxn}}
+\index{A\+D\+C\+\_\+\+Close\+Fxn@{A\+D\+C\+\_\+\+Close\+Fxn}!A\+D\+C.\+h@{A\+D\+C.\+h}}
+\paragraph[{A\+D\+C\+\_\+\+Close\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ A\+D\+C\+\_\+\+Close\+Fxn) ({\bf A\+D\+C\+\_\+\+Handle} handle)}\label{_a_d_c_8h_a42f6ff234d06fb71647510e04be8a3bf}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_a_d_c_8h_adb49f74bdef5e3e45ee5de306c5dfc08}{A\+D\+C\+\_\+close()}. 
+
+\index{A\+D\+C.\+h@{A\+D\+C.\+h}!A\+D\+C\+\_\+\+Control\+Fxn@{A\+D\+C\+\_\+\+Control\+Fxn}}
+\index{A\+D\+C\+\_\+\+Control\+Fxn@{A\+D\+C\+\_\+\+Control\+Fxn}!A\+D\+C.\+h@{A\+D\+C.\+h}}
+\paragraph[{A\+D\+C\+\_\+\+Control\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef int\+\_\+fast16\+\_\+t($\ast$ A\+D\+C\+\_\+\+Control\+Fxn) ({\bf A\+D\+C\+\_\+\+Handle} handle, uint\+\_\+fast16\+\_\+t cmd, void $\ast$arg)}\label{_a_d_c_8h_af9c178e22b377d9cf5eb7d2a1a072f12}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_a_d_c_8h_af4be7e5e4f5cc931f4501a542d689c32}{A\+D\+C\+\_\+control()}. 
+
+\index{A\+D\+C.\+h@{A\+D\+C.\+h}!A\+D\+C\+\_\+\+Convert\+Fxn@{A\+D\+C\+\_\+\+Convert\+Fxn}}
+\index{A\+D\+C\+\_\+\+Convert\+Fxn@{A\+D\+C\+\_\+\+Convert\+Fxn}!A\+D\+C.\+h@{A\+D\+C.\+h}}
+\paragraph[{A\+D\+C\+\_\+\+Convert\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef int\+\_\+fast16\+\_\+t($\ast$ A\+D\+C\+\_\+\+Convert\+Fxn) ({\bf A\+D\+C\+\_\+\+Handle} handle, uint16\+\_\+t $\ast$value)}\label{_a_d_c_8h_a552f2f752fbfc1b2af7551e55e392a42}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_a_d_c_8h_a552f2f752fbfc1b2af7551e55e392a42}{A\+D\+C\+\_\+\+Convert\+Fxn()}. 
+
+\index{A\+D\+C.\+h@{A\+D\+C.\+h}!A\+D\+C\+\_\+\+Convert\+Raw\+To\+Micro\+Volts@{A\+D\+C\+\_\+\+Convert\+Raw\+To\+Micro\+Volts}}
+\index{A\+D\+C\+\_\+\+Convert\+Raw\+To\+Micro\+Volts@{A\+D\+C\+\_\+\+Convert\+Raw\+To\+Micro\+Volts}!A\+D\+C.\+h@{A\+D\+C.\+h}}
+\paragraph[{A\+D\+C\+\_\+\+Convert\+Raw\+To\+Micro\+Volts}]{\setlength{\rightskip}{0pt plus 5cm}typedef uint32\+\_\+t($\ast$ A\+D\+C\+\_\+\+Convert\+Raw\+To\+Micro\+Volts) ({\bf A\+D\+C\+\_\+\+Handle} handle, uint16\+\_\+t raw\+Adc\+Value)}\label{_a_d_c_8h_ab1b64068b8e0e3a26fa4b470cff92bf7}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_a_d_c_8h_a81e762c06c3957c01d3271bdecef358d}{A\+D\+C\+\_\+convert\+Raw\+To\+Micro\+Volts()}. 
+
+\index{A\+D\+C.\+h@{A\+D\+C.\+h}!A\+D\+C\+\_\+\+Init\+Fxn@{A\+D\+C\+\_\+\+Init\+Fxn}}
+\index{A\+D\+C\+\_\+\+Init\+Fxn@{A\+D\+C\+\_\+\+Init\+Fxn}!A\+D\+C.\+h@{A\+D\+C.\+h}}
+\paragraph[{A\+D\+C\+\_\+\+Init\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ A\+D\+C\+\_\+\+Init\+Fxn) ({\bf A\+D\+C\+\_\+\+Handle} handle)}\label{_a_d_c_8h_af5f90e5268e88d0bb56d40d53542b1da}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_a_d_c_8h_a4b4a2ddcb45df0c8497c47d4ed800e2a}{A\+D\+C\+\_\+init()}. 
+
+\index{A\+D\+C.\+h@{A\+D\+C.\+h}!A\+D\+C\+\_\+\+Open\+Fxn@{A\+D\+C\+\_\+\+Open\+Fxn}}
+\index{A\+D\+C\+\_\+\+Open\+Fxn@{A\+D\+C\+\_\+\+Open\+Fxn}!A\+D\+C.\+h@{A\+D\+C.\+h}}
+\paragraph[{A\+D\+C\+\_\+\+Open\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf A\+D\+C\+\_\+\+Handle}($\ast$ A\+D\+C\+\_\+\+Open\+Fxn) ({\bf A\+D\+C\+\_\+\+Handle} handle, {\bf A\+D\+C\+\_\+\+Params} $\ast$params)}\label{_a_d_c_8h_a753af5a6a07905e109bbdecb785ac44d}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_a_d_c_8h_a9f3e5f311cda4df63e70660651b9314e}{A\+D\+C\+\_\+open()}. 
+
+\index{A\+D\+C.\+h@{A\+D\+C.\+h}!A\+D\+C\+\_\+\+Fxn\+Table@{A\+D\+C\+\_\+\+Fxn\+Table}}
+\index{A\+D\+C\+\_\+\+Fxn\+Table@{A\+D\+C\+\_\+\+Fxn\+Table}!A\+D\+C.\+h@{A\+D\+C.\+h}}
+\paragraph[{A\+D\+C\+\_\+\+Fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf A\+D\+C\+\_\+\+Fxn\+Table}  {\bf A\+D\+C\+\_\+\+Fxn\+Table}}\label{_a_d_c_8h_a587cff1a3914cf624037cf8a01649380}
+
+
+The definition of a A\+D\+C function table that contains the required set of functions to control a specific A\+D\+C driver implementation. 
+
+\index{A\+D\+C.\+h@{A\+D\+C.\+h}!A\+D\+C\+\_\+\+Config@{A\+D\+C\+\_\+\+Config}}
+\index{A\+D\+C\+\_\+\+Config@{A\+D\+C\+\_\+\+Config}!A\+D\+C.\+h@{A\+D\+C.\+h}}
+\paragraph[{A\+D\+C\+\_\+\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf A\+D\+C\+\_\+\+Config}  {\bf A\+D\+C\+\_\+\+Config}}\label{_a_d_c_8h_af334849657f87b79a31392f89828299a}
+
+
+A\+D\+C Global configuration. 
+
+The \hyperlink{struct_a_d_c___config}{A\+D\+C\+\_\+\+Config} structure contains a set of pointers used to characterize the A\+D\+C driver implementation.
+
+This structure needs to be defined before calling \hyperlink{_a_d_c_8h_a4b4a2ddcb45df0c8497c47d4ed800e2a}{A\+D\+C\+\_\+init()} and it must not be changed thereafter.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_a_d_c_8h_a4b4a2ddcb45df0c8497c47d4ed800e2a}{A\+D\+C\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Function Documentation}
+\index{A\+D\+C.\+h@{A\+D\+C.\+h}!A\+D\+C\+\_\+close@{A\+D\+C\+\_\+close}}
+\index{A\+D\+C\+\_\+close@{A\+D\+C\+\_\+close}!A\+D\+C.\+h@{A\+D\+C.\+h}}
+\paragraph[{A\+D\+C\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}void A\+D\+C\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{{\bf A\+D\+C\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_a_d_c_8h_adb49f74bdef5e3e45ee5de306c5dfc08}
+
+
+Function to close a A\+D\+C driver. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_a_d_c_8h_a9f3e5f311cda4df63e70660651b9314e}{A\+D\+C\+\_\+open()} has to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & An A\+D\+C handle returned from \hyperlink{_a_d_c_8h_a9f3e5f311cda4df63e70660651b9314e}{A\+D\+C\+\_\+open()}\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_a_d_c_8h_a9f3e5f311cda4df63e70660651b9314e}{A\+D\+C\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{A\+D\+C.\+h@{A\+D\+C.\+h}!A\+D\+C\+\_\+control@{A\+D\+C\+\_\+control}}
+\index{A\+D\+C\+\_\+control@{A\+D\+C\+\_\+control}!A\+D\+C.\+h@{A\+D\+C.\+h}}
+\paragraph[{A\+D\+C\+\_\+control}]{\setlength{\rightskip}{0pt plus 5cm}int\+\_\+fast16\+\_\+t A\+D\+C\+\_\+control (
+\begin{DoxyParamCaption}
+\item[{{\bf A\+D\+C\+\_\+\+Handle}}]{handle, }
+\item[{uint\+\_\+fast16\+\_\+t}]{cmd, }
+\item[{void $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}\label{_a_d_c_8h_af4be7e5e4f5cc931f4501a542d689c32}
+
+
+Function performs implementation specific features on a given A\+D\+C\+\_\+\+Handle. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_a_d_c_8h_a9f3e5f311cda4df63e70660651b9314e}{A\+D\+C\+\_\+open()} has to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A A\+D\+C handle returned from \hyperlink{_a_d_c_8h_a9f3e5f311cda4df63e70660651b9314e}{A\+D\+C\+\_\+open()}\\
+\hline
+{\em cmd} & A command value defined by the driver specific implementation\\
+\hline
+{\em arg} & An optional R/\+W (read/write) argument that is accompanied with cmd\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Implementation specific return codes. Negative values indicate unsuccessful operations.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_a_d_c_8h_a9f3e5f311cda4df63e70660651b9314e}{A\+D\+C\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{A\+D\+C.\+h@{A\+D\+C.\+h}!A\+D\+C\+\_\+convert@{A\+D\+C\+\_\+convert}}
+\index{A\+D\+C\+\_\+convert@{A\+D\+C\+\_\+convert}!A\+D\+C.\+h@{A\+D\+C.\+h}}
+\paragraph[{A\+D\+C\+\_\+convert}]{\setlength{\rightskip}{0pt plus 5cm}int\+\_\+fast16\+\_\+t A\+D\+C\+\_\+convert (
+\begin{DoxyParamCaption}
+\item[{{\bf A\+D\+C\+\_\+\+Handle}}]{handle, }
+\item[{uint16\+\_\+t $\ast$}]{value}
+\end{DoxyParamCaption}
+)}\label{_a_d_c_8h_afcac5582b8be42a7740091d150aef05c}
+
+
+Function to perform A\+D\+C conversion. 
+
+Function to perform A\+D\+C single channel single sample conversion.
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_a_d_c_8h_a9f3e5f311cda4df63e70660651b9314e}{A\+D\+C\+\_\+open()} has been called
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & An A\+D\+C\+\_\+\+Handle \\
+\hline
+{\em value} & A pointer to the conversion result\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The return value indicates the conversion is succeeded or failed. The value could be A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S or A\+D\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_a_d_c_8h_a9f3e5f311cda4df63e70660651b9314e}{A\+D\+C\+\_\+open()} 
+
+\hyperlink{_a_d_c_8h_adb49f74bdef5e3e45ee5de306c5dfc08}{A\+D\+C\+\_\+close()} 
+\end{DoxySeeAlso}
+\index{A\+D\+C.\+h@{A\+D\+C.\+h}!A\+D\+C\+\_\+convert\+Raw\+To\+Micro\+Volts@{A\+D\+C\+\_\+convert\+Raw\+To\+Micro\+Volts}}
+\index{A\+D\+C\+\_\+convert\+Raw\+To\+Micro\+Volts@{A\+D\+C\+\_\+convert\+Raw\+To\+Micro\+Volts}!A\+D\+C.\+h@{A\+D\+C.\+h}}
+\paragraph[{A\+D\+C\+\_\+convert\+Raw\+To\+Micro\+Volts}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t A\+D\+C\+\_\+convert\+Raw\+To\+Micro\+Volts (
+\begin{DoxyParamCaption}
+\item[{{\bf A\+D\+C\+\_\+\+Handle}}]{handle, }
+\item[{uint16\+\_\+t}]{raw\+Adc\+Value}
+\end{DoxyParamCaption}
+)}\label{_a_d_c_8h_a81e762c06c3957c01d3271bdecef358d}
+
+
+Function performs conversion from raw A\+D\+C result to actual value in microvolts. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_a_d_c_8h_a9f3e5f311cda4df63e70660651b9314e}{A\+D\+C\+\_\+open()} and \hyperlink{_a_d_c_8h_afcac5582b8be42a7740091d150aef05c}{A\+D\+C\+\_\+convert()} has to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A A\+D\+C handle returned from \hyperlink{_a_d_c_8h_a9f3e5f311cda4df63e70660651b9314e}{A\+D\+C\+\_\+open()}\\
+\hline
+{\em raw\+Adc\+Value} & A sampling result return from \hyperlink{_a_d_c_8h_afcac5582b8be42a7740091d150aef05c}{A\+D\+C\+\_\+convert()}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The actual sampling result in micro volts unit.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_a_d_c_8h_a9f3e5f311cda4df63e70660651b9314e}{A\+D\+C\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{A\+D\+C.\+h@{A\+D\+C.\+h}!A\+D\+C\+\_\+init@{A\+D\+C\+\_\+init}}
+\index{A\+D\+C\+\_\+init@{A\+D\+C\+\_\+init}!A\+D\+C.\+h@{A\+D\+C.\+h}}
+\paragraph[{A\+D\+C\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void A\+D\+C\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_a_d_c_8h_a4b4a2ddcb45df0c8497c47d4ed800e2a}
+
+
+Function to initializes the A\+D\+C driver. 
+
+\begin{DoxyPrecond}{Precondition}
+The A\+D\+C\+\_\+config structure must exist and be persistent before this function can be called. This function must also be called before any other A\+D\+C driver A\+P\+Is. 
+\end{DoxyPrecond}
+\index{A\+D\+C.\+h@{A\+D\+C.\+h}!A\+D\+C\+\_\+open@{A\+D\+C\+\_\+open}}
+\index{A\+D\+C\+\_\+open@{A\+D\+C\+\_\+open}!A\+D\+C.\+h@{A\+D\+C.\+h}}
+\paragraph[{A\+D\+C\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}{\bf A\+D\+C\+\_\+\+Handle} A\+D\+C\+\_\+open (
+\begin{DoxyParamCaption}
+\item[{uint\+\_\+fast16\+\_\+t}]{index, }
+\item[{{\bf A\+D\+C\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_a_d_c_8h_a9f3e5f311cda4df63e70660651b9314e}
+
+
+Function to initialize the A\+D\+C peripheral. 
+
+Function to initialize the A\+D\+C peripheral specified by the particular index value.
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_a_d_c_8h_a4b4a2ddcb45df0c8497c47d4ed800e2a}{A\+D\+C\+\_\+init()} has been called
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em index} & Logical peripheral number for the A\+D\+C indexed into the A\+D\+C\+\_\+config table \\
+\hline
+{\em params} & Pointer to an parameter block, if N\+U\+L\+L it will use default values. All the fields in this structure are R\+O (read-\/only).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A A\+D\+C\+\_\+\+Handle on success or a N\+U\+L\+L on an error or if it has been opened already.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_a_d_c_8h_a4b4a2ddcb45df0c8497c47d4ed800e2a}{A\+D\+C\+\_\+init()} 
+
+\hyperlink{_a_d_c_8h_adb49f74bdef5e3e45ee5de306c5dfc08}{A\+D\+C\+\_\+close()} 
+\end{DoxySeeAlso}
+\index{A\+D\+C.\+h@{A\+D\+C.\+h}!A\+D\+C\+\_\+\+Params\+\_\+init@{A\+D\+C\+\_\+\+Params\+\_\+init}}
+\index{A\+D\+C\+\_\+\+Params\+\_\+init@{A\+D\+C\+\_\+\+Params\+\_\+init}!A\+D\+C.\+h@{A\+D\+C.\+h}}
+\paragraph[{A\+D\+C\+\_\+\+Params\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void A\+D\+C\+\_\+\+Params\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf A\+D\+C\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_a_d_c_8h_a21df1c0987f5cecb660581ae081c4dc7}
+
+
+Function to initialize the \hyperlink{struct_a_d_c___params}{A\+D\+C\+\_\+\+Params} struct to its defaults. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & An pointer to \hyperlink{struct_a_d_c___params}{A\+D\+C\+\_\+\+Params} structure for initialization\\
+\hline
+\end{DoxyParams}
+Defaults values are\+: custom = N\+U\+L\+L 

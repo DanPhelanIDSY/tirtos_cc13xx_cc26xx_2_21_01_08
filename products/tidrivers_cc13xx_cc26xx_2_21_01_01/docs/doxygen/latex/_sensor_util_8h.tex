@@ -1,0 +1,151 @@
+\subsection{Sensor\+Util.\+h File Reference}
+\label{_sensor_util_8h}\index{Sensor\+Util.\+h@{Sensor\+Util.\+h}}
+
+
+\subsubsection{Detailed Description}
+Common utility code for Sensor\+Tag. 
+
+============================================================================
+
+
+
+{\ttfamily \#include $<$ti/sysbios/knl/\+Clock.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/knl/\+Task.\+h$>$}\\*
+Include dependency graph for Sensor\+Util.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=267pt]{_sensor_util_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_sensor_util_8h_aa1d75393f5f60fc7fc58b9822c23f896}{S\+T\+\_\+\+A\+S\+S\+E\+R\+T}(cond)~\hyperlink{_sensor_util_8h_a83a7925bef8f2e5faffa99821f818f95}{S\+T}( if (!(cond)) \{\hyperlink{_sensor_i2_c_8h_a8e1291a81ac7875a040fda088682bb83}{Sensor\+I2\+C\+\_\+deselect}(); return false;\})
+\item 
+\#define \hyperlink{_sensor_util_8h_afa6d4d5f6e448eb007acfa739e9bf93e}{S\+T\+\_\+\+A\+S\+S\+E\+R\+T\+\_\+\+V}(cond)~\hyperlink{_sensor_util_8h_a83a7925bef8f2e5faffa99821f818f95}{S\+T}( if (!(cond)) \{\hyperlink{_sensor_i2_c_8h_a8e1291a81ac7875a040fda088682bb83}{Sensor\+I2\+C\+\_\+deselect}(); return;\} )
+\item 
+\#define \hyperlink{_sensor_util_8h_a83a7925bef8f2e5faffa99821f818f95}{S\+T}(x)~do \{ x \} while (\+\_\+\+\_\+\+L\+I\+N\+E\+\_\+\+\_\+ == -\/1)
+\item 
+\#define \hyperlink{_sensor_util_8h_a869398c9f0eb7bcf1c8e101b052eed07}{H\+I\+\_\+\+U\+I\+N\+T16}(a)~(((a) $>$$>$ 8) \& 0x\+F\+F)
+\item 
+\#define \hyperlink{_sensor_util_8h_ab2b94e11f455d94fd743666d4f1364d7}{L\+O\+\_\+\+U\+I\+N\+T16}(a)~((a) \& 0x\+F\+F)
+\item 
+\#define \hyperlink{_sensor_util_8h_a8bce92215fd97a1339c48fbe4c272ede}{S\+W\+A\+P}(v)~((\hyperlink{_sensor_util_8h_ab2b94e11f455d94fd743666d4f1364d7}{L\+O\+\_\+\+U\+I\+N\+T16}(v) $<$$<$ 8) $\vert$ \hyperlink{_sensor_util_8h_a869398c9f0eb7bcf1c8e101b052eed07}{H\+I\+\_\+\+U\+I\+N\+T16}(v))
+\item 
+\#define \hyperlink{_sensor_util_8h_ad1cc7765dc57ee760365c9ba5935a014}{D\+E\+L\+A\+Y\+\_\+\+M\+S}(i)~(Task\+\_\+sleep(((i) $\ast$ 1000) / Clock\+\_\+tick\+Period))
+\item 
+\#define \hyperlink{_sensor_util_8h_aa1676902b9d24e097ff1f255776c33bd}{D\+E\+L\+A\+Y\+\_\+\+U\+S}(i)~(Task\+\_\+sleep(((i) $\ast$ 1) / Clock\+\_\+tick\+Period))
+\item 
+\#define \hyperlink{_sensor_util_8h_ae32a07931ba4360a026656bdf77de13f}{M\+S\+\_\+2\+\_\+\+T\+I\+C\+K\+S}(ms)~(((ms) $\ast$ 1000) / Clock\+\_\+tick\+Period)
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_sensor_util_8h_a5933e0363494be94920e67cdcc2ea765}{Sensor\+Util\+\_\+convert\+To\+Le} (uint8\+\_\+t $\ast$data, uint8\+\_\+t len)
+\item 
+uint16\+\_\+t \hyperlink{_sensor_util_8h_abda30338cdb8871941133df3a2c3c6b7}{Sensor\+Util\+\_\+float\+To\+Sfloat} (float data)
+\item 
+float \hyperlink{_sensor_util_8h_ac0f50f026937360685d77454769ab065}{Sensor\+Util\+\_\+sfloat\+To\+Float} (uint16\+\_\+t raw\+Data)
+\item 
+uint16\+\_\+t \hyperlink{_sensor_util_8h_af5a9818410d7c7c4e69145ef991088fb}{Sensor\+Util\+\_\+int\+To\+Sfloat} (int data)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{Sensor\+Util.\+h@{Sensor\+Util.\+h}!S\+T\+\_\+\+A\+S\+S\+E\+R\+T@{S\+T\+\_\+\+A\+S\+S\+E\+R\+T}}
+\index{S\+T\+\_\+\+A\+S\+S\+E\+R\+T@{S\+T\+\_\+\+A\+S\+S\+E\+R\+T}!Sensor\+Util.\+h@{Sensor\+Util.\+h}}
+\paragraph[{S\+T\+\_\+\+A\+S\+S\+E\+R\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+T\+\_\+\+A\+S\+S\+E\+R\+T(
+\begin{DoxyParamCaption}
+\item[{}]{cond}
+\end{DoxyParamCaption}
+)~{\bf S\+T}( if (!(cond)) \{{\bf Sensor\+I2\+C\+\_\+deselect}(); return false;\})}\label{_sensor_util_8h_aa1d75393f5f60fc7fc58b9822c23f896}
+\index{Sensor\+Util.\+h@{Sensor\+Util.\+h}!S\+T\+\_\+\+A\+S\+S\+E\+R\+T\+\_\+\+V@{S\+T\+\_\+\+A\+S\+S\+E\+R\+T\+\_\+\+V}}
+\index{S\+T\+\_\+\+A\+S\+S\+E\+R\+T\+\_\+\+V@{S\+T\+\_\+\+A\+S\+S\+E\+R\+T\+\_\+\+V}!Sensor\+Util.\+h@{Sensor\+Util.\+h}}
+\paragraph[{S\+T\+\_\+\+A\+S\+S\+E\+R\+T\+\_\+\+V}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+T\+\_\+\+A\+S\+S\+E\+R\+T\+\_\+\+V(
+\begin{DoxyParamCaption}
+\item[{}]{cond}
+\end{DoxyParamCaption}
+)~{\bf S\+T}( if (!(cond)) \{{\bf Sensor\+I2\+C\+\_\+deselect}(); return;\} )}\label{_sensor_util_8h_afa6d4d5f6e448eb007acfa739e9bf93e}
+\index{Sensor\+Util.\+h@{Sensor\+Util.\+h}!S\+T@{S\+T}}
+\index{S\+T@{S\+T}!Sensor\+Util.\+h@{Sensor\+Util.\+h}}
+\paragraph[{S\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+T(
+\begin{DoxyParamCaption}
+\item[{}]{x}
+\end{DoxyParamCaption}
+)~do \{ x \} while (\+\_\+\+\_\+\+L\+I\+N\+E\+\_\+\+\_\+ == -\/1)}\label{_sensor_util_8h_a83a7925bef8f2e5faffa99821f818f95}
+\index{Sensor\+Util.\+h@{Sensor\+Util.\+h}!H\+I\+\_\+\+U\+I\+N\+T16@{H\+I\+\_\+\+U\+I\+N\+T16}}
+\index{H\+I\+\_\+\+U\+I\+N\+T16@{H\+I\+\_\+\+U\+I\+N\+T16}!Sensor\+Util.\+h@{Sensor\+Util.\+h}}
+\paragraph[{H\+I\+\_\+\+U\+I\+N\+T16}]{\setlength{\rightskip}{0pt plus 5cm}\#define H\+I\+\_\+\+U\+I\+N\+T16(
+\begin{DoxyParamCaption}
+\item[{}]{a}
+\end{DoxyParamCaption}
+)~(((a) $>$$>$ 8) \& 0x\+F\+F)}\label{_sensor_util_8h_a869398c9f0eb7bcf1c8e101b052eed07}
+\index{Sensor\+Util.\+h@{Sensor\+Util.\+h}!L\+O\+\_\+\+U\+I\+N\+T16@{L\+O\+\_\+\+U\+I\+N\+T16}}
+\index{L\+O\+\_\+\+U\+I\+N\+T16@{L\+O\+\_\+\+U\+I\+N\+T16}!Sensor\+Util.\+h@{Sensor\+Util.\+h}}
+\paragraph[{L\+O\+\_\+\+U\+I\+N\+T16}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+O\+\_\+\+U\+I\+N\+T16(
+\begin{DoxyParamCaption}
+\item[{}]{a}
+\end{DoxyParamCaption}
+)~((a) \& 0x\+F\+F)}\label{_sensor_util_8h_ab2b94e11f455d94fd743666d4f1364d7}
+\index{Sensor\+Util.\+h@{Sensor\+Util.\+h}!S\+W\+A\+P@{S\+W\+A\+P}}
+\index{S\+W\+A\+P@{S\+W\+A\+P}!Sensor\+Util.\+h@{Sensor\+Util.\+h}}
+\paragraph[{S\+W\+A\+P}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+A\+P(
+\begin{DoxyParamCaption}
+\item[{}]{v}
+\end{DoxyParamCaption}
+)~(({\bf L\+O\+\_\+\+U\+I\+N\+T16}(v) $<$$<$ 8) $\vert$ {\bf H\+I\+\_\+\+U\+I\+N\+T16}(v))}\label{_sensor_util_8h_a8bce92215fd97a1339c48fbe4c272ede}
+\index{Sensor\+Util.\+h@{Sensor\+Util.\+h}!D\+E\+L\+A\+Y\+\_\+\+M\+S@{D\+E\+L\+A\+Y\+\_\+\+M\+S}}
+\index{D\+E\+L\+A\+Y\+\_\+\+M\+S@{D\+E\+L\+A\+Y\+\_\+\+M\+S}!Sensor\+Util.\+h@{Sensor\+Util.\+h}}
+\paragraph[{D\+E\+L\+A\+Y\+\_\+\+M\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+E\+L\+A\+Y\+\_\+\+M\+S(
+\begin{DoxyParamCaption}
+\item[{}]{i}
+\end{DoxyParamCaption}
+)~(Task\+\_\+sleep(((i) $\ast$ 1000) / Clock\+\_\+tick\+Period))}\label{_sensor_util_8h_ad1cc7765dc57ee760365c9ba5935a014}
+\index{Sensor\+Util.\+h@{Sensor\+Util.\+h}!D\+E\+L\+A\+Y\+\_\+\+U\+S@{D\+E\+L\+A\+Y\+\_\+\+U\+S}}
+\index{D\+E\+L\+A\+Y\+\_\+\+U\+S@{D\+E\+L\+A\+Y\+\_\+\+U\+S}!Sensor\+Util.\+h@{Sensor\+Util.\+h}}
+\paragraph[{D\+E\+L\+A\+Y\+\_\+\+U\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+E\+L\+A\+Y\+\_\+\+U\+S(
+\begin{DoxyParamCaption}
+\item[{}]{i}
+\end{DoxyParamCaption}
+)~(Task\+\_\+sleep(((i) $\ast$ 1) / Clock\+\_\+tick\+Period))}\label{_sensor_util_8h_aa1676902b9d24e097ff1f255776c33bd}
+\index{Sensor\+Util.\+h@{Sensor\+Util.\+h}!M\+S\+\_\+2\+\_\+\+T\+I\+C\+K\+S@{M\+S\+\_\+2\+\_\+\+T\+I\+C\+K\+S}}
+\index{M\+S\+\_\+2\+\_\+\+T\+I\+C\+K\+S@{M\+S\+\_\+2\+\_\+\+T\+I\+C\+K\+S}!Sensor\+Util.\+h@{Sensor\+Util.\+h}}
+\paragraph[{M\+S\+\_\+2\+\_\+\+T\+I\+C\+K\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+S\+\_\+2\+\_\+\+T\+I\+C\+K\+S(
+\begin{DoxyParamCaption}
+\item[{}]{ms}
+\end{DoxyParamCaption}
+)~(((ms) $\ast$ 1000) / Clock\+\_\+tick\+Period)}\label{_sensor_util_8h_ae32a07931ba4360a026656bdf77de13f}
+
+
+\subsubsection{Function Documentation}
+\index{Sensor\+Util.\+h@{Sensor\+Util.\+h}!Sensor\+Util\+\_\+convert\+To\+Le@{Sensor\+Util\+\_\+convert\+To\+Le}}
+\index{Sensor\+Util\+\_\+convert\+To\+Le@{Sensor\+Util\+\_\+convert\+To\+Le}!Sensor\+Util.\+h@{Sensor\+Util.\+h}}
+\paragraph[{Sensor\+Util\+\_\+convert\+To\+Le}]{\setlength{\rightskip}{0pt plus 5cm}void Sensor\+Util\+\_\+convert\+To\+Le (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t $\ast$}]{data, }
+\item[{uint8\+\_\+t}]{len}
+\end{DoxyParamCaption}
+)}\label{_sensor_util_8h_a5933e0363494be94920e67cdcc2ea765}
+\index{Sensor\+Util.\+h@{Sensor\+Util.\+h}!Sensor\+Util\+\_\+float\+To\+Sfloat@{Sensor\+Util\+\_\+float\+To\+Sfloat}}
+\index{Sensor\+Util\+\_\+float\+To\+Sfloat@{Sensor\+Util\+\_\+float\+To\+Sfloat}!Sensor\+Util.\+h@{Sensor\+Util.\+h}}
+\paragraph[{Sensor\+Util\+\_\+float\+To\+Sfloat}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t Sensor\+Util\+\_\+float\+To\+Sfloat (
+\begin{DoxyParamCaption}
+\item[{float}]{data}
+\end{DoxyParamCaption}
+)}\label{_sensor_util_8h_abda30338cdb8871941133df3a2c3c6b7}
+\index{Sensor\+Util.\+h@{Sensor\+Util.\+h}!Sensor\+Util\+\_\+sfloat\+To\+Float@{Sensor\+Util\+\_\+sfloat\+To\+Float}}
+\index{Sensor\+Util\+\_\+sfloat\+To\+Float@{Sensor\+Util\+\_\+sfloat\+To\+Float}!Sensor\+Util.\+h@{Sensor\+Util.\+h}}
+\paragraph[{Sensor\+Util\+\_\+sfloat\+To\+Float}]{\setlength{\rightskip}{0pt plus 5cm}float Sensor\+Util\+\_\+sfloat\+To\+Float (
+\begin{DoxyParamCaption}
+\item[{uint16\+\_\+t}]{raw\+Data}
+\end{DoxyParamCaption}
+)}\label{_sensor_util_8h_ac0f50f026937360685d77454769ab065}
+\index{Sensor\+Util.\+h@{Sensor\+Util.\+h}!Sensor\+Util\+\_\+int\+To\+Sfloat@{Sensor\+Util\+\_\+int\+To\+Sfloat}}
+\index{Sensor\+Util\+\_\+int\+To\+Sfloat@{Sensor\+Util\+\_\+int\+To\+Sfloat}!Sensor\+Util.\+h@{Sensor\+Util.\+h}}
+\paragraph[{Sensor\+Util\+\_\+int\+To\+Sfloat}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t Sensor\+Util\+\_\+int\+To\+Sfloat (
+\begin{DoxyParamCaption}
+\item[{int}]{data}
+\end{DoxyParamCaption}
+)}\label{_sensor_util_8h_af5a9818410d7c7c4e69145ef991088fb}

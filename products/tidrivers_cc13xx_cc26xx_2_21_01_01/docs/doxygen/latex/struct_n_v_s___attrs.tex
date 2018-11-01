@@ -1,0 +1,46 @@
+\subsection{N\+V\+S\+\_\+\+Attrs Struct Reference}
+\label{struct_n_v_s___attrs}\index{N\+V\+S\+\_\+\+Attrs@{N\+V\+S\+\_\+\+Attrs}}
+
+
+N\+V\+S attributes.  
+
+
+
+
+{\ttfamily \#include $<$N\+V\+S.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t \hyperlink{struct_n_v_s___attrs_a57112fee0ce3701ebee1b96b50638e8c}{page\+Size}
+\item 
+size\+\_\+t \hyperlink{struct_n_v_s___attrs_a2fd12e8a91495037a43bf409c0ae6435}{block\+Size}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+N\+V\+S attributes. 
+
+The address of an \hyperlink{struct_n_v_s___attrs}{N\+V\+S\+\_\+\+Attrs} structure can be passed to \hyperlink{_n_v_s_8h_a6b92f45097f377824524f7a4f33f02b1}{N\+V\+S\+\_\+get\+Attrs()} to fill in the fields.
+
+page\+Size is the size of the smallest erase page. This is hardware specific. For example, all T\+M4\+C123x devices use 1\+K\+B pages, but T\+M4\+C129x devices use 16\+K\+B pages. Please consult the device datasheet to determine the page\+Size to use.
+
+block\+Size is the actual size of the N\+V\+S storage block that the application chooses to manage. If page\+Size is greater than block\+Size, care should be taken not to use the storage on the page that is outside of the block, since it may be erased when writing to the block. The block size must not be greater than the page size.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_n_v_s_8h_a6b92f45097f377824524f7a4f33f02b1}{N\+V\+S\+\_\+get\+Attrs()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Field Documentation}
+\index{N\+V\+S\+\_\+\+Attrs@{N\+V\+S\+\_\+\+Attrs}!page\+Size@{page\+Size}}
+\index{page\+Size@{page\+Size}!N\+V\+S\+\_\+\+Attrs@{N\+V\+S\+\_\+\+Attrs}}
+\paragraph[{page\+Size}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t N\+V\+S\+\_\+\+Attrs\+::page\+Size}\label{struct_n_v_s___attrs_a57112fee0ce3701ebee1b96b50638e8c}
+\index{N\+V\+S\+\_\+\+Attrs@{N\+V\+S\+\_\+\+Attrs}!block\+Size@{block\+Size}}
+\index{block\+Size@{block\+Size}!N\+V\+S\+\_\+\+Attrs@{N\+V\+S\+\_\+\+Attrs}}
+\paragraph[{block\+Size}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t N\+V\+S\+\_\+\+Attrs\+::block\+Size}\label{struct_n_v_s___attrs_a2fd12e8a91495037a43bf409c0ae6435}
+Hardware page size 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_n_v_s_8h}{N\+V\+S.\+h}\end{DoxyCompactItemize}

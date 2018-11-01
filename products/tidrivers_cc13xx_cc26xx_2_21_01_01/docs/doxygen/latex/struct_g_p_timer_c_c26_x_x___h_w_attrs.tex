@@ -1,0 +1,81 @@
+\subsection{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_g_p_timer_c_c26_x_x___h_w_attrs}\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+
+
+G\+P\+Timer26\+X\+X Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$G\+P\+Timer\+C\+C26\+X\+X.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \hyperlink{struct_g_p_timer_c_c26_x_x___h_w_attrs_ad6bc77822c89ec42d268a29178d81828}{base\+Addr}
+\item 
+uint8\+\_\+t \hyperlink{struct_g_p_timer_c_c26_x_x___h_w_attrs_af8a6cce8af13c52e964b65ac2f8fa9f3}{int\+Num}
+\item 
+uint8\+\_\+t \hyperlink{struct_g_p_timer_c_c26_x_x___h_w_attrs_a83fbce47b4ff591bde69b5f77d2c133e}{int\+Priority}
+\item 
+uint8\+\_\+t \hyperlink{struct_g_p_timer_c_c26_x_x___h_w_attrs_a3772ec5a7f529047ed690c83cffad038}{power\+Mngr\+Id}
+\item 
+\hyperlink{_g_p_timer_c_c26_x_x_8h_aff5462fa33c306f2c8bd29284fd898b0}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Part} \hyperlink{struct_g_p_timer_c_c26_x_x___h_w_attrs_a85c14724ff57d1b25d6552752293d7fc}{timer}
+\item 
+\hyperlink{_g_p_timer_c_c26_x_x_8h_ab4a2e82c659e0ea1fa2ae7a852298359}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Pin\+Mux} \hyperlink{struct_g_p_timer_c_c26_x_x___h_w_attrs_a7a5f3ba89a0094ead820cc15f9465ed5}{pin\+Mux}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+G\+P\+Timer26\+X\+X Hardware attributes. 
+
+These fields are used by the driver to set up underlying G\+P\+Timer driver statically. A sample structure is shown below\+:
+
+
+\begin{DoxyCode}
+\textcolor{comment}{// GPTimer hardware attributes, one per timer unit (Timer 0A, 0B, 1A, 1B..)}
+\textcolor{keyword}{const} GPTimerCC26XX_HWAttrs gptimerCC26xxHWAttrs[CC2650\_GPTIMERPARTSCOUNT] = \{
+  \{.baseAddr = GPT0\_BASE, .intNum = INT\_TIMER0A, .powerMngrId = PERIPH\_GPT0, .pinMux = 
+      GPT_PIN_0A, \},
+  \{.baseAddr = GPT0\_BASE, .intNum = INT\_TIMER0B, .powerMngrId = PERIPH\_GPT0, .pinMux = 
+      GPT_PIN_0B, \},
+  \{.baseAddr = GPT1\_BASE, .intNum = INT\_TIMER1A, .powerMngrId = PERIPH\_GPT1, .pinMux = 
+      GPT_PIN_1A, \},
+  \{.baseAddr = GPT1\_BASE, .intNum = INT\_TIMER1B, .powerMngrId = PERIPH\_GPT1, .pinMux = 
+      GPT_PIN_1B, \},
+  \{.baseAddr = GPT2\_BASE, .intNum = INT\_TIMER2A, .powerMngrId = PERIPH\_GPT2, .pinMux = 
+      GPT_PIN_2A, \},
+  \{.baseAddr = GPT2\_BASE, .intNum = INT\_TIMER2B, .powerMngrId = PERIPH\_GPT2, .pinMux = 
+      GPT_PIN_2B, \},
+  \{.baseAddr = GPT3\_BASE, .intNum = INT\_TIMER3A, .powerMngrId = PERIPH\_GPT3, .pinMux = 
+      GPT_PIN_3A, \},
+  \{.baseAddr = GPT3\_BASE, .intNum = INT\_TIMER3B, .powerMngrId = PERIPH\_GPT3, .pinMux = 
+      GPT_PIN_3B, \},
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_g_p_timer_c_c26_x_x___h_w_attrs_ad6bc77822c89ec42d268a29178d81828}
+$<$ G\+P\+Timer peripheral base address \index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!int\+Num@{int\+Num}}
+\index{int\+Num@{int\+Num}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Num}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::int\+Num}\label{struct_g_p_timer_c_c26_x_x___h_w_attrs_af8a6cce8af13c52e964b65ac2f8fa9f3}
+G\+P\+Timer peripheral interrupt vector \index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!int\+Priority@{int\+Priority}}
+\index{int\+Priority@{int\+Priority}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::int\+Priority}\label{struct_g_p_timer_c_c26_x_x___h_w_attrs_a83fbce47b4ff591bde69b5f77d2c133e}
+G\+P\+Timer peripheral\textquotesingle{}s interrupt priority. The C\+C26xx uses three of the priority bits, meaning $\sim$0 has the same effect as (7 $<$$<$ 5). (7 $<$$<$ 5) will apply the lowest priority. (1 $<$$<$ 5) will apply the highest priority. Setting the priority to 0 is not supported by this driver. H\+W\+I\textquotesingle{}s with priority 0 ignore the H\+W\+I dispatcher to support zero-\/latency interrupts, thus invalidating the critical sections in this driver.\+G\+P\+Timer peripheral\textquotesingle{}s power manager I\+D \index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!power\+Mngr\+Id@{power\+Mngr\+Id}}
+\index{power\+Mngr\+Id@{power\+Mngr\+Id}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{power\+Mngr\+Id}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::power\+Mngr\+Id}\label{struct_g_p_timer_c_c26_x_x___h_w_attrs_a3772ec5a7f529047ed690c83cffad038}
+\index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!timer@{timer}}
+\index{timer@{timer}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{timer}]{\setlength{\rightskip}{0pt plus 5cm}{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Part} G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::timer}\label{struct_g_p_timer_c_c26_x_x___h_w_attrs_a85c14724ff57d1b25d6552752293d7fc}
+G\+P\+Timer half timer unit \index{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!pin\+Mux@{pin\+Mux}}
+\index{pin\+Mux@{pin\+Mux}!G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{pin\+Mux}]{\setlength{\rightskip}{0pt plus 5cm}{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Pin\+Mux} G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::pin\+Mux}\label{struct_g_p_timer_c_c26_x_x___h_w_attrs_a7a5f3ba89a0094ead820cc15f9465ed5}
+P\+I\+N driver M\+U\+X 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_g_p_timer_c_c26_x_x_8h}{G\+P\+Timer\+C\+C26\+X\+X.\+h}\end{DoxyCompactItemize}

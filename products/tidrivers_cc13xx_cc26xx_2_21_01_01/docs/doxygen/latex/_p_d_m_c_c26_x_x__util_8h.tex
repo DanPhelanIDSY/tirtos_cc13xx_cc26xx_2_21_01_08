@@ -1,0 +1,1105 @@
+\subsection{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h File Reference}
+\label{_p_d_m_c_c26_x_x__util_8h}\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+
+
+\subsubsection{Detailed Description}
+P\+D\+M utility includes helper functions for configuring the C\+C26\+X\+X I2\+S controller. 
+
+============================================================================
+
+The P\+D\+M\+C\+C26\+X\+X utility header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/pdm/PDMCC26XX_util.h>}
+\end{DoxyCode}
+
+
+\subsubsection*{Overview}
+
+This utility file is written specifically for the I2\+S module on C\+C26\+X\+X. The user should be aware that although this H\+W module is called I2\+S it is a highly configurable audio interface module. I2\+S is only one of many configurations.
+
+
+
+{\ttfamily \#include $<$ti/drivers/pin/\+P\+I\+N\+C\+C26\+X\+X.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+Power.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/power/\+Power\+C\+C26\+X\+X.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/knl/\+Semaphore.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/family/arm/m3/\+Hwi.\+h$>$}\\*
+Include dependency graph for P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_p_d_m_c_c26_x_x__util_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___config}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em The \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___config}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Config} structure contains a set of pointers used to characterize the P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S driver implementation. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___h_w_attrs}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Hardware attributes. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___audio_clock_config}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config}
+\begin{DoxyCompactList}\small\item\em P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Audio Clock configuration. \end{DoxyCompactList}\item 
+union \hyperlink{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}
+\begin{DoxyCompactList}\small\item\em P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Audio Pin configuration. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___audio_format_config}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Format\+Config}
+\begin{DoxyCompactList}\small\item\em P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Hardware configuration. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___stream_notification}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Stream\+Notification}
+\begin{DoxyCompactList}\small\item\em A \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___stream_notification}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Stream\+Notification} data structure is used with \hyperlink{_p_d_m_c_c26_x_x__util_8h_a82786f08d1b22895c79dcd8880fb92f3}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Callback\+Fxn()}. Provides notification about available buffers and potential errors. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___buffer_request}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request}
+\begin{DoxyCompactList}\small\item\em A \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___buffer_request}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request} data structure is used with \hyperlink{_p_d_m_c_c26_x_x__util_8h_a69561b9a6f07a82bfe3b18f3c51fcd19}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer()}. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___buffer_release}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Release}
+\begin{DoxyCompactList}\small\item\em A \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___buffer_release}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Release} data structure is used with \hyperlink{_p_d_m_c_c26_x_x__util_8h_ae6436840c3944258d3bdf041250dd10c}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+release\+Buffer()}. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___params}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em P\+D\+M\+C\+C26\+X\+X I2\+S Parameters are used when calling \hyperlink{_p_d_m_c_c26_x_x__util_8h_a8168bcdab9f1e46c26823555df6f797f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open()}. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___object}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_aaa17ecf48f5762e2e1bdb0bab8aacf0c}{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_ac0a29d5ef3ba2f0be6cb4a4541b5c9a5}{x\+I2\+S\+\_\+\+D\+E\+B\+U\+G}
+\begin{DoxyCompactList}\small\item\em Define to control debug mode. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_a85f935f09b6a23da28925d08fd6ed5e7}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+M\+I\+N\+\_\+\+A\+L\+L\+O\+W\+E\+D\+\_\+\+Q\+U\+E\+U\+E\+\_\+\+S\+I\+Z\+E}~3
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_a8b3b29f28fba7618e60409457a14f6f8}{I2\+S\+\_\+\+B\+L\+O\+C\+K\+\_\+\+O\+V\+E\+R\+H\+E\+A\+D\+\_\+\+I\+N\+\_\+\+B\+Y\+T\+E\+S}~12
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_a66928c9a1538dd63beb1fecb3b79817a}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+M\+D\+\_\+\+S\+U\+C\+C\+E\+S\+S}~0
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_a36e0057e52c089224e60dd745ae8b38a}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+M\+D\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D}~-\/1
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_a841dd26303cb285b2a8fa0a12ef11410}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+M\+D\+\_\+\+N\+O\+\_\+\+S\+U\+C\+C\+E\+S\+S}~-\/2
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_abfc231cf2cad7f16b75523024546e912}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+G\+E\+N\+E\+R\+I\+C\+\_\+\+D\+I\+S\+A\+B\+L\+E\+D}~0
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_a7addf5824e414ed59a40c360b8497fad}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+G\+E\+N\+E\+R\+I\+C\+\_\+\+E\+N\+A\+B\+L\+E\+D}~1
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_a49eaea1595b37d242a7788a20396aaa3}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+S\+T\+A\+M\+P\+\_\+\+M\+O\+D}~0x0000\+F\+F\+F\+F
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_ad5e97275f3d868adfea67f33b08a2632}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+Single}~0
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_ad37a9ce9685187bfa88526541722cdaa}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+Dual}~1
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_a96543fc7fe2422e8680c4aae87abdd48}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+User\+Defined}~2
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_a34160fd5f1a971d556156570afc26e44}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Sample\+Edge\+\_\+\+Negative}~0
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_a287270844da242b7f70ae66ec92c71db}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Sample\+Edge\+\_\+\+Postive}~1
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_a6500f8c6c4855330299d5c260f67b6f3}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Source\+\_\+\+Ext}~1
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_acebf97118ebc531d62b9b632548f4404}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Source\+\_\+\+Int}~2
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_ab679cdfce2dc3c8f8a17b69d96f5b178}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Bit\+Clock\+Source\+\_\+\+Ext}~0
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_a0657ed74629a0b3d5a00e7caad959f11}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Bit\+Clock\+Source\+\_\+\+Int}~1
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_aa98a64d9ee07d7978624379de0b79083}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Clock\+Source\+\_\+\+Normal}~0
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_a34a2318316066a045683f98694180d25}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Clock\+Source\+\_\+\+Inverted}~1
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_a7a06ccb33b16d28d7d38570e90db4145}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+A\+D\+Usage\+Disabled}~0
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_af1aad8fceab94ec0db069110420bec38}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+A\+D\+Usage\+Input}~1
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_ad565f18a862a2e3504acb0460735ecfa}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+A\+D\+Usage\+Output}~2
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_a32d06c7aef6f466e626e9756c85298f8}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N0\+\_\+\+A\+C\+T}~0x00000001
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_a51db26f64a63f3907271a1225be723e9}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N1\+\_\+\+A\+C\+T}~0x00000002
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_ac3fbe3609b6573ba800ad0b032dfad71}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N2\+\_\+\+A\+C\+T}~0x00000004
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_ac974ad9e49dd28cde900652ea15ead1d}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N3\+\_\+\+A\+C\+T}~0x00000008
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_a5f6fa4892a90bf5671f11bc6a852102d}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N4\+\_\+\+A\+C\+T}~0x00000010
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_aac36e1d05aeb0511fa6477b92f92d5cb}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N5\+\_\+\+A\+C\+T}~0x00000020
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_a799a0e38f04c4688298abd5516b910e9}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N6\+\_\+\+A\+C\+T}~0x00000040
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_ab1bc745d8d55898e5c8074f53cb5e4ab}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N7\+\_\+\+A\+C\+T}~0x00000080
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_a26ad06f03e00557ec6969cb628e308f1}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+M\+O\+N\+O\+\_\+\+M\+O\+D\+E}~0x00000001
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_aab44412c8919fe1577a4a0bc428aa90c}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+E\+R\+E\+O\+\_\+\+M\+O\+D\+E}~0x00000003
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_a1d104f1b2b70f3a0574862e0ee8475fc}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+D\+I\+S\+A\+B\+L\+E\+D\+\_\+\+M\+O\+D\+E}~0x00000000
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_afffc8012d078494895133861764690fe}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N\+\_\+\+C\+F\+G\+\_\+\+M\+A\+S\+K}~0x000000\+F\+F
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_af6b394e2eac2812d14d58c62b31467ad}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Length\+Min}~8
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_ab4eded8479e91228d09d210a067c752f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Length16}~16
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_a516ce5fd2b154e2cc487ff73c03f5f07}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Length\+Max}~24
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_aa3869a39dc817d8297a1fffd77568d39}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Single\+Phase}~0
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_acbd5c34905fd0866315e4065e934248e}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Dual\+Phase}~1
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_a1ccf47516280b04346af4f57d5bc743d}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Negative\+Edge}~0
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_af5b4926b849db9bb23a24b3807a3380a}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Positive\+Edge}~1
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_a636b307f107609c5ed33408388f92cbb}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mem\+Len16bit}~0
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_ac3e46840c6ebbd42ce8020f30cb2245f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mem\+Len24bit}~1
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_a5dbd78db575466a7afd1a579b9d3bef2}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+L\+J\+F}~0
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_ae67f83d561b7bdb5441f21c7aa1577f8}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+I2\+Sand\+D\+S\+P}~1
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_ac5fe3ebd081f4e3bd650cf3f09a50523}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+R\+J\+Fmin}~2
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_af782ae465f8903ee8349e27f27d172dc}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+R\+J\+Fmax}~255
+\item 
+\#define \hyperlink{_p_d_m_c_c26_x_x__util_8h_a3105b54f425f7b4f8bdbef8cdab85432}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+D\+I\+R\+\_\+\+C\+H\+A\+\_\+\+M}~(I2\+S\+\_\+\+L\+I\+N\+E\+\_\+\+M\+A\+S\+K $\vert$ I2\+S\+\_\+\+C\+H\+A\+N\+\_\+\+C\+F\+G\+\_\+\+M\+A\+S\+K)
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___config}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Config} $\ast$ \hyperlink{_p_d_m_c_c26_x_x__util_8h_adc3b274b4a54e54316ad385fd4290c80}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle}
+\begin{DoxyCompactList}\small\item\em A handle that is returned from a \hyperlink{_p_d_m_c_c26_x_x__util_8h_a8168bcdab9f1e46c26823555df6f797f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open()} call. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_p_d_m_c_c26_x_x__util_8h_ac1e4fbeb33409a874015d4e0609ddff1}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Status} \hyperlink{_p_d_m_c_c26_x_x__util_8h_ad0f2102751f8a8f0bcd47dd154aa836c}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Status}
+\begin{DoxyCompactList}\small\item\em Status codes that are set by the I2\+S driver. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_p_d_m_c_c26_x_x__util_8h_a7392b654a84f42e717a4df1485058a84}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mode} \hyperlink{_p_d_m_c_c26_x_x__util_8h_a2f220663270b5388de54e612e5773d98}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mode}
+\begin{DoxyCompactList}\small\item\em Definitions for various P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S modes of operation. \end{DoxyCompactList}\item 
+typedef uint32\+\_\+t \hyperlink{_p_d_m_c_c26_x_x__util_8h_a5b4e6b7c39c913bc6ae97261a5f2a226}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Transfer\+Size}
+\item 
+typedef struct \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___config}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Config} \hyperlink{_p_d_m_c_c26_x_x__util_8h_ac69d2ed91954cdfe4c1bd668a2dab290}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em The \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___config}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Config} structure contains a set of pointers used to characterize the P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S driver implementation. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___h_w_attrs}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs} \hyperlink{_p_d_m_c_c26_x_x__util_8h_a8e141a2dcd47376258fe58167a990027}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Hardware attributes. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___audio_clock_config}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config} \hyperlink{_p_d_m_c_c26_x_x__util_8h_a8def7a5770e8bb7c904727e21cdf1fb9}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config}
+\begin{DoxyCompactList}\small\item\em P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Audio Clock configuration. \end{DoxyCompactList}\item 
+typedef union \hyperlink{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config} \hyperlink{_p_d_m_c_c26_x_x__util_8h_ae4dd5264f128d13849211fc9baf12bea}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}
+\begin{DoxyCompactList}\small\item\em P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Audio Pin configuration. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___audio_format_config}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Format\+Config} \hyperlink{_p_d_m_c_c26_x_x__util_8h_a3ba2d6efa7148c2657a7288f8fbc675c}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Format\+Config}
+\begin{DoxyCompactList}\small\item\em P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Hardware configuration. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_p_d_m_c_c26_x_x__util_8h_aef896b2a7fc07d3b145f8d02eaa9e377}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Request\+Mode} \hyperlink{_p_d_m_c_c26_x_x__util_8h_a3efab417bd3d431079d133bbbe062c22}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Request\+Mode}
+\begin{DoxyCompactList}\small\item\em P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Object. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___stream_notification}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Stream\+Notification} \hyperlink{_p_d_m_c_c26_x_x__util_8h_ac2e036836381051508576dc3bb2fe78c}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Stream\+Notification}
+\begin{DoxyCompactList}\small\item\em A \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___stream_notification}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Stream\+Notification} data structure is used with \hyperlink{_p_d_m_c_c26_x_x__util_8h_a82786f08d1b22895c79dcd8880fb92f3}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Callback\+Fxn()}. Provides notification about available buffers and potential errors. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___buffer_request}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request} \hyperlink{_p_d_m_c_c26_x_x__util_8h_ad0118de2c13236f0d75f7b5279c0b72a}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request}
+\begin{DoxyCompactList}\small\item\em A \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___buffer_request}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request} data structure is used with \hyperlink{_p_d_m_c_c26_x_x__util_8h_a69561b9a6f07a82bfe3b18f3c51fcd19}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer()}. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___buffer_release}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Release} \hyperlink{_p_d_m_c_c26_x_x__util_8h_ab2a6fc7ef5e6cf67ee2686e4d6553ea4}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Release}
+\begin{DoxyCompactList}\small\item\em A \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___buffer_release}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Release} data structure is used with \hyperlink{_p_d_m_c_c26_x_x__util_8h_ae6436840c3944258d3bdf041250dd10c}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+release\+Buffer()}. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_p_d_m_c_c26_x_x__util_8h_a82786f08d1b22895c79dcd8880fb92f3}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Callback\+Fxn}) (\hyperlink{_p_d_m_c_c26_x_x__util_8h_adc3b274b4a54e54316ad385fd4290c80}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle} handle, \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___stream_notification}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Stream\+Notification} $\ast$notification)
+\begin{DoxyCompactList}\small\item\em The definition of a callback function used when wakeup on chip select is enabled. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___params}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params} \hyperlink{_p_d_m_c_c26_x_x__util_8h_a7d296d85afcdecb82b5572261a03d3c2}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em P\+D\+M\+C\+C26\+X\+X I2\+S Parameters are used when calling \hyperlink{_p_d_m_c_c26_x_x__util_8h_a8168bcdab9f1e46c26823555df6f797f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open()}. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___object}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object} \hyperlink{_p_d_m_c_c26_x_x__util_8h_add23279adb905ee56c889bc38c2fe3d8}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_p_d_m_c_c26_x_x__util_8h_ac1e4fbeb33409a874015d4e0609ddff1}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Status} \{ \\*
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_ac1e4fbeb33409a874015d4e0609ddff1a16df5a8f67d12b81d307af221d46ab18}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+I\+D\+L\+E} = 0, 
+\\*
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_ac1e4fbeb33409a874015d4e0609ddff1a4a32be3e7f98c0bacfb55142e1d4cf89}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+A\+R\+T\+E\+D}, 
+\\*
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_ac1e4fbeb33409a874015d4e0609ddff1a8284b284a95225ef6919d51336364ce6}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+C\+A\+N\+C\+E\+L\+E\+D}, 
+\\*
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_ac1e4fbeb33409a874015d4e0609ddff1a1f07b976c3da69bb99bd89be2ce4d894}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+F\+A\+I\+L\+E\+D}, 
+\\*
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_ac1e4fbeb33409a874015d4e0609ddff1a2927dbcaeefc4cd9fc49b2d51767fda0}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+E\+R\+R\+O\+R}, 
+\\*
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_ac1e4fbeb33409a874015d4e0609ddff1a9b0c4bf2229c25d6f271bc8e5d8f6f57}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+R\+E\+A\+D\+Y}, 
+\\*
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_ac1e4fbeb33409a874015d4e0609ddff1a6dac68bba81485d36db74d4427de22de}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+R\+E\+A\+D\+Y\+\_\+\+B\+U\+T\+\_\+\+N\+O\+\_\+\+A\+V\+A\+I\+L\+A\+B\+L\+E\+\_\+\+B\+U\+F\+F\+E\+R\+S}, 
+\\*
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_ac1e4fbeb33409a874015d4e0609ddff1aac07f8085e63f0883863ad9ec092b6ce}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+O\+P\+P\+I\+N\+G}, 
+\\*
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_ac1e4fbeb33409a874015d4e0609ddff1a0c245201c506bf7eacfb9f0f451e33dd}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+O\+P\+P\+E\+D}, 
+\\*
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_ac1e4fbeb33409a874015d4e0609ddff1a895fc1d5ca5ab81c4c7c7223c0b8b6a5}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+F\+A\+I\+L\+E\+D\+\_\+\+T\+O\+\_\+\+S\+T\+O\+P}
+ \}
+\begin{DoxyCompactList}\small\item\em Status codes that are set by the I2\+S driver. \end{DoxyCompactList}\item 
+enum \hyperlink{_p_d_m_c_c26_x_x__util_8h_a7392b654a84f42e717a4df1485058a84}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mode} \{ \\*
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a7392b654a84f42e717a4df1485058a84a2e5f04919021778dc64b531cc9ca19dd}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+P\+D\+M} = 0, 
+\\*
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a7392b654a84f42e717a4df1485058a84ae4abdf809e7f1f26a1cbdee9cdfbec2e}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+I2\+S} = 1
+ \}
+\begin{DoxyCompactList}\small\item\em Definitions for various P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S modes of operation. \end{DoxyCompactList}\item 
+enum \hyperlink{_p_d_m_c_c26_x_x__util_8h_aef896b2a7fc07d3b145f8d02eaa9e377}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Request\+Mode} \{ \\*
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_aef896b2a7fc07d3b145f8d02eaa9e377a8a325f16e9c7ea73e9a6571285bf4de6}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}, 
+\\*
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_aef896b2a7fc07d3b145f8d02eaa9e377a8b043983d80de30bc3c61f1df84a2212}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K\+\_\+\+M\+O\+D\+E}
+ \}
+\begin{DoxyCompactList}\small\item\em P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_p_d_m_c_c26_x_x__util_8h_af19da786c201c7c1852177a92f851158}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+init} (\hyperlink{_p_d_m_c_c26_x_x__util_8h_adc3b274b4a54e54316ad385fd4290c80}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em I2\+S C\+C26\+X\+X initialization. \end{DoxyCompactList}\item 
+bool \hyperlink{_p_d_m_c_c26_x_x__util_8h_a4b0ca4428ed47e11d7280d98dd7f46e5}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params\+\_\+init} (\hyperlink{struct_p_d_m_c_c26_x_x___i2_s___params}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params} $\ast$params, \hyperlink{_p_d_m_c_c26_x_x__util_8h_a7392b654a84f42e717a4df1485058a84}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mode} mode, void $\ast$mode\+Specific\+Params)
+\begin{DoxyCompactList}\small\item\em Function to set initialization parameters for the audio interface. \end{DoxyCompactList}\item 
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_adc3b274b4a54e54316ad385fd4290c80}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle} \hyperlink{_p_d_m_c_c26_x_x__util_8h_a8168bcdab9f1e46c26823555df6f797f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open} (\hyperlink{_p_d_m_c_c26_x_x__util_8h_adc3b274b4a54e54316ad385fd4290c80}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle} handle, \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___params}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to open a given C\+C26\+X\+X I2\+S peripheral specified by the I2\+S handle. \end{DoxyCompactList}\item 
+void \hyperlink{_p_d_m_c_c26_x_x__util_8h_a6c337d78b6c364ca580cfcb86176c35a}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+close} (\hyperlink{_p_d_m_c_c26_x_x__util_8h_adc3b274b4a54e54316ad385fd4290c80}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to close a given C\+C26\+X\+X I2\+S peripheral specified by the I2\+S handle. \end{DoxyCompactList}\item 
+bool \hyperlink{_p_d_m_c_c26_x_x__util_8h_ac318829ebbf5e66a0ee0c23ba3b36ba4}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+start\+Stream} (\hyperlink{_p_d_m_c_c26_x_x__util_8h_adc3b274b4a54e54316ad385fd4290c80}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function for starting an I2\+S interface. \end{DoxyCompactList}\item 
+bool \hyperlink{_p_d_m_c_c26_x_x__util_8h_abe6c63029970621defb60aaa467d9b6c}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+stop\+Stream} (\hyperlink{_p_d_m_c_c26_x_x__util_8h_adc3b274b4a54e54316ad385fd4290c80}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function for stopping an I2\+S interface. \end{DoxyCompactList}\item 
+bool \hyperlink{_p_d_m_c_c26_x_x__util_8h_a69561b9a6f07a82bfe3b18f3c51fcd19}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer} (\hyperlink{_p_d_m_c_c26_x_x__util_8h_adc3b274b4a54e54316ad385fd4290c80}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle} handle, \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___buffer_request}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request} $\ast$buffer\+Request)
+\begin{DoxyCompactList}\small\item\em Function for requesting buffer. \end{DoxyCompactList}\item 
+Void \hyperlink{_p_d_m_c_c26_x_x__util_8h_ae6436840c3944258d3bdf041250dd10c}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+release\+Buffer} (\hyperlink{_p_d_m_c_c26_x_x__util_8h_adc3b274b4a54e54316ad385fd4290c80}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle} handle, \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___buffer_release}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Release} $\ast$buffer\+Release)
+\begin{DoxyCompactList}\small\item\em Function for releasing buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___config}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Config} \hyperlink{_p_d_m_c_c26_x_x__util_8h_a1a4dd4e230736baa3d1c7c62528e918c}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+config} \mbox{[}$\,$\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames@{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}}
+\index{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames@{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}]{\setlength{\rightskip}{0pt plus 5cm}\#define ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}\label{_p_d_m_c_c26_x_x__util_8h_aaa17ecf48f5762e2e1bdb0bab8aacf0c}
+The following allows this header file to be included in an application file which also includes ti/sysbios/hal/\+Hwi.\+h. \index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!x\+I2\+S\+\_\+\+D\+E\+B\+U\+G@{x\+I2\+S\+\_\+\+D\+E\+B\+U\+G}}
+\index{x\+I2\+S\+\_\+\+D\+E\+B\+U\+G@{x\+I2\+S\+\_\+\+D\+E\+B\+U\+G}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{x\+I2\+S\+\_\+\+D\+E\+B\+U\+G}]{\setlength{\rightskip}{0pt plus 5cm}\#define x\+I2\+S\+\_\+\+D\+E\+B\+U\+G}\label{_p_d_m_c_c26_x_x__util_8h_ac0a29d5ef3ba2f0be6cb4a4541b5c9a5}
+
+
+Define to control debug mode. 
+
+Production code should set this to x\+I2\+S\+\_\+\+D\+E\+B\+U\+G. To enable debug mode rename the define to {\bfseries I2\+S\+\_\+\+D\+E\+B\+U\+G}. \index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+M\+I\+N\+\_\+\+A\+L\+L\+O\+W\+E\+D\+\_\+\+Q\+U\+E\+U\+E\+\_\+\+S\+I\+Z\+E@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+M\+I\+N\+\_\+\+A\+L\+L\+O\+W\+E\+D\+\_\+\+Q\+U\+E\+U\+E\+\_\+\+S\+I\+Z\+E}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+M\+I\+N\+\_\+\+A\+L\+L\+O\+W\+E\+D\+\_\+\+Q\+U\+E\+U\+E\+\_\+\+S\+I\+Z\+E@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+M\+I\+N\+\_\+\+A\+L\+L\+O\+W\+E\+D\+\_\+\+Q\+U\+E\+U\+E\+\_\+\+S\+I\+Z\+E}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+M\+I\+N\+\_\+\+A\+L\+L\+O\+W\+E\+D\+\_\+\+Q\+U\+E\+U\+E\+\_\+\+S\+I\+Z\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+M\+I\+N\+\_\+\+A\+L\+L\+O\+W\+E\+D\+\_\+\+Q\+U\+E\+U\+E\+\_\+\+S\+I\+Z\+E~3}\label{_p_d_m_c_c26_x_x__util_8h_a85f935f09b6a23da28925d08fd6ed5e7}
+At least three elements must exist for good flow in driver \index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!I2\+S\+\_\+\+B\+L\+O\+C\+K\+\_\+\+O\+V\+E\+R\+H\+E\+A\+D\+\_\+\+I\+N\+\_\+\+B\+Y\+T\+E\+S@{I2\+S\+\_\+\+B\+L\+O\+C\+K\+\_\+\+O\+V\+E\+R\+H\+E\+A\+D\+\_\+\+I\+N\+\_\+\+B\+Y\+T\+E\+S}}
+\index{I2\+S\+\_\+\+B\+L\+O\+C\+K\+\_\+\+O\+V\+E\+R\+H\+E\+A\+D\+\_\+\+I\+N\+\_\+\+B\+Y\+T\+E\+S@{I2\+S\+\_\+\+B\+L\+O\+C\+K\+\_\+\+O\+V\+E\+R\+H\+E\+A\+D\+\_\+\+I\+N\+\_\+\+B\+Y\+T\+E\+S}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{I2\+S\+\_\+\+B\+L\+O\+C\+K\+\_\+\+O\+V\+E\+R\+H\+E\+A\+D\+\_\+\+I\+N\+\_\+\+B\+Y\+T\+E\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define I2\+S\+\_\+\+B\+L\+O\+C\+K\+\_\+\+O\+V\+E\+R\+H\+E\+A\+D\+\_\+\+I\+N\+\_\+\+B\+Y\+T\+E\+S~12}\label{_p_d_m_c_c26_x_x__util_8h_a8b3b29f28fba7618e60409457a14f6f8}
+P\+D\+M block overhead size in number of bytes --$>$ sizeof(queue\+Node\+I2\+S\+\_\+t) \index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+M\+D\+\_\+\+S\+U\+C\+C\+E\+S\+S@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+M\+D\+\_\+\+S\+U\+C\+C\+E\+S\+S}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+M\+D\+\_\+\+S\+U\+C\+C\+E\+S\+S@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+M\+D\+\_\+\+S\+U\+C\+C\+E\+S\+S}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+M\+D\+\_\+\+S\+U\+C\+C\+E\+S\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+M\+D\+\_\+\+S\+U\+C\+C\+E\+S\+S~0}\label{_p_d_m_c_c26_x_x__util_8h_a66928c9a1538dd63beb1fecb3b79817a}
+Return code when P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+control() was successful. \index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+M\+D\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+M\+D\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+M\+D\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+M\+D\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+M\+D\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+M\+D\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D~-\/1}\label{_p_d_m_c_c26_x_x__util_8h_a36e0057e52c089224e60dd745ae8b38a}
+Return code when a I2\+S command or function is undefined/not-\/implemented. \index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+M\+D\+\_\+\+N\+O\+\_\+\+S\+U\+C\+C\+E\+S\+S@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+M\+D\+\_\+\+N\+O\+\_\+\+S\+U\+C\+C\+E\+S\+S}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+M\+D\+\_\+\+N\+O\+\_\+\+S\+U\+C\+C\+E\+S\+S@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+M\+D\+\_\+\+N\+O\+\_\+\+S\+U\+C\+C\+E\+S\+S}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+M\+D\+\_\+\+N\+O\+\_\+\+S\+U\+C\+C\+E\+S\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+M\+D\+\_\+\+N\+O\+\_\+\+S\+U\+C\+C\+E\+S\+S~-\/2}\label{_p_d_m_c_c26_x_x__util_8h_a841dd26303cb285b2a8fa0a12ef11410}
+Return code when P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+control() was unsuccessful. \index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+G\+E\+N\+E\+R\+I\+C\+\_\+\+D\+I\+S\+A\+B\+L\+E\+D@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+G\+E\+N\+E\+R\+I\+C\+\_\+\+D\+I\+S\+A\+B\+L\+E\+D}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+G\+E\+N\+E\+R\+I\+C\+\_\+\+D\+I\+S\+A\+B\+L\+E\+D@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+G\+E\+N\+E\+R\+I\+C\+\_\+\+D\+I\+S\+A\+B\+L\+E\+D}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+G\+E\+N\+E\+R\+I\+C\+\_\+\+D\+I\+S\+A\+B\+L\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+G\+E\+N\+E\+R\+I\+C\+\_\+\+D\+I\+S\+A\+B\+L\+E\+D~0}\label{_p_d_m_c_c26_x_x__util_8h_abfc231cf2cad7f16b75523024546e912}
+Generic macro for disabled \index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+G\+E\+N\+E\+R\+I\+C\+\_\+\+E\+N\+A\+B\+L\+E\+D@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+G\+E\+N\+E\+R\+I\+C\+\_\+\+E\+N\+A\+B\+L\+E\+D}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+G\+E\+N\+E\+R\+I\+C\+\_\+\+E\+N\+A\+B\+L\+E\+D@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+G\+E\+N\+E\+R\+I\+C\+\_\+\+E\+N\+A\+B\+L\+E\+D}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+G\+E\+N\+E\+R\+I\+C\+\_\+\+E\+N\+A\+B\+L\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+G\+E\+N\+E\+R\+I\+C\+\_\+\+E\+N\+A\+B\+L\+E\+D~1}\label{_p_d_m_c_c26_x_x__util_8h_a7addf5824e414ed59a40c360b8497fad}
+Generic macro for enabled \index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+S\+T\+A\+M\+P\+\_\+\+M\+O\+D@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+S\+T\+A\+M\+P\+\_\+\+M\+O\+D}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+S\+T\+A\+M\+P\+\_\+\+M\+O\+D@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+S\+T\+A\+M\+P\+\_\+\+M\+O\+D}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+S\+T\+A\+M\+P\+\_\+\+M\+O\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+S\+T\+A\+M\+P\+\_\+\+M\+O\+D~0x0000\+F\+F\+F\+F}\label{_p_d_m_c_c26_x_x__util_8h_a49eaea1595b37d242a7788a20396aaa3}
+We don\textquotesingle{}t use sample stamp generator, but we can\textquotesingle{}t start without enabling it and configuring the trigger. This is because the trigger also starts the audio stream Since we don\textquotesingle{}t use it we keep the word period at its max 2$^\wedge$16 For the driverlib which runs a modulo on the word period we can set the modulo to 0x\+F\+F\+F\+F to avoid issues with division by zero. \index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+Single@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+Single}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+Single@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+Single}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+Single}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+Single~0}\label{_p_d_m_c_c26_x_x__util_8h_ad5e97275f3d868adfea67f33b08a2632}
+Definitions for different I2\+S Word Clock phase settings.
+
+Defines how W\+C\+L\+K division ratio is calculated to generate different duty cycles. \begin{DoxySeeAlso}{See also}
+I2\+S\+W\+C\+L\+K\+D\+I\+V.\+W\+D\+I\+V
+\end{DoxySeeAlso}
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Macro }&{\bf Value  }\\\cline{1-2}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+Single &0 \\\cline{1-2}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+Dual &1 \\\cline{1-2}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+User\+Defined &2 \\\cline{1-2}
+\end{TabularC}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+Dual@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+Dual}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+Dual@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+Dual}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+Dual}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+Dual~1}\label{_p_d_m_c_c26_x_x__util_8h_ad37a9ce9685187bfa88526541722cdaa}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_ad5e97275f3d868adfea67f33b08a2632}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+Single} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+User\+Defined@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+User\+Defined}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+User\+Defined@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+User\+Defined}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+User\+Defined}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+User\+Defined~2}\label{_p_d_m_c_c26_x_x__util_8h_a96543fc7fe2422e8680c4aae87abdd48}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_ad5e97275f3d868adfea67f33b08a2632}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Phase\+\_\+\+Single} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Sample\+Edge\+\_\+\+Negative@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Sample\+Edge\+\_\+\+Negative}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Sample\+Edge\+\_\+\+Negative@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Sample\+Edge\+\_\+\+Negative}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Sample\+Edge\+\_\+\+Negative}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Sample\+Edge\+\_\+\+Negative~0}\label{_p_d_m_c_c26_x_x__util_8h_a34160fd5f1a971d556156570afc26e44}
+Definitions to set sample edge
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Macro }&{\bf Value  }\\\cline{1-2}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Sample\+Edge\+\_\+\+Negative &0 \\\cline{1-2}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Sample\+Edge\+\_\+\+Postive &1 \\\cline{1-2}
+\end{TabularC}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Sample\+Edge\+\_\+\+Postive@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Sample\+Edge\+\_\+\+Postive}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Sample\+Edge\+\_\+\+Postive@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Sample\+Edge\+\_\+\+Postive}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Sample\+Edge\+\_\+\+Postive}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Sample\+Edge\+\_\+\+Postive~1}\label{_p_d_m_c_c26_x_x__util_8h_a287270844da242b7f70ae66ec92c71db}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a34160fd5f1a971d556156570afc26e44}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Sample\+Edge\+\_\+\+Negative} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Source\+\_\+\+Ext@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Source\+\_\+\+Ext}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Source\+\_\+\+Ext@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Source\+\_\+\+Ext}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Source\+\_\+\+Ext}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Source\+\_\+\+Ext~1}\label{_p_d_m_c_c26_x_x__util_8h_a6500f8c6c4855330299d5c260f67b6f3}
+Definitions different I2\+S Word Clock source settings.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Macro }&{\bf Value  }\\\cline{1-2}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Source\+\_\+\+Ext &0 \\\cline{1-2}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Source\+\_\+\+Int &1 \\\cline{1-2}
+\end{TabularC}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Source\+\_\+\+Int@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Source\+\_\+\+Int}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Source\+\_\+\+Int@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Source\+\_\+\+Int}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Source\+\_\+\+Int}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Source\+\_\+\+Int~2}\label{_p_d_m_c_c26_x_x__util_8h_acebf97118ebc531d62b9b632548f4404}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a6500f8c6c4855330299d5c260f67b6f3}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Clock\+Source\+\_\+\+Ext} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Bit\+Clock\+Source\+\_\+\+Ext@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Bit\+Clock\+Source\+\_\+\+Ext}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Bit\+Clock\+Source\+\_\+\+Ext@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Bit\+Clock\+Source\+\_\+\+Ext}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Bit\+Clock\+Source\+\_\+\+Ext}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Bit\+Clock\+Source\+\_\+\+Ext~0}\label{_p_d_m_c_c26_x_x__util_8h_ab679cdfce2dc3c8f8a17b69d96f5b178}
+Definitions different I2\+S Bit Clock source settings.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Macro }&{\bf Value  }\\\cline{1-2}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Bit\+Clock\+Source\+\_\+\+Ext &0 \\\cline{1-2}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Bit\+Clock\+Source\+\_\+\+Int &1 \\\cline{1-2}
+\end{TabularC}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Bit\+Clock\+Source\+\_\+\+Int@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Bit\+Clock\+Source\+\_\+\+Int}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Bit\+Clock\+Source\+\_\+\+Int@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Bit\+Clock\+Source\+\_\+\+Int}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Bit\+Clock\+Source\+\_\+\+Int}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Bit\+Clock\+Source\+\_\+\+Int~1}\label{_p_d_m_c_c26_x_x__util_8h_a0657ed74629a0b3d5a00e7caad959f11}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_ab679cdfce2dc3c8f8a17b69d96f5b178}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Bit\+Clock\+Source\+\_\+\+Ext} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Clock\+Source\+\_\+\+Normal@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Clock\+Source\+\_\+\+Normal}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Clock\+Source\+\_\+\+Normal@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Clock\+Source\+\_\+\+Normal}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Clock\+Source\+\_\+\+Normal}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Clock\+Source\+\_\+\+Normal~0}\label{_p_d_m_c_c26_x_x__util_8h_aa98a64d9ee07d7978624379de0b79083}
+Definitions to either invert I2\+S word or bit clock or not
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Macro }&{\bf Value  }\\\cline{1-2}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Clock\+Source\+\_\+\+Normal &0 \\\cline{1-2}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Clock\+Source\+\_\+\+Inverted &1 \\\cline{1-2}
+\end{TabularC}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Clock\+Source\+\_\+\+Inverted@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Clock\+Source\+\_\+\+Inverted}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Clock\+Source\+\_\+\+Inverted@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Clock\+Source\+\_\+\+Inverted}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Clock\+Source\+\_\+\+Inverted}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Clock\+Source\+\_\+\+Inverted~1}\label{_p_d_m_c_c26_x_x__util_8h_a34a2318316066a045683f98694180d25}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_aa98a64d9ee07d7978624379de0b79083}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Clock\+Source\+\_\+\+Normal} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+A\+D\+Usage\+Disabled@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+A\+D\+Usage\+Disabled}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+A\+D\+Usage\+Disabled@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+A\+D\+Usage\+Disabled}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+A\+D\+Usage\+Disabled}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+A\+D\+Usage\+Disabled~0}\label{_p_d_m_c_c26_x_x__util_8h_a7a06ccb33b16d28d7d38570e90db4145}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Audio Data Pin Usage.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Macro }&{\bf Details  }\\\cline{1-2}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+A\+D\+Usage\+Disabled &Disabled \\\cline{1-2}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+A\+D\+Usage\+Input &Input \\\cline{1-2}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+A\+D\+Usage\+Output &Output \\\cline{1-2}
+\end{TabularC}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+A\+D\+Usage\+Input@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+A\+D\+Usage\+Input}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+A\+D\+Usage\+Input@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+A\+D\+Usage\+Input}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+A\+D\+Usage\+Input}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+A\+D\+Usage\+Input~1}\label{_p_d_m_c_c26_x_x__util_8h_af1aad8fceab94ec0db069110420bec38}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a7a06ccb33b16d28d7d38570e90db4145}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+A\+D\+Usage\+Disabled} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+A\+D\+Usage\+Output@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+A\+D\+Usage\+Output}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+A\+D\+Usage\+Output@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+A\+D\+Usage\+Output}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+A\+D\+Usage\+Output}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+A\+D\+Usage\+Output~2}\label{_p_d_m_c_c26_x_x__util_8h_ad565f18a862a2e3504acb0460735ecfa}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a7a06ccb33b16d28d7d38570e90db4145}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+A\+D\+Usage\+Disabled} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N0\+\_\+\+A\+C\+T@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N0\+\_\+\+A\+C\+T}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N0\+\_\+\+A\+C\+T@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N0\+\_\+\+A\+C\+T}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N0\+\_\+\+A\+C\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N0\+\_\+\+A\+C\+T~0x00000001}\label{_p_d_m_c_c26_x_x__util_8h_a32d06c7aef6f466e626e9756c85298f8}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Audio Channel Masks.
+
+\begin{TabularC}{3}
+\hline
+\rowcolor{lightgray}{\bf Macro }&{\bf Value }&{\bf Usage  }\\\cline{1-3}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N0\+\_\+\+A\+C\+T &0x00000001 &O\+R in to enable channel 0 \\\cline{1-3}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N1\+\_\+\+A\+C\+T &0x00000002 &O\+R in to enable channel 1 \\\cline{1-3}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N2\+\_\+\+A\+C\+T &0x00000004 &O\+R in to enable channel 2 \\\cline{1-3}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N3\+\_\+\+A\+C\+T &0x00000008 &O\+R in to enable channel 3 \\\cline{1-3}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N4\+\_\+\+A\+C\+T &0x00000010 &O\+R in to enable channel 4 \\\cline{1-3}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N5\+\_\+\+A\+C\+T &0x00000020 &O\+R in to enable channel 5 \\\cline{1-3}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N6\+\_\+\+A\+C\+T &0x00000040 &O\+R in to enable channel 6 \\\cline{1-3}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N7\+\_\+\+A\+C\+T &0x00000080 &O\+R in to enable channel 7 \\\cline{1-3}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+M\+O\+N\+O\+\_\+\+M\+O\+D\+E &0x00000001 &Use to set Mono mode \\\cline{1-3}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+E\+R\+E\+O\+\_\+\+M\+O\+D\+E &0x00000003 &Use to set Stereo mode \\\cline{1-3}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+D\+I\+S\+A\+B\+L\+E\+D\+\_\+\+M\+O\+D\+E &0x00000000 &Use to disable \\\cline{1-3}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N\+\_\+\+C\+F\+G\+\_\+\+M\+A\+S\+K &0x000000\+F\+F &Use to mask out invalid \\\cline{1-3}
+\end{TabularC}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N1\+\_\+\+A\+C\+T@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N1\+\_\+\+A\+C\+T}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N1\+\_\+\+A\+C\+T@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N1\+\_\+\+A\+C\+T}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N1\+\_\+\+A\+C\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N1\+\_\+\+A\+C\+T~0x00000002}\label{_p_d_m_c_c26_x_x__util_8h_a51db26f64a63f3907271a1225be723e9}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a32d06c7aef6f466e626e9756c85298f8}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N0\+\_\+\+A\+C\+T} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N2\+\_\+\+A\+C\+T@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N2\+\_\+\+A\+C\+T}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N2\+\_\+\+A\+C\+T@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N2\+\_\+\+A\+C\+T}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N2\+\_\+\+A\+C\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N2\+\_\+\+A\+C\+T~0x00000004}\label{_p_d_m_c_c26_x_x__util_8h_ac3fbe3609b6573ba800ad0b032dfad71}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a32d06c7aef6f466e626e9756c85298f8}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N0\+\_\+\+A\+C\+T} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N3\+\_\+\+A\+C\+T@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N3\+\_\+\+A\+C\+T}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N3\+\_\+\+A\+C\+T@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N3\+\_\+\+A\+C\+T}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N3\+\_\+\+A\+C\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N3\+\_\+\+A\+C\+T~0x00000008}\label{_p_d_m_c_c26_x_x__util_8h_ac974ad9e49dd28cde900652ea15ead1d}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a32d06c7aef6f466e626e9756c85298f8}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N0\+\_\+\+A\+C\+T} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N4\+\_\+\+A\+C\+T@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N4\+\_\+\+A\+C\+T}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N4\+\_\+\+A\+C\+T@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N4\+\_\+\+A\+C\+T}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N4\+\_\+\+A\+C\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N4\+\_\+\+A\+C\+T~0x00000010}\label{_p_d_m_c_c26_x_x__util_8h_a5f6fa4892a90bf5671f11bc6a852102d}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a32d06c7aef6f466e626e9756c85298f8}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N0\+\_\+\+A\+C\+T} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N5\+\_\+\+A\+C\+T@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N5\+\_\+\+A\+C\+T}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N5\+\_\+\+A\+C\+T@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N5\+\_\+\+A\+C\+T}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N5\+\_\+\+A\+C\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N5\+\_\+\+A\+C\+T~0x00000020}\label{_p_d_m_c_c26_x_x__util_8h_aac36e1d05aeb0511fa6477b92f92d5cb}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a32d06c7aef6f466e626e9756c85298f8}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N0\+\_\+\+A\+C\+T} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N6\+\_\+\+A\+C\+T@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N6\+\_\+\+A\+C\+T}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N6\+\_\+\+A\+C\+T@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N6\+\_\+\+A\+C\+T}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N6\+\_\+\+A\+C\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N6\+\_\+\+A\+C\+T~0x00000040}\label{_p_d_m_c_c26_x_x__util_8h_a799a0e38f04c4688298abd5516b910e9}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a32d06c7aef6f466e626e9756c85298f8}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N0\+\_\+\+A\+C\+T} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N7\+\_\+\+A\+C\+T@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N7\+\_\+\+A\+C\+T}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N7\+\_\+\+A\+C\+T@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N7\+\_\+\+A\+C\+T}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N7\+\_\+\+A\+C\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N7\+\_\+\+A\+C\+T~0x00000080}\label{_p_d_m_c_c26_x_x__util_8h_ab1bc745d8d55898e5c8074f53cb5e4ab}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a32d06c7aef6f466e626e9756c85298f8}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N0\+\_\+\+A\+C\+T} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+M\+O\+N\+O\+\_\+\+M\+O\+D\+E@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+M\+O\+N\+O\+\_\+\+M\+O\+D\+E}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+M\+O\+N\+O\+\_\+\+M\+O\+D\+E@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+M\+O\+N\+O\+\_\+\+M\+O\+D\+E}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+M\+O\+N\+O\+\_\+\+M\+O\+D\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+M\+O\+N\+O\+\_\+\+M\+O\+D\+E~0x00000001}\label{_p_d_m_c_c26_x_x__util_8h_a26ad06f03e00557ec6969cb628e308f1}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a32d06c7aef6f466e626e9756c85298f8}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N0\+\_\+\+A\+C\+T} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+E\+R\+E\+O\+\_\+\+M\+O\+D\+E@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+E\+R\+E\+O\+\_\+\+M\+O\+D\+E}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+E\+R\+E\+O\+\_\+\+M\+O\+D\+E@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+E\+R\+E\+O\+\_\+\+M\+O\+D\+E}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+E\+R\+E\+O\+\_\+\+M\+O\+D\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+E\+R\+E\+O\+\_\+\+M\+O\+D\+E~0x00000003}\label{_p_d_m_c_c26_x_x__util_8h_aab44412c8919fe1577a4a0bc428aa90c}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a32d06c7aef6f466e626e9756c85298f8}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N0\+\_\+\+A\+C\+T} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+D\+I\+S\+A\+B\+L\+E\+D\+\_\+\+M\+O\+D\+E@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+D\+I\+S\+A\+B\+L\+E\+D\+\_\+\+M\+O\+D\+E}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+D\+I\+S\+A\+B\+L\+E\+D\+\_\+\+M\+O\+D\+E@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+D\+I\+S\+A\+B\+L\+E\+D\+\_\+\+M\+O\+D\+E}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+D\+I\+S\+A\+B\+L\+E\+D\+\_\+\+M\+O\+D\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+D\+I\+S\+A\+B\+L\+E\+D\+\_\+\+M\+O\+D\+E~0x00000000}\label{_p_d_m_c_c26_x_x__util_8h_a1d104f1b2b70f3a0574862e0ee8475fc}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a32d06c7aef6f466e626e9756c85298f8}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N0\+\_\+\+A\+C\+T} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N\+\_\+\+C\+F\+G\+\_\+\+M\+A\+S\+K@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N\+\_\+\+C\+F\+G\+\_\+\+M\+A\+S\+K}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N\+\_\+\+C\+F\+G\+\_\+\+M\+A\+S\+K@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N\+\_\+\+C\+F\+G\+\_\+\+M\+A\+S\+K}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N\+\_\+\+C\+F\+G\+\_\+\+M\+A\+S\+K}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N\+\_\+\+C\+F\+G\+\_\+\+M\+A\+S\+K~0x000000\+F\+F}\label{_p_d_m_c_c26_x_x__util_8h_afffc8012d078494895133861764690fe}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a32d06c7aef6f466e626e9756c85298f8}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+H\+A\+N0\+\_\+\+A\+C\+T} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Length\+Min@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Length\+Min}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Length\+Min@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Length\+Min}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Length\+Min}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Length\+Min~8}\label{_p_d_m_c_c26_x_x__util_8h_af6b394e2eac2812d14d58c62b31467ad}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S data word length is used to determine how bits to transfer per word.
+
+\begin{TabularC}{3}
+\hline
+\rowcolor{lightgray}{\bf Macro }&{\bf Value }&{\bf Usage  }\\\cline{1-3}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Length\+Min &8 &Minimum transfer length is 8 bits \\\cline{1-3}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Length16 &16 &A typical transfer length is 16 bits \\\cline{1-3}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Length\+Max &24 &Maximum transfer length is 24 bits \\\cline{1-3}
+\end{TabularC}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Length16@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Length16}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Length16@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Length16}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Length16}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Length16~16}\label{_p_d_m_c_c26_x_x__util_8h_ab4eded8479e91228d09d210a067c752f}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_af6b394e2eac2812d14d58c62b31467ad}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Length\+Min} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Length\+Max@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Length\+Max}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Length\+Max@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Length\+Max}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Length\+Max}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Length\+Max~24}\label{_p_d_m_c_c26_x_x__util_8h_a516ce5fd2b154e2cc487ff73c03f5f07}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_af6b394e2eac2812d14d58c62b31467ad}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Word\+Length\+Min} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Single\+Phase@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Single\+Phase}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Single\+Phase@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Single\+Phase}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Single\+Phase}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Single\+Phase~0}\label{_p_d_m_c_c26_x_x__util_8h_aa3869a39dc817d8297a1fffd77568d39}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Phase is set to select Dual or Single phase format
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Macro }&{\bf Value  }\\\cline{1-2}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Single\+Phase &0 \\\cline{1-2}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Dual\+Phase &1 \\\cline{1-2}
+\end{TabularC}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Dual\+Phase@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Dual\+Phase}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Dual\+Phase@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Dual\+Phase}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Dual\+Phase}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Dual\+Phase~1}\label{_p_d_m_c_c26_x_x__util_8h_acbd5c34905fd0866315e4065e934248e}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_aa3869a39dc817d8297a1fffd77568d39}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Single\+Phase} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Negative\+Edge@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Negative\+Edge}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Negative\+Edge@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Negative\+Edge}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Negative\+Edge}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Negative\+Edge~0}\label{_p_d_m_c_c26_x_x__util_8h_a1ccf47516280b04346af4f57d5bc743d}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Sample Edge is set to control what edge to sample and clock out data on.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Macro }&{\bf Value  }\\\cline{1-2}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Negative\+Edge &0 \\\cline{1-2}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Positive\+Edge &1 \\\cline{1-2}
+\end{TabularC}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Positive\+Edge@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Positive\+Edge}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Positive\+Edge@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Positive\+Edge}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Positive\+Edge}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Positive\+Edge~1}\label{_p_d_m_c_c26_x_x__util_8h_af5b4926b849db9bb23a24b3807a3380a}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a1ccf47516280b04346af4f57d5bc743d}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Negative\+Edge} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mem\+Len16bit@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mem\+Len16bit}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mem\+Len16bit@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mem\+Len16bit}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mem\+Len16bit}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mem\+Len16bit~0}\label{_p_d_m_c_c26_x_x__util_8h_a636b307f107609c5ed33408388f92cbb}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S data word size is used to determine how to configure the I2\+S data transfers to/from memory.
+
+\begin{TabularC}{3}
+\hline
+\rowcolor{lightgray}{\bf Macro }&{\bf Value }&{\bf Usage  }\\\cline{1-3}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mem\+Len16bit &0 &sample 16 bits per word \\\cline{1-3}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mem\+Len24bit &1 &sample 24 bits per word \\\cline{1-3}
+\end{TabularC}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mem\+Len16bit\+: sample 16 bits per word P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mem\+Len24bit\+: sample 24 bits per word \index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mem\+Len24bit@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mem\+Len24bit}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mem\+Len24bit@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mem\+Len24bit}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mem\+Len24bit}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mem\+Len24bit~1}\label{_p_d_m_c_c26_x_x__util_8h_ac3e46840c6ebbd42ce8020f30cb2245f}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a636b307f107609c5ed33408388f92cbb}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mem\+Len16bit} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+L\+J\+F@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+L\+J\+F}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+L\+J\+F@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+L\+J\+F}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+L\+J\+F}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+L\+J\+F~0}\label{_p_d_m_c_c26_x_x__util_8h_a5dbd78db575466a7afd1a579b9d3bef2}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Data Delay, which translates into format (L\+J\+F, I2\+S/\+D\+S\+P, R\+J\+F).
+
+This field can be set to any 8 bit value. The macros are just defined for convenience. Left justified mode means that sampling should start immediately. For right justified mode the data delay depends on how many samples should be taken per word. It is an alignment.
+
+I2\+S is a special mode that defines that no sample occur on first edge, hence there is one period data delay.
+
+\begin{TabularC}{3}
+\hline
+\rowcolor{lightgray}{\bf Macro }&{\bf Value }&{\bf Usage  }\\\cline{1-3}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+L\+J\+F &0 &no data delay \\\cline{1-3}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+I2\+Sand\+D\+S\+P &1 &one period data delay \\\cline{1-3}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+R\+J\+Fmin &2 &two periods data delay \\\cline{1-3}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+R\+J\+Fmax &255 &255 periods data delay \\\cline{1-3}
+\end{TabularC}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+I2\+Sand\+D\+S\+P@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+I2\+Sand\+D\+S\+P}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+I2\+Sand\+D\+S\+P@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+I2\+Sand\+D\+S\+P}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+I2\+Sand\+D\+S\+P}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+I2\+Sand\+D\+S\+P~1}\label{_p_d_m_c_c26_x_x__util_8h_ae67f83d561b7bdb5441f21c7aa1577f8}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a5dbd78db575466a7afd1a579b9d3bef2}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+L\+J\+F} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+R\+J\+Fmin@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+R\+J\+Fmin}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+R\+J\+Fmin@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+R\+J\+Fmin}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+R\+J\+Fmin}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+R\+J\+Fmin~2}\label{_p_d_m_c_c26_x_x__util_8h_ac5fe3ebd081f4e3bd650cf3f09a50523}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a5dbd78db575466a7afd1a579b9d3bef2}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+L\+J\+F} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+R\+J\+Fmax@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+R\+J\+Fmax}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+R\+J\+Fmax@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+R\+J\+Fmax}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+R\+J\+Fmax}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+R\+J\+Fmax~255}\label{_p_d_m_c_c26_x_x__util_8h_af782ae465f8903ee8349e27f27d172dc}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a5dbd78db575466a7afd1a579b9d3bef2}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Format\+L\+J\+F} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+D\+I\+R\+\_\+\+C\+H\+A\+\_\+\+M@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+D\+I\+R\+\_\+\+C\+H\+A\+\_\+\+M}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+D\+I\+R\+\_\+\+C\+H\+A\+\_\+\+M@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+D\+I\+R\+\_\+\+C\+H\+A\+\_\+\+M}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+D\+I\+R\+\_\+\+C\+H\+A\+\_\+\+M}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+D\+I\+R\+\_\+\+C\+H\+A\+\_\+\+M~(I2\+S\+\_\+\+L\+I\+N\+E\+\_\+\+M\+A\+S\+K $\vert$ I2\+S\+\_\+\+C\+H\+A\+N\+\_\+\+C\+F\+G\+\_\+\+M\+A\+S\+K)}\label{_p_d_m_c_c26_x_x__util_8h_a3105b54f425f7b4f8bdbef8cdab85432}
+Mask to use with \hyperlink{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_a8af297ee464eea4533090185a5f39445}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config.\+driver\+Lib\+Params} when calling Driver\+Lib. 
+
+\subsubsection{Typedef Documentation}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Config}$\ast$ {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle}}\label{_p_d_m_c_c26_x_x__util_8h_adc3b274b4a54e54316ad385fd4290c80}
+
+
+A handle that is returned from a \hyperlink{_p_d_m_c_c26_x_x__util_8h_a8168bcdab9f1e46c26823555df6f797f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open()} call. 
+
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Status@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Status}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Status@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Status}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Status}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Status}  {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Status}}\label{_p_d_m_c_c26_x_x__util_8h_ad0f2102751f8a8f0bcd47dd154aa836c}
+
+
+Status codes that are set by the I2\+S driver. 
+
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mode@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mode}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mode@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mode}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mode}  {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mode}}\label{_p_d_m_c_c26_x_x__util_8h_a2f220663270b5388de54e612e5773d98}
+
+
+Definitions for various P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S modes of operation. 
+
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Transfer\+Size@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Transfer\+Size}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Transfer\+Size@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Transfer\+Size}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Transfer\+Size}]{\setlength{\rightskip}{0pt plus 5cm}typedef uint32\+\_\+t {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Transfer\+Size}}\label{_p_d_m_c_c26_x_x__util_8h_a5b4e6b7c39c913bc6ae97261a5f2a226}
+Number of samples (16 or 24 bits) per queue element buffer \index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Config}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Config}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Config}  {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Config}}\label{_p_d_m_c_c26_x_x__util_8h_ac69d2ed91954cdfe4c1bd668a2dab290}
+
+
+The \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___config}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Config} structure contains a set of pointers used to characterize the P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S driver implementation. 
+
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs}  {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+H\+W\+Attrs}}\label{_p_d_m_c_c26_x_x__util_8h_a8e141a2dcd47376258fe58167a990027}
+
+
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For C\+C26xx\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item inc/hw\+\_\+ints.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+1 const PDMCC26XX\_I2S\_HWAttrs PDMCC26XX\_I2SHWAttrs = \{
+2     \{
+3         I2S0\_BASE,
+4         INT\_I2S,
+5         PERIPH\_I2S,
+6         Board\_I2S\_MCLK,
+7         Board\_I2S\_BCLK,
+8         Board\_I2S\_WCLK,
+9         Board\_I2S\_ADI,
+10         Board\_I2S\_ADO
+11     \},
+12 \};
+\end{DoxyCode}
+ \index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config}  {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Clock\+Config}}\label{_p_d_m_c_c26_x_x__util_8h_a8def7a5770e8bb7c904727e21cdf1fb9}
+
+
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Audio Clock configuration. 
+
+These fields are used by the driver to set up the I2\+S module
+
+A sample structure is shown below (single P\+D\+M microphone)\+: 
+\begin{DoxyCode}
+1 const PDMCC26XX\_I2S\_AudioClockConfig PDMCC26XX\_I2Sobjects[] = \{
+2         16, // Word clock division
+3         PDMCC26XX\_I2S\_SampleEdge\_Negative,
+4         PDMCC26XX\_I2S\_WordClockPhase\_Dual,
+5         PDMCC26XX\_I2S\_ClockSource\_Inverted,
+6         PDMCC26XX\_I2S\_WordClockSource\_Int,
+7         47, // Bit clock division
+8         0, // Reserved
+9         PDMCC26XX\_I2S\_BitClockSource\_Int
+10         6, // Master clock division
+11 \};
+\end{DoxyCode}
+ \index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef union {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}  {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}}\label{_p_d_m_c_c26_x_x__util_8h_ae4dd5264f128d13849211fc9baf12bea}
+
+
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Audio Pin configuration. 
+
+These fields are used by the driver to set up the I2\+S module
+
+A sample structure is shown below (single P\+D\+M microphone)\+: 
+\begin{DoxyCode}
+1 const PDMCC26XX\_I2S\_AudioPinConfig PDMCC26XX\_I2Sobjects[] = \{
+2         PDMCC26XX\_I2S\_ADUsageDisabled,
+3         0,
+4         0,
+5         0,
+6         0,
+7         PDMCC26XX\_I2S\_ADUsageInput,
+8         0,
+9         1,
+10         2,
+11         I2S\_MONO\_MODE
+12 \};
+\end{DoxyCode}
+ \index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Format\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Format\+Config}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Format\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Format\+Config}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Format\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Format\+Config}  {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Format\+Config}}\label{_p_d_m_c_c26_x_x__util_8h_a3ba2d6efa7148c2657a7288f8fbc675c}
+
+
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Hardware configuration. 
+
+These fields are used by the driver to set up the I2\+S module
+
+A sample structure is shown below (single P\+D\+M microphone)\+: 
+\begin{DoxyCode}
+1 const PDMCC26XX\_I2S\_AudioFormatConfig PDMCC26XX\_I2Sobjects[] = \{
+2         PDMCC26XX\_I2S\_WordLength16,
+3         PDMCC26XX\_I2S\_PositiveEdge,
+4         PDMCC26XX\_I2S\_DualPhase,
+5         PDMCC26XX\_I2S\_MemLen16bit,
+6         PDMCC26XX\_I2S\_FormatI2SandDSP
+7 \};
+\end{DoxyCode}
+ \index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Request\+Mode@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Request\+Mode}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Request\+Mode@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Request\+Mode}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Request\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Request\+Mode}  {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Request\+Mode}}\label{_p_d_m_c_c26_x_x__util_8h_a3efab417bd3d431079d133bbbe062c22}
+
+
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Object. 
+
+The application must not access any member variables of this structure! \index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Stream\+Notification@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Stream\+Notification}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Stream\+Notification@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Stream\+Notification}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Stream\+Notification}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Stream\+Notification}  {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Stream\+Notification}}\label{_p_d_m_c_c26_x_x__util_8h_ac2e036836381051508576dc3bb2fe78c}
+
+
+A \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___stream_notification}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Stream\+Notification} data structure is used with \hyperlink{_p_d_m_c_c26_x_x__util_8h_a82786f08d1b22895c79dcd8880fb92f3}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Callback\+Fxn()}. Provides notification about available buffers and potential errors. 
+
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request}  {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request}}\label{_p_d_m_c_c26_x_x__util_8h_ad0118de2c13236f0d75f7b5279c0b72a}
+
+
+A \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___buffer_request}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request} data structure is used with \hyperlink{_p_d_m_c_c26_x_x__util_8h_a69561b9a6f07a82bfe3b18f3c51fcd19}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer()}. 
+
+buffer\+In is a pointer to the requested buffer. It is N\+U\+L\+L if no buffer is available~\newline
+ \begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Input Mode }&{\bf Interpretation of buffer\+In being N\+U\+L\+L after returning  }\\\cline{1-2}
+Blocking mode &Request timed out and still no buffer available \\\cline{1-2}
+Non-\/\+Blocking mode &No buffer available \\\cline{1-2}
+\end{TabularC}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer will also return {\bfseries false} if there are no buffers available.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a69561b9a6f07a82bfe3b18f3c51fcd19}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Release@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Release}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Release@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Release}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Release}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Release}  {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Release}}\label{_p_d_m_c_c26_x_x__util_8h_ab2a6fc7ef5e6cf67ee2686e4d6553ea4}
+
+
+A \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___buffer_release}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Release} data structure is used with \hyperlink{_p_d_m_c_c26_x_x__util_8h_ae6436840c3944258d3bdf041250dd10c}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+release\+Buffer()}. 
+
+buffer\+Handle\+In and buffer\+Handle\+Out allows the driver to take back and reuse memory. \index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Callback\+Fxn@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Callback\+Fxn}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Callback\+Fxn@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Callback\+Fxn}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Callback\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Callback\+Fxn) ({\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle} handle, {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Stream\+Notification} $\ast$notification)}\label{_p_d_m_c_c26_x_x__util_8h_a82786f08d1b22895c79dcd8880fb92f3}
+
+
+The definition of a callback function used when wakeup on chip select is enabled. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle} & P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle \\
+\hline
+\end{DoxyParams}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params}  {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params}}\label{_p_d_m_c_c26_x_x__util_8h_a7d296d85afcdecb82b5572261a03d3c2}
+
+
+P\+D\+M\+C\+C26\+X\+X I2\+S Parameters are used when calling \hyperlink{_p_d_m_c_c26_x_x__util_8h_a8168bcdab9f1e46c26823555df6f797f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open()}. 
+
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}  {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Object}}\label{_p_d_m_c_c26_x_x__util_8h_add23279adb905ee56c889bc38c2fe3d8}
+
+
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Object. 
+
+The application must not access any member variables of this structure! 
+
+\subsubsection{Enumeration Type Documentation}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Status@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Status}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Status@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Status}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Status}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Status}}\label{_p_d_m_c_c26_x_x__util_8h_ac1e4fbeb33409a874015d4e0609ddff1}
+
+
+Status codes that are set by the I2\+S driver. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+I\+D\+L\+E@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+I\+D\+L\+E}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+I\+D\+L\+E@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+I\+D\+L\+E}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+I\+D\+L\+E\label{_p_d_m_c_c26_x_x__util_8h_ac1e4fbeb33409a874015d4e0609ddff1a16df5a8f67d12b81d307af221d46ab18}
+}]Idle mode. Stream not started \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+A\+R\+T\+E\+D@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+A\+R\+T\+E\+D}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+A\+R\+T\+E\+D@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+A\+R\+T\+E\+D}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+A\+R\+T\+E\+D\label{_p_d_m_c_c26_x_x__util_8h_ac1e4fbeb33409a874015d4e0609ddff1a4a32be3e7f98c0bacfb55142e1d4cf89}
+}]Stream started, no buffer yet available \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+C\+A\+N\+C\+E\+L\+E\+D@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+C\+A\+N\+C\+E\+L\+E\+D}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+C\+A\+N\+C\+E\+L\+E\+D@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+C\+A\+N\+C\+E\+L\+E\+D}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+C\+A\+N\+C\+E\+L\+E\+D\label{_p_d_m_c_c26_x_x__util_8h_ac1e4fbeb33409a874015d4e0609ddff1a8284b284a95225ef6919d51336364ce6}
+}]Unused state. \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+F\+A\+I\+L\+E\+D@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+F\+A\+I\+L\+E\+D}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+F\+A\+I\+L\+E\+D@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+F\+A\+I\+L\+E\+D}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+F\+A\+I\+L\+E\+D\label{_p_d_m_c_c26_x_x__util_8h_ac1e4fbeb33409a874015d4e0609ddff1a1f07b976c3da69bb99bd89be2ce4d894}
+}]\hyperlink{_p_d_m_c_c26_x_x__util_8h_ac318829ebbf5e66a0ee0c23ba3b36ba4}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+start\+Stream()} called while stream is already running \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+E\+R\+R\+O\+R@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+E\+R\+R\+O\+R}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+E\+R\+R\+O\+R@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+E\+R\+R\+O\+R}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+E\+R\+R\+O\+R\label{_p_d_m_c_c26_x_x__util_8h_ac1e4fbeb33409a874015d4e0609ddff1a2927dbcaeefc4cd9fc49b2d51767fda0}
+}]No pointer available when one was expected, meaning the driver failed to provide new pointer and \hyperlink{_p_d_m_c_c26_x_x__util_8h_abe6c63029970621defb60aaa467d9b6c}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+stop\+Stream()} was not called \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+R\+E\+A\+D\+Y@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+R\+E\+A\+D\+Y}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+R\+E\+A\+D\+Y@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+R\+E\+A\+D\+Y}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+R\+E\+A\+D\+Y\label{_p_d_m_c_c26_x_x__util_8h_ac1e4fbeb33409a874015d4e0609ddff1a9b0c4bf2229c25d6f271bc8e5d8f6f57}
+}]Buffer ready, either I\+N or O\+U\+T or both, whichever are expected \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+R\+E\+A\+D\+Y\+\_\+\+B\+U\+T\+\_\+\+N\+O\+\_\+\+A\+V\+A\+I\+L\+A\+B\+L\+E\+\_\+\+B\+U\+F\+F\+E\+R\+S@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+R\+E\+A\+D\+Y\+\_\+\+B\+U\+T\+\_\+\+N\+O\+\_\+\+A\+V\+A\+I\+L\+A\+B\+L\+E\+\_\+\+B\+U\+F\+F\+E\+R\+S}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+R\+E\+A\+D\+Y\+\_\+\+B\+U\+T\+\_\+\+N\+O\+\_\+\+A\+V\+A\+I\+L\+A\+B\+L\+E\+\_\+\+B\+U\+F\+F\+E\+R\+S@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+R\+E\+A\+D\+Y\+\_\+\+B\+U\+T\+\_\+\+N\+O\+\_\+\+A\+V\+A\+I\+L\+A\+B\+L\+E\+\_\+\+B\+U\+F\+F\+E\+R\+S}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+R\+E\+A\+D\+Y\+\_\+\+B\+U\+T\+\_\+\+N\+O\+\_\+\+A\+V\+A\+I\+L\+A\+B\+L\+E\+\_\+\+B\+U\+F\+F\+E\+R\+S\label{_p_d_m_c_c26_x_x__util_8h_ac1e4fbeb33409a874015d4e0609ddff1a6dac68bba81485d36db74d4427de22de}
+}]Buffer ready, either I\+N or O\+U\+T or both, whichever are expected. However, driver has no more buffers available to provide to the hardware on next interrupt. This serves as an indication to the caller that the driver is about to fail, unless caller processes ready buffers \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+O\+P\+P\+I\+N\+G@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+O\+P\+P\+I\+N\+G}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+O\+P\+P\+I\+N\+G@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+O\+P\+P\+I\+N\+G}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+O\+P\+P\+I\+N\+G\label{_p_d_m_c_c26_x_x__util_8h_ac1e4fbeb33409a874015d4e0609ddff1aac07f8085e63f0883863ad9ec092b6ce}
+}]\hyperlink{_p_d_m_c_c26_x_x__util_8h_abe6c63029970621defb60aaa467d9b6c}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+stop\+Stream()} is called, a graceful shutdown procedure is started \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+O\+P\+P\+E\+D@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+O\+P\+P\+E\+D}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+O\+P\+P\+E\+D@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+O\+P\+P\+E\+D}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+S\+T\+O\+P\+P\+E\+D\label{_p_d_m_c_c26_x_x__util_8h_ac1e4fbeb33409a874015d4e0609ddff1a0c245201c506bf7eacfb9f0f451e33dd}
+}]Driver transitioned from Stopping to Stopped state during graceful shutdown. Now a pointer error is expected, and upon it a semaphore is set allowing \hyperlink{_p_d_m_c_c26_x_x__util_8h_abe6c63029970621defb60aaa467d9b6c}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+stop\+Stream()} to return \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+F\+A\+I\+L\+E\+D\+\_\+\+T\+O\+\_\+\+S\+T\+O\+P@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+F\+A\+I\+L\+E\+D\+\_\+\+T\+O\+\_\+\+S\+T\+O\+P}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+F\+A\+I\+L\+E\+D\+\_\+\+T\+O\+\_\+\+S\+T\+O\+P@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+F\+A\+I\+L\+E\+D\+\_\+\+T\+O\+\_\+\+S\+T\+O\+P}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+S\+T\+R\+E\+A\+M\+\_\+\+F\+A\+I\+L\+E\+D\+\_\+\+T\+O\+\_\+\+S\+T\+O\+P\label{_p_d_m_c_c26_x_x__util_8h_ac1e4fbeb33409a874015d4e0609ddff1a895fc1d5ca5ab81c4c7c7223c0b8b6a5}
+}]\hyperlink{_p_d_m_c_c26_x_x__util_8h_abe6c63029970621defb60aaa467d9b6c}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+stop\+Stream()} was called, but driver timed out trying to gracefully shutdown \end{description}
+\end{Desc}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mode@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mode}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mode@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mode}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mode}}\label{_p_d_m_c_c26_x_x__util_8h_a7392b654a84f42e717a4df1485058a84}
+
+
+Definitions for various P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S modes of operation. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+P\+D\+M@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+P\+D\+M}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+P\+D\+M@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+P\+D\+M}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+P\+D\+M\label{_p_d_m_c_c26_x_x__util_8h_a7392b654a84f42e717a4df1485058a84a2e5f04919021778dc64b531cc9ca19dd}
+}]P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S in P\+D\+M microphone mode \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+I2\+S@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+I2\+S}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+I2\+S@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+I2\+S}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+I2\+S\label{_p_d_m_c_c26_x_x__util_8h_a7392b654a84f42e717a4df1485058a84ae4abdf809e7f1f26a1cbdee9cdfbec2e}
+}]P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S in I2\+S mode \end{description}
+\end{Desc}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Request\+Mode@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Request\+Mode}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Request\+Mode@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Request\+Mode}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Request\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Request\+Mode}}\label{_p_d_m_c_c26_x_x__util_8h_aef896b2a7fc07d3b145f8d02eaa9e377}
+
+
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Object. 
+
+The application must not access any member variables of this structure! \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G\label{_p_d_m_c_c26_x_x__util_8h_aef896b2a7fc07d3b145f8d02eaa9e377a8a325f16e9c7ea73e9a6571285bf4de6}
+}]\hyperlink{_p_d_m_c_c26_x_x__util_8h_a69561b9a6f07a82bfe3b18f3c51fcd19}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer()} blocks execution. This mode can only be used when called within a Task context. \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K\+\_\+\+M\+O\+D\+E@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K\+\_\+\+M\+O\+D\+E}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K\+\_\+\+M\+O\+D\+E@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K\+\_\+\+M\+O\+D\+E}}\item[{\em 
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K\+\_\+\+M\+O\+D\+E\label{_p_d_m_c_c26_x_x__util_8h_aef896b2a7fc07d3b145f8d02eaa9e377a8b043983d80de30bc3c61f1df84a2212}
+}]P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer returns immediately if no buffer is available. The caller is notified through events each time a buffer is available. This mode can be used in a Task, Swi, or Hwi context. \end{description}
+\end{Desc}
+
+
+\subsubsection{Function Documentation}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+init@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+init}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+init@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+init}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_p_d_m_c_c26_x_x__util_8h_af19da786c201c7c1852177a92f851158}
+
+
+I2\+S C\+C26\+X\+X initialization. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle \\
+\hline
+\end{DoxyParams}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params\+\_\+init@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params\+\_\+init}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params\+\_\+init@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params\+\_\+init}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}bool P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params} $\ast$}]{params, }
+\item[{{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Mode}}]{mode, }
+\item[{void $\ast$}]{mode\+Specific\+Params}
+\end{DoxyParamCaption}
+)}\label{_p_d_m_c_c26_x_x__util_8h_a4b0ca4428ed47e11d7280d98dd7f46e5}
+
+
+Function to set initialization parameters for the audio interface. 
+
+The parameter {\bfseries mode} specifies which mode the audio interface module will operate. {\bfseries mode\+Specific\+Params} must point to a struct that matches the selected mode. This is because this function will type-\/cast the void$\ast$ based on the selected mode.
+
+{\bfseries params} is filled correctly by this function. Its memory must be allocated by the caller. Note however that it only has to live past the call to \hyperlink{_p_d_m_c_c26_x_x__util_8h_a8168bcdab9f1e46c26823555df6f797f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & Pointer to allocated structure to hold parameters to be used in P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open \\
+\hline
+{\em mode} & Selects what predefined mode to configure \\
+\hline
+{\em mode\+Specific\+Params} & Pointer to parameters that are specific to the requested configuration \\
+\hline
+\end{DoxyParams}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle} P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle}}]{handle, }
+\item[{{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_p_d_m_c_c26_x_x__util_8h_a8168bcdab9f1e46c26823555df6f797f}
+
+
+Function to open a given C\+C26\+X\+X I2\+S peripheral specified by the I2\+S handle. 
+
+The function will set a dependency on its power domain, i.\+e. power up the module and enable the clock. The I\+Os are allocated. The I2\+S will not be enabled.
+
+{\bfseries params} must point a correctly initialized \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___params}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params} struct. P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Params\+\_\+init is a convenience function to initialize the struct correctly.
+
+\begin{DoxyPrecond}{Precondition}
+I2\+S controller has been initialized
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle\\
+\hline
+{\em params} & Pointer to a parameter block, if N\+U\+L\+L it will use default values\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle on success or a N\+U\+L\+L on an error or if it has been already opened
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a6c337d78b6c364ca580cfcb86176c35a}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+close()} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+close@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+close}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+close@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+close}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}void P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_p_d_m_c_c26_x_x__util_8h_a6c337d78b6c364ca580cfcb86176c35a}
+
+
+Function to close a given C\+C26\+X\+X I2\+S peripheral specified by the I2\+S handle. 
+
+Will disable the I2\+S, disable all I2\+S interrupts and release the dependency on the corresponding power domain. It will also destroy all semaphores and queues that have been used.
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a8168bcdab9f1e46c26823555df6f797f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open()} has to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle returned from \hyperlink{_p_d_m_c_c26_x_x__util_8h_a8168bcdab9f1e46c26823555df6f797f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open()}\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a8168bcdab9f1e46c26823555df6f797f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+start\+Stream@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+start\+Stream}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+start\+Stream@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+start\+Stream}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+start\+Stream}]{\setlength{\rightskip}{0pt plus 5cm}bool P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+start\+Stream (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_p_d_m_c_c26_x_x__util_8h_ac318829ebbf5e66a0ee0c23ba3b36ba4}
+
+
+Function for starting an I2\+S interface. 
+
+Calling this function will prevent the device from sleeping, as the stream is continuous and thus require power to the audio interface module from start to end. This function will configure all hardware registers that does not have retention. Hence, one may call P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open then go to sleep before this function is called.
+
+If non-\/blocking mode is selected then the P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S module will begin calling the provided callback function every time a new buffer is ready.
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a8168bcdab9f1e46c26823555df6f797f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open()} has to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & An I2\+S handle returned from \hyperlink{_p_d_m_c_c26_x_x__util_8h_a8168bcdab9f1e46c26823555df6f797f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open()}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if transfer is successful and false if not
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a8168bcdab9f1e46c26823555df6f797f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open()}, \hyperlink{_p_d_m_c_c26_x_x__util_8h_abe6c63029970621defb60aaa467d9b6c}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+stop\+Stream()} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+stop\+Stream@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+stop\+Stream}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+stop\+Stream@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+stop\+Stream}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+stop\+Stream}]{\setlength{\rightskip}{0pt plus 5cm}bool P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+stop\+Stream (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_p_d_m_c_c26_x_x__util_8h_abe6c63029970621defb60aaa467d9b6c}
+
+
+Function for stopping an I2\+S interface. 
+
+This function will initiate the shut down sequence. The audio interface module is designed with a graceful shutdown. What this means is that the current buffer is filled before stopping. This function will block while the last buffer is completing. The maximum blocking delay is a function of the configured D\+M\+A transfer size, and the word clock rate.
+
+When this function returns it is recommended to complete processing of all pending ready buffers. If the caller is not interested in the last audio data it may simply call \hyperlink{_p_d_m_c_c26_x_x__util_8h_a69561b9a6f07a82bfe3b18f3c51fcd19}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer()} and \hyperlink{_p_d_m_c_c26_x_x__util_8h_ae6436840c3944258d3bdf041250dd10c}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+release\+Buffer()} in a loop until \hyperlink{_p_d_m_c_c26_x_x__util_8h_a69561b9a6f07a82bfe3b18f3c51fcd19}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer()} returns false.
+
+Will disable the I2\+S, disable all I2\+S interrupts and release the dependency on the corresponding power domain.
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_ac318829ebbf5e66a0ee0c23ba3b36ba4}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+start\+Stream()} has to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & An I2\+S handle returned from \hyperlink{_p_d_m_c_c26_x_x__util_8h_a8168bcdab9f1e46c26823555df6f797f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open()}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if stream stopped successfully and false if not
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a8168bcdab9f1e46c26823555df6f797f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open()}, \hyperlink{_p_d_m_c_c26_x_x__util_8h_ac318829ebbf5e66a0ee0c23ba3b36ba4}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+start\+Stream()} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer}]{\setlength{\rightskip}{0pt plus 5cm}bool P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle}}]{handle, }
+\item[{{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request} $\ast$}]{buffer\+Request}
+\end{DoxyParamCaption}
+)}\label{_p_d_m_c_c26_x_x__util_8h_a69561b9a6f07a82bfe3b18f3c51fcd19}
+
+
+Function for requesting buffer. 
+
+In \hyperlink{_p_d_m_c_c26_x_x__util_8h_aef896b2a7fc07d3b145f8d02eaa9e377a8a325f16e9c7ea73e9a6571285bf4de6}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}, P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer will block task execution until at least one buffer is ready.
+
+In \hyperlink{_p_d_m_c_c26_x_x__util_8h_aef896b2a7fc07d3b145f8d02eaa9e377a8b043983d80de30bc3c61f1df84a2212}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K\+\_\+\+M\+O\+D\+E}, P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer returns immediately if no buffer is available. The caller is notified through events each time a buffer is available.
+
+This function takes as an argument a pointer to a struct which contains 4 pointers. There are two pairs; one for Input and one for Output. If input is defined then the input buffer pointer will point to the new input buffer. Same goes for output and the output buffer pointer. The caller is not expected to allocate memory for the buffer as no copy is performed. The other two pointers must be maintained by the caller until it is ready to call \hyperlink{_p_d_m_c_c26_x_x__util_8h_ae6436840c3944258d3bdf041250dd10c}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+release\+Buffer()}.
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a8168bcdab9f1e46c26823555df6f797f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open()} and \hyperlink{_p_d_m_c_c26_x_x__util_8h_ac318829ebbf5e66a0ee0c23ba3b36ba4}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+start\+Stream()} has to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A I2\+S handle returned from \hyperlink{_p_d_m_c_c26_x_x__util_8h_a8168bcdab9f1e46c26823555df6f797f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open()}\\
+\hline
+{\em $\ast$buffer\+Request} & Pointer to \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___buffer_request}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Request} struct\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if a buffer is available, false if not.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a8168bcdab9f1e46c26823555df6f797f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open()}, \hyperlink{_p_d_m_c_c26_x_x__util_8h_ac318829ebbf5e66a0ee0c23ba3b36ba4}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+start\+Stream()}, \hyperlink{_p_d_m_c_c26_x_x__util_8h_ae6436840c3944258d3bdf041250dd10c}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+release\+Buffer()} 
+\end{DoxySeeAlso}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+release\+Buffer@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+release\+Buffer}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+release\+Buffer@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+release\+Buffer}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+release\+Buffer}]{\setlength{\rightskip}{0pt plus 5cm}Void P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+release\+Buffer (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Handle}}]{handle, }
+\item[{{\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Release} $\ast$}]{buffer\+Release}
+\end{DoxyParamCaption}
+)}\label{_p_d_m_c_c26_x_x__util_8h_ae6436840c3944258d3bdf041250dd10c}
+
+
+Function for releasing buffer. 
+
+The caller of \hyperlink{_p_d_m_c_c26_x_x__util_8h_a69561b9a6f07a82bfe3b18f3c51fcd19}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer()} must call this function when it is finished working on the buffer. This function takes as an argument a pointer to a struct which contains two other pointers. These pointers must be set the pointers received in \hyperlink{_p_d_m_c_c26_x_x__util_8h_a69561b9a6f07a82bfe3b18f3c51fcd19}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer()}.
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a69561b9a6f07a82bfe3b18f3c51fcd19}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer()} has to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A I2\+S handle returned from \hyperlink{_p_d_m_c_c26_x_x__util_8h_a8168bcdab9f1e46c26823555df6f797f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open()}\\
+\hline
+{\em $\ast$buffer\+Release} & Pointer to \hyperlink{struct_p_d_m_c_c26_x_x___i2_s___buffer_release}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Buffer\+Release} struct\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if release is successful and false if not
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_d_m_c_c26_x_x__util_8h_a8168bcdab9f1e46c26823555df6f797f}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+open()}, \hyperlink{_p_d_m_c_c26_x_x__util_8h_ac318829ebbf5e66a0ee0c23ba3b36ba4}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+start\+Stream()}, \hyperlink{_p_d_m_c_c26_x_x__util_8h_a69561b9a6f07a82bfe3b18f3c51fcd19}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+request\+Buffer()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Variable Documentation}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+config}}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+config}!P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h@{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}}
+\paragraph[{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+config}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Config} P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+config\mbox{[}$\,$\mbox{]}}\label{_p_d_m_c_c26_x_x__util_8h_a1a4dd4e230736baa3d1c7c62528e918c}
+\hyperlink{struct_p_d_m_c_c26_x_x___i2_s___config}{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Config} struct defined in the board file 

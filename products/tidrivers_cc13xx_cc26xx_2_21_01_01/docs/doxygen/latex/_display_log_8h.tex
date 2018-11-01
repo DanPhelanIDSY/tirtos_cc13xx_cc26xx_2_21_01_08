@@ -1,0 +1,120 @@
+\subsection{Display\+Log.\+h File Reference}
+\label{_display_log_8h}\index{Display\+Log.\+h@{Display\+Log.\+h}}
+{\ttfamily \#include $<$ti/mw/display/\+Display.\+h$>$}\\*
+Include dependency graph for Display\+Log.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=153pt]{_display_log_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_display_log___object}{Display\+Log\+\_\+\+Object}
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_display_log___object}{Display\+Log\+\_\+\+Object} \hyperlink{_display_log_8h_a4145e66a371835b4c60f09d8428f04a3}{Display\+Log\+\_\+\+Object}
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} \hyperlink{_display_log_8h_abf731b96ea43adde1aba4000c8eb614a}{Display\+Log\+\_\+open} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle}, \hyperlink{struct_display___params}{Display\+\_\+\+Params} $\ast$params)
+\item 
+void \hyperlink{_display_log_8h_a2ea41286142e75987158d5ad8e17e71d}{Display\+Log\+\_\+clear} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle)
+\item 
+void \hyperlink{_display_log_8h_ab5bdbb87cfda5be2d4c3d2f5a1bac384}{Display\+Log\+\_\+clear\+Lines} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle, uint8\+\_\+t from\+Line, uint8\+\_\+t to\+Line)
+\item 
+void \hyperlink{_display_log_8h_a150098057f22e8f081f20786079997bc}{Display\+Log\+\_\+put5} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle, uint8\+\_\+t line, uint8\+\_\+t column, uintptr\+\_\+t fmt, uintptr\+\_\+t a0, uintptr\+\_\+t a1, uintptr\+\_\+t a2, uintptr\+\_\+t a3, uintptr\+\_\+t a4)
+\item 
+void \hyperlink{_display_log_8h_aa671ad02c2071f28a8af3015355f4f33}{Display\+Log\+\_\+close} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle})
+\item 
+int \hyperlink{_display_log_8h_a71c685185da34644fa9967c12f799ace}{Display\+Log\+\_\+control} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)
+\item 
+unsigned int \hyperlink{_display_log_8h_ad67682b1f6dcd757131df4b515b5c499}{Display\+Log\+\_\+get\+Type} (void)
+\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_display___fxn_table}{Display\+\_\+\+Fxn\+Table} \hyperlink{_display_log_8h_a9b47109421eb742bcadbb6e5d33654cd}{Display\+Log\+\_\+fxn\+Table}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Typedef Documentation}
+\index{Display\+Log.\+h@{Display\+Log.\+h}!Display\+Log\+\_\+\+Object@{Display\+Log\+\_\+\+Object}}
+\index{Display\+Log\+\_\+\+Object@{Display\+Log\+\_\+\+Object}!Display\+Log.\+h@{Display\+Log.\+h}}
+\paragraph[{Display\+Log\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Display\+Log\+\_\+\+Object}  {\bf Display\+Log\+\_\+\+Object}}\label{_display_log_8h_a4145e66a371835b4c60f09d8428f04a3}
+
+
+\subsubsection{Function Documentation}
+\index{Display\+Log.\+h@{Display\+Log.\+h}!Display\+Log\+\_\+open@{Display\+Log\+\_\+open}}
+\index{Display\+Log\+\_\+open@{Display\+Log\+\_\+open}!Display\+Log.\+h@{Display\+Log.\+h}}
+\paragraph[{Display\+Log\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Display\+\_\+\+Handle} Display\+Log\+\_\+open (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{, }
+\item[{{\bf Display\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_display_log_8h_abf731b96ea43adde1aba4000c8eb614a}
+\index{Display\+Log.\+h@{Display\+Log.\+h}!Display\+Log\+\_\+clear@{Display\+Log\+\_\+clear}}
+\index{Display\+Log\+\_\+clear@{Display\+Log\+\_\+clear}!Display\+Log.\+h@{Display\+Log.\+h}}
+\paragraph[{Display\+Log\+\_\+clear}]{\setlength{\rightskip}{0pt plus 5cm}void Display\+Log\+\_\+clear (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_display_log_8h_a2ea41286142e75987158d5ad8e17e71d}
+\index{Display\+Log.\+h@{Display\+Log.\+h}!Display\+Log\+\_\+clear\+Lines@{Display\+Log\+\_\+clear\+Lines}}
+\index{Display\+Log\+\_\+clear\+Lines@{Display\+Log\+\_\+clear\+Lines}!Display\+Log.\+h@{Display\+Log.\+h}}
+\paragraph[{Display\+Log\+\_\+clear\+Lines}]{\setlength{\rightskip}{0pt plus 5cm}void Display\+Log\+\_\+clear\+Lines (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{handle, }
+\item[{uint8\+\_\+t}]{from\+Line, }
+\item[{uint8\+\_\+t}]{to\+Line}
+\end{DoxyParamCaption}
+)}\label{_display_log_8h_ab5bdbb87cfda5be2d4c3d2f5a1bac384}
+\index{Display\+Log.\+h@{Display\+Log.\+h}!Display\+Log\+\_\+put5@{Display\+Log\+\_\+put5}}
+\index{Display\+Log\+\_\+put5@{Display\+Log\+\_\+put5}!Display\+Log.\+h@{Display\+Log.\+h}}
+\paragraph[{Display\+Log\+\_\+put5}]{\setlength{\rightskip}{0pt plus 5cm}void Display\+Log\+\_\+put5 (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{handle, }
+\item[{uint8\+\_\+t}]{line, }
+\item[{uint8\+\_\+t}]{column, }
+\item[{uintptr\+\_\+t}]{fmt, }
+\item[{uintptr\+\_\+t}]{a0, }
+\item[{uintptr\+\_\+t}]{a1, }
+\item[{uintptr\+\_\+t}]{a2, }
+\item[{uintptr\+\_\+t}]{a3, }
+\item[{uintptr\+\_\+t}]{a4}
+\end{DoxyParamCaption}
+)}\label{_display_log_8h_a150098057f22e8f081f20786079997bc}
+\index{Display\+Log.\+h@{Display\+Log.\+h}!Display\+Log\+\_\+close@{Display\+Log\+\_\+close}}
+\index{Display\+Log\+\_\+close@{Display\+Log\+\_\+close}!Display\+Log.\+h@{Display\+Log.\+h}}
+\paragraph[{Display\+Log\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}void Display\+Log\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{}
+\end{DoxyParamCaption}
+)}\label{_display_log_8h_aa671ad02c2071f28a8af3015355f4f33}
+\index{Display\+Log.\+h@{Display\+Log.\+h}!Display\+Log\+\_\+control@{Display\+Log\+\_\+control}}
+\index{Display\+Log\+\_\+control@{Display\+Log\+\_\+control}!Display\+Log.\+h@{Display\+Log.\+h}}
+\paragraph[{Display\+Log\+\_\+control}]{\setlength{\rightskip}{0pt plus 5cm}int Display\+Log\+\_\+control (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{cmd, }
+\item[{void $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}\label{_display_log_8h_a71c685185da34644fa9967c12f799ace}
+\index{Display\+Log.\+h@{Display\+Log.\+h}!Display\+Log\+\_\+get\+Type@{Display\+Log\+\_\+get\+Type}}
+\index{Display\+Log\+\_\+get\+Type@{Display\+Log\+\_\+get\+Type}!Display\+Log.\+h@{Display\+Log.\+h}}
+\paragraph[{Display\+Log\+\_\+get\+Type}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int Display\+Log\+\_\+get\+Type (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_display_log_8h_ad67682b1f6dcd757131df4b515b5c499}
+
+
+\subsubsection{Variable Documentation}
+\index{Display\+Log.\+h@{Display\+Log.\+h}!Display\+Log\+\_\+fxn\+Table@{Display\+Log\+\_\+fxn\+Table}}
+\index{Display\+Log\+\_\+fxn\+Table@{Display\+Log\+\_\+fxn\+Table}!Display\+Log.\+h@{Display\+Log.\+h}}
+\paragraph[{Display\+Log\+\_\+fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Display\+\_\+\+Fxn\+Table} Display\+Log\+\_\+fxn\+Table}\label{_display_log_8h_a9b47109421eb742bcadbb6e5d33654cd}

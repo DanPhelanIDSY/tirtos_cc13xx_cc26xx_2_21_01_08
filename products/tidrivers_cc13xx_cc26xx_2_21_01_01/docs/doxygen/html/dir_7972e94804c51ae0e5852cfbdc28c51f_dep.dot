@@ -1,0 +1,9 @@
+digraph "grlib" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_622605b5fc87a1221dd66225202096f9 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="mw" fontname="Helvetica", fontsize="10", URL="dir_622605b5fc87a1221dd66225202096f9.html"]
+  dir_7972e94804c51ae0e5852cfbdc28c51f [shape=box, label="grlib", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_7972e94804c51ae0e5852cfbdc28c51f.html"];
+  }
+}

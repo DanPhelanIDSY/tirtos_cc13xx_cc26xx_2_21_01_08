@@ -1,0 +1,367 @@
+\subsection{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h File Reference}
+\label{_u_s_b_m_s_c_h_fat_fs_8h}\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}}
+
+
+\subsubsection{Detailed Description}
+U\+S\+B\+M\+S\+C\+H\+Fat\+Fs driver interface. 
+
+============================================================================
+
+The U\+S\+B\+M\+S\+C\+H\+Fat\+Fs header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/USBMSCHFatFs.h>}
+\end{DoxyCode}
+
+
+\subsubsection*{Operation}
+
+The U\+S\+B\+M\+S\+C\+H\+Fat\+Fs driver is a driver designed to hook into Fat\+Fs. It implements a set of functions that Fat\+Fs needs to call to perform basic block data transfers.
+
+This driver is designed to work with the U\+S\+B Library. Because it is running in host mode, we need to add protection when accessing the U\+S\+B Library. A gate was added to prevent the task servicing the U\+S\+B library to preempt any other task accessing the U\+S\+B Library.
+
+Once the driver has been opened, the application may used the Fat\+Fs A\+P\+Is or the standard C runtime file I/\+O calls (fopen, fclose, etc...). Once the driver has been closed, ensure the application does N\+O\+T make any file I/\+O calls.
+
+\paragraph*{Opening the driver}
+
+
+\begin{DoxyCode}
+USBMSCHFatFs_Handle      handle;
+USBMSCHFatFs_Params      params;
+
+USBMSCHFatFs_Params_init(&params);
+params.servicePriority  = somePriority;
+handle = USBMSCHFatFs_open(someUSBMSCHFatFs\_configIndexValue, &params);
+\textcolor{keywordflow}{if} (!handle) \{
+    System\_printf(\textcolor{stringliteral}{"USBMSCHFatFs did not open"});
+\}
+\end{DoxyCode}
+
+
+\subsubsection*{Implementation}
+
+This module serves as the main interface for T\+I-\/\+R\+T\+O\+S applications. Its purpose is to redirect the module\textquotesingle{}s A\+P\+Is to specific peripheral implementations which are specified using a pointer to a \hyperlink{struct_u_s_b_m_s_c_h_fat_fs___fxn_table}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Fxn\+Table}.
+
+The U\+S\+B\+M\+S\+C\+H\+Fat\+Fs driver interface module is joined (at link time) to a N\+U\+L\+L-\/terminated array of \hyperlink{struct_u_s_b_m_s_c_h_fat_fs___config}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config} data structures named {\itshape U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+config}. {\itshape U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+config} is implemented in the application with each entry being an instance of a U\+S\+B\+M\+S\+C\+H\+Fat\+Fs peripheral. Each entry in {\itshape U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+config} contains a\+:
+\begin{DoxyItemize}
+\item (\hyperlink{struct_u_s_b_m_s_c_h_fat_fs___fxn_table}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Fxn\+Table} $\ast$) to a set of functions that implement a U\+S\+B\+M\+S\+C\+H\+Fat\+Fs peripheral
+\item (void $\ast$) data object that is associated with the \hyperlink{struct_u_s_b_m_s_c_h_fat_fs___fxn_table}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Fxn\+Table}
+\item (void $\ast$) hardware attributes that are associated to the \hyperlink{struct_u_s_b_m_s_c_h_fat_fs___fxn_table}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Fxn\+Table}
+\end{DoxyItemize}
+
+\subsubsection*{Instrumentation}
+
+The U\+S\+B\+M\+S\+C\+H\+Fat\+Fs driver interface produces log statements if instrumentation is enabled.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Diagnostics Mask }&{\bf Log details  }\\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R1 &basic operations performed \\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R2 &detailed operations performed \\\cline{1-2}
+\end{TabularC}
+
+
+{\ttfamily \#include $<$stddef.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+Include dependency graph for U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{_u_s_b_m_s_c_h_fat_fs_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_u_s_b_m_s_c_h_fat_fs___params}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em U\+S\+B\+M\+S\+C\+H\+Fat\+Fs Parameters. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_u_s_b_m_s_c_h_fat_fs___fxn_table}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Fxn\+Table}
+\begin{DoxyCompactList}\small\item\em The definition of a U\+S\+B\+M\+S\+C\+H\+Fat\+Fs function table that contains the required set of functions to control a specific U\+S\+B\+M\+S\+C\+H\+Fat\+Fs driver implementation. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_u_s_b_m_s_c_h_fat_fs___config}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em U\+S\+B\+M\+S\+C\+H\+Fat\+Fs Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group___u_s_b_m_s_c_h_fat_fs___c_o_n_t_r_o_l_gad004ac61340295d4d9b03cf1c2e202c4}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~32
+\item 
+\#define \hyperlink{group___u_s_b_m_s_c_h_fat_fs___c_o_n_t_r_o_l_ga545b1522b0f10d6215484ade86b5dcc8}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~-\/32
+\item 
+\#define \hyperlink{group___u_s_b_m_s_c_h_fat_fs___s_t_a_t_u_s_ga40e5ecd349cbaeb9f524b568240822d3}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}~0
+\begin{DoxyCompactList}\small\item\em Successful status code returned by \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a8725aac569cefabe624b5bfda0d07422}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___u_s_b_m_s_c_h_fat_fs___s_t_a_t_u_s_gabf90bd396f6e1caf142983768aafee6d}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}~-\/1
+\begin{DoxyCompactList}\small\item\em Generic error status code returned by \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a8725aac569cefabe624b5bfda0d07422}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___u_s_b_m_s_c_h_fat_fs___s_t_a_t_u_s_ga60260295df38b47e3e58ec29003d52b4}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}~-\/2
+\begin{DoxyCompactList}\small\item\em An error status code returned by \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a8725aac569cefabe624b5bfda0d07422}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control()} for undefined command codes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_u_s_b_m_s_c_h_fat_fs___config}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config} $\ast$ \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_ae35f957205bbddee73fb052b33b1719b}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle}
+\begin{DoxyCompactList}\small\item\em U\+S\+B\+M\+S\+C\+H\+Fat\+Fs Handler. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_u_s_b_m_s_c_h_fat_fs___params}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params} \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a06f74db1fc3ff6554070ee18b255b6f2}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em U\+S\+B\+M\+S\+C\+H\+Fat\+Fs Parameters. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a2909390706605acd0972b1d77aa449e5}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Init\+Fxn}) (\hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_ae35f957205bbddee73fb052b33b1719b}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a70cc0939d4a838e87e3bb4742dae442e}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+init()}. \end{DoxyCompactList}\item 
+typedef \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_ae35f957205bbddee73fb052b33b1719b}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle}($\ast$ \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_ae4916284bc1646118c40574df42a4bc8}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Open\+Fxn}) (\hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_ae35f957205bbddee73fb052b33b1719b}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle} handle, unsigned char drv, \hyperlink{struct_u_s_b_m_s_c_h_fat_fs___params}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a64956f1bd732672e4cd5592a4fef4a09}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+open()}. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a599ab79cca3d2ca8f00c72574baf6694}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Close\+Fxn}) (\hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_ae35f957205bbddee73fb052b33b1719b}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a842d3efc8c9eec33b501c3215a9c4abf}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+close()}. \end{DoxyCompactList}\item 
+typedef int($\ast$ \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_aee939ae4a7a17ef93e777a855bc70dcc}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Control\+Fxn}) (\hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_ae35f957205bbddee73fb052b33b1719b}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a8725aac569cefabe624b5bfda0d07422}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control()}. \end{DoxyCompactList}\item 
+typedef bool($\ast$ \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a0c9baca220e5c94c5b5e27cb8963e6f8}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+wait\+Forconnect\+Fxn}) (\hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_ae35f957205bbddee73fb052b33b1719b}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle} handle, unsigned int timeout)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_afc7ee4e1bbb95a37943335833a27f94c}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+wait\+For\+Connect()}. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_u_s_b_m_s_c_h_fat_fs___fxn_table}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Fxn\+Table} \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a1d6f17f051fce0337c51c8c56d9b4675}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Fxn\+Table}
+\begin{DoxyCompactList}\small\item\em The definition of a U\+S\+B\+M\+S\+C\+H\+Fat\+Fs function table that contains the required set of functions to control a specific U\+S\+B\+M\+S\+C\+H\+Fat\+Fs driver implementation. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_u_s_b_m_s_c_h_fat_fs___config}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config} \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a880b0f12857d333b89a769963e0aad40}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em U\+S\+B\+M\+S\+C\+H\+Fat\+Fs Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a842d3efc8c9eec33b501c3215a9c4abf}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+close} (\hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_ae35f957205bbddee73fb052b33b1719b}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to closes a given U\+S\+B\+M\+S\+C\+H\+Fat\+Fs peripheral specified by the U\+S\+B\+M\+S\+C\+H\+Fat\+Fs handle. This function unmounts the file system mounted by U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+open and unregisters the U\+S\+B\+M\+S\+C\+H\+Fat\+Fs driver from B\+I\+O\+S\textquotesingle{} Fat\+Fs module. \end{DoxyCompactList}\item 
+int \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a8725aac569cefabe624b5bfda0d07422}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control} (\hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_ae35f957205bbddee73fb052b33b1719b}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em Function performs implementation specific features on a given U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle. \end{DoxyCompactList}\item 
+void \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a70cc0939d4a838e87e3bb4742dae442e}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em Function to initialize the U\+S\+B\+M\+S\+C\+H\+Fat\+Fs module. \end{DoxyCompactList}\item 
+\hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_ae35f957205bbddee73fb052b33b1719b}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle} \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a64956f1bd732672e4cd5592a4fef4a09}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+open} (unsigned int index, unsigned char drv, \hyperlink{struct_u_s_b_m_s_c_h_fat_fs___params}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em This function registers the U\+S\+B\+M\+S\+C\+H\+Fat\+Fs driver with B\+I\+O\+S\textquotesingle{} Fat\+Fs module and mounts the Fat\+Fs file system. \end{DoxyCompactList}\item 
+void \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_ae46d9bf936f1837eddea6e787954afec}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params\+\_\+init} (\hyperlink{struct_u_s_b_m_s_c_h_fat_fs___params}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to initialize the \hyperlink{struct_u_s_b_m_s_c_h_fat_fs___params}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params} structure to its defaults. \end{DoxyCompactList}\item 
+bool \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_afc7ee4e1bbb95a37943335833a27f94c}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+wait\+For\+Connect} (\hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_ae35f957205bbddee73fb052b33b1719b}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle} handle, unsigned int timeout)
+\begin{DoxyCompactList}\small\item\em Function blocks task execution while no U\+S\+B drive is enumerated. After the U\+S\+B\+M\+S\+C\+H\+Fat\+Fs driver has been opened this functino is used to determine when a U\+S\+B drive is has been enumerated. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Typedef Documentation}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle}}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}}
+\paragraph[{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config}$\ast$ {\bf U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle}}\label{_u_s_b_m_s_c_h_fat_fs_8h_ae35f957205bbddee73fb052b33b1719b}
+
+
+U\+S\+B\+M\+S\+C\+H\+Fat\+Fs Handler. 
+
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params}}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}}
+\paragraph[{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params}  {\bf U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params}}\label{_u_s_b_m_s_c_h_fat_fs_8h_a06f74db1fc3ff6554070ee18b255b6f2}
+
+
+U\+S\+B\+M\+S\+C\+H\+Fat\+Fs Parameters. 
+
+U\+S\+B\+M\+S\+C\+H\+Fat\+Fs parameters are used to with the \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a64956f1bd732672e4cd5592a4fef4a09}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+open()} call. Default values for these parameters are set using \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_ae46d9bf936f1837eddea6e787954afec}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params\+\_\+init()}.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_ae46d9bf936f1837eddea6e787954afec}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params\+\_\+init()} 
+\end{DoxySeeAlso}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Init\+Fxn@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Init\+Fxn}}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Init\+Fxn@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Init\+Fxn}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}}
+\paragraph[{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Init\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Init\+Fxn) ({\bf U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle} handle)}\label{_u_s_b_m_s_c_h_fat_fs_8h_a2909390706605acd0972b1d77aa449e5}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a70cc0939d4a838e87e3bb4742dae442e}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+init()}. 
+
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Open\+Fxn@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Open\+Fxn}}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Open\+Fxn@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Open\+Fxn}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}}
+\paragraph[{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Open\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle}($\ast$ U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Open\+Fxn) ({\bf U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle} handle, unsigned char drv, {\bf U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params} $\ast$params)}\label{_u_s_b_m_s_c_h_fat_fs_8h_ae4916284bc1646118c40574df42a4bc8}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a64956f1bd732672e4cd5592a4fef4a09}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+open()}. 
+
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Close\+Fxn@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Close\+Fxn}}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Close\+Fxn@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Close\+Fxn}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}}
+\paragraph[{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Close\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Close\+Fxn) ({\bf U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle} handle)}\label{_u_s_b_m_s_c_h_fat_fs_8h_a599ab79cca3d2ca8f00c72574baf6694}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a842d3efc8c9eec33b501c3215a9c4abf}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+close()}. 
+
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Control\+Fxn@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Control\+Fxn}}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Control\+Fxn@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Control\+Fxn}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}}
+\paragraph[{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Control\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef int($\ast$ U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Control\+Fxn) ({\bf U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)}\label{_u_s_b_m_s_c_h_fat_fs_8h_aee939ae4a7a17ef93e777a855bc70dcc}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a8725aac569cefabe624b5bfda0d07422}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control()}. 
+
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+wait\+Forconnect\+Fxn@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+wait\+Forconnect\+Fxn}}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+wait\+Forconnect\+Fxn@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+wait\+Forconnect\+Fxn}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}}
+\paragraph[{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+wait\+Forconnect\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef bool($\ast$ U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+wait\+Forconnect\+Fxn) ({\bf U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle} handle, unsigned int timeout)}\label{_u_s_b_m_s_c_h_fat_fs_8h_a0c9baca220e5c94c5b5e27cb8963e6f8}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_afc7ee4e1bbb95a37943335833a27f94c}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+wait\+For\+Connect()}. 
+
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Fxn\+Table@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Fxn\+Table}}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Fxn\+Table@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Fxn\+Table}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}}
+\paragraph[{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Fxn\+Table}  {\bf U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Fxn\+Table}}\label{_u_s_b_m_s_c_h_fat_fs_8h_a1d6f17f051fce0337c51c8c56d9b4675}
+
+
+The definition of a U\+S\+B\+M\+S\+C\+H\+Fat\+Fs function table that contains the required set of functions to control a specific U\+S\+B\+M\+S\+C\+H\+Fat\+Fs driver implementation. 
+
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config}}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}}
+\paragraph[{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config}  {\bf U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config}}\label{_u_s_b_m_s_c_h_fat_fs_8h_a880b0f12857d333b89a769963e0aad40}
+
+
+U\+S\+B\+M\+S\+C\+H\+Fat\+Fs Global configuration. 
+
+The \hyperlink{struct_u_s_b_m_s_c_h_fat_fs___config}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config} structure contains a set of pointers used to characterize the U\+S\+B\+M\+S\+C\+H\+Fat\+Fs driver implementation.
+
+This structure needs to be defined before calling \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a70cc0939d4a838e87e3bb4742dae442e}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+init()} and it must not be changed thereafter.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a70cc0939d4a838e87e3bb4742dae442e}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Function Documentation}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+close@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+close}}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+close@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+close}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}}
+\paragraph[{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}void U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{{\bf U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_u_s_b_m_s_c_h_fat_fs_8h_a842d3efc8c9eec33b501c3215a9c4abf}
+
+
+Function to closes a given U\+S\+B\+M\+S\+C\+H\+Fat\+Fs peripheral specified by the U\+S\+B\+M\+S\+C\+H\+Fat\+Fs handle. This function unmounts the file system mounted by U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+open and unregisters the U\+S\+B\+M\+S\+C\+H\+Fat\+Fs driver from B\+I\+O\+S\textquotesingle{} Fat\+Fs module. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a64956f1bd732672e4cd5592a4fef4a09}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+open()} had to be called first.
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+After calling this function, it is safe to remove the U\+S\+B drive
+\end{DoxyPostcond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle returned from U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+open\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a64956f1bd732672e4cd5592a4fef4a09}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control}}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}}
+\paragraph[{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control}]{\setlength{\rightskip}{0pt plus 5cm}int U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control (
+\begin{DoxyParamCaption}
+\item[{{\bf U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{cmd, }
+\item[{void $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}\label{_u_s_b_m_s_c_h_fat_fs_8h_a8725aac569cefabe624b5bfda0d07422}
+
+
+Function performs implementation specific features on a given U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle. 
+
+Commands for U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control can originate from \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h} or from implementation specific U\+S\+B\+M\+S\+C\+H\+Fat\+Fs$\ast$.h ({\itshape U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+Tiva.\+h}, etc.. ) files. While commands from \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h} are A\+P\+I portable across driver implementations, not all implementations may support all these commands. Conversely, commands from driver implementation specific U\+S\+B\+M\+S\+C\+H\+Fat\+Fs$\ast$.h files add unique driver capabilities but are not A\+P\+I portable across all U\+S\+B\+M\+S\+C\+H\+Fat\+Fs driver implementations.
+
+Commands supported by \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h} follow a U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+C\+M\+D\+\_\+$<$cmd$>$ naming convention.~\newline
+ Commands supported by U\+S\+B\+M\+S\+C\+H\+Fat\+Fs$\ast$.h follow a U\+S\+B\+M\+S\+C\+H\+Fat\+Fs$\ast$\+\_\+\+C\+M\+D\+\_\+$<$cmd$>$ naming convention.~\newline
+ Each control command defines {\bfseries arg} differently. The types of {\bfseries arg} are documented with each command.
+
+See \hyperlink{group___u_s_b_m_s_c_h_fat_fs___c_m_d}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control command codes} for command codes.
+
+See \hyperlink{group___u_s_b_m_s_c_h_fat_fs___s_t_a_t_u_s}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+control return status codes} for status codes.
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a64956f1bd732672e4cd5592a4fef4a09}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+open()} has to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A U\+S\+B\+M\+S\+C\+H\+Fat\+Fs handle returned from \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a64956f1bd732672e4cd5592a4fef4a09}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+open()}\\
+\hline
+{\em cmd} & \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h} or U\+S\+B\+M\+S\+C\+H\+Fat\+Fs$\ast$.h commands.\\
+\hline
+{\em arg} & An optional R/\+W (read/write) command argument accompanied with cmd\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Implementation specific return codes. Negative values indicate unsuccessful operations.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a64956f1bd732672e4cd5592a4fef4a09}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+init@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+init}}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+init@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+init}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}}
+\paragraph[{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_u_s_b_m_s_c_h_fat_fs_8h_a70cc0939d4a838e87e3bb4742dae442e}
+
+
+Function to initialize the U\+S\+B\+M\+S\+C\+H\+Fat\+Fs module. 
+
+\begin{DoxyPrecond}{Precondition}
+The U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+config structure must exist and be persistent before this function can be called. This function must also be called before any other U\+S\+B\+M\+S\+C\+H\+Fat\+Fs driver A\+P\+Is. This function call does not modify any peripheral registers. 
+\end{DoxyPrecond}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+open@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+open}}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+open@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+open}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}}
+\paragraph[{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}{\bf U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle} U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+open (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{index, }
+\item[{unsigned char}]{drv, }
+\item[{{\bf U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_u_s_b_m_s_c_h_fat_fs_8h_a64956f1bd732672e4cd5592a4fef4a09}
+
+
+This function registers the U\+S\+B\+M\+S\+C\+H\+Fat\+Fs driver with B\+I\+O\+S\textquotesingle{} Fat\+Fs module and mounts the Fat\+Fs file system. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_ae46d9bf936f1837eddea6e787954afec}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params\+\_\+init()} has been called
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em index} & Logical peripheral number for the U\+S\+B\+M\+S\+C\+H\+Fat\+Fs indexed into the U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+config table\\
+\hline
+{\em drv} & Drive number to be associated with the U\+S\+B\+M\+S\+C\+H\+Fat\+Fs Fat\+Fs driver\\
+\hline
+{\em params} & Pointer to an parameter block, if N\+U\+L\+L it will use default values. All the fields in this structure are R\+O (read-\/only).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A pointer to a U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle on success or a N\+U\+L\+L it was already opened
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a70cc0939d4a838e87e3bb4742dae442e}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+init()} 
+
+\hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a842d3efc8c9eec33b501c3215a9c4abf}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+close()} 
+\end{DoxySeeAlso}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params\+\_\+init@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params\+\_\+init}}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params\+\_\+init@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params\+\_\+init}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}}
+\paragraph[{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_u_s_b_m_s_c_h_fat_fs_8h_ae46d9bf936f1837eddea6e787954afec}
+
+
+Function to initialize the \hyperlink{struct_u_s_b_m_s_c_h_fat_fs___params}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params} structure to its defaults. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & An pointer to \hyperlink{struct_u_s_b_m_s_c_h_fat_fs___params}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params} structure for initialization\\
+\hline
+\end{DoxyParams}
+Defaults values are\+: service\+Priority = Task\+\_\+num\+Priorities -\/ 1; \index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+wait\+For\+Connect@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+wait\+For\+Connect}}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+wait\+For\+Connect@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+wait\+For\+Connect}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}}
+\paragraph[{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+wait\+For\+Connect}]{\setlength{\rightskip}{0pt plus 5cm}bool U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+wait\+For\+Connect (
+\begin{DoxyParamCaption}
+\item[{{\bf U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{timeout}
+\end{DoxyParamCaption}
+)}\label{_u_s_b_m_s_c_h_fat_fs_8h_afc7ee4e1bbb95a37943335833a27f94c}
+
+
+Function blocks task execution while no U\+S\+B drive is enumerated. After the U\+S\+B\+M\+S\+C\+H\+Fat\+Fs driver has been opened this functino is used to determine when a U\+S\+B drive is has been enumerated. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A U\+S\+B\+M\+S\+C\+H\+Fat\+Fs handle\\
+\hline
+{\em timeout} & Timeout period in system ticks for the task to block\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+status\+:
+\begin{DoxyItemize}
+\item true\+: Successful
+\item false\+: timed out 
+\end{DoxyItemize}
+\end{DoxyReturn}

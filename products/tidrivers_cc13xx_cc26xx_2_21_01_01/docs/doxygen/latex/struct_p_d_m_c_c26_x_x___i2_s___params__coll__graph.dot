@@ -1,0 +1,10 @@
+digraph "PDMCC26XX_I2S_Params"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="PDMCC26XX_I2S_Params",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" currentStream" ];
+  Node2 [label="PDMCC26XX_I2S_StreamNotification",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_p_d_m_c_c26_x_x___i2_s___stream_notification.html",tooltip="A PDMCC26XX_I2S_StreamNotification data structure is used with PDMCC26XX_I2S_CallbackFxn(). Provides notification about available buffers and potential errors. "];
+  Node3 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" callbackFxn" ];
+  Node3 [label="PDMCC26XX_I2S_Config",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_p_d_m_c_c26_x_x___i2_s___config.html",tooltip="The PDMCC26XX_I2S_Config structure contains a set of pointers used to characterize the PDMCC26XX_I2S ..."];
+}

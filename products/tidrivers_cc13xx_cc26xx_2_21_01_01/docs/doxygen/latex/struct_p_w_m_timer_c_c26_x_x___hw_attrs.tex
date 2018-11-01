@@ -1,0 +1,53 @@
+\subsection{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Hw\+Attrs Struct Reference}
+\label{struct_p_w_m_timer_c_c26_x_x___hw_attrs}\index{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Hw\+Attrs@{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Hw\+Attrs}}
+
+
+P\+W\+M\+Timer26\+X\+X Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$P\+W\+M\+Timer\+C\+C26\+X\+X.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_p_i_n_8h_a9ae8197f460bb76ea09a84f47d09921f}{P\+I\+N\+\_\+\+Id} \hyperlink{struct_p_w_m_timer_c_c26_x_x___hw_attrs_a51bf646e2e56d0dbe1c3b79af314af08}{pwm\+Pin}
+\item 
+uint8\+\_\+t \hyperlink{struct_p_w_m_timer_c_c26_x_x___hw_attrs_a82c34a1970bf960c04b72f28ecebe1c8}{gp\+Timer\+Unit}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+P\+W\+M\+Timer26\+X\+X Hardware attributes. 
+
+These fields are used by the driver to set up underlying P\+I\+N and G\+P\+Timer driver statically. A sample structure is shown below\+:
+
+
+\begin{DoxyCode}
+\textcolor{comment}{// PWM configuration, one per PWM output}
+PWMTimerCC26XX_HwAttrs pwmtimerCC26xxHWAttrs[CC2650\_PWMCOUNT] = \{
+ \{ .pwmPin = Board\_PWMPIN0, .gpTimerUnit = CC2650\_GPTIMER0A \} ,
+ \{ .pwmPin = Board\_PWMPIN1, .gpTimerUnit = CC2650\_GPTIMER0B \} ,
+ \{ .pwmPin = Board\_PWMPIN2, .gpTimerUnit = CC2650\_GPTIMER1A \} ,
+ \{ .pwmPin = Board\_PWMPIN3, .gpTimerUnit = CC2650\_GPTIMER1B \} ,
+ \{ .pwmPin = Board\_PWMPIN4, .gpTimerUnit = CC2650\_GPTIMER2A \} ,
+ \{ .pwmPin = Board\_PWMPIN5, .gpTimerUnit = CC2650\_GPTIMER2B \} ,
+ \{ .pwmPin = Board\_PWMPIN6, .gpTimerUnit = CC2650\_GPTIMER3A \} ,
+ \{ .pwmPin = Board\_PWMPIN7, .gpTimerUnit = CC2650\_GPTIMER3B \} ,
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Hw\+Attrs@{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Hw\+Attrs}!pwm\+Pin@{pwm\+Pin}}
+\index{pwm\+Pin@{pwm\+Pin}!P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Hw\+Attrs@{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Hw\+Attrs}}
+\paragraph[{pwm\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+I\+N\+\_\+\+Id} P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Hw\+Attrs\+::pwm\+Pin}\label{struct_p_w_m_timer_c_c26_x_x___hw_attrs_a51bf646e2e56d0dbe1c3b79af314af08}
+P\+I\+N to output P\+W\+M signal on \index{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Hw\+Attrs@{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Hw\+Attrs}!gp\+Timer\+Unit@{gp\+Timer\+Unit}}
+\index{gp\+Timer\+Unit@{gp\+Timer\+Unit}!P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Hw\+Attrs@{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Hw\+Attrs}}
+\paragraph[{gp\+Timer\+Unit}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Hw\+Attrs\+::gp\+Timer\+Unit}\label{struct_p_w_m_timer_c_c26_x_x___hw_attrs_a82c34a1970bf960c04b72f28ecebe1c8}
+G\+P\+Timer unit index (0\+A, 0\+B, 1\+A..) 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_p_w_m_timer_c_c26_x_x_8h}{P\+W\+M\+Timer\+C\+C26\+X\+X.\+h}\end{DoxyCompactItemize}

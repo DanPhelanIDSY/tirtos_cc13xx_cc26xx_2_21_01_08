@@ -1,0 +1,154 @@
+\subsection{Display\+Sharp.\+h File Reference}
+\label{_display_sharp_8h}\index{Display\+Sharp.\+h@{Display\+Sharp.\+h}}
+{\ttfamily \#include $<$ti/sysbios/knl/\+Semaphore.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+P\+I\+N.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+S\+P\+I.\+h$>$}\\*
+{\ttfamily \#include $<$ti/mw/display/\+Display.\+h$>$}\\*
+{\ttfamily \#include $<$ti/mw/grlib/grlib.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+Include dependency graph for Display\+Sharp.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_display_sharp_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_display_sharp_color__t}{Display\+Sharp\+Color\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Foreground and background color struct, compatible with Gr\+Lib. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_display_sharp___h_w_attrs}{Display\+Sharp\+\_\+\+H\+W\+Attrs}
+\item 
+struct \hyperlink{struct_display_sharp___object}{Display\+Sharp\+\_\+\+Object}
+\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group___d_i_s_p_l_a_y___c_m_d_ga27b9623d9abc7aa7eeae74ea7d77cd0f}{D\+I\+S\+P\+L\+A\+Y\+S\+H\+A\+R\+P\+\_\+\+C\+M\+D\+\_\+\+S\+E\+T\+\_\+\+C\+O\+L\+O\+R\+S}~\hyperlink{group___d_i_s_p_l_a_y___c_o_n_t_r_o_l_ga99c2401cd11ea3b49e5e3e4ffac5c886}{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D} + 0
+\begin{DoxyCompactList}\small\item\em Command used by Display\+\_\+control to invert the display. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_display_sharp___h_w_attrs}{Display\+Sharp\+\_\+\+H\+W\+Attrs} \hyperlink{_display_sharp_8h_aa62462bfa240d8baa1496f068b9e6b72}{Display\+Sharp\+\_\+\+H\+W\+Attrs}
+\item 
+typedef uint8\+\_\+t \hyperlink{_display_sharp_8h_a252644281442bd3d66e41b9f4bf668f3}{Display\+Sharp\+\_\+\+Buf\+\_\+96x96}\mbox{[}96 $\ast$96/8\mbox{]}
+\item 
+typedef uint8\+\_\+t \hyperlink{_display_sharp_8h_ad8ce0f227370642020f4950d846f099b}{Display\+Sharp\+\_\+\+Buf\+\_\+128x128}\mbox{[}128 $\ast$128/8\mbox{]}
+\item 
+typedef struct \hyperlink{struct_display_sharp___object}{Display\+Sharp\+\_\+\+Object} \hyperlink{_display_sharp_8h_a5c889fe79898e80e246386ed4b147a42}{Display\+Sharp\+\_\+\+Object}
+\item 
+typedef struct \hyperlink{struct_display_sharp___object}{Display\+Sharp\+\_\+\+Object} $\ast$ \hyperlink{_display_sharp_8h_aa5921b9b7a4e44e010d86b858f3de52d}{Display\+Sharp\+\_\+\+Handle}
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} \hyperlink{_display_sharp_8h_a97a0ae6d2811237e4b0cddac24e04880}{Display\+Sharp\+\_\+open} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle}, \hyperlink{struct_display___params}{Display\+\_\+\+Params} $\ast$params)
+\item 
+void \hyperlink{_display_sharp_8h_adbb2a9fd5349f5ae4cb881a57da90c52}{Display\+Sharp\+\_\+clear} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle)
+\item 
+void \hyperlink{_display_sharp_8h_a6ca5f8e56b7d7e14d1c8facc1364edb1}{Display\+Sharp\+\_\+clear\+Lines} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle, uint8\+\_\+t from\+Line, uint8\+\_\+t to\+Line)
+\item 
+void \hyperlink{_display_sharp_8h_a16d462b9d57110237f30a201e9ff4676}{Display\+Sharp\+\_\+put5} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle, uint8\+\_\+t line, uint8\+\_\+t column, uintptr\+\_\+t fmt, uintptr\+\_\+t a0, uintptr\+\_\+t a1, uintptr\+\_\+t a2, uintptr\+\_\+t a3, uintptr\+\_\+t a4)
+\item 
+void \hyperlink{_display_sharp_8h_a681c21997c6cc14058bba72bc0586ef4}{Display\+Sharp\+\_\+close} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle})
+\item 
+int \hyperlink{_display_sharp_8h_a4ab2badbd3b5e9ce136a2d5d6766674a}{Display\+Sharp\+\_\+control} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)
+\item 
+unsigned int \hyperlink{_display_sharp_8h_a84b926652d7f687008dc7cd081325c61}{Display\+Sharp\+\_\+get\+Type} (void)
+\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_display___fxn_table}{Display\+\_\+\+Fxn\+Table} \hyperlink{_display_sharp_8h_a0177a7fbf362ab53a6fe3d520dd62017}{Display\+Sharp\+\_\+fxn\+Table}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Typedef Documentation}
+\index{Display\+Sharp.\+h@{Display\+Sharp.\+h}!Display\+Sharp\+\_\+\+H\+W\+Attrs@{Display\+Sharp\+\_\+\+H\+W\+Attrs}}
+\index{Display\+Sharp\+\_\+\+H\+W\+Attrs@{Display\+Sharp\+\_\+\+H\+W\+Attrs}!Display\+Sharp.\+h@{Display\+Sharp.\+h}}
+\paragraph[{Display\+Sharp\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Display\+Sharp\+\_\+\+H\+W\+Attrs}  {\bf Display\+Sharp\+\_\+\+H\+W\+Attrs}}\label{_display_sharp_8h_aa62462bfa240d8baa1496f068b9e6b72}
+\index{Display\+Sharp.\+h@{Display\+Sharp.\+h}!Display\+Sharp\+\_\+\+Buf\+\_\+96x96@{Display\+Sharp\+\_\+\+Buf\+\_\+96x96}}
+\index{Display\+Sharp\+\_\+\+Buf\+\_\+96x96@{Display\+Sharp\+\_\+\+Buf\+\_\+96x96}!Display\+Sharp.\+h@{Display\+Sharp.\+h}}
+\paragraph[{Display\+Sharp\+\_\+\+Buf\+\_\+96x96}]{\setlength{\rightskip}{0pt plus 5cm}typedef uint8\+\_\+t Display\+Sharp\+\_\+\+Buf\+\_\+96x96\mbox{[}96 $\ast$96/8\mbox{]}}\label{_display_sharp_8h_a252644281442bd3d66e41b9f4bf668f3}
+\index{Display\+Sharp.\+h@{Display\+Sharp.\+h}!Display\+Sharp\+\_\+\+Buf\+\_\+128x128@{Display\+Sharp\+\_\+\+Buf\+\_\+128x128}}
+\index{Display\+Sharp\+\_\+\+Buf\+\_\+128x128@{Display\+Sharp\+\_\+\+Buf\+\_\+128x128}!Display\+Sharp.\+h@{Display\+Sharp.\+h}}
+\paragraph[{Display\+Sharp\+\_\+\+Buf\+\_\+128x128}]{\setlength{\rightskip}{0pt plus 5cm}typedef uint8\+\_\+t Display\+Sharp\+\_\+\+Buf\+\_\+128x128\mbox{[}128 $\ast$128/8\mbox{]}}\label{_display_sharp_8h_ad8ce0f227370642020f4950d846f099b}
+\index{Display\+Sharp.\+h@{Display\+Sharp.\+h}!Display\+Sharp\+\_\+\+Object@{Display\+Sharp\+\_\+\+Object}}
+\index{Display\+Sharp\+\_\+\+Object@{Display\+Sharp\+\_\+\+Object}!Display\+Sharp.\+h@{Display\+Sharp.\+h}}
+\paragraph[{Display\+Sharp\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Display\+Sharp\+\_\+\+Object}  {\bf Display\+Sharp\+\_\+\+Object}}\label{_display_sharp_8h_a5c889fe79898e80e246386ed4b147a42}
+\index{Display\+Sharp.\+h@{Display\+Sharp.\+h}!Display\+Sharp\+\_\+\+Handle@{Display\+Sharp\+\_\+\+Handle}}
+\index{Display\+Sharp\+\_\+\+Handle@{Display\+Sharp\+\_\+\+Handle}!Display\+Sharp.\+h@{Display\+Sharp.\+h}}
+\paragraph[{Display\+Sharp\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Display\+Sharp\+\_\+\+Object} $\ast$ {\bf Display\+Sharp\+\_\+\+Handle}}\label{_display_sharp_8h_aa5921b9b7a4e44e010d86b858f3de52d}
+
+
+\subsubsection{Function Documentation}
+\index{Display\+Sharp.\+h@{Display\+Sharp.\+h}!Display\+Sharp\+\_\+open@{Display\+Sharp\+\_\+open}}
+\index{Display\+Sharp\+\_\+open@{Display\+Sharp\+\_\+open}!Display\+Sharp.\+h@{Display\+Sharp.\+h}}
+\paragraph[{Display\+Sharp\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Display\+\_\+\+Handle} Display\+Sharp\+\_\+open (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{, }
+\item[{{\bf Display\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_display_sharp_8h_a97a0ae6d2811237e4b0cddac24e04880}
+\index{Display\+Sharp.\+h@{Display\+Sharp.\+h}!Display\+Sharp\+\_\+clear@{Display\+Sharp\+\_\+clear}}
+\index{Display\+Sharp\+\_\+clear@{Display\+Sharp\+\_\+clear}!Display\+Sharp.\+h@{Display\+Sharp.\+h}}
+\paragraph[{Display\+Sharp\+\_\+clear}]{\setlength{\rightskip}{0pt plus 5cm}void Display\+Sharp\+\_\+clear (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_display_sharp_8h_adbb2a9fd5349f5ae4cb881a57da90c52}
+\index{Display\+Sharp.\+h@{Display\+Sharp.\+h}!Display\+Sharp\+\_\+clear\+Lines@{Display\+Sharp\+\_\+clear\+Lines}}
+\index{Display\+Sharp\+\_\+clear\+Lines@{Display\+Sharp\+\_\+clear\+Lines}!Display\+Sharp.\+h@{Display\+Sharp.\+h}}
+\paragraph[{Display\+Sharp\+\_\+clear\+Lines}]{\setlength{\rightskip}{0pt plus 5cm}void Display\+Sharp\+\_\+clear\+Lines (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{handle, }
+\item[{uint8\+\_\+t}]{from\+Line, }
+\item[{uint8\+\_\+t}]{to\+Line}
+\end{DoxyParamCaption}
+)}\label{_display_sharp_8h_a6ca5f8e56b7d7e14d1c8facc1364edb1}
+\index{Display\+Sharp.\+h@{Display\+Sharp.\+h}!Display\+Sharp\+\_\+put5@{Display\+Sharp\+\_\+put5}}
+\index{Display\+Sharp\+\_\+put5@{Display\+Sharp\+\_\+put5}!Display\+Sharp.\+h@{Display\+Sharp.\+h}}
+\paragraph[{Display\+Sharp\+\_\+put5}]{\setlength{\rightskip}{0pt plus 5cm}void Display\+Sharp\+\_\+put5 (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{handle, }
+\item[{uint8\+\_\+t}]{line, }
+\item[{uint8\+\_\+t}]{column, }
+\item[{uintptr\+\_\+t}]{fmt, }
+\item[{uintptr\+\_\+t}]{a0, }
+\item[{uintptr\+\_\+t}]{a1, }
+\item[{uintptr\+\_\+t}]{a2, }
+\item[{uintptr\+\_\+t}]{a3, }
+\item[{uintptr\+\_\+t}]{a4}
+\end{DoxyParamCaption}
+)}\label{_display_sharp_8h_a16d462b9d57110237f30a201e9ff4676}
+\index{Display\+Sharp.\+h@{Display\+Sharp.\+h}!Display\+Sharp\+\_\+close@{Display\+Sharp\+\_\+close}}
+\index{Display\+Sharp\+\_\+close@{Display\+Sharp\+\_\+close}!Display\+Sharp.\+h@{Display\+Sharp.\+h}}
+\paragraph[{Display\+Sharp\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}void Display\+Sharp\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{}
+\end{DoxyParamCaption}
+)}\label{_display_sharp_8h_a681c21997c6cc14058bba72bc0586ef4}
+\index{Display\+Sharp.\+h@{Display\+Sharp.\+h}!Display\+Sharp\+\_\+control@{Display\+Sharp\+\_\+control}}
+\index{Display\+Sharp\+\_\+control@{Display\+Sharp\+\_\+control}!Display\+Sharp.\+h@{Display\+Sharp.\+h}}
+\paragraph[{Display\+Sharp\+\_\+control}]{\setlength{\rightskip}{0pt plus 5cm}int Display\+Sharp\+\_\+control (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{cmd, }
+\item[{void $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}\label{_display_sharp_8h_a4ab2badbd3b5e9ce136a2d5d6766674a}
+\index{Display\+Sharp.\+h@{Display\+Sharp.\+h}!Display\+Sharp\+\_\+get\+Type@{Display\+Sharp\+\_\+get\+Type}}
+\index{Display\+Sharp\+\_\+get\+Type@{Display\+Sharp\+\_\+get\+Type}!Display\+Sharp.\+h@{Display\+Sharp.\+h}}
+\paragraph[{Display\+Sharp\+\_\+get\+Type}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int Display\+Sharp\+\_\+get\+Type (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_display_sharp_8h_a84b926652d7f687008dc7cd081325c61}
+
+
+\subsubsection{Variable Documentation}
+\index{Display\+Sharp.\+h@{Display\+Sharp.\+h}!Display\+Sharp\+\_\+fxn\+Table@{Display\+Sharp\+\_\+fxn\+Table}}
+\index{Display\+Sharp\+\_\+fxn\+Table@{Display\+Sharp\+\_\+fxn\+Table}!Display\+Sharp.\+h@{Display\+Sharp.\+h}}
+\paragraph[{Display\+Sharp\+\_\+fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Display\+\_\+\+Fxn\+Table} Display\+Sharp\+\_\+fxn\+Table}\label{_display_sharp_8h_a0177a7fbf362ab53a6fe3d520dd62017}

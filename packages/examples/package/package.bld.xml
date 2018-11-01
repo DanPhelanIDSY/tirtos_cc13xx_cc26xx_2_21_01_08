@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This file conforms to the DTD xdc/bld/build.dtd -->
+<package name="examples" version="" producerId="undefined">
+    <units>
+        <module name="TrexExamples"/>
+    </units>
+    <sources>
+    </sources>
+    <configscripts>
+    </configscripts>
+    <makefiles>
+        <srcFile name="package.mak" src="package.bld"/>
+        <srcFile name="package/package.xdc.dep" src="package.xdc"/>
+        <srcFile name="package/package.cfg.dep" src="package.xdc"/>
+        <srcFile name="package/rel/examples.tar.dep" src="package/rel/examples.xdc.inc"/>
+    </makefiles>
+    <targets>
+    </targets>
+    <libraries>
+    </libraries>
+    <configurations>
+    </configurations>
+    <executables>
+    </executables>
+    <tests>
+    </tests>
+    <releases relDir="package/rel/">
+    <release name="examples"
+        pname="examples.tar"
+        label="default"
+    >
+        <file name="package/package.bld.xml"/>
+        <file name="package/build.cfg"/>
+        <file name="package/package.xdc.inc"/>
+        <file name="Boards.xs"/>
+        <file name="ExampleList.xs"/>
+        <file name="makefile.defs"/>
+        <file name="package.bld"/>
+        <file name="productList.xs"/>
+        <file name="./source/display/README.md"/>
+        <file name="./source/display/display.cfg"/>
+        <file name="./source/display/splash_image.c"/>
+        <file name="./source/display/splash_image.h"/>
+        <file name="./source/display/display.c"/>
+        <file name="./source/display/README.html"/>
+        <file name="./source/adcsinglechannel/lprf/adcsinglechannel.c"/>
+        <file name="./source/adcsinglechannel/lprf/adcsinglechannel.cfg"/>
+        <file name="./source/adcsinglechannel/README.md"/>
+        <file name="./source/adcsinglechannel/README.html"/>
+        <file name="./source/adcbufcontinuous/lprf/adcBufContinuousSampling.c"/>
+        <file name="./source/adcbufcontinuous/lprf/adcBufContinuousSampling.cfg"/>
+        <file name="./source/adcbufcontinuous/README.md"/>
+        <file name="./source/adcbufcontinuous/README.html"/>
+        <file name="./source/empty/lprf/README.md"/>
+        <file name="./source/empty/lprf/empty.c"/>
+        <file name="./source/empty/lprf/empty.cfg"/>
+        <file name="./source/empty/lprf/README.html"/>
+        <file name="./source/empty_min/lprf/README.md"/>
+        <file name="./source/empty_min/lprf/empty_min.c"/>
+        <file name="./source/empty_min/lprf/empty_min.cfg"/>
+        <file name="./source/empty_min/lprf/README.html"/>
+        <file name="./source/lcdSmartRF06EB/README.md"/>
+        <file name="./source/lcdSmartRF06EB/lcdSmartRF06EB.cfg"/>
+        <file name="./source/lcdSmartRF06EB/README.html"/>
+        <file name="./source/lcdSmartRF06EB/lcdSmartRF06EB.c"/>
+        <file name="./source/pinInterrupt/README.md"/>
+        <file name="./source/pinInterrupt/pinInterrupt.c"/>
+        <file name="./source/pinInterrupt/pinInterrupt.cfg"/>
+        <file name="./source/pinInterrupt/README.html"/>
+        <file name="./source/pinShutdown/README.md"/>
+        <file name="./source/pinShutdown/pinShutdown.c"/>
+        <file name="./source/pinShutdown/pinShutdown.cfg"/>
+        <file name="./source/pinShutdown/README.html"/>
+        <file name="./source/pinStandby/README.md"/>
+        <file name="./source/pinStandby/pinStandby.c"/>
+        <file name="./source/pinStandby/pinStandby.cfg"/>
+        <file name="./source/pinStandby/README.html"/>
+        <file name="./source/pwmled/lprf/pwmled.c"/>
+        <file name="./source/pwmled/lprf/pwmled.cfg"/>
+        <file name="./source/pwmled/README.md"/>
+        <file name="./source/pwmled/README.html"/>
+        <file name="./source/rf/rfExamples.cfg"/>
+        <file name="./source/rfpacket/tx/README.md"/>
+        <file name="./source/rfpacket/tx/rfPacketTx.c"/>
+        <file name="./source/rfpacket/tx/README.html"/>
+        <file name="./source/rf/smartrf_settings/cc1310/smartrf_settings.c"/>
+        <file name="./source/rf/smartrf_settings/cc1310/smartrf_settings.h"/>
+        <file name="./source/rf/RFQueue.h"/>
+        <file name="./source/rf/RFQueue.c"/>
+        <file name="./source/rfpacket/rx/README.md"/>
+        <file name="./source/rfpacket/rx/rfPacketRx.c"/>
+        <file name="./source/rfpacket/rx/README.html"/>
+        <file name="./source/rfcarrierwave/README.md"/>
+        <file name="./source/rfcarrierwave/rfCarrierWave.c"/>
+        <file name="./source/rfcarrierwave/README.html"/>
+        <file name="./source/rf/easylink/EasyLink.h"/>
+        <file name="./source/rf/easylink/EasyLink.c"/>
+        <file name="./source/rfeasylink/tx/README.md"/>
+        <file name="./source/rfeasylink/tx/rfEasyLinkTx.c"/>
+        <file name="./source/rfeasylink/tx/README.html"/>
+        <file name="./source/rf/smartrf_settings/cc1310/smartrf_settings_predefined.c"/>
+        <file name="./source/rf/smartrf_settings/cc1310/smartrf_settings_predefined.h"/>
+        <file name="./source/rfeasylink/rx/README.md"/>
+        <file name="./source/rfeasylink/rx/rfEasyLinkRx.c"/>
+        <file name="./source/rfeasylink/rx/README.html"/>
+        <file name="./source/rf/at/AtControl.c"/>
+        <file name="./source/rf/at/AtControl.h"/>
+        <file name="./source/rf/at/AtParams.c"/>
+        <file name="./source/rf/at/AtParams.h"/>
+        <file name="./source/rf/at/AtProcess.c"/>
+        <file name="./source/rf/at/AtProcess.h"/>
+        <file name="./source/rf/at/platform/inc/AtTerm.h"/>
+        <file name="./source/rf/at/platform/tirtos/AtTerm.c"/>
+        <file name="./source/rf/at/platform/tirtos/DbgPrint.h"/>
+        <file name="./source/rf/at/platform/tirtos/PlatformTypes.h"/>
+        <file name="./source/rfeasylink/np/Per.c"/>
+        <file name="./source/rfeasylink/np/Per.h"/>
+        <file name="./source/rfeasylink/np/rfEasyLinkNp.c"/>
+        <file name="./source/rfeasylink/np/README.md"/>
+        <file name="./source/rfeasylink/np/README.html"/>
+        <file name="./source/rfPacketErrorRate/menu.c"/>
+        <file name="./source/rfPacketErrorRate/config.c"/>
+        <file name="./source/rfPacketErrorRate/config.h"/>
+        <file name="./source/rfPacketErrorRate/menu.h"/>
+        <file name="./source/rfPacketErrorRate/README.md"/>
+        <file name="./source/rfPacketErrorRate/README.html"/>
+        <file name="./source/rfPacketErrorRate/rfPacketErrorRate.c"/>
+        <file name="./source/rfPacketErrorRate/rx.c"/>
+        <file name="./source/rfPacketErrorRate/tx.c"/>
+        <file name="./source/rfwsn/RadioProtocol.h"/>
+        <file name="./source/rfwsn/concentrator/ConcentratorTask.c"/>
+        <file name="./source/rfwsn/concentrator/ConcentratorRadioTask.h"/>
+        <file name="./source/rfwsn/concentrator/README.md"/>
+        <file name="./source/rfwsn/concentrator/ConcentratorTask.h"/>
+        <file name="./source/rfwsn/concentrator/rfWsnConcentrator.c"/>
+        <file name="./source/rfwsn/concentrator/ConcentratorRadioTask.c"/>
+        <file name="./source/rfwsn/concentrator/README.html"/>
+        <file name="./source/rfwsn/SceAdc.c"/>
+        <file name="./source/rfwsn/SceAdc.h"/>
+        <file name="./source/rfwsn/node/README.md"/>
+        <file name="./source/rfwsn/node/NodeRadioTask.h"/>
+        <file name="./source/rfwsn/node/NodeTask.c"/>
+        <file name="./source/rfwsn/node/NodeTask.h"/>
+        <file name="./source/rfwsn/node/rfWsnNode.c"/>
+        <file name="./source/rfwsn/node/NodeRadioTask.c"/>
+        <file name="./source/rfwsn/node/README.html"/>
+        <file name="./source/rf/sce/dk/adc_sample.scp"/>
+        <file name="./source/rf/sce/dk/scif.c"/>
+        <file name="./source/rf/sce/dk/scif.h"/>
+        <file name="./source/rf/sce/dk/scif_framework.c"/>
+        <file name="./source/rf/sce/dk/scif_framework.h"/>
+        <file name="./source/rf/sce/dk/scif_osal_tirtos.c"/>
+        <file name="./source/rf/sce/dk/scif_osal_tirtos.h"/>
+        <file name="./source/rfwakeonradio/tx/README.md"/>
+        <file name="./source/rfwakeonradio/tx/rfWakeOnRadioTx.c"/>
+        <file name="./source/rfwakeonradio/tx/README.html"/>
+        <file name="./source/rfwakeonradio/rx/README.md"/>
+        <file name="./source/rfwakeonradio/rx/rfWakeOnRadioRx.c"/>
+        <file name="./source/rfwakeonradio/rx/README.html"/>
+        <file name="./source/rfListenBeforeTalk/README.md"/>
+        <file name="./source/rfListenBeforeTalk/application_settings.c"/>
+        <file name="./source/rfListenBeforeTalk/application_settings.h"/>
+        <file name="./source/rfListenBeforeTalk/rfListenBeforeTalk.c"/>
+        <file name="./source/rfListenBeforeTalk/README.html"/>
+        <file name="./source/uartecho/lprf/uartecho.c"/>
+        <file name="./source/uartecho/lprf/uartecho.cfg"/>
+        <file name="./source/uartecho/README.md"/>
+        <file name="./source/uartecho/README.html"/>
+        <file name="./source/kernel/benchloop/cc13xx_cc26xx/benchloop.cfg"/>
+        <file name="./source/kernel/benchloop/README.md"/>
+        <file name="./source/kernel/benchloop/benchloop.c"/>
+        <file name="./source/kernel/benchloop/README.html"/>
+        <file name="./source/kernel/bigtime/cc13xx_cc26xx/bigtime.cfg"/>
+        <file name="./source/kernel/bigtime/README.md"/>
+        <file name="./source/kernel/bigtime/bigtime.cpp"/>
+        <file name="./source/kernel/bigtime/README.html"/>
+        <file name="./source/kernel/clock/cc13xx_cc26xx/clock.cfg"/>
+        <file name="./source/kernel/clock/README.md"/>
+        <file name="./source/kernel/clock/clock.c"/>
+        <file name="./source/kernel/clock/README.html"/>
+        <file name="./source/kernel/error/cc13xx_cc26xx/error.cfg"/>
+        <file name="./source/kernel/error/README.md"/>
+        <file name="./source/kernel/error/error.c"/>
+        <file name="./source/kernel/error/README.html"/>
+        <file name="./source/kernel/hello/cc13xx_cc26xx/hello.cfg"/>
+        <file name="./source/kernel/hello/README.md"/>
+        <file name="./source/kernel/hello/hello.c"/>
+        <file name="./source/kernel/hello/README.html"/>
+        <file name="./source/kernel/memory/cc13xx_cc26xx/memory.cfg"/>
+        <file name="./source/kernel/memory/README.md"/>
+        <file name="./source/kernel/memory/memory.c"/>
+        <file name="./source/kernel/memory/README.html"/>
+        <file name="./source/kernel/mutex/cc13xx_cc26xx/mutex.cfg"/>
+        <file name="./source/kernel/mutex/README.md"/>
+        <file name="./source/kernel/mutex/mutex.c"/>
+        <file name="./source/kernel/mutex/README.html"/>
+        <file name="./source/kernel/semihost/cc13xx_cc26xx/semihost.cfg"/>
+        <file name="./source/kernel/semihost/README.md"/>
+        <file name="./source/kernel/semihost/semihost.c"/>
+        <file name="./source/kernel/semihost/README.html"/>
+        <file name="./source/kernel/swi/cc13xx_cc26xx/swi.cfg"/>
+        <file name="./source/kernel/swi/README.md"/>
+        <file name="./source/kernel/swi/swi.c"/>
+        <file name="./source/kernel/swi/README.html"/>
+        <file name="./source/rf/sce/launchxl/adc_sample.scp"/>
+        <file name="./source/rf/sce/launchxl/scif.c"/>
+        <file name="./source/rf/sce/launchxl/scif.h"/>
+        <file name="./source/rf/sce/launchxl/scif_framework.c"/>
+        <file name="./source/rf/sce/launchxl/scif_framework.h"/>
+        <file name="./source/rf/sce/launchxl/scif_osal_tirtos.c"/>
+        <file name="./source/rf/sce/launchxl/scif_osal_tirtos.h"/>
+        <file name="./source/rf/smartrf_settings/cc1350-lp/smartrf_settings.c"/>
+        <file name="./source/rf/smartrf_settings/cc1350-lp/smartrf_settings.h"/>
+        <file name="./source/rf/smartrf_settings/cc1350-lp/smartrf_settings_predefined.c"/>
+        <file name="./source/rf/smartrf_settings/cc1350-lp/smartrf_settings_predefined.h"/>
+        <file name="./source/rf/smartrf_settings/cc1350-lp/smartrf_settings_ble.c"/>
+        <file name="./source/rf/smartrf_settings/cc1350-lp/smartrf_settings_ble.h"/>
+        <file name="./source/rf/rfDmExamples.cfg"/>
+        <file name="./source/rf/seb/SEB.h"/>
+        <file name="./source/rf/seb/SEB.c"/>
+        <file name="./source/rf/seb/SimpleBeacon.h"/>
+        <file name="./source/rf/seb/SimpleBeacon.c"/>
+        <file name="./source/rf/bim/BimFactoryReset.h"/>
+        <file name="./source/rf/bim/BimFactoryReset.c"/>
+        <file name="./source/rf/bim/ext_flash_layout.h"/>
+        <file name="./source/rfwsn/concentratordm/DmConcentratorTask.c"/>
+        <file name="./source/rfwsn/concentratordm/DmConcentratorRadioTask.h"/>
+        <file name="./source/rfwsn/concentratordm/README.md"/>
+        <file name="./source/rfwsn/concentratordm/DmConcentratorTask.h"/>
+        <file name="./source/rfwsn/concentratordm/rfWsnDmConcentrator.c"/>
+        <file name="./source/rfwsn/concentratordm/DmConcentratorRadioTask.c"/>
+        <file name="./source/rfwsn/concentratordm/README.html"/>
+        <file name="./source/rfwsn/nodedm/node_dk_luanchxl/DmNodeRadioTask.c"/>
+        <file name="./source/rfwsn/nodedm/node_dk_luanchxl/DmNodeTask.c"/>
+        <file name="./source/rfwsn/nodedm/README.md"/>
+        <file name="./source/rfwsn/nodedm/DmNodeRadioTask.h"/>
+        <file name="./source/rfwsn/nodedm/DmNodeTask.h"/>
+        <file name="./source/rfwsn/nodedm/rfWsnDmNode.c"/>
+        <file name="./source/rfwsn/nodedm/README.html"/>
+        <file name="./source/i2ctmp007/lprf/i2ctmp007.c"/>
+        <file name="./source/i2ctmp007/lprf/i2ctmp007.cfg"/>
+        <file name="./source/i2ctmp007/README.md"/>
+        <file name="./source/i2ctmp007/README.html"/>
+        <file name="./source/pdmstream/README.md"/>
+        <file name="./source/pdmstream/pdmstream.c"/>
+        <file name="./source/pdmstream/pdmstream.cfg"/>
+        <file name="./source/pdmstream/README.html"/>
+        <file name="./source/rf/smartrf_settings/cc1350-stk/smartrf_settings.h"/>
+        <file name="./source/rf/smartrf_settings/cc1350-stk/smartrf_settings.c"/>
+        <file name="./source/rf/smartrf_settings/cc1350-stk/smartrf_settings_predefined.c"/>
+        <file name="./source/rf/smartrf_settings/cc1350-stk/smartrf_settings_predefined.h"/>
+        <file name="./source/rf/smartrf_settings/cc1350-stk/smartrf_settings_ble.c"/>
+        <file name="./source/rf/smartrf_settings/cc1350-stk/smartrf_settings_ble.h"/>
+        <file name="./source/rfwsn/nodedm/node_stk/DmNodeRadioTask.c"/>
+        <file name="./source/rfwsn/nodedm/node_stk/DmNodeTask.c"/>
+        <file name="./source/rf/smartrf_settings/cc2650/smartrf_settings.c"/>
+        <file name="./source/rf/smartrf_settings/cc2650/smartrf_settings.h"/>
+        <file name="./source/rf/smartrf_settings/cc2650/smartrf_settings_predefined.c"/>
+        <file name="./source/rf/smartrf_settings/cc2650/smartrf_settings_predefined.h"/>
+        <file name="./source/rf/smartrf_settings/cc2650/smartrf_settings_ble.c"/>
+        <file name="./source/rf/smartrf_settings/cc2650/smartrf_settings_ble.h"/>
+        <file name="package/package.cfg.xdc.inc"/>
+    </release>
+    </releases>
+    <repositories>
+    </repositories>
+</package>

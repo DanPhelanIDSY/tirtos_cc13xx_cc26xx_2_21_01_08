@@ -1,0 +1,506 @@
+\subsection{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h File Reference}
+\label{_a_d_c_buf_c_c26_x_x_8h}\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}
+
+
+\subsubsection{Detailed Description}
+A\+D\+C\+Buf driver implementation for a C\+C26\+X\+X analog-\/to-\/digital converter. 
+
+============================================================================
+
+\subsubsection*{Driver include}
+
+The A\+D\+C\+Buf header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/ADCBuf.h>}
+\textcolor{preprocessor}{#include <ti/drivers/adc/ADCBufCC26XX.h>}
+\end{DoxyCode}
+
+
+\subsubsection*{Overview}
+
+This is a C\+C26\+X\+X specific implementation of the generic T\+I-\/\+R\+T\+O\+S A\+D\+C\+Buf driver. The generic A\+D\+C\+Buf A\+P\+I specified in \hyperlink{_a_d_c_buf_8h}{ti/drivers/\+A\+D\+C\+Buf.\+h} should be called by the application, not the device specific implementation in ti/drivers/adcbuf/\+A\+D\+C\+Buf\+C\+C26\+X\+X. The board file defines the device specific configuration and casting in the general A\+P\+I ensures the correct device specific functions are called. You should specify an \hyperlink{struct_a_d_c_buf_c_c26_x_x___params_extension}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension} in the custom field of the \hyperlink{struct_a_d_c_buf___params}{A\+D\+C\+Buf\+\_\+\+Params} that suits your application. The default settings work for many, but not all, usecases.
+
+\subsubsection*{General Behavior}
+
+A timer and the D\+M\+A are used to trigger the A\+D\+C and fill a buffer in the background (in hardware) at a specified frequency. The application may execute other tasks while the hardware handles the conversions. In contrast to the standard ti/drivers/\+A\+D\+C driver, this driver allows for precise sampling of waveforms.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Driver }&{\bf Number of samples needed in one call  }\\\cline{1-2}
+\hyperlink{_a_d_c_8h}{A\+D\+C.\+h} &1 \\\cline{1-2}
+\hyperlink{_a_d_c_buf_8h}{A\+D\+C\+Buf.\+h} &$>$ 1 \\\cline{1-2}
+\end{TabularC}
+This A\+D\+C\+Buf driver provides an A\+P\+I interface to using the analog-\/to-\/digital converter directly from the C\+M3 without going through the sensor controller. The sensor controller can still use the A\+D\+C, support for sharing the A\+D\+C resource between the sensor controller and the C\+M3 is built into the driver. There is a hardware semaphore that the driver must aqcuire before beginning any number of conversions. This same hardware semaphore also prevents the simultaneous use of this driver and the basic A\+D\+C driver.
+
+The A\+D\+C drivers supports making between one and 1024 measurements once or continuous measuring with returned buffer sizes between one and 1024 measurements.
+
+The application should call \hyperlink{_a_d_c_buf_8h_a88a0ab421304465b22417a7adef6c0c2}{A\+D\+C\+Buf\+\_\+init()} once by the application to set the is\+Opened flag to false, indicating that the driver is ready to use.
+
+The A\+D\+C driver is opened by calling \hyperlink{_a_d_c_buf_8h_a0b63bca2e8f8e5b58f0c657ac662c97b}{A\+D\+C\+Buf\+\_\+open()} which will set up interrupts and configure the internal components of the driver. However, the A\+D\+C hardware or analog pins are not yet configured, since the sensor controller or basic A\+D\+C driver might be using the A\+D\+C.
+
+In order to perform an A\+D\+C conversion, the application should call \hyperlink{_a_d_c_buf_8h_a762253a94875258c5a71b591f03f9d97}{A\+D\+C\+Buf\+\_\+convert()}. This call will request the A\+D\+C resource, configure the A\+D\+C, set up the D\+M\+A and G\+P\+Timer, and perform the requested A\+D\+C conversions on the selected D\+I\+O or internal signal. The D\+I\+O or interrnal signal is defined by the \hyperlink{struct_a_d_c_buf___conversion}{A\+D\+C\+Buf\+\_\+\+Conversion} structure in the application code and adc\+Buf\+C\+C26xx\+Objects in the board file. If the sensor controller is using the A\+D\+C when the driver requests it at the start of the \hyperlink{_a_d_c_8h_afcac5582b8be42a7740091d150aef05c}{A\+D\+C\+\_\+convert()} call, the conversion will fail and return false. The A\+D\+C resource may be pre-\/acquired by calling the control function A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+C\+M\+D\+\_\+\+A\+C\+Q\+U\+I\+R\+E\+\_\+\+A\+D\+C\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E. It will be released again automatically after the next conversion completes.
+
+In both A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+S\+Y\+N\+C\+H\+R\+O\+N\+O\+U\+S mode and A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+A\+S\+Y\+N\+C\+H\+R\+O\+N\+O\+U\+S mode, enough sampling time must be provided between conversions that each measurement may be completed before the next trigger arrives.
+
+\begin{DoxyNote}{Note}
+The A\+D\+C\+Buf driver requires G\+P\+Timer0\+A to function correctly. It will be unavailable for other uses.
+\end{DoxyNote}
+\subsubsection*{Supported A\+D\+C pins}
+
+Below is a table of the supported A\+D\+C I\+O pins for each package size, for both C\+C26xx and C\+C13xx. It maps a D\+I\+O to its corresponding driverlib define for the Comp\+B\+Input that it is hardwired to. This table can be used to create virtual channel entries in the A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+adc\+Channel\+Lut table in the board file.
+
+\begin{TabularC}{7}
+\hline
+\rowcolor{lightgray}{\bf D\+I\+O }&{\bf C\+C26xx 7x7 A\+U\+X\+I\+O Comp\+B\+Input }&{\bf C\+C13xx 7x7 A\+U\+X\+I\+O Comp\+B\+Input }&{\bf C\+C26xx 5x5 A\+U\+X\+I\+O Comp\+B\+Input }&{\bf C\+C13xx 5x5 A\+U\+X\+I\+O Comp\+B\+Input }&{\bf C\+C26xx 4x4 A\+U\+X\+I\+O Comp\+B\+Input }&{\bf C\+C13xx 4x4 A\+U\+X\+I\+O Comp\+B\+Input  }\\\cline{1-7}
+0 &No &No &No &No &No &No \\\cline{1-7}
+1 &No &No &No &No &No &No \\\cline{1-7}
+2 &No &No &No &No &No &No \\\cline{1-7}
+3 &No &No &No &No &No &No \\\cline{1-7}
+4 &No &No &No &No &No &No \\\cline{1-7}
+5 &No &No &No &No &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O7 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O7 \\\cline{1-7}
+6 &No &No &No &No &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O6 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O6 \\\cline{1-7}
+7 &No &No &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O7 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O7 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O5 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O5 \\\cline{1-7}
+8 &No &No &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O6 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O6 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O4 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O4 \\\cline{1-7}
+9 &No &No &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O5 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O5 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O3 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O3 \\\cline{1-7}
+10 &No &No &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O4 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O4 &No &No \\\cline{1-7}
+11 &No &No &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O3 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O3 &No &No \\\cline{1-7}
+12 &No &No &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O2 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O2 &No &No \\\cline{1-7}
+13 &No &No &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O1 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O1 &No &No \\\cline{1-7}
+14 &No &No &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O0 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O0 &No &No \\\cline{1-7}
+15-\/22 &No &No &No &No &No &No \\\cline{1-7}
+23 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O7 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O7 &No &No &No &No \\\cline{1-7}
+24 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O6 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O6 &No &No &No &No \\\cline{1-7}
+25 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O5 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O5 &No &No &No &No \\\cline{1-7}
+26 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O4 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O4 &No &No &No &No \\\cline{1-7}
+27 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O3 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O3 &No &No &No &No \\\cline{1-7}
+28 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O2 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O2 &No &No &No &No \\\cline{1-7}
+29 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O1 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O1 &No &No &No &No \\\cline{1-7}
+30 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O0 &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+A\+U\+X\+I\+O0 &No &No &No &No \\\cline{1-7}
+\end{TabularC}
+\subsubsection*{Supported Internal Signals}
+
+Below is a table of internal signals that can be measured using the A\+D\+C. Since we are not connecting to a D\+I\+O, there is no D\+I\+O to internal signal mapping. The D\+I\+O field in the channel lookup table should be marked P\+I\+N\+\_\+\+U\+N\+A\+S\+S\+I\+G\+N\+E\+D. This table can be used to create virtual channel entries in the A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+adc\+Channel\+Lut table in the board file.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf D\+I\+O }&{\bf Internal Signal Comp\+B\+Input  }\\\cline{1-2}
+P\+I\+N\+\_\+\+U\+N\+A\+S\+S\+I\+G\+N\+E\+D &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+D\+C\+O\+U\+P\+L \\\cline{1-2}
+P\+I\+N\+\_\+\+U\+N\+A\+S\+S\+I\+G\+N\+E\+D &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+V\+S\+S \\\cline{1-2}
+P\+I\+N\+\_\+\+U\+N\+A\+S\+S\+I\+G\+N\+E\+D &A\+D\+C\+\_\+\+C\+O\+M\+P\+B\+\_\+\+I\+N\+\_\+\+V\+D\+D\+S \\\cline{1-2}
+\end{TabularC}
+\subsubsection*{Error handling}
+
+The following errors may occur when opening the A\+D\+C without assertions enabled\+:
+\begin{DoxyItemize}
+\item The A\+D\+C handle is already open.
+\end{DoxyItemize}
+
+The following errors may occur when requesting an A\+D\+C conversion\+:
+\begin{DoxyItemize}
+\item The A\+D\+C is currently already doing a conversion.
+\item The A\+D\+C was not available (used by sensor controller or basic A\+D\+C).
+\end{DoxyItemize}
+
+\subsubsection*{Power Management}
+
+The T\+I-\/\+R\+T\+O\+S power management framework will try to put the device into the most power efficient mode whenever possible. Please see the technical reference manual for further details on each power mode.
+
+While converting, the A\+D\+C\+Buf\+C\+C26\+X\+X driver sets a power constraint to keep the device out of standby. When the conversion has finished, the power constraint is released. The driver also sets a dependency on the D\+M\+A to enable background transfers from the A\+D\+C F\+I\+F\+O to memory and to clear the G\+P\+Timer interrupt. The following statements are valid\+:
+\begin{DoxyItemize}
+\item After \hyperlink{_a_d_c_buf_8h_a762253a94875258c5a71b591f03f9d97}{A\+D\+C\+Buf\+\_\+convert()}\+: the device cannot enter standby.
+\item After \hyperlink{_a_d_c_buf_8h_a5201c27bddf11b9f9ae902807bded40d}{A\+D\+C\+Buf\+\_\+convert\+Cancel()}\+: the device can enter standby again.
+\item After a conversion finishes\+: the device can enter standby again.
+\end{DoxyItemize}
+
+\subsubsection*{Supported Functions}
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf A\+P\+I function }&{\bf Description  }\\\cline{1-2}
+\hyperlink{_a_d_c_buf_8h_a88a0ab421304465b22417a7adef6c0c2}{A\+D\+C\+Buf\+\_\+init()} &Initialize A\+D\+C driver \\\cline{1-2}
+\hyperlink{_a_d_c_buf_8h_a0b63bca2e8f8e5b58f0c657ac662c97b}{A\+D\+C\+Buf\+\_\+open()} &Open the A\+D\+C driver and configure driver \\\cline{1-2}
+\hyperlink{_a_d_c_buf_8h_a762253a94875258c5a71b591f03f9d97}{A\+D\+C\+Buf\+\_\+convert()} &Perform A\+D\+C conversion \\\cline{1-2}
+\hyperlink{_a_d_c_buf_8h_a5201c27bddf11b9f9ae902807bded40d}{A\+D\+C\+Buf\+\_\+convert\+Cancel()} &Cancel ongoing A\+D\+C conversion \\\cline{1-2}
+\hyperlink{_a_d_c_buf_8h_a04ab5fae5da8f9ff77ab3ae4974d8f7d}{A\+D\+C\+Buf\+\_\+close()} &Close A\+D\+C driver \\\cline{1-2}
+\hyperlink{_a_d_c_buf_8h_ae6ddd34c34fd06cdede98fb01033cc47}{A\+D\+C\+Buf\+\_\+\+Params\+\_\+init()} &Initialise \hyperlink{struct_a_d_c_buf___params}{A\+D\+C\+Buf\+\_\+\+Params} structure to default values \\\cline{1-2}
+\hyperlink{_a_d_c_buf_8h_a2ff6d7db155bcd1367ef82a9f5cef19c}{A\+D\+C\+Buf\+\_\+get\+Resolution()} &Get the resolution of the A\+D\+C of the current device \\\cline{1-2}
+\hyperlink{_a_d_c_buf_8h_a6967c459b64a71b344bd88eb7fbaa097}{A\+D\+C\+Buf\+\_\+adjust\+Raw\+Values()} &Adjust the values in a returned buffer for manufacturing tolerances \\\cline{1-2}
+A\+D\+C\+Buf\+\_\+convert\+Adjusted\+To\+Micro\+Volts &Convert a buffer of adjusted values to microvolts \\\cline{1-2}
+\hyperlink{_a_d_c_buf_8h_a9b9765fb0ac57dee9df234a79dcd5aea}{A\+D\+C\+Buf\+\_\+control()} &Execute device specific functions \\\cline{1-2}
+\end{TabularC}
+
+
+\subsubsection*{Not Supported Functionality}
+
+T\+B\+D
+
+\subsubsection*{Use Cases}
+
+\paragraph*{Basic one-\/shot conversion}
+
+Perform one conversion on Board\+\_\+\+A\+D\+C\+C\+H\+A\+N\+N\+E\+L\+\_\+\+A1 in \hyperlink{_a_d_c_buf_8h_a3d643e8024503c5ef2679c83419ba6eea5c6236b2f629b196d7874175be679399}{A\+D\+C\+Buf\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}. 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/ADCBuf.h>}
+
+\textcolor{preprocessor}{#define ADCBUFFERSIZE      100}
+
+ADCBuf_Handle adcBufHandle;
+ADCBuf_Params adcBufParams;
+ADCBuf_Conversion blockingConversion;
+uint16\_t sampleBufferOne[ADCBUFFERSIZE];
+
+ADCBuf_Params_init(&adcBufParams);
+adcBufHandle = ADCBuf_open(Board\_ADCBuf0, &adcBufParams);
+
+blockingConversion.arg = NULL;
+blockingConversion.adcChannel = Board\_ADCCHANNEL\_A1;
+blockingConversion.sampleBuffer = sampleBufferOne;
+blockingConversion.sampleBufferTwo = NULL;
+blockingConversion.samplesRequestedCount = ADCBUFFERSIZE;
+
+\textcolor{keywordflow}{if} (adcBufHandle) \{
+    \textcolor{keywordflow}{if} (!ADCBuf_convert(adcBuf, &blockingConversion, 1)) \{
+        \textcolor{comment}{// handle error}
+    \}
+    \textcolor{keywordflow}{else} \{
+        ADCBuf_close(adcBufHandle);
+    \}
+\}
+\textcolor{keywordflow}{else} \{
+    \textcolor{comment}{// handle error}
+\}
+\end{DoxyCode}
+
+
+\subsubsection*{Instrumentation}
+
+The A\+D\+C driver interface produces log statements if instrumentation is enabled.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Diagnostics Mask }&{\bf Log details  }\\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R1 &basic A\+D\+C\+Buf operations performed \\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R2 &detailed A\+D\+C\+Buf operations performed \\\cline{1-2}
+\end{TabularC}
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+A\+D\+C\+Buf.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+P\+I\+N.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/pin/\+P\+I\+N\+C\+C26\+X\+X.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/dma/\+U\+D\+M\+A\+C\+C26\+X\+X.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/timer/\+G\+P\+Timer\+C\+C26\+X\+X.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+Power.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/power/\+Power\+C\+C26\+X\+X.\+h$>$}\\*
+{\ttfamily \#include $<$driverlib/aux\+\_\+adc.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/family/arm/m3/\+Hwi.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/knl/\+Clock.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/knl/\+Semaphore.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/knl/\+Swi.\+h$>$}\\*
+Include dependency graph for A\+D\+C\+Buf\+C\+C26\+X\+X.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_a_d_c_buf_c_c26_x_x_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_a_d_c_buf_c_c26_x_x___adc_channel_lut_entry}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Adc\+Channel\+Lut\+Entry}
+\begin{DoxyCompactList}\small\item\em Table entry that maps a virtual adc channel to a dio and its corresponding internal analogue signal. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_a_d_c_buf_c_c26_x_x___params_extension}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension}
+\begin{DoxyCompactList}\small\item\em C\+C26\+X\+X specfic extension to \hyperlink{struct_a_d_c_buf___params}{A\+D\+C\+Buf\+\_\+\+Params}. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_a_d_c_buf_c_c26_x_x___h_w_attrs}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em A\+D\+C\+Buf\+C\+C26\+X\+X Hardware Attributes. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_a_d_c_buf_c_c26_x_x___object}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em A\+D\+C\+Buf\+C\+C26\+X\+X Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_a_d_c_buf_c_c26_x_x_8h_aaa17ecf48f5762e2e1bdb0bab8aacf0c}{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}
+\item 
+\#define \hyperlink{group___a_d_c_buf___c_m_d_ga0a536e47b039d0f506a4245079af247e}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+C\+M\+D\+\_\+\+A\+C\+Q\+U\+I\+R\+E\+\_\+\+A\+D\+C\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E}~\hyperlink{_a_d_c_buf_8h_a6d889e191027535ad318be0b9c3765d1}{A\+D\+C\+Buf\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D} + 1
+\begin{DoxyCompactList}\small\item\em This control function acquires the semaphore that arbitrates access to the A\+D\+C between the C\+M3 and the sensor controller. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___a_d_c_buf___c_m_d_ga830dac4199ded43c278e48bb1fe9725e}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+C\+M\+D\+\_\+\+K\+E\+E\+P\+\_\+\+A\+D\+C\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E}~\hyperlink{_a_d_c_buf_8h_a6d889e191027535ad318be0b9c3765d1}{A\+D\+C\+Buf\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D} + 2
+\begin{DoxyCompactList}\small\item\em This function makes the A\+D\+C driver keep the A\+D\+C semaphore until released. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___a_d_c_buf___c_m_d_ga23015764922f21c49518aa1050d70c0e}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+C\+M\+D\+\_\+\+K\+E\+E\+P\+\_\+\+A\+D\+C\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+D\+I\+S\+A\+B\+L\+E}~\hyperlink{_a_d_c_buf_8h_a6d889e191027535ad318be0b9c3765d1}{A\+D\+C\+Buf\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D} + 3
+\begin{DoxyCompactList}\small\item\em This function makes the A\+D\+C driver no longer keep the A\+D\+C semaphore until released. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___a_d_c_buf___c_m_d_gaaacc1d31de8c38e71c351bc1fcd54340}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+C\+M\+D\+\_\+\+R\+E\+L\+E\+A\+S\+E\+\_\+\+A\+D\+C\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E}~\hyperlink{_a_d_c_buf_8h_a6d889e191027535ad318be0b9c3765d1}{A\+D\+C\+Buf\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D} + 4
+\begin{DoxyCompactList}\small\item\em This function releases the A\+D\+C semaphore. \end{DoxyCompactList}\item 
+\#define \hyperlink{_a_d_c_buf_c_c26_x_x_8h_a909590e3cb53a9e496ee7d706edad6cd}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+R\+E\+S\+O\+L\+U\+T\+I\+O\+N}~12
+\begin{DoxyCompactList}\small\item\em Resolution in bits of the C\+C26\+X\+X A\+D\+C. \end{DoxyCompactList}\item 
+\#define \hyperlink{_a_d_c_buf_c_c26_x_x_8h_a7445395fba5609c1fccae4b67c72f0cd}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+B\+Y\+T\+E\+S\+\_\+\+P\+E\+R\+\_\+\+S\+A\+M\+P\+L\+E}~2
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \hyperlink{_a_d_c_buf_c_c26_x_x_8h_a816f299f98f8fc3cc1124cda74a18d10}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Mode} \hyperlink{_a_d_c_buf_c_c26_x_x_8h_a49a153bb66450bc16c5e2ac674fad698}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Mode}
+\begin{DoxyCompactList}\small\item\em Specifies whether the internal reference of the A\+D\+C is sourced from the battery voltage or a fixed internal source. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fb}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration} \hyperlink{_a_d_c_buf_c_c26_x_x_8h_aeccab39075ab39a107100cfbbc473c47}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration}
+\begin{DoxyCompactList}\small\item\em Amount of time the A\+D\+C spends sampling the analogue input. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_a_d_c_buf_c_c26_x_x_8h_a31a41d718712f3d4ff936bb566da0d0a}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source} \hyperlink{_a_d_c_buf_c_c26_x_x_8h_a55267edc4a4440dd55b97f3384474f80}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source}
+\begin{DoxyCompactList}\small\item\em Specifies whether the internal reference of the A\+D\+C is sourced from the battery voltage or a fixed internal source. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_a_d_c_buf_c_c26_x_x___adc_channel_lut_entry}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Adc\+Channel\+Lut\+Entry} \hyperlink{_a_d_c_buf_c_c26_x_x_8h_a99e197fd4f1d0021a0737f74f80d2643}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Adc\+Channel\+Lut\+Entry}
+\begin{DoxyCompactList}\small\item\em Table entry that maps a virtual adc channel to a dio and its corresponding internal analogue signal. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_a_d_c_buf_c_c26_x_x___params_extension}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension} \hyperlink{_a_d_c_buf_c_c26_x_x_8h_afac55b5d59cd880fecafb9a71f73162b}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension}
+\begin{DoxyCompactList}\small\item\em C\+C26\+X\+X specfic extension to \hyperlink{struct_a_d_c_buf___params}{A\+D\+C\+Buf\+\_\+\+Params}. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_a_d_c_buf_c_c26_x_x___h_w_attrs}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs} \hyperlink{_a_d_c_buf_c_c26_x_x_8h_a22b04734af9e7cbaa1915f92942918fc}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em A\+D\+C\+Buf\+C\+C26\+X\+X Hardware Attributes. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_a_d_c_buf_c_c26_x_x___object}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Object} \hyperlink{_a_d_c_buf_c_c26_x_x_8h_a7963f859847ffe0853c06219b63ceb42}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em A\+D\+C\+Buf\+C\+C26\+X\+X Object. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_a_d_c_buf_c_c26_x_x___object}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Object} $\ast$ \hyperlink{_a_d_c_buf_c_c26_x_x_8h_a1bd07a1b826d70701a49d7d951152504}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Handle}
+\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_a_d_c_buf_c_c26_x_x_8h_a816f299f98f8fc3cc1124cda74a18d10}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Mode} \{ \\*
+\hyperlink{_a_d_c_buf_c_c26_x_x_8h_a816f299f98f8fc3cc1124cda74a18d10a946b45558c94c6f3ade872941a9a3e8a}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+S\+Y\+N\+C\+H\+R\+O\+N\+O\+U\+S}, 
+\\*
+\hyperlink{_a_d_c_buf_c_c26_x_x_8h_a816f299f98f8fc3cc1124cda74a18d10a528cdd3ff0e276e7fc85cc6b116af432}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+A\+S\+Y\+N\+C\+H\+R\+O\+N\+O\+U\+S}
+ \}
+\begin{DoxyCompactList}\small\item\em Specifies whether the internal reference of the A\+D\+C is sourced from the battery voltage or a fixed internal source. \end{DoxyCompactList}\item 
+enum \hyperlink{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fb}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration} \{ \\*
+\hyperlink{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fbacd4d4af4fd7304ce2184fa9a22600a22}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+2\+P7\+\_\+\+U\+S} = A\+U\+X\+A\+D\+C\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+T\+I\+M\+E\+\_\+2\+P7\+\_\+\+U\+S, 
+\\*
+\hyperlink{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fba4164b576bef7b70e1a3f69eec57a6f62}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+5\+P3\+\_\+\+U\+S} = A\+U\+X\+A\+D\+C\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+T\+I\+M\+E\+\_\+5\+P3\+\_\+\+U\+S, 
+\\*
+\hyperlink{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fba49ca33f11fcff33041eb0cbc19a089b4}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+10\+P6\+\_\+\+U\+S} = A\+U\+X\+A\+D\+C\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+T\+I\+M\+E\+\_\+10\+P6\+\_\+\+U\+S, 
+\\*
+\hyperlink{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fba0156bc1aa641d10df8a820395f7193bf}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+21\+P3\+\_\+\+U\+S} = A\+U\+X\+A\+D\+C\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+T\+I\+M\+E\+\_\+21\+P3\+\_\+\+U\+S, 
+\\*
+\hyperlink{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fba150c59385da570a79aea1e4c0c1e914b}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+42\+P6\+\_\+\+U\+S} = A\+U\+X\+A\+D\+C\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+T\+I\+M\+E\+\_\+42\+P6\+\_\+\+U\+S, 
+\\*
+\hyperlink{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fba921a55551370c46180f3ab729a4da912}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+85\+P3\+\_\+\+U\+S} = A\+U\+X\+A\+D\+C\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+T\+I\+M\+E\+\_\+85\+P3\+\_\+\+U\+S, 
+\\*
+\hyperlink{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fbad1d82e9bb12e373860ad36ba6cee7a9f}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+170\+\_\+\+U\+S} = A\+U\+X\+A\+D\+C\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+T\+I\+M\+E\+\_\+170\+\_\+\+U\+S, 
+\\*
+\hyperlink{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fba5d7638fadf06f706a13588e0c8957b27}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+341\+\_\+\+U\+S} = A\+U\+X\+A\+D\+C\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+T\+I\+M\+E\+\_\+341\+\_\+\+U\+S, 
+\\*
+\hyperlink{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fba41124a9e4bc93d0ebbc01b78bc3e9a7e}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+682\+\_\+\+U\+S} = A\+U\+X\+A\+D\+C\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+T\+I\+M\+E\+\_\+682\+\_\+\+U\+S, 
+\\*
+\hyperlink{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fbacb02ad19af7a0912549716115af13f88}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+1\+P37\+\_\+\+M\+S} = A\+U\+X\+A\+D\+C\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+T\+I\+M\+E\+\_\+1\+P37\+\_\+\+M\+S, 
+\\*
+\hyperlink{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fbab73858ae3ffa520756cdfca77df35602}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+2\+P73\+\_\+\+M\+S} = A\+U\+X\+A\+D\+C\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+T\+I\+M\+E\+\_\+2\+P73\+\_\+\+M\+S, 
+\\*
+\hyperlink{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fba4dea9b186e256b8cfb71722ae689889d}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+5\+P46\+\_\+\+M\+S} = A\+U\+X\+A\+D\+C\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+T\+I\+M\+E\+\_\+5\+P46\+\_\+\+M\+S, 
+\\*
+\hyperlink{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fbaf5746a2bb589e0fc237dfe7cea002859}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+10\+P9\+\_\+\+M\+S} = A\+U\+X\+A\+D\+C\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+T\+I\+M\+E\+\_\+10\+P9\+\_\+\+M\+S
+ \}
+\begin{DoxyCompactList}\small\item\em Amount of time the A\+D\+C spends sampling the analogue input. \end{DoxyCompactList}\item 
+enum \hyperlink{_a_d_c_buf_c_c26_x_x_8h_a31a41d718712f3d4ff936bb566da0d0a}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source} \{ \\*
+\hyperlink{_a_d_c_buf_c_c26_x_x_8h_a31a41d718712f3d4ff936bb566da0d0aad02c445be8959c127744cfe9519d1770}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+F\+I\+X\+E\+D\+\_\+\+R\+E\+F\+E\+R\+E\+N\+C\+E} = A\+U\+X\+A\+D\+C\+\_\+\+R\+E\+F\+\_\+\+F\+I\+X\+E\+D, 
+\\*
+\hyperlink{_a_d_c_buf_c_c26_x_x_8h_a31a41d718712f3d4ff936bb566da0d0aa4b0c0d3239bf0e32219c87df11baa0c9}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+V\+D\+D\+S\+\_\+\+R\+E\+F\+E\+R\+E\+N\+C\+E} = A\+U\+X\+A\+D\+C\+\_\+\+R\+E\+F\+\_\+\+V\+D\+D\+S\+\_\+\+R\+E\+L
+ \}
+\begin{DoxyCompactList}\small\item\em Specifies whether the internal reference of the A\+D\+C is sourced from the battery voltage or a fixed internal source. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_a_d_c_buf___fxn_table}{A\+D\+C\+Buf\+\_\+\+Fxn\+Table} \hyperlink{_a_d_c_buf_c_c26_x_x_8h_ab26fa75463dae8b7a8c9d7585735177a}{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+fxn\+Table}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames@{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}}
+\index{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames@{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}
+\paragraph[{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}]{\setlength{\rightskip}{0pt plus 5cm}\#define ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}\label{_a_d_c_buf_c_c26_x_x_8h_aaa17ecf48f5762e2e1bdb0bab8aacf0c}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+R\+E\+S\+O\+L\+U\+T\+I\+O\+N@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+R\+E\+S\+O\+L\+U\+T\+I\+O\+N}}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+R\+E\+S\+O\+L\+U\+T\+I\+O\+N@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+R\+E\+S\+O\+L\+U\+T\+I\+O\+N}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}
+\paragraph[{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+R\+E\+S\+O\+L\+U\+T\+I\+O\+N}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+R\+E\+S\+O\+L\+U\+T\+I\+O\+N~12}\label{_a_d_c_buf_c_c26_x_x_8h_a909590e3cb53a9e496ee7d706edad6cd}
+
+
+Resolution in bits of the C\+C26\+X\+X A\+D\+C. 
+
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+B\+Y\+T\+E\+S\+\_\+\+P\+E\+R\+\_\+\+S\+A\+M\+P\+L\+E@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+B\+Y\+T\+E\+S\+\_\+\+P\+E\+R\+\_\+\+S\+A\+M\+P\+L\+E}}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+B\+Y\+T\+E\+S\+\_\+\+P\+E\+R\+\_\+\+S\+A\+M\+P\+L\+E@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+B\+Y\+T\+E\+S\+\_\+\+P\+E\+R\+\_\+\+S\+A\+M\+P\+L\+E}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}
+\paragraph[{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+B\+Y\+T\+E\+S\+\_\+\+P\+E\+R\+\_\+\+S\+A\+M\+P\+L\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+B\+Y\+T\+E\+S\+\_\+\+P\+E\+R\+\_\+\+S\+A\+M\+P\+L\+E~2}\label{_a_d_c_buf_c_c26_x_x_8h_a7445395fba5609c1fccae4b67c72f0cd}
+
+
+\subsubsection{Typedef Documentation}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Mode@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Mode}}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Mode@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Mode}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}
+\paragraph[{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Mode}  {\bf A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Mode}}\label{_a_d_c_buf_c_c26_x_x_8h_a49a153bb66450bc16c5e2ac674fad698}
+
+
+Specifies whether the internal reference of the A\+D\+C is sourced from the battery voltage or a fixed internal source. 
+
+The C\+C26\+X\+X A\+D\+C can operate in two different ways with regards to the sampling phase of the A\+D\+C conversion process\+:
+\begin{DoxyItemize}
+\item It can spend a fixed amount of time sampling the signal after getting the start conversion trigger.
+\item It can constantly keep sampling and immediately start the conversion process after getting the trigger.
+\end{DoxyItemize}
+
+In A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+Y\+N\+C\+H\+R\+O\+N\+O\+U\+S mode, the A\+D\+C goes into I\+D\+L\+E in between conversions and uses less power. The minimum sample time for full precision in A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+S\+Y\+N\+C\+H\+R\+O\+N\+O\+U\+S is dependent on the input load. \index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration}}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}
+\paragraph[{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration}  {\bf A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration}}\label{_a_d_c_buf_c_c26_x_x_8h_aeccab39075ab39a107100cfbbc473c47}
+
+
+Amount of time the A\+D\+C spends sampling the analogue input. 
+
+The analogue to digital conversion process consists of two phases in the C\+C26\+X\+X A\+D\+C, the sampling and conversion phases. During the sampling phase, the A\+D\+C samples the analogue input signal. Larger input loads require longer sample times for the most accurate results. In A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+S\+Y\+N\+C\+H\+R\+O\+N\+O\+U\+S mode, this enum specifies the sampling times available. \index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source}}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}
+\paragraph[{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source}  {\bf A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source}}\label{_a_d_c_buf_c_c26_x_x_8h_a55267edc4a4440dd55b97f3384474f80}
+
+
+Specifies whether the internal reference of the A\+D\+C is sourced from the battery voltage or a fixed internal source. 
+
+
+\begin{DoxyItemize}
+\item In practice, using the internal fixed voltage reference sets the upper range of the A\+D\+C to a fixed value. That value is 4.\+3\+V with input scaling enabled and $\sim$1.4785\+V with input scaling disabled. In this mode, the output is a function of the input voltage multiplied by the resolution in alternatives (not bits) divided by the upper voltage range of the A\+D\+C. Output = Input (V) $\ast$ 2$^\wedge$12 / (A\+D\+C range (V))
+\item Using V\+D\+D\+S as a reference scales the upper range of the A\+D\+C with the battery voltage. As the battery depletes and its voltage drops, so does the range of the A\+D\+C. This is helpful when measuring signals that are generated relative to the battery voltage. In this mode, the output is a function of the input voltage multiplied by the resolution in alternatives (not bits) divided by V\+D\+D\+S multiplied by a scaling factor derived from the input scaling. Output = Input (V) $\ast$ 2$^\wedge$12 / (V\+D\+D\+S (V) $\ast$ Scaling factor), where the scaling factor is $\sim$1.4785/4.\+3 for input scaling disabled and 1 for input scaling enabled.
+\end{DoxyItemize}
+
+\begin{DoxyNote}{Note}
+The actual reference values are slightly different for each device and are higher than the values specified above. This gain is saved in the F\+C\+F\+G. The function A\+D\+C\+Buf\+\_\+convert\+Raw\+To\+Micro\+Volts() must be used to derive actual voltage values. Do not attempt to compare raw values between devices or derive a voltage from them yourself. The results of doing so will only be approximately correct.
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+Even though the upper voltage range of the A\+D\+C is 4.\+3 volts in fixed mode with input scaling enabled, the input should never exceed V\+D\+D\+S as per the data sheet. 
+\end{DoxyWarning}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Adc\+Channel\+Lut\+Entry@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Adc\+Channel\+Lut\+Entry}}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Adc\+Channel\+Lut\+Entry@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Adc\+Channel\+Lut\+Entry}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}
+\paragraph[{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Adc\+Channel\+Lut\+Entry}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Adc\+Channel\+Lut\+Entry}  {\bf A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Adc\+Channel\+Lut\+Entry}}\label{_a_d_c_buf_c_c26_x_x_8h_a99e197fd4f1d0021a0737f74f80d2643}
+
+
+Table entry that maps a virtual adc channel to a dio and its corresponding internal analogue signal. 
+
+Non-\/dio signals can be used as well. To do this, comp\+B\+Input is set to the driverlib define corresponding to the desired non-\/dio signal and dio is set to P\+I\+N\+\_\+\+U\+N\+A\+S\+S\+I\+G\+N\+E\+D. \index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension}}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}
+\paragraph[{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension}  {\bf A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Params\+Extension}}\label{_a_d_c_buf_c_c26_x_x_8h_afac55b5d59cd880fecafb9a71f73162b}
+
+
+C\+C26\+X\+X specfic extension to \hyperlink{struct_a_d_c_buf___params}{A\+D\+C\+Buf\+\_\+\+Params}. 
+
+To use non-\/default C\+C26\+X\+X specific parameters when calling \hyperlink{_a_d_c_buf_8h_a0b63bca2e8f8e5b58f0c657ac662c97b}{A\+D\+C\+Buf\+\_\+open()}, a pointer to an instance of this struct must be specified in \hyperlink{struct_a_d_c_buf___params_a72c7ec51318ec2f8fcf5d2ff37de33e3}{A\+D\+C\+Buf\+\_\+\+Params\+::custom}. Alternatively, these values can be set using the control function after calling \hyperlink{_a_d_c_buf_8h_a0b63bca2e8f8e5b58f0c657ac662c97b}{A\+D\+C\+Buf\+\_\+open()}. \index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}
+\paragraph[{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}  {\bf A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}\label{_a_d_c_buf_c_c26_x_x_8h_a22b04734af9e7cbaa1915f92942918fc}
+
+
+A\+D\+C\+Buf\+C\+C26\+X\+X Hardware Attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For C\+C26xx\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item inc/hw\+\_\+ints.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+1 const ADCBufCC26XX\_HWAttrs ADCBufCC26XXHWAttrs[] = \{
+2     \{
+3         .intPriority = ~0,
+4         .swiPriority = 0,
+5         .gpTimerUnit = CC2650\_GPTIMER0A,
+6         .gptDMAChannelMask = 1 << UDMA\_CHAN\_TIMER0\_A,
+7     \}
+8 \};
+\end{DoxyCode}
+ \index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Object@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Object}}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Object@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Object}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}
+\paragraph[{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Object}  {\bf A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Object}}\label{_a_d_c_buf_c_c26_x_x_8h_a7963f859847ffe0853c06219b63ceb42}
+
+
+A\+D\+C\+Buf\+C\+C26\+X\+X Object. 
+
+The application must not access any member variables of this structure! \index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Handle@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Handle}}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Handle@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Handle}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}
+\paragraph[{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Object} $\ast$ {\bf A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Handle}}\label{_a_d_c_buf_c_c26_x_x_8h_a1bd07a1b826d70701a49d7d951152504}
+
+
+\subsubsection{Enumeration Type Documentation}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Mode@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Mode}}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Mode@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Mode}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}
+\paragraph[{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Mode}}\label{_a_d_c_buf_c_c26_x_x_8h_a816f299f98f8fc3cc1124cda74a18d10}
+
+
+Specifies whether the internal reference of the A\+D\+C is sourced from the battery voltage or a fixed internal source. 
+
+The C\+C26\+X\+X A\+D\+C can operate in two different ways with regards to the sampling phase of the A\+D\+C conversion process\+:
+\begin{DoxyItemize}
+\item It can spend a fixed amount of time sampling the signal after getting the start conversion trigger.
+\item It can constantly keep sampling and immediately start the conversion process after getting the trigger.
+\end{DoxyItemize}
+
+In A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+Y\+N\+C\+H\+R\+O\+N\+O\+U\+S mode, the A\+D\+C goes into I\+D\+L\+E in between conversions and uses less power. The minimum sample time for full precision in A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+S\+Y\+N\+C\+H\+R\+O\+N\+O\+U\+S is dependent on the input load. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+S\+Y\+N\+C\+H\+R\+O\+N\+O\+U\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+S\+Y\+N\+C\+H\+R\+O\+N\+O\+U\+S}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+S\+Y\+N\+C\+H\+R\+O\+N\+O\+U\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+S\+Y\+N\+C\+H\+R\+O\+N\+O\+U\+S}}\item[{\em 
+A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+S\+Y\+N\+C\+H\+R\+O\+N\+O\+U\+S\label{_a_d_c_buf_c_c26_x_x_8h_a816f299f98f8fc3cc1124cda74a18d10a946b45558c94c6f3ade872941a9a3e8a}
+}]\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+A\+S\+Y\+N\+C\+H\+R\+O\+N\+O\+U\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+A\+S\+Y\+N\+C\+H\+R\+O\+N\+O\+U\+S}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+A\+S\+Y\+N\+C\+H\+R\+O\+N\+O\+U\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+A\+S\+Y\+N\+C\+H\+R\+O\+N\+O\+U\+S}}\item[{\em 
+A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+A\+S\+Y\+N\+C\+H\+R\+O\+N\+O\+U\+S\label{_a_d_c_buf_c_c26_x_x_8h_a816f299f98f8fc3cc1124cda74a18d10a528cdd3ff0e276e7fc85cc6b116af432}
+}]\end{description}
+\end{Desc}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration}}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}
+\paragraph[{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration}}\label{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fb}
+
+
+Amount of time the A\+D\+C spends sampling the analogue input. 
+
+The analogue to digital conversion process consists of two phases in the C\+C26\+X\+X A\+D\+C, the sampling and conversion phases. During the sampling phase, the A\+D\+C samples the analogue input signal. Larger input loads require longer sample times for the most accurate results. In A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+S\+Y\+N\+C\+H\+R\+O\+N\+O\+U\+S mode, this enum specifies the sampling times available. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+2\+P7\+\_\+\+U\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+2\+P7\+\_\+\+U\+S}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+2\+P7\+\_\+\+U\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+2\+P7\+\_\+\+U\+S}}\item[{\em 
+A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+2\+P7\+\_\+\+U\+S\label{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fbacd4d4af4fd7304ce2184fa9a22600a22}
+}]\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+5\+P3\+\_\+\+U\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+5\+P3\+\_\+\+U\+S}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+5\+P3\+\_\+\+U\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+5\+P3\+\_\+\+U\+S}}\item[{\em 
+A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+5\+P3\+\_\+\+U\+S\label{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fba4164b576bef7b70e1a3f69eec57a6f62}
+}]\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+10\+P6\+\_\+\+U\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+10\+P6\+\_\+\+U\+S}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+10\+P6\+\_\+\+U\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+10\+P6\+\_\+\+U\+S}}\item[{\em 
+A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+10\+P6\+\_\+\+U\+S\label{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fba49ca33f11fcff33041eb0cbc19a089b4}
+}]\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+21\+P3\+\_\+\+U\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+21\+P3\+\_\+\+U\+S}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+21\+P3\+\_\+\+U\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+21\+P3\+\_\+\+U\+S}}\item[{\em 
+A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+21\+P3\+\_\+\+U\+S\label{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fba0156bc1aa641d10df8a820395f7193bf}
+}]\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+42\+P6\+\_\+\+U\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+42\+P6\+\_\+\+U\+S}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+42\+P6\+\_\+\+U\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+42\+P6\+\_\+\+U\+S}}\item[{\em 
+A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+42\+P6\+\_\+\+U\+S\label{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fba150c59385da570a79aea1e4c0c1e914b}
+}]\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+85\+P3\+\_\+\+U\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+85\+P3\+\_\+\+U\+S}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+85\+P3\+\_\+\+U\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+85\+P3\+\_\+\+U\+S}}\item[{\em 
+A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+85\+P3\+\_\+\+U\+S\label{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fba921a55551370c46180f3ab729a4da912}
+}]\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+170\+\_\+\+U\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+170\+\_\+\+U\+S}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+170\+\_\+\+U\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+170\+\_\+\+U\+S}}\item[{\em 
+A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+170\+\_\+\+U\+S\label{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fbad1d82e9bb12e373860ad36ba6cee7a9f}
+}]\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+341\+\_\+\+U\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+341\+\_\+\+U\+S}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+341\+\_\+\+U\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+341\+\_\+\+U\+S}}\item[{\em 
+A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+341\+\_\+\+U\+S\label{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fba5d7638fadf06f706a13588e0c8957b27}
+}]\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+682\+\_\+\+U\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+682\+\_\+\+U\+S}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+682\+\_\+\+U\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+682\+\_\+\+U\+S}}\item[{\em 
+A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+682\+\_\+\+U\+S\label{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fba41124a9e4bc93d0ebbc01b78bc3e9a7e}
+}]\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+1\+P37\+\_\+\+M\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+1\+P37\+\_\+\+M\+S}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+1\+P37\+\_\+\+M\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+1\+P37\+\_\+\+M\+S}}\item[{\em 
+A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+1\+P37\+\_\+\+M\+S\label{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fbacb02ad19af7a0912549716115af13f88}
+}]\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+2\+P73\+\_\+\+M\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+2\+P73\+\_\+\+M\+S}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+2\+P73\+\_\+\+M\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+2\+P73\+\_\+\+M\+S}}\item[{\em 
+A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+2\+P73\+\_\+\+M\+S\label{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fbab73858ae3ffa520756cdfca77df35602}
+}]\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+5\+P46\+\_\+\+M\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+5\+P46\+\_\+\+M\+S}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+5\+P46\+\_\+\+M\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+5\+P46\+\_\+\+M\+S}}\item[{\em 
+A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+5\+P46\+\_\+\+M\+S\label{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fba4dea9b186e256b8cfb71722ae689889d}
+}]\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+10\+P9\+\_\+\+M\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+10\+P9\+\_\+\+M\+S}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+10\+P9\+\_\+\+M\+S@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+10\+P9\+\_\+\+M\+S}}\item[{\em 
+A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+10\+P9\+\_\+\+M\+S\label{_a_d_c_buf_c_c26_x_x_8h_a4a95bf383dea0206b6708496a034a9fbaf5746a2bb589e0fc237dfe7cea002859}
+}]\end{description}
+\end{Desc}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source}}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}
+\paragraph[{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source}}\label{_a_d_c_buf_c_c26_x_x_8h_a31a41d718712f3d4ff936bb566da0d0a}
+
+
+Specifies whether the internal reference of the A\+D\+C is sourced from the battery voltage or a fixed internal source. 
+
+
+\begin{DoxyItemize}
+\item In practice, using the internal fixed voltage reference sets the upper range of the A\+D\+C to a fixed value. That value is 4.\+3\+V with input scaling enabled and $\sim$1.4785\+V with input scaling disabled. In this mode, the output is a function of the input voltage multiplied by the resolution in alternatives (not bits) divided by the upper voltage range of the A\+D\+C. Output = Input (V) $\ast$ 2$^\wedge$12 / (A\+D\+C range (V))
+\item Using V\+D\+D\+S as a reference scales the upper range of the A\+D\+C with the battery voltage. As the battery depletes and its voltage drops, so does the range of the A\+D\+C. This is helpful when measuring signals that are generated relative to the battery voltage. In this mode, the output is a function of the input voltage multiplied by the resolution in alternatives (not bits) divided by V\+D\+D\+S multiplied by a scaling factor derived from the input scaling. Output = Input (V) $\ast$ 2$^\wedge$12 / (V\+D\+D\+S (V) $\ast$ Scaling factor), where the scaling factor is $\sim$1.4785/4.\+3 for input scaling disabled and 1 for input scaling enabled.
+\end{DoxyItemize}
+
+\begin{DoxyNote}{Note}
+The actual reference values are slightly different for each device and are higher than the values specified above. This gain is saved in the F\+C\+F\+G. The function A\+D\+C\+Buf\+\_\+convert\+Raw\+To\+Micro\+Volts() must be used to derive actual voltage values. Do not attempt to compare raw values between devices or derive a voltage from them yourself. The results of doing so will only be approximately correct.
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+Even though the upper voltage range of the A\+D\+C is 4.\+3 volts in fixed mode with input scaling enabled, the input should never exceed V\+D\+D\+S as per the data sheet. 
+\end{DoxyWarning}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+F\+I\+X\+E\+D\+\_\+\+R\+E\+F\+E\+R\+E\+N\+C\+E@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+F\+I\+X\+E\+D\+\_\+\+R\+E\+F\+E\+R\+E\+N\+C\+E}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+F\+I\+X\+E\+D\+\_\+\+R\+E\+F\+E\+R\+E\+N\+C\+E@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+F\+I\+X\+E\+D\+\_\+\+R\+E\+F\+E\+R\+E\+N\+C\+E}}\item[{\em 
+A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+F\+I\+X\+E\+D\+\_\+\+R\+E\+F\+E\+R\+E\+N\+C\+E\label{_a_d_c_buf_c_c26_x_x_8h_a31a41d718712f3d4ff936bb566da0d0aad02c445be8959c127744cfe9519d1770}
+}]\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+V\+D\+D\+S\+\_\+\+R\+E\+F\+E\+R\+E\+N\+C\+E@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+V\+D\+D\+S\+\_\+\+R\+E\+F\+E\+R\+E\+N\+C\+E}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+V\+D\+D\+S\+\_\+\+R\+E\+F\+E\+R\+E\+N\+C\+E@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+V\+D\+D\+S\+\_\+\+R\+E\+F\+E\+R\+E\+N\+C\+E}}\item[{\em 
+A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+\+V\+D\+D\+S\+\_\+\+R\+E\+F\+E\+R\+E\+N\+C\+E\label{_a_d_c_buf_c_c26_x_x_8h_a31a41d718712f3d4ff936bb566da0d0aa4b0c0d3239bf0e32219c87df11baa0c9}
+}]\end{description}
+\end{Desc}
+
+
+\subsubsection{Variable Documentation}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}!A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+fxn\+Table@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+fxn\+Table}}
+\index{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+fxn\+Table@{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+fxn\+Table}!A\+D\+C\+Buf\+C\+C26\+X\+X.\+h@{A\+D\+C\+Buf\+C\+C26\+X\+X.\+h}}
+\paragraph[{A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf A\+D\+C\+Buf\+\_\+\+Fxn\+Table} A\+D\+C\+Buf\+C\+C26\+X\+X\+\_\+fxn\+Table}\label{_a_d_c_buf_c_c26_x_x_8h_ab26fa75463dae8b7a8c9d7585735177a}

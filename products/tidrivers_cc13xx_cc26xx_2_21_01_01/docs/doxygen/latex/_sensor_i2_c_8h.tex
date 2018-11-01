@@ -1,0 +1,126 @@
+\subsection{Sensor\+I2\+C.\+h File Reference}
+\label{_sensor_i2_c_8h}\index{Sensor\+I2\+C.\+h@{Sensor\+I2\+C.\+h}}
+
+
+\subsubsection{Detailed Description}
+Simple interface to the T\+I-\/\+R\+T\+O\+S driver. Also manages switching between I2\+C-\/buses. 
+
+============================================================================
+
+
+
+{\ttfamily \#include \char`\"{}stdbool.\+h\char`\"{}}\\*
+Include dependency graph for Sensor\+I2\+C.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=109pt]{_sensor_i2_c_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_sensor_i2_c_8h_aa9cbb511d4299a3bc389624737c2b171}{S\+E\+N\+S\+O\+R\+\_\+\+I2\+C\+\_\+0}~0
+\item 
+\#define \hyperlink{_sensor_i2_c_8h_afed3d0515650aa6426fbfbf6bd6920d7}{S\+E\+N\+S\+O\+R\+\_\+\+I2\+C\+\_\+1}~1
+\item 
+\#define \hyperlink{_sensor_i2_c_8h_a2d6c3813be4719d93226389684c32a38}{S\+E\+N\+S\+O\+R\+\_\+\+I2\+C\+\_\+\+N\+O\+N\+E}~-\/1
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{_sensor_i2_c_8h_ae48cb159e53f02d70de98dd8c65cda21}{Sensor\+I2\+C\+\_\+open} (void)
+\item 
+bool \hyperlink{_sensor_i2_c_8h_a879b500d39ef3aed6846eeb7e7a03cb1}{Sensor\+I2\+C\+\_\+select} (uint8\+\_\+t interface, uint8\+\_\+t slave\+Address)
+\item 
+bool \hyperlink{_sensor_i2_c_8h_acddf3bff1273609066a9fbcd167bae43}{Sensor\+I2\+C\+\_\+read\+Reg} (uint8\+\_\+t addr, uint8\+\_\+t $\ast$p\+Buf, uint8\+\_\+t n\+Bytes)
+\item 
+bool \hyperlink{_sensor_i2_c_8h_abcc5eb41a2dc8036ea3238a200dd462c}{Sensor\+I2\+C\+\_\+write\+Reg} (uint8\+\_\+t addr, uint8\+\_\+t $\ast$p\+Buf, uint8\+\_\+t n\+Bytes)
+\item 
+void \hyperlink{_sensor_i2_c_8h_a8e1291a81ac7875a040fda088682bb83}{Sensor\+I2\+C\+\_\+deselect} (void)
+\item 
+void \hyperlink{_sensor_i2_c_8h_a59f20ccd8b4f85091aec19244b00a736}{Sensor\+I2\+C\+\_\+close} (void)
+\item 
+bool \hyperlink{_sensor_i2_c_8h_ab70157b9853a993d1eeeb646673d2c65}{Sensor\+I2\+C\+\_\+read} (uint8\+\_\+t $\ast$data, uint8\+\_\+t len)
+\item 
+bool \hyperlink{_sensor_i2_c_8h_a330976806fff7d7d1b47a702cda4bd67}{Sensor\+I2\+C\+\_\+write} (uint8\+\_\+t $\ast$data, uint8\+\_\+t len)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{Sensor\+I2\+C.\+h@{Sensor\+I2\+C.\+h}!S\+E\+N\+S\+O\+R\+\_\+\+I2\+C\+\_\+0@{S\+E\+N\+S\+O\+R\+\_\+\+I2\+C\+\_\+0}}
+\index{S\+E\+N\+S\+O\+R\+\_\+\+I2\+C\+\_\+0@{S\+E\+N\+S\+O\+R\+\_\+\+I2\+C\+\_\+0}!Sensor\+I2\+C.\+h@{Sensor\+I2\+C.\+h}}
+\paragraph[{S\+E\+N\+S\+O\+R\+\_\+\+I2\+C\+\_\+0}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+E\+N\+S\+O\+R\+\_\+\+I2\+C\+\_\+0~0}\label{_sensor_i2_c_8h_aa9cbb511d4299a3bc389624737c2b171}
+\index{Sensor\+I2\+C.\+h@{Sensor\+I2\+C.\+h}!S\+E\+N\+S\+O\+R\+\_\+\+I2\+C\+\_\+1@{S\+E\+N\+S\+O\+R\+\_\+\+I2\+C\+\_\+1}}
+\index{S\+E\+N\+S\+O\+R\+\_\+\+I2\+C\+\_\+1@{S\+E\+N\+S\+O\+R\+\_\+\+I2\+C\+\_\+1}!Sensor\+I2\+C.\+h@{Sensor\+I2\+C.\+h}}
+\paragraph[{S\+E\+N\+S\+O\+R\+\_\+\+I2\+C\+\_\+1}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+E\+N\+S\+O\+R\+\_\+\+I2\+C\+\_\+1~1}\label{_sensor_i2_c_8h_afed3d0515650aa6426fbfbf6bd6920d7}
+\index{Sensor\+I2\+C.\+h@{Sensor\+I2\+C.\+h}!S\+E\+N\+S\+O\+R\+\_\+\+I2\+C\+\_\+\+N\+O\+N\+E@{S\+E\+N\+S\+O\+R\+\_\+\+I2\+C\+\_\+\+N\+O\+N\+E}}
+\index{S\+E\+N\+S\+O\+R\+\_\+\+I2\+C\+\_\+\+N\+O\+N\+E@{S\+E\+N\+S\+O\+R\+\_\+\+I2\+C\+\_\+\+N\+O\+N\+E}!Sensor\+I2\+C.\+h@{Sensor\+I2\+C.\+h}}
+\paragraph[{S\+E\+N\+S\+O\+R\+\_\+\+I2\+C\+\_\+\+N\+O\+N\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+E\+N\+S\+O\+R\+\_\+\+I2\+C\+\_\+\+N\+O\+N\+E~-\/1}\label{_sensor_i2_c_8h_a2d6c3813be4719d93226389684c32a38}
+
+
+\subsubsection{Function Documentation}
+\index{Sensor\+I2\+C.\+h@{Sensor\+I2\+C.\+h}!Sensor\+I2\+C\+\_\+open@{Sensor\+I2\+C\+\_\+open}}
+\index{Sensor\+I2\+C\+\_\+open@{Sensor\+I2\+C\+\_\+open}!Sensor\+I2\+C.\+h@{Sensor\+I2\+C.\+h}}
+\paragraph[{Sensor\+I2\+C\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}bool Sensor\+I2\+C\+\_\+open (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_sensor_i2_c_8h_ae48cb159e53f02d70de98dd8c65cda21}
+\index{Sensor\+I2\+C.\+h@{Sensor\+I2\+C.\+h}!Sensor\+I2\+C\+\_\+select@{Sensor\+I2\+C\+\_\+select}}
+\index{Sensor\+I2\+C\+\_\+select@{Sensor\+I2\+C\+\_\+select}!Sensor\+I2\+C.\+h@{Sensor\+I2\+C.\+h}}
+\paragraph[{Sensor\+I2\+C\+\_\+select}]{\setlength{\rightskip}{0pt plus 5cm}bool Sensor\+I2\+C\+\_\+select (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{interface, }
+\item[{uint8\+\_\+t}]{slave\+Address}
+\end{DoxyParamCaption}
+)}\label{_sensor_i2_c_8h_a879b500d39ef3aed6846eeb7e7a03cb1}
+\index{Sensor\+I2\+C.\+h@{Sensor\+I2\+C.\+h}!Sensor\+I2\+C\+\_\+read\+Reg@{Sensor\+I2\+C\+\_\+read\+Reg}}
+\index{Sensor\+I2\+C\+\_\+read\+Reg@{Sensor\+I2\+C\+\_\+read\+Reg}!Sensor\+I2\+C.\+h@{Sensor\+I2\+C.\+h}}
+\paragraph[{Sensor\+I2\+C\+\_\+read\+Reg}]{\setlength{\rightskip}{0pt plus 5cm}bool Sensor\+I2\+C\+\_\+read\+Reg (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{addr, }
+\item[{uint8\+\_\+t $\ast$}]{p\+Buf, }
+\item[{uint8\+\_\+t}]{n\+Bytes}
+\end{DoxyParamCaption}
+)}\label{_sensor_i2_c_8h_acddf3bff1273609066a9fbcd167bae43}
+\index{Sensor\+I2\+C.\+h@{Sensor\+I2\+C.\+h}!Sensor\+I2\+C\+\_\+write\+Reg@{Sensor\+I2\+C\+\_\+write\+Reg}}
+\index{Sensor\+I2\+C\+\_\+write\+Reg@{Sensor\+I2\+C\+\_\+write\+Reg}!Sensor\+I2\+C.\+h@{Sensor\+I2\+C.\+h}}
+\paragraph[{Sensor\+I2\+C\+\_\+write\+Reg}]{\setlength{\rightskip}{0pt plus 5cm}bool Sensor\+I2\+C\+\_\+write\+Reg (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{addr, }
+\item[{uint8\+\_\+t $\ast$}]{p\+Buf, }
+\item[{uint8\+\_\+t}]{n\+Bytes}
+\end{DoxyParamCaption}
+)}\label{_sensor_i2_c_8h_abcc5eb41a2dc8036ea3238a200dd462c}
+\index{Sensor\+I2\+C.\+h@{Sensor\+I2\+C.\+h}!Sensor\+I2\+C\+\_\+deselect@{Sensor\+I2\+C\+\_\+deselect}}
+\index{Sensor\+I2\+C\+\_\+deselect@{Sensor\+I2\+C\+\_\+deselect}!Sensor\+I2\+C.\+h@{Sensor\+I2\+C.\+h}}
+\paragraph[{Sensor\+I2\+C\+\_\+deselect}]{\setlength{\rightskip}{0pt plus 5cm}void Sensor\+I2\+C\+\_\+deselect (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_sensor_i2_c_8h_a8e1291a81ac7875a040fda088682bb83}
+\index{Sensor\+I2\+C.\+h@{Sensor\+I2\+C.\+h}!Sensor\+I2\+C\+\_\+close@{Sensor\+I2\+C\+\_\+close}}
+\index{Sensor\+I2\+C\+\_\+close@{Sensor\+I2\+C\+\_\+close}!Sensor\+I2\+C.\+h@{Sensor\+I2\+C.\+h}}
+\paragraph[{Sensor\+I2\+C\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}void Sensor\+I2\+C\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_sensor_i2_c_8h_a59f20ccd8b4f85091aec19244b00a736}
+\index{Sensor\+I2\+C.\+h@{Sensor\+I2\+C.\+h}!Sensor\+I2\+C\+\_\+read@{Sensor\+I2\+C\+\_\+read}}
+\index{Sensor\+I2\+C\+\_\+read@{Sensor\+I2\+C\+\_\+read}!Sensor\+I2\+C.\+h@{Sensor\+I2\+C.\+h}}
+\paragraph[{Sensor\+I2\+C\+\_\+read}]{\setlength{\rightskip}{0pt plus 5cm}bool Sensor\+I2\+C\+\_\+read (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t $\ast$}]{data, }
+\item[{uint8\+\_\+t}]{len}
+\end{DoxyParamCaption}
+)}\label{_sensor_i2_c_8h_ab70157b9853a993d1eeeb646673d2c65}
+\index{Sensor\+I2\+C.\+h@{Sensor\+I2\+C.\+h}!Sensor\+I2\+C\+\_\+write@{Sensor\+I2\+C\+\_\+write}}
+\index{Sensor\+I2\+C\+\_\+write@{Sensor\+I2\+C\+\_\+write}!Sensor\+I2\+C.\+h@{Sensor\+I2\+C.\+h}}
+\paragraph[{Sensor\+I2\+C\+\_\+write}]{\setlength{\rightskip}{0pt plus 5cm}bool Sensor\+I2\+C\+\_\+write (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t $\ast$}]{data, }
+\item[{uint8\+\_\+t}]{len}
+\end{DoxyParamCaption}
+)}\label{_sensor_i2_c_8h_a330976806fff7d7d1b47a702cda4bd67}

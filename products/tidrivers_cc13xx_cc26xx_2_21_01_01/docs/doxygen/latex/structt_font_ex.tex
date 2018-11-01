@@ -1,0 +1,64 @@
+\subsection{t\+Font\+Ex Struct Reference}
+\label{structt_font_ex}\index{t\+Font\+Ex@{t\+Font\+Ex}}
+
+
+{\ttfamily \#include $<$grlib.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \hyperlink{structt_font_ex_a18d1466a68cd5673de8290372edf390e}{uc\+Format}
+\item 
+uint8\+\_\+t \hyperlink{structt_font_ex_a3f51fb84bffa3931869ea672dc6c52d1}{uc\+Max\+Width}
+\item 
+uint8\+\_\+t \hyperlink{structt_font_ex_a8baf5550b51a3d163c7ebd9dbff45ed0}{uc\+Height}
+\item 
+uint8\+\_\+t \hyperlink{structt_font_ex_a27e75a2228f0a32014b459eef7c34d3f}{uc\+Baseline}
+\item 
+uint8\+\_\+t \hyperlink{structt_font_ex_a1713d8f3dda1b6da85b7d35dbc6df056}{uc\+First}
+\item 
+uint8\+\_\+t \hyperlink{structt_font_ex_a255cd79c42ea16526ec00d19a0cc0b18}{uc\+Last}
+\item 
+const uint16\+\_\+t $\ast$ \hyperlink{structt_font_ex_aaab3266bca56077196a0f8025be5f7d4}{pus\+Offset}
+\item 
+const uint8\+\_\+t $\ast$ \hyperlink{structt_font_ex_a3c7bf575dfbc6a76bacfd57baa618b4f}{puc\+Data}
+\begin{DoxyCompactList}\small\item\em A pointer to the data for the font. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+This is a newer version of the structure which describes a font used for drawing text onto the screen. This variant allows a font to contain an arbitrary, contiguous block of codepoints from the 256 basic characters in an I\+S\+O8859-\/n font and allows support for accented characters in Western European languages and any left-\/to-\/right typeface supported by an I\+S\+O8859 variant. Fonts encoded in this format may be used interchangeably with the original fonts merely by casting the structure pointer when calling any function or macro which expects a font pointer as a parameter. 
+
+\subsubsection{Field Documentation}
+\index{t\+Font\+Ex@{t\+Font\+Ex}!uc\+Format@{uc\+Format}}
+\index{uc\+Format@{uc\+Format}!t\+Font\+Ex@{t\+Font\+Ex}}
+\paragraph[{uc\+Format}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t t\+Font\+Ex\+::uc\+Format}\label{structt_font_ex_a18d1466a68cd5673de8290372edf390e}
+The format of the font. Can be one of F\+O\+N\+T\+\_\+\+F\+M\+T\+\_\+\+E\+X\+\_\+\+U\+N\+C\+O\+M\+P\+R\+E\+S\+S\+E\+D or F\+O\+N\+T\+\_\+\+F\+M\+T\+\_\+\+E\+X\+\_\+\+P\+I\+X\+E\+L\+\_\+\+R\+L\+E. \index{t\+Font\+Ex@{t\+Font\+Ex}!uc\+Max\+Width@{uc\+Max\+Width}}
+\index{uc\+Max\+Width@{uc\+Max\+Width}!t\+Font\+Ex@{t\+Font\+Ex}}
+\paragraph[{uc\+Max\+Width}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t t\+Font\+Ex\+::uc\+Max\+Width}\label{structt_font_ex_a3f51fb84bffa3931869ea672dc6c52d1}
+The maximum width of a character; this is the width of the widest character in the font, though any individual character may be narrower than this width. \index{t\+Font\+Ex@{t\+Font\+Ex}!uc\+Height@{uc\+Height}}
+\index{uc\+Height@{uc\+Height}!t\+Font\+Ex@{t\+Font\+Ex}}
+\paragraph[{uc\+Height}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t t\+Font\+Ex\+::uc\+Height}\label{structt_font_ex_a8baf5550b51a3d163c7ebd9dbff45ed0}
+The height of the character cell; this may be taller than the font data for the characters (to provide inter-\/line spacing). \index{t\+Font\+Ex@{t\+Font\+Ex}!uc\+Baseline@{uc\+Baseline}}
+\index{uc\+Baseline@{uc\+Baseline}!t\+Font\+Ex@{t\+Font\+Ex}}
+\paragraph[{uc\+Baseline}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t t\+Font\+Ex\+::uc\+Baseline}\label{structt_font_ex_a27e75a2228f0a32014b459eef7c34d3f}
+The offset between the top of the character cell and the baseline of the glyph. The baseline is the bottom row of a capital letter, below which only the descenders of the lower case letters occur. \index{t\+Font\+Ex@{t\+Font\+Ex}!uc\+First@{uc\+First}}
+\index{uc\+First@{uc\+First}!t\+Font\+Ex@{t\+Font\+Ex}}
+\paragraph[{uc\+First}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t t\+Font\+Ex\+::uc\+First}\label{structt_font_ex_a1713d8f3dda1b6da85b7d35dbc6df056}
+The codepoint number representing the first character encoded in the font. \index{t\+Font\+Ex@{t\+Font\+Ex}!uc\+Last@{uc\+Last}}
+\index{uc\+Last@{uc\+Last}!t\+Font\+Ex@{t\+Font\+Ex}}
+\paragraph[{uc\+Last}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t t\+Font\+Ex\+::uc\+Last}\label{structt_font_ex_a255cd79c42ea16526ec00d19a0cc0b18}
+The codepoint number representing the last character encoded in the font. \index{t\+Font\+Ex@{t\+Font\+Ex}!pus\+Offset@{pus\+Offset}}
+\index{pus\+Offset@{pus\+Offset}!t\+Font\+Ex@{t\+Font\+Ex}}
+\paragraph[{pus\+Offset}]{\setlength{\rightskip}{0pt plus 5cm}const uint16\+\_\+t$\ast$ t\+Font\+Ex\+::pus\+Offset}\label{structt_font_ex_aaab3266bca56077196a0f8025be5f7d4}
+A pointer to a table containing the offset within puc\+Data to the data for each character in the font. \index{t\+Font\+Ex@{t\+Font\+Ex}!puc\+Data@{puc\+Data}}
+\index{puc\+Data@{puc\+Data}!t\+Font\+Ex@{t\+Font\+Ex}}
+\paragraph[{puc\+Data}]{\setlength{\rightskip}{0pt plus 5cm}const uint8\+\_\+t$\ast$ t\+Font\+Ex\+::puc\+Data}\label{structt_font_ex_a3c7bf575dfbc6a76bacfd57baa618b4f}
+
+
+A pointer to the data for the font. 
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{grlib_8h}{grlib.\+h}\end{DoxyCompactItemize}

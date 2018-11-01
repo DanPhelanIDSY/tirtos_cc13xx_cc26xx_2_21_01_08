@@ -1,0 +1,52 @@
+\subsection{Camera\+\_\+control command and status codes}
+\label{group___c_a_m_e_r_a___c_o_n_t_r_o_l}\index{Camera\+\_\+control command and status codes@{Camera\+\_\+control command and status codes}}
+Collaboration diagram for Camera\+\_\+control command and status codes\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=301pt]{group___c_a_m_e_r_a___c_o_n_t_r_o_l}
+\end{center}
+\end{figure}
+\subsubsection*{Modules}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group___camera___s_t_a_t_u_s}{Status Codes}
+\item 
+\hyperlink{group___camera___c_m_d}{Command Codes}
+\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group___c_a_m_e_r_a___c_o_n_t_r_o_l_gaed2b3df48a75ec7e6e78320bb3a48eb9}{C\+A\+M\+E\+R\+A\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~32
+\item 
+\#define \hyperlink{group___c_a_m_e_r_a___c_o_n_t_r_o_l_ga13b3728d2673d72db6cc71744a0cbedf}{C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~-\/32
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+These Camera macros are reservations for \hyperlink{_camera_8h}{Camera.\+h} 
+
+\subsubsection{Macro Definition Documentation}
+\index{Camera\+\_\+control command and status codes@{Camera\+\_\+control command and status codes}!C\+A\+M\+E\+R\+A\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{C\+A\+M\+E\+R\+A\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{C\+A\+M\+E\+R\+A\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{C\+A\+M\+E\+R\+A\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!Camera\+\_\+control command and status codes@{Camera\+\_\+control command and status codes}}
+\paragraph[{C\+A\+M\+E\+R\+A\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+A\+M\+E\+R\+A\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~32}\label{group___c_a_m_e_r_a___c_o_n_t_r_o_l_gaed2b3df48a75ec7e6e78320bb3a48eb9}
+Common Camera\+\_\+control command code reservation offset. Camera driver implementations should offset command codes with C\+A\+M\+E\+R\+A\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing positively
+
+Example implementation specific command codes\+: 
+\begin{DoxyCode}
+1 #define CAMERAXYZ\_CMD\_COMMAND0   CAMERA\_CMD\_RESERVED + 0
+2 #define CAMERAXYZ\_CMD\_COMMAND1   CAMERA\_CMD\_RESERVED + 1
+\end{DoxyCode}
+ \index{Camera\+\_\+control command and status codes@{Camera\+\_\+control command and status codes}!C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!Camera\+\_\+control command and status codes@{Camera\+\_\+control command and status codes}}
+\paragraph[{C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~-\/32}\label{group___c_a_m_e_r_a___c_o_n_t_r_o_l_ga13b3728d2673d72db6cc71744a0cbedf}
+Common Camera\+\_\+control status code reservation offset. Camera driver implementations should offset status codes with C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing negatively.
+
+Example implementation specific status codes\+: 
+\begin{DoxyCode}
+1 #define CAMERAXYZ\_STATUS\_ERROR0  CAMERA\_STATUS\_RESERVED - 0
+2 #define CAMERAXYZ\_STATUS\_ERROR1  CAMERA\_STATUS\_RESERVED - 1
+3 #define CAMERAXYZ\_STATUS\_ERROR2  CAMERA\_STATUS\_RESERVED - 2
+\end{DoxyCode}
+ 

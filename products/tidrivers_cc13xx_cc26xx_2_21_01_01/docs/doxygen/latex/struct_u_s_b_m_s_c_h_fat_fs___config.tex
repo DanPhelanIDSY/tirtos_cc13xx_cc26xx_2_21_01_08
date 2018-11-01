@@ -1,0 +1,59 @@
+\subsection{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config Struct Reference}
+\label{struct_u_s_b_m_s_c_h_fat_fs___config}\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config}}
+
+
+U\+S\+B\+M\+S\+C\+H\+Fat\+Fs Global configuration.  
+
+
+
+
+{\ttfamily \#include $<$U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h$>$}
+
+
+
+Collaboration diagram for U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=217pt]{struct_u_s_b_m_s_c_h_fat_fs___config__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_u_s_b_m_s_c_h_fat_fs___fxn_table}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Fxn\+Table} const $\ast$ \hyperlink{struct_u_s_b_m_s_c_h_fat_fs___config_a3a4cc2246f53d8c7aca196c20feeed7c}{fxn\+Table\+Ptr}
+\item 
+void $\ast$ \hyperlink{struct_u_s_b_m_s_c_h_fat_fs___config_ac7a9ff09f69fded788e34195c234f562}{object}
+\item 
+void const $\ast$ \hyperlink{struct_u_s_b_m_s_c_h_fat_fs___config_ab91b03539dc769508dd811ab7b0c1e82}{hw\+Attrs}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+U\+S\+B\+M\+S\+C\+H\+Fat\+Fs Global configuration. 
+
+The \hyperlink{struct_u_s_b_m_s_c_h_fat_fs___config}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config} structure contains a set of pointers used to characterize the U\+S\+B\+M\+S\+C\+H\+Fat\+Fs driver implementation.
+
+This structure needs to be defined before calling \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a70cc0939d4a838e87e3bb4742dae442e}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+init()} and it must not be changed thereafter.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a70cc0939d4a838e87e3bb4742dae442e}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Field Documentation}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config}!fxn\+Table\+Ptr@{fxn\+Table\+Ptr}}
+\index{fxn\+Table\+Ptr@{fxn\+Table\+Ptr}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config}}
+\paragraph[{fxn\+Table\+Ptr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Fxn\+Table} const$\ast$ U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config\+::fxn\+Table\+Ptr}\label{struct_u_s_b_m_s_c_h_fat_fs___config_a3a4cc2246f53d8c7aca196c20feeed7c}
+Pointer to a table of driver-\/specific implementations of U\+S\+B\+M\+S\+C\+H\+Fat\+Fs A\+P\+Is \index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config}!object@{object}}
+\index{object@{object}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config}}
+\paragraph[{object}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config\+::object}\label{struct_u_s_b_m_s_c_h_fat_fs___config_ac7a9ff09f69fded788e34195c234f562}
+Pointer to a driver specific data object \index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config}!hw\+Attrs@{hw\+Attrs}}
+\index{hw\+Attrs@{hw\+Attrs}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config}}
+\paragraph[{hw\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}void const$\ast$ U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Config\+::hw\+Attrs}\label{struct_u_s_b_m_s_c_h_fat_fs___config_ab91b03539dc769508dd811ab7b0c1e82}
+Pointer to a driver specific hardware attributes structure 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_u_s_b_m_s_c_h_fat_fs_8h}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}\end{DoxyCompactItemize}

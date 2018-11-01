@@ -1,0 +1,50 @@
+\subsection{A\+D\+C\+Buf\+\_\+\+Conversion Struct Reference}
+\label{struct_a_d_c_buf___conversion}\index{A\+D\+C\+Buf\+\_\+\+Conversion@{A\+D\+C\+Buf\+\_\+\+Conversion}}
+
+
+An \hyperlink{struct_a_d_c_buf___conversion}{A\+D\+C\+Buf\+\_\+\+Conversion} data structure is used with \hyperlink{_a_d_c_buf_8h_a762253a94875258c5a71b591f03f9d97}{A\+D\+C\+Buf\+\_\+convert()}. It indicates which channel to perform the A\+D\+C conversion on, how many conversions to make, and where to put them. The arg variable is an user-\/definable argument which gets passed to the \hyperlink{_a_d_c_buf_8h_a477c377c65f8de04aa67ff7eefa0a4cf}{A\+D\+C\+Buf\+\_\+\+Callback} when the A\+D\+C driver is in \hyperlink{_a_d_c_buf_8h_a3d643e8024503c5ef2679c83419ba6eea633b4b063b88d7c62e9e2513075a36a7}{A\+D\+C\+Buf\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}.  
+
+
+
+
+{\ttfamily \#include $<$A\+D\+C\+Buf.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint16\+\_\+t \hyperlink{struct_a_d_c_buf___conversion_afd95c203d1e7dd347102eef22dc9cc93}{samples\+Requested\+Count}
+\item 
+void $\ast$ \hyperlink{struct_a_d_c_buf___conversion_a5415e58a69e40124f66cdcc52a097c4a}{sample\+Buffer}
+\item 
+void $\ast$ \hyperlink{struct_a_d_c_buf___conversion_a6953e200ba2e5a85b9197bdaeb101a5f}{sample\+Buffer\+Two}
+\item 
+void $\ast$ \hyperlink{struct_a_d_c_buf___conversion_a47080bd2e4d552858be60f6e25be58dc}{arg}
+\item 
+uint32\+\_\+t \hyperlink{struct_a_d_c_buf___conversion_a379de126469bdd35de64c36498fafb51}{adc\+Channel}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+An \hyperlink{struct_a_d_c_buf___conversion}{A\+D\+C\+Buf\+\_\+\+Conversion} data structure is used with \hyperlink{_a_d_c_buf_8h_a762253a94875258c5a71b591f03f9d97}{A\+D\+C\+Buf\+\_\+convert()}. It indicates which channel to perform the A\+D\+C conversion on, how many conversions to make, and where to put them. The arg variable is an user-\/definable argument which gets passed to the \hyperlink{_a_d_c_buf_8h_a477c377c65f8de04aa67ff7eefa0a4cf}{A\+D\+C\+Buf\+\_\+\+Callback} when the A\+D\+C driver is in \hyperlink{_a_d_c_buf_8h_a3d643e8024503c5ef2679c83419ba6eea633b4b063b88d7c62e9e2513075a36a7}{A\+D\+C\+Buf\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}. 
+
+\subsubsection{Field Documentation}
+\index{A\+D\+C\+Buf\+\_\+\+Conversion@{A\+D\+C\+Buf\+\_\+\+Conversion}!samples\+Requested\+Count@{samples\+Requested\+Count}}
+\index{samples\+Requested\+Count@{samples\+Requested\+Count}!A\+D\+C\+Buf\+\_\+\+Conversion@{A\+D\+C\+Buf\+\_\+\+Conversion}}
+\paragraph[{samples\+Requested\+Count}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t A\+D\+C\+Buf\+\_\+\+Conversion\+::samples\+Requested\+Count}\label{struct_a_d_c_buf___conversion_afd95c203d1e7dd347102eef22dc9cc93}
+Number of samples to convert and return \index{A\+D\+C\+Buf\+\_\+\+Conversion@{A\+D\+C\+Buf\+\_\+\+Conversion}!sample\+Buffer@{sample\+Buffer}}
+\index{sample\+Buffer@{sample\+Buffer}!A\+D\+C\+Buf\+\_\+\+Conversion@{A\+D\+C\+Buf\+\_\+\+Conversion}}
+\paragraph[{sample\+Buffer}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ A\+D\+C\+Buf\+\_\+\+Conversion\+::sample\+Buffer}\label{struct_a_d_c_buf___conversion_a5415e58a69e40124f66cdcc52a097c4a}
+Buffer the results of the conversions are stored in \index{A\+D\+C\+Buf\+\_\+\+Conversion@{A\+D\+C\+Buf\+\_\+\+Conversion}!sample\+Buffer\+Two@{sample\+Buffer\+Two}}
+\index{sample\+Buffer\+Two@{sample\+Buffer\+Two}!A\+D\+C\+Buf\+\_\+\+Conversion@{A\+D\+C\+Buf\+\_\+\+Conversion}}
+\paragraph[{sample\+Buffer\+Two}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ A\+D\+C\+Buf\+\_\+\+Conversion\+::sample\+Buffer\+Two}\label{struct_a_d_c_buf___conversion_a6953e200ba2e5a85b9197bdaeb101a5f}
+A second buffer that is filled in \hyperlink{_a_d_c_buf_8h_af15cc4961b02af48216132c2b8bc88f1ac10945188f88ddadd4322c4e117d5b3c}{A\+D\+C\+Buf\+\_\+\+R\+E\+C\+U\+R\+R\+E\+N\+C\+E\+\_\+\+M\+O\+D\+E\+\_\+\+C\+O\+N\+T\+I\+N\+U\+O\+U\+S} mode while the first buffer is processed by the application. The value is not used in \hyperlink{_a_d_c_buf_8h_af15cc4961b02af48216132c2b8bc88f1a1916212b661aa853b7a581e3e5dc35e2}{A\+D\+C\+Buf\+\_\+\+R\+E\+C\+U\+R\+R\+E\+N\+C\+E\+\_\+\+M\+O\+D\+E\+\_\+\+O\+N\+E\+\_\+\+S\+H\+O\+T} mode. \index{A\+D\+C\+Buf\+\_\+\+Conversion@{A\+D\+C\+Buf\+\_\+\+Conversion}!arg@{arg}}
+\index{arg@{arg}!A\+D\+C\+Buf\+\_\+\+Conversion@{A\+D\+C\+Buf\+\_\+\+Conversion}}
+\paragraph[{arg}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ A\+D\+C\+Buf\+\_\+\+Conversion\+::arg}\label{struct_a_d_c_buf___conversion_a47080bd2e4d552858be60f6e25be58dc}
+Argument to be passed to the callback function in \hyperlink{_a_d_c_buf_8h_a3d643e8024503c5ef2679c83419ba6eea633b4b063b88d7c62e9e2513075a36a7}{A\+D\+C\+Buf\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K} \index{A\+D\+C\+Buf\+\_\+\+Conversion@{A\+D\+C\+Buf\+\_\+\+Conversion}!adc\+Channel@{adc\+Channel}}
+\index{adc\+Channel@{adc\+Channel}!A\+D\+C\+Buf\+\_\+\+Conversion@{A\+D\+C\+Buf\+\_\+\+Conversion}}
+\paragraph[{adc\+Channel}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t A\+D\+C\+Buf\+\_\+\+Conversion\+::adc\+Channel}\label{struct_a_d_c_buf___conversion_a379de126469bdd35de64c36498fafb51}
+Channel to perform the A\+D\+C conversion on. Mapping of channel to pin or internal signal is device specific. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_a_d_c_buf_8h}{A\+D\+C\+Buf.\+h}\end{DoxyCompactItemize}

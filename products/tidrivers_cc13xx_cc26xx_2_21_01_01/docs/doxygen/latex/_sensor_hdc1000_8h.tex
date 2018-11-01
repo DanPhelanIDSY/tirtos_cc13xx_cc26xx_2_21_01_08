@@ -1,0 +1,76 @@
+\subsection{Sensor\+Hdc1000.\+h File Reference}
+\label{_sensor_hdc1000_8h}\index{Sensor\+Hdc1000.\+h@{Sensor\+Hdc1000.\+h}}
+
+
+\subsubsection{Detailed Description}
+Driver for Texas Instruments H\+C\+D1000 humidity sensor. 
+
+============================================================================
+
+
+
+{\ttfamily \#include \char`\"{}stdbool.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}stdint.\+h\char`\"{}}\\*
+Include dependency graph for Sensor\+Hdc1000.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=159pt]{_sensor_hdc1000_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{_sensor_hdc1000_8h_a1ae6a63626264c81bb5f113f34ddfca2}{Sensor\+Hdc1000\+\_\+init} (void)
+\item 
+bool \hyperlink{_sensor_hdc1000_8h_a8b21704587a07306e193c691254139e9}{Sensor\+Hdc1000\+\_\+test} (void)
+\item 
+void \hyperlink{_sensor_hdc1000_8h_a711f601477e11b1e856724fd45919fb5}{Sensor\+Hdc1000\+\_\+start} (void)
+\item 
+bool \hyperlink{_sensor_hdc1000_8h_ab469b8359429be6773050dd025a224b4}{Sensor\+Hdc1000\+\_\+read} (uint16\+\_\+t $\ast$raw\+Temp, uint16\+\_\+t $\ast$raw\+Hum)
+\item 
+void \hyperlink{_sensor_hdc1000_8h_aebb0b020b8dcd1e81d7f0a78e38aeff0}{Sensor\+Hdc1000\+\_\+convert} (uint16\+\_\+t raw\+Temp, uint16\+\_\+t raw\+Hum, float $\ast$temp, float $\ast$hum)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Function Documentation}
+\index{Sensor\+Hdc1000.\+h@{Sensor\+Hdc1000.\+h}!Sensor\+Hdc1000\+\_\+init@{Sensor\+Hdc1000\+\_\+init}}
+\index{Sensor\+Hdc1000\+\_\+init@{Sensor\+Hdc1000\+\_\+init}!Sensor\+Hdc1000.\+h@{Sensor\+Hdc1000.\+h}}
+\paragraph[{Sensor\+Hdc1000\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}bool Sensor\+Hdc1000\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_sensor_hdc1000_8h_a1ae6a63626264c81bb5f113f34ddfca2}
+\index{Sensor\+Hdc1000.\+h@{Sensor\+Hdc1000.\+h}!Sensor\+Hdc1000\+\_\+test@{Sensor\+Hdc1000\+\_\+test}}
+\index{Sensor\+Hdc1000\+\_\+test@{Sensor\+Hdc1000\+\_\+test}!Sensor\+Hdc1000.\+h@{Sensor\+Hdc1000.\+h}}
+\paragraph[{Sensor\+Hdc1000\+\_\+test}]{\setlength{\rightskip}{0pt plus 5cm}bool Sensor\+Hdc1000\+\_\+test (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_sensor_hdc1000_8h_a8b21704587a07306e193c691254139e9}
+\index{Sensor\+Hdc1000.\+h@{Sensor\+Hdc1000.\+h}!Sensor\+Hdc1000\+\_\+start@{Sensor\+Hdc1000\+\_\+start}}
+\index{Sensor\+Hdc1000\+\_\+start@{Sensor\+Hdc1000\+\_\+start}!Sensor\+Hdc1000.\+h@{Sensor\+Hdc1000.\+h}}
+\paragraph[{Sensor\+Hdc1000\+\_\+start}]{\setlength{\rightskip}{0pt plus 5cm}void Sensor\+Hdc1000\+\_\+start (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_sensor_hdc1000_8h_a711f601477e11b1e856724fd45919fb5}
+\index{Sensor\+Hdc1000.\+h@{Sensor\+Hdc1000.\+h}!Sensor\+Hdc1000\+\_\+read@{Sensor\+Hdc1000\+\_\+read}}
+\index{Sensor\+Hdc1000\+\_\+read@{Sensor\+Hdc1000\+\_\+read}!Sensor\+Hdc1000.\+h@{Sensor\+Hdc1000.\+h}}
+\paragraph[{Sensor\+Hdc1000\+\_\+read}]{\setlength{\rightskip}{0pt plus 5cm}bool Sensor\+Hdc1000\+\_\+read (
+\begin{DoxyParamCaption}
+\item[{uint16\+\_\+t $\ast$}]{raw\+Temp, }
+\item[{uint16\+\_\+t $\ast$}]{raw\+Hum}
+\end{DoxyParamCaption}
+)}\label{_sensor_hdc1000_8h_ab469b8359429be6773050dd025a224b4}
+\index{Sensor\+Hdc1000.\+h@{Sensor\+Hdc1000.\+h}!Sensor\+Hdc1000\+\_\+convert@{Sensor\+Hdc1000\+\_\+convert}}
+\index{Sensor\+Hdc1000\+\_\+convert@{Sensor\+Hdc1000\+\_\+convert}!Sensor\+Hdc1000.\+h@{Sensor\+Hdc1000.\+h}}
+\paragraph[{Sensor\+Hdc1000\+\_\+convert}]{\setlength{\rightskip}{0pt plus 5cm}void Sensor\+Hdc1000\+\_\+convert (
+\begin{DoxyParamCaption}
+\item[{uint16\+\_\+t}]{raw\+Temp, }
+\item[{uint16\+\_\+t}]{raw\+Hum, }
+\item[{float $\ast$}]{temp, }
+\item[{float $\ast$}]{hum}
+\end{DoxyParamCaption}
+)}\label{_sensor_hdc1000_8h_aebb0b020b8dcd1e81d7f0a78e38aeff0}

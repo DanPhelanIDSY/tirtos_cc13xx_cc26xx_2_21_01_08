@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectSpec>
+    <applicability>
+        <when>
+            <context
+                deviceFamily="ARM"
+                deviceId="Cortex M.CC1350F128"
+            />
+        </when>
+    </applicability>
+
+    <project
+        title="RF Packet RX"
+        name="rfPacketRx_CC1350STK_TI"
+        toolChain="TI"
+        linkerCommandFile=""
+        compilerBuildOptions=" -I${workspace_loc:/${ProjName}} -I${workspace_loc:/${ProjName}/smartrf_settings} -I${COM_TI_RTSC_TIRTOSCC13XX_CC26XX_INSTALL_DIR}/products/cc13xxware_2_04_03_17272 -Dccs -mv7M3 --code_state=16 --abi=eabi -me -g --display_error_number --diag_warning=255 --diag_wrap=off --gen_func_subsections=on --float_support=vfplib"
+        linkerBuildOptions=" -l${COM_TI_RTSC_TIRTOSCC13XX_CC26XX_INSTALL_DIR}/products/cc13xxware_2_04_03_17272/driverlib/bin/ccs/driverlib.lib --warn_sections --display_error_number --diag_wrap=off --rom_model"
+        description="A receiver example on how to use the RF driver">
+
+        <property name="type" value="rtsc"/>
+        <property name="products" value="com.ti.rtsc.TIRTOSCC13XX_CC26XX"/>
+        <property name="xdcToolsVersion" value="3_32_00_06_core"/>
+        <property name="target" value="ti.targets.arm.elf.M3"/>
+        <property name="platform" value="ti.platforms.simplelink:CC1350F128"/>
+        <property name="buildProfile" value="release"/>
+        <property name="isHybrid" value="true"/>
+        <property name="configuroOptions" value=" --compileOptions &quot;${COMPILER_FLAGS} &quot;"/>
+        <group id="examples.CC13XX_CC26XX.CC1350STK.driver.TI.RF"/>
+        <file path="ti/boards/CC1350STK/Board.h" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="ti/boards/CC1350STK/CC1350STK.c" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="ti/boards/CC1350STK/CC1350STK.h" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="ti/boards/CC1350STK/ccfg.c" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="ti/boards/CC1350STK/CC1350STK.cmd" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="examples/makefile.defs" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="examples/source/rf/rfExamples.cfg" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="examples/source/rf/RFQueue.h" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="examples/source/rf/RFQueue.c" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="examples/source/rfpacket/rx/README.md" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="examples/source/rfpacket/rx/rfPacketRx.c" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="examples/source/rfpacket/rx/README.html" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="examples/source/rf/smartrf_settings/cc1350-stk/smartrf_settings.h" openOnCreation="false" excludeFromBuild="false" action="copy" targetDirectory="./smartrf_settings" >
+        </file>
+        <file path="examples/source/rf/smartrf_settings/cc1350-stk/smartrf_settings.c" openOnCreation="false" excludeFromBuild="false" action="copy" targetDirectory="./smartrf_settings" >
+        </file>
+    </project>
+</projectSpec>
+

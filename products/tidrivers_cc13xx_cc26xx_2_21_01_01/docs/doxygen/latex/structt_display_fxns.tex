@@ -1,0 +1,85 @@
+\subsection{t\+Display\+Fxns Struct Reference}
+\label{structt_display_fxns}\index{t\+Display\+Fxns@{t\+Display\+Fxns}}
+
+
+This structure defines the implementation of a display driver.  
+
+
+
+
+{\ttfamily \#include $<$grlib.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+void($\ast$ \hyperlink{structt_display_fxns_aba4cb20d0c76f62c3b4a81e5887bc4f2}{pfn\+Pixel\+Draw} )(\hyperlink{structt_display}{t\+Display} $\ast$p\+Display, int16\+\_\+t l\+X, int16\+\_\+t l\+Y, uint16\+\_\+t ul\+Value)
+\begin{DoxyCompactList}\small\item\em A pointer to the function to draw a pixel on this display. \end{DoxyCompactList}\item 
+void($\ast$ \hyperlink{structt_display_fxns_a95214d850a92705637a5d7d7a4d933fb}{pfn\+Pixel\+Draw\+Multiple} )(\hyperlink{structt_display}{t\+Display} $\ast$p\+Display, int16\+\_\+t l\+X, int16\+\_\+t l\+Y, int16\+\_\+t l\+X0, int16\+\_\+t l\+Count, int16\+\_\+t l\+B\+P\+P, const uint8\+\_\+t $\ast$puc\+Data, const uint16\+\_\+t $\ast$puc\+Palette)
+\begin{DoxyCompactList}\small\item\em A pointer to the function to draw multiple pixels on this display. \end{DoxyCompactList}\item 
+void($\ast$ \hyperlink{structt_display_fxns_a154f087fd9eae1772c62016122bf3e05}{pfn\+Line\+Draw\+H} )(\hyperlink{structt_display}{t\+Display} $\ast$p\+Display, int16\+\_\+t l\+X1, int16\+\_\+t l\+X2, int16\+\_\+t l\+Y, uint16\+\_\+t ul\+Value)
+\begin{DoxyCompactList}\small\item\em A pointer to the function to draw a horizontal line on this display. \end{DoxyCompactList}\item 
+void($\ast$ \hyperlink{structt_display_fxns_a5fff17e767fde1b95ec3334e3ce5c39d}{pfn\+Line\+Draw\+V} )(\hyperlink{structt_display}{t\+Display} $\ast$p\+Display, int16\+\_\+t l\+X, int16\+\_\+t l\+Y1, int16\+\_\+t l\+Y2, uint16\+\_\+t ul\+Value)
+\begin{DoxyCompactList}\small\item\em A pointer to the function to draw a vertical line on this display. \end{DoxyCompactList}\item 
+void($\ast$ \hyperlink{structt_display_fxns_a161a515401ad8e9627ec5f0c84f413c9}{pfn\+Rect\+Fill} )(\hyperlink{structt_display}{t\+Display} $\ast$p\+Display, const \hyperlink{structt_rectangle}{t\+Rectangle} $\ast$p\+Rect, uint16\+\_\+t ul\+Value)
+\begin{DoxyCompactList}\small\item\em A pointer to the function to draw a filled rectangle on this display. \end{DoxyCompactList}\item 
+uint16\+\_\+t($\ast$ \hyperlink{structt_display_fxns_ac35ce70cabfe85d0265c064ecd2fbfa8}{pfn\+Color\+Translate} )(\hyperlink{structt_display}{t\+Display} $\ast$p\+Display, uint32\+\_\+t ul\+Value)
+\item 
+void($\ast$ \hyperlink{structt_display_fxns_a1a96d7181f6226e269fc55186121857d}{pfn\+Flush} )(\hyperlink{structt_display}{t\+Display} $\ast$p\+Display)
+\item 
+void($\ast$ \hyperlink{structt_display_fxns_a823e2142ba4dea428121839c52ea76aa}{pfn\+Clear\+Display} )(\hyperlink{structt_display}{t\+Display} $\ast$p\+Display, uint16\+\_\+t ul\+Value)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+This structure defines the implementation of a display driver. 
+
+\subsubsection{Field Documentation}
+\index{t\+Display\+Fxns@{t\+Display\+Fxns}!pfn\+Pixel\+Draw@{pfn\+Pixel\+Draw}}
+\index{pfn\+Pixel\+Draw@{pfn\+Pixel\+Draw}!t\+Display\+Fxns@{t\+Display\+Fxns}}
+\paragraph[{pfn\+Pixel\+Draw}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ t\+Display\+Fxns\+::pfn\+Pixel\+Draw) ({\bf t\+Display} $\ast$p\+Display, int16\+\_\+t l\+X, int16\+\_\+t l\+Y, uint16\+\_\+t ul\+Value)}\label{structt_display_fxns_aba4cb20d0c76f62c3b4a81e5887bc4f2}
+
+
+A pointer to the function to draw a pixel on this display. 
+
+\index{t\+Display\+Fxns@{t\+Display\+Fxns}!pfn\+Pixel\+Draw\+Multiple@{pfn\+Pixel\+Draw\+Multiple}}
+\index{pfn\+Pixel\+Draw\+Multiple@{pfn\+Pixel\+Draw\+Multiple}!t\+Display\+Fxns@{t\+Display\+Fxns}}
+\paragraph[{pfn\+Pixel\+Draw\+Multiple}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ t\+Display\+Fxns\+::pfn\+Pixel\+Draw\+Multiple) ({\bf t\+Display} $\ast$p\+Display, int16\+\_\+t l\+X, int16\+\_\+t l\+Y, int16\+\_\+t l\+X0, int16\+\_\+t l\+Count, int16\+\_\+t l\+B\+P\+P, const uint8\+\_\+t $\ast$puc\+Data, const uint16\+\_\+t $\ast$puc\+Palette)}\label{structt_display_fxns_a95214d850a92705637a5d7d7a4d933fb}
+
+
+A pointer to the function to draw multiple pixels on this display. 
+
+\index{t\+Display\+Fxns@{t\+Display\+Fxns}!pfn\+Line\+Draw\+H@{pfn\+Line\+Draw\+H}}
+\index{pfn\+Line\+Draw\+H@{pfn\+Line\+Draw\+H}!t\+Display\+Fxns@{t\+Display\+Fxns}}
+\paragraph[{pfn\+Line\+Draw\+H}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ t\+Display\+Fxns\+::pfn\+Line\+Draw\+H) ({\bf t\+Display} $\ast$p\+Display, int16\+\_\+t l\+X1, int16\+\_\+t l\+X2, int16\+\_\+t l\+Y, uint16\+\_\+t ul\+Value)}\label{structt_display_fxns_a154f087fd9eae1772c62016122bf3e05}
+
+
+A pointer to the function to draw a horizontal line on this display. 
+
+\index{t\+Display\+Fxns@{t\+Display\+Fxns}!pfn\+Line\+Draw\+V@{pfn\+Line\+Draw\+V}}
+\index{pfn\+Line\+Draw\+V@{pfn\+Line\+Draw\+V}!t\+Display\+Fxns@{t\+Display\+Fxns}}
+\paragraph[{pfn\+Line\+Draw\+V}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ t\+Display\+Fxns\+::pfn\+Line\+Draw\+V) ({\bf t\+Display} $\ast$p\+Display, int16\+\_\+t l\+X, int16\+\_\+t l\+Y1, int16\+\_\+t l\+Y2, uint16\+\_\+t ul\+Value)}\label{structt_display_fxns_a5fff17e767fde1b95ec3334e3ce5c39d}
+
+
+A pointer to the function to draw a vertical line on this display. 
+
+\index{t\+Display\+Fxns@{t\+Display\+Fxns}!pfn\+Rect\+Fill@{pfn\+Rect\+Fill}}
+\index{pfn\+Rect\+Fill@{pfn\+Rect\+Fill}!t\+Display\+Fxns@{t\+Display\+Fxns}}
+\paragraph[{pfn\+Rect\+Fill}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ t\+Display\+Fxns\+::pfn\+Rect\+Fill) ({\bf t\+Display} $\ast$p\+Display, const {\bf t\+Rectangle} $\ast$p\+Rect, uint16\+\_\+t ul\+Value)}\label{structt_display_fxns_a161a515401ad8e9627ec5f0c84f413c9}
+
+
+A pointer to the function to draw a filled rectangle on this display. 
+
+\index{t\+Display\+Fxns@{t\+Display\+Fxns}!pfn\+Color\+Translate@{pfn\+Color\+Translate}}
+\index{pfn\+Color\+Translate@{pfn\+Color\+Translate}!t\+Display\+Fxns@{t\+Display\+Fxns}}
+\paragraph[{pfn\+Color\+Translate}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t($\ast$ t\+Display\+Fxns\+::pfn\+Color\+Translate) ({\bf t\+Display} $\ast$p\+Display, uint32\+\_\+t ul\+Value)}\label{structt_display_fxns_ac35ce70cabfe85d0265c064ecd2fbfa8}
+A pointer to the function to translate 24-\/bit R\+G\+B colors to display-\/specific colors. \index{t\+Display\+Fxns@{t\+Display\+Fxns}!pfn\+Flush@{pfn\+Flush}}
+\index{pfn\+Flush@{pfn\+Flush}!t\+Display\+Fxns@{t\+Display\+Fxns}}
+\paragraph[{pfn\+Flush}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ t\+Display\+Fxns\+::pfn\+Flush) ({\bf t\+Display} $\ast$p\+Display)}\label{structt_display_fxns_a1a96d7181f6226e269fc55186121857d}
+A pointer to the function to flush any cached drawing operations on this display. \index{t\+Display\+Fxns@{t\+Display\+Fxns}!pfn\+Clear\+Display@{pfn\+Clear\+Display}}
+\index{pfn\+Clear\+Display@{pfn\+Clear\+Display}!t\+Display\+Fxns@{t\+Display\+Fxns}}
+\paragraph[{pfn\+Clear\+Display}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ t\+Display\+Fxns\+::pfn\+Clear\+Display) ({\bf t\+Display} $\ast$p\+Display, uint16\+\_\+t ul\+Value)}\label{structt_display_fxns_a823e2142ba4dea428121839c52ea76aa}
+A pointer to the function to clears Display. Contents of display buffer unmodified 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{grlib_8h}{grlib.\+h}\end{DoxyCompactItemize}

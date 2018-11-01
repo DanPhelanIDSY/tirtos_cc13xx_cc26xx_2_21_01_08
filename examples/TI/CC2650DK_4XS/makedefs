@@ -1,0 +1,41 @@
+###### CHANGE LOCATION TO YOUR CODEGEN TOOLS INSTALL DIR. UNIX PATH (no backslashes) #######
+CODEGEN_INSTALL_DIR = c:/ti/ccsv6/tools/compiler/ti-cgt-arm_15.12.1.LTS
+
+CC = "$(CODEGEN_INSTALL_DIR)/bin/armcl"
+LNK = "$(CODEGEN_INSTALL_DIR)/bin/armcl"
+
+XDC_INSTALL_DIR := c:/ti/xdctools_3_32_00_06_core
+TIRTOS_INSTALL_DIR := c:/ti/tirtos_cc13xx_cc26xx_2_21_01_08
+TIDRIVERS_INSTALL_DIR := $(TIRTOS_INSTALL_DIR)/products/tidrivers_cc13xx_cc26xx_2_21_01_01
+BIOS_INSTALL_DIR := $(TIRTOS_INSTALL_DIR)/products/bios_6_46_01_38
+UIA_INSTALL_DIR := $(TIRTOS_INSTALL_DIR)/products/uia_2_01_00_01
+CC26XXWARE_INSTALL_DIR ?= $(TIRTOS_INSTALL_DIR)/products/cc26xxware_2_24_03_17272
+
+TIRTOS_PACKAGES_DIR = $(TIRTOS_INSTALL_DIR)/packages
+TIDRIVERS_PACKAGES_DIR = $(TIDRIVERS_INSTALL_DIR)/packages
+BIOS_PACKAGES_DIR = $(BIOS_INSTALL_DIR)/packages
+UIA_PACKAGES_DIR = $(UIA_INSTALL_DIR)/packages
+
+XDCPATH = $(TIRTOS_PACKAGES_DIR);$(TIDRIVERS_PACKAGES_DIR);$(BIOS_PACKAGES_DIR);$(UIA_PACKAGES_DIR);
+
+CFLAGS = -I$(CC26XXWARE_INSTALL_DIR) -Dccs -mv7M3 --code_state=16 --abi=eabi -me -g --display_error_number --diag_warning=255 --diag_wrap=off --gen_func_subsections=on --float_support=vfplib
+
+LFLAGS = -l$(CC26XXWARE_INSTALL_DIR)/driverlib/bin/ccs/driverlib.lib CC2650DK_4XS.cmd -m$(NAME).map --warn_sections --display_error_number --diag_wrap=off --rom_model -i$(CODEGEN_INSTALL_DIR)/lib -llibc.a
+
+###################### SHOULD NOT MODIFY BELOW THIS LINE ############################
+export XDCPATH
+
+XDCTARGET = ti.targets.arm.elf.M3
+PLATFORM = ti.platforms.simplelink:CC2650F128
+
+ifeq ("$(SHELL)","sh.exe")
+#For Windows
+        RMDIR  = -rmdir /S /Q
+        remove = -del $(subst /,\,$1)
+        pwd    = cd
+else
+#For Linux
+        RMDIR  = rm -rf
+        remove = rm -f $(subst /,\,$1)
+        pwd    = pwd
+endif

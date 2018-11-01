@@ -1,0 +1,169 @@
+\subsection{Watchdog\+C\+C26\+X\+X.\+h File Reference}
+\label{_watchdog_c_c26_x_x_8h}\index{Watchdog\+C\+C26\+X\+X.\+h@{Watchdog\+C\+C26\+X\+X.\+h}}
+
+
+\subsubsection{Detailed Description}
+Watchdog driver implementation for C\+C13\+X\+X/\+C\+C26\+X\+X. 
+
+============================================================================
+
+\subsubsection*{Driver include}
+
+The Watchdog header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/Watchdog.h>}
+\textcolor{preprocessor}{#include <ti/drivers/watchdog/WatchdogCC26XX.h>}
+\end{DoxyCode}
+
+
+Refer to \hyperlink{_watchdog_8h}{Watchdog.\+h} for a complete description of A\+P\+Is.
+
+\subsubsection*{Overview}
+
+The general Watchdog A\+P\+I should be used in application code, i.\+e. \hyperlink{_watchdog_8h_aa5ce656aa6d5199e1efdb4ca2cd9fb7c}{Watchdog\+\_\+open()} should be used instead of Watchdog\+C\+C26\+X\+X\+\_\+open(). The board file will define the device specific config, and casting in the general A\+P\+I will ensure that the correct device specific functions are called.
+
+\subsubsection*{General Behavior}
+
+This Watchdog driver implementation is designed to operate on a C\+C13\+X\+X/\+C\+C26\+X\+X device. Before using the Watchdog in C\+C13\+X\+X/\+C\+C26\+X\+X, the Watchdog driver is initialized by calling \hyperlink{_watchdog_8h_afaadfb59be17661ae95562f2081355e7}{Watchdog\+\_\+init()}. The Watchdog H\+W is configured by calling \hyperlink{_watchdog_8h_aa5ce656aa6d5199e1efdb4ca2cd9fb7c}{Watchdog\+\_\+open()}. Once opened, the Watchdog will count down from the reload value specified in \hyperlink{struct_watchdog_c_c26_x_x___h_w_attrs}{Watchdog\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}. If it times out, a non-\/maskable interrupt will be triggered, the Watchdog interrupt flag will be set, and a user-\/provided callback function will be called. If reset is enabled in the \hyperlink{struct_watchdog___params}{Watchdog\+\_\+\+Params} and the Watchdog timer is allowed to time out again while the interrupt flag is still pending, a reset signal will be generated. To prevent a reset, \hyperlink{_watchdog_8h_a396decd6b1807db10c636f9987c3be4c}{Watchdog\+\_\+clear()} must be called to clear the interrupt flag and to reload the timer.
+
+The Watchdog counts down at a rate of the device clock S\+C\+L\+K\+\_\+\+H\+F (48 M\+Hz) divided by a fixed-\/division ratio of 32, which equals to 1.\+5 M\+Hz. The Watchdog rate will change if S\+C\+L\+K\+\_\+\+H\+F deviates from 48 M\+Hz.
+
+The Watchdog interrupt is configured as a non-\/maskable interrupt (N\+M\+I) and the user-\/defined callback function is called in the context of N\+M\+I.
+
+The reload value from which the Watchdog timer counts down may be changed during runtime using \hyperlink{_watchdog_8h_a476ef7b9d4e7268717adf94d8505f4a5}{Watchdog\+\_\+set\+Reload()}. This value should be specified in Watchdog clock ticks and should not exceed the maximum value of 32 bits, which corresponds to a timeout period of 2863.\+3 seconds at the Watchdog rate of 1.\+5 M\+Hz. If the reload value is set to zero, the Watchdog interrupt is immediately generated.
+
+Since the device is not reset on the first Watchdog timeout, the maximum time lapse between the time when the device gets locked up and the time when it is reset can be up to {\bfseries two} Watchdog timeout periods.
+
+\hyperlink{_watchdog_8h_a1c0dfea7011b06f303d01afb631ffbdd}{Watchdog\+\_\+close()} is {\bfseries not} supported by this driver implementation. Once started, the Watchdog timer can only be stopped by a hardware reset.
+
+{\bfseries No} C\+C13\+X\+X/\+C\+C26\+X\+X specific command has been implemented. Any call to \hyperlink{_watchdog_8h_aa98a75361edb1e476432669169f2950e}{Watchdog\+\_\+control()} will receive the return code Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D.
+
+By default the Watchdog driver has reset enabled. However, it may be disabled in the \hyperlink{struct_watchdog___params}{Watchdog\+\_\+\+Params} which allows the Watchdog Timer to be used like another timer interrupt. This functionality is {\bfseries not} supported by all platforms, refer to device specific documentation for details.
+
+\subsubsection*{Power Management}
+
+Once started, the Watchdog will keep running in Active or Idle mode. When the device enters Standby mode, the Watchdog timer will stop counting down but the counter value will be preserved. When the device wakes up from Standby, the Watchdog timer will continue to count down from the previous counter value.
+
+This means that if a system goes into Standby 50\% of the time and the Watchdog reload value is set to 1 second, the Watchdog timer will actually time out in 2 seconds. A system which is only in Active/\+Idle mode for 1\% of the time, the Watchdog timer will time out in 100 seconds. However, if a bug locks up the application in Active mode, the Watchdog timer will time out in the configured time.
+
+\subsubsection*{Supported Functions}
+
+\begin{TabularC}{3}
+\hline
+\rowcolor{lightgray}{\bf Generic A\+P\+I Function }&{\bf A\+P\+I Function }&{\bf Description  }\\\cline{1-3}
+\hyperlink{_watchdog_8h_afaadfb59be17661ae95562f2081355e7}{Watchdog\+\_\+init()} &Watchdog\+C\+C26\+X\+X\+\_\+init() &Initialize Watchdog driver \\\cline{1-3}
+\hyperlink{_watchdog_8h_aa5ce656aa6d5199e1efdb4ca2cd9fb7c}{Watchdog\+\_\+open()} &Watchdog\+C\+C26\+X\+X\+\_\+open() &Initialize Watchdog H\+W and set system dependencies \\\cline{1-3}
+\hyperlink{_watchdog_8h_a396decd6b1807db10c636f9987c3be4c}{Watchdog\+\_\+clear()} &Watchdog\+C\+C26\+X\+X\+\_\+clear() &Clear Watchdog interrupt flag and reload counter \\\cline{1-3}
+\hyperlink{_watchdog_8h_a476ef7b9d4e7268717adf94d8505f4a5}{Watchdog\+\_\+set\+Reload()} &Watchdog\+C\+C26\+X\+X\+\_\+set\+Reload() &Set Watchdog timer reload value in clock ticnks \\\cline{1-3}
+\hyperlink{_watchdog_8h_a7b93cd0bd3a6f11aa28b0c7219755979}{Watchdog\+\_\+convert\+Ms\+To\+Ticks()} &Watchdog\+C\+C26\+X\+X\+\_\+convert\+Ms\+To\+Ticks() &Converts milliseconds to clock ticks \\\cline{1-3}
+\end{TabularC}
+\begin{DoxyNote}{Note}
+All calls should go through the generic A\+P\+I. Please refer to \hyperlink{_watchdog_8h}{Watchdog.\+h} for a complete description of the generic A\+P\+Is.
+\end{DoxyNote}
+\subsubsection*{Use Cases}
+
+\paragraph*{Basic Watchdog}
+
+In this basic watchdog example, the application is expected to define a Watchdog callback function and start the Watchdog timer by calling \hyperlink{_watchdog_8h_aa5ce656aa6d5199e1efdb4ca2cd9fb7c}{Watchdog\+\_\+open()}. If needed, \hyperlink{_watchdog_8h_a476ef7b9d4e7268717adf94d8505f4a5}{Watchdog\+\_\+set\+Reload()} may be called to change the timeout period. If all monitored tasks are doing alright, \hyperlink{_watchdog_8h_a396decd6b1807db10c636f9987c3be4c}{Watchdog\+\_\+clear()} should be called regularly to reload the counter so as to restart the timeoout period and to avoid the Watchdog interrupt being triggered. If the \hyperlink{_watchdog_8h_a396decd6b1807db10c636f9987c3be4c}{Watchdog\+\_\+clear()} is missed and the Watchdog timer is allowed to timeout, the user-\/defined callback function is called. In this function, the user may do whatever is appropriate for the application. Here are some suggestions\+:
+\begin{DoxyItemize}
+\item do nothing so that the timer will timeout again and trigger the reset,
+\item immediately reset the device,
+\item do self-\/test to check the integrity of the application,
+\item post a S\+W\+I or Task to do the self-\/test.
+\end{DoxyItemize}
+
+The following code example shows how to define the callback function and to start the Watchdog timer. 
+\begin{DoxyCode}
+\textcolor{keywordtype}{void} watchdogCallback(UArg handle);
+
+...
+
+Watchdog\_Handle handle;
+Watchdog_Params params;
+uint32\_t tickValue;
+
+Watchdog_Params_init(&params);
+params.callbackFxn = watchdogCallback;
+handle = Watchdog_open(Watchdog\_configIndex, &params);
+\textcolor{comment}{// set timeout period to 100 ms}
+tickValue = Watchdog_convertMsToTicks(handle, 100);
+Watchdog_setReload(handle, tickValue);
+
+...
+
+void watchdogCallback(UArg handle)
+\{
+    \textcolor{comment}{// User-defined code here}
+    ...
+
+\}
+\end{DoxyCode}
+ {\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+Watchdog.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/family/arm/m3/\+Hwi.\+h$>$}\\*
+Include dependency graph for Watchdog\+C\+C26\+X\+X.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_watchdog_c_c26_x_x_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_watchdog_c_c26_x_x___h_w_attrs}{Watchdog\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em Watchdog hardware attributes for C\+C26\+X\+X. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_watchdog_c_c26_x_x___object}{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em Watchdog Object for C\+C26\+X\+X. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_watchdog_c_c26_x_x_8h_aaa17ecf48f5762e2e1bdb0bab8aacf0c}{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_watchdog_c_c26_x_x___h_w_attrs}{Watchdog\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs} \hyperlink{_watchdog_c_c26_x_x_8h_a3c5c1fb8e79e0ffbefbc0c6077490157}{Watchdog\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em Watchdog hardware attributes for C\+C26\+X\+X. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_watchdog_c_c26_x_x___object}{Watchdog\+C\+C26\+X\+X\+\_\+\+Object} \hyperlink{_watchdog_c_c26_x_x_8h_a1974637ff573d5fb1e141f263ac5361f}{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em Watchdog Object for C\+C26\+X\+X. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_watchdog___fxn_table}{Watchdog\+\_\+\+Fxn\+Table} \hyperlink{_watchdog_c_c26_x_x_8h_a1f60b940055d37c5bf8545499e948ca3}{Watchdog\+C\+C26\+X\+X\+\_\+fxn\+Table}
+\begin{DoxyCompactList}\small\item\em Watchdog function table for C\+C26\+X\+X. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{Watchdog\+C\+C26\+X\+X.\+h@{Watchdog\+C\+C26\+X\+X.\+h}!ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames@{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}}
+\index{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames@{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}!Watchdog\+C\+C26\+X\+X.\+h@{Watchdog\+C\+C26\+X\+X.\+h}}
+\paragraph[{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}]{\setlength{\rightskip}{0pt plus 5cm}\#define ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}\label{_watchdog_c_c26_x_x_8h_aaa17ecf48f5762e2e1bdb0bab8aacf0c}
+
+
+\subsubsection{Typedef Documentation}
+\index{Watchdog\+C\+C26\+X\+X.\+h@{Watchdog\+C\+C26\+X\+X.\+h}!Watchdog\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{Watchdog\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\index{Watchdog\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{Watchdog\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!Watchdog\+C\+C26\+X\+X.\+h@{Watchdog\+C\+C26\+X\+X.\+h}}
+\paragraph[{Watchdog\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Watchdog\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}  {\bf Watchdog\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}\label{_watchdog_c_c26_x_x_8h_a3c5c1fb8e79e0ffbefbc0c6077490157}
+
+
+Watchdog hardware attributes for C\+C26\+X\+X. 
+
+\index{Watchdog\+C\+C26\+X\+X.\+h@{Watchdog\+C\+C26\+X\+X.\+h}!Watchdog\+C\+C26\+X\+X\+\_\+\+Object@{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}}
+\index{Watchdog\+C\+C26\+X\+X\+\_\+\+Object@{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}!Watchdog\+C\+C26\+X\+X.\+h@{Watchdog\+C\+C26\+X\+X.\+h}}
+\paragraph[{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Watchdog\+C\+C26\+X\+X\+\_\+\+Object}  {\bf Watchdog\+C\+C26\+X\+X\+\_\+\+Object}}\label{_watchdog_c_c26_x_x_8h_a1974637ff573d5fb1e141f263ac5361f}
+
+
+Watchdog Object for C\+C26\+X\+X. 
+
+Not to be accessed by the user. 
+
+\subsubsection{Variable Documentation}
+\index{Watchdog\+C\+C26\+X\+X.\+h@{Watchdog\+C\+C26\+X\+X.\+h}!Watchdog\+C\+C26\+X\+X\+\_\+fxn\+Table@{Watchdog\+C\+C26\+X\+X\+\_\+fxn\+Table}}
+\index{Watchdog\+C\+C26\+X\+X\+\_\+fxn\+Table@{Watchdog\+C\+C26\+X\+X\+\_\+fxn\+Table}!Watchdog\+C\+C26\+X\+X.\+h@{Watchdog\+C\+C26\+X\+X.\+h}}
+\paragraph[{Watchdog\+C\+C26\+X\+X\+\_\+fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Watchdog\+\_\+\+Fxn\+Table} Watchdog\+C\+C26\+X\+X\+\_\+fxn\+Table}\label{_watchdog_c_c26_x_x_8h_a1f60b940055d37c5bf8545499e948ca3}
+
+
+Watchdog function table for C\+C26\+X\+X. 
+

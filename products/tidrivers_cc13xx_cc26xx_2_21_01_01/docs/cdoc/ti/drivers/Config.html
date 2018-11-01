@@ -1,0 +1,216 @@
+<html>
+<head>
+<title>module ti.drivers.Config</title>
+<link rel="stylesheet" type="text/css" href="../../xdoc.css" />
+</head>
+<body><div id="xdocWrapper"><div id="xdocContent">
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">metaonly </span><span class="xdoc-kw1">module</span> <span class="xdoc-id">ti.drivers.</span><span class="xdoc-id">Config</span></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../ti/drivers/package.html" title="package ti.drivers"><img class="xdocHdrArrow" src="../../Arrow_up.png"/></a></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../ti/drivers/Power.html" title="module Power"><img class="xdocHdrArrow" src="../../Arrow_right.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../index.html#ti/drivers/Config.html">index URL</a></div>
+<ul class="xdocToc">
+<li class="xdocToc"><a class="xdocToc" href="#meta-synop">XDCscript usage</a></li>
+<li class="xdocToc2"><a class="xdocToc" href="#xdocMetaElems">Individual elements</a></li>
+</ul>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2">XDCscript</span></tt> usage</td>
+<td class="xdocLabelCenter">meta-domain</td>
+<td class="xdocLabelRight">sourced in <a class="xdocLink" href="../../ti/drivers/Config-src.html"><span class="xdocLabelFile">ti/drivers/Config.xdc</span></a></td>
+</tr></table>
+<div class="xdocSynM">
+<div class="xdocSynCode">
+<tt></tt><span class="xdoc-kw1">var</span> Config = <span class="xdoc-kw3">xdc.useModule</span>(<span class="xdoc-id">'ti.drivers.Config'</span>);
+</div>
+<div class='xdocSynHdr'>module-wide constants & types</div>
+
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><i>values of type <a class="xdocSynGo" href="#.Lib.Type">Config.<span class="xdoc-id">LibType</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;Configuration options for TI Drivers library</span></span></a></i>
+</div>
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><span class="xdoc-kw1">const</span> <a class="xdocSynGo" href="#.Lib.Type">Config.<span class="xdoc-id">LibType_Instrumented</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;instrumented (with asserts and logs)</span></span></a>;
+</div>
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><span class="xdoc-kw1">const</span> <a class="xdocSynGo" href="#.Lib.Type">Config.<span class="xdoc-id">LibType_NonInstrumented</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;non-instrumented</span></span></a>;
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><i>values of type <a class="xdocSynGo" href="#.R.F.Driver.Mode">Config.<span class="xdoc-id">RFDriverMode</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;TI-Drivers RF Driver mode</span></span></a></i>
+</div>
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><span class="xdoc-kw1">const</span> <a class="xdocSynGo" href="#.R.F.Driver.Mode">Config.<span class="xdoc-id">RF_MultiMode</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;Multiple clients/protocols run simultaneously</span></span></a>;
+</div>
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><span class="xdoc-kw1">const</span> <a class="xdocSynGo" href="#.R.F.Driver.Mode">Config.<span class="xdoc-id">RF_SingleMode</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;Only a single client/protocol</span></span></a>;
+</div>
+<div class='xdocSynHdr'>module-wide config parameters</div>
+
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><a class="xdocSynGo" href="#lib.Type">Config.<span class="xdoc-id">libType</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;TI Drivers library type</span></span></a> = <i><a class="xdoc-link" href="../../ti/drivers/Config.html#.Lib.Type" title="ti.drivers.Config.LibType">Config.LibType</a></i> <a class="xdoc-link" href="../../ti/drivers/Config.html#.Lib.Type_.Non.Instrumented" title="ti.drivers.Config.LibType_NonInstrumented">Config.LibType_NonInstrumented</a>;
+</div>
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><a class="xdocSynGo" href="#rf.Driver.Mode">Config.<span class="xdoc-id">rfDriverMode</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;TI-Drivers RF Driver mode</span></span></a> = <i><a class="xdoc-link" href="../../ti/drivers/Config.html#.R.F.Driver.Mode" title="ti.drivers.Config.RFDriverMode">Config.RFDriverMode</a></i> <a class="xdoc-link" href="../../ti/drivers/Config.html#.R.F_.Single.Mode" title="ti.drivers.Config.RF_SingleMode">Config.RF_SingleMode</a>;
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+</div>
+<div id="xdocSep">
+</div>
+<div id="xdocMetaElems">
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id=".Lib.Type"></a>
+<a class="xdocAnchor" id=".Lib.Type_.Instrumented"></a>
+<a class="xdocAnchor" id=".Lib.Type_.Non.Instrumented"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">enum</span> <span class="xdoc-id">Config.</span><span class="xdoc-id">LibType</span></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../ti/drivers/Config.html" title="module Config"><img class="xdocHdrArrow" src="../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../index.html#ti/drivers/Config.html#.Lib.Type">index URL</a></div>
+<p class="xdocHdrSummaryDcl">Configuration options for TI Drivers library</p>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2dcl">XDCscript</span></tt> usage</td>
+<td class="xdocLabelRight">meta-domain</td>
+</tr></table>
+<div class="xdocSynMdcl">
+<div class="xdocSynCode">
+<tt></tt><tt></tt><i>values of type Config.<span class="xdoc-id">LibType</span></i>
+</div>
+<div class="xdocSynCode">
+<tt></tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><span class="xdoc-kw1">const</span> Config.<span class="xdoc-id">LibType_Instrumented</span>;
+</div>
+<div class='xdocSynSum'><tt></tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt>//&nbsp;instrumented (with asserts and logs)</div>
+<div class="xdocSynCode">
+<tt></tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><span class="xdoc-kw1">const</span> Config.<span class="xdoc-id">LibType_NonInstrumented</span>;
+</div>
+<div class='xdocSynSum'><tt></tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt>//&nbsp;non-instrumented</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">VALUES</div>
+<div class="xdocChild"><span class="xdocChildId">LibType_Instrumented</span>
+<span class="xdocChildSum">&#151;&nbsp;The library supplied is pre-built with
+  logging and assertions enabled.
+  Diags_USER1 mask logs basic information
+  Diags_USER2 mask logs more detailed information</span>
+</div>
+<div class="xdocChild"><span class="xdocChildId">LibType_NonInstrumented</span>
+<span class="xdocChildSum">&#151;&nbsp;The library supplied is pre-built
+  with logging and assertions disabled.</span>
+</div>
+<span id="xdoc-sect-2"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">You can select the library type by setting
+  the <a class="xdoc-link" href="Config.html#lib.Type" title="libType">Config.libType</a> configuration parameter.</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id=".R.F.Driver.Mode"></a>
+<a class="xdocAnchor" id=".R.F_.Multi.Mode"></a>
+<a class="xdocAnchor" id=".R.F_.Single.Mode"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">enum</span> <span class="xdoc-id">Config.</span><span class="xdoc-id">RFDriverMode</span></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../ti/drivers/Config.html" title="module Config"><img class="xdocHdrArrow" src="../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../index.html#ti/drivers/Config.html#.R.F.Driver.Mode">index URL</a></div>
+<p class="xdocHdrSummaryDcl">TI-Drivers RF Driver mode</p>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2dcl">XDCscript</span></tt> usage</td>
+<td class="xdocLabelRight">meta-domain</td>
+</tr></table>
+<div class="xdocSynMdcl">
+<div class="xdocSynCode">
+<tt></tt><tt></tt><i>values of type Config.<span class="xdoc-id">RFDriverMode</span></i>
+</div>
+<div class="xdocSynCode">
+<tt></tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><span class="xdoc-kw1">const</span> Config.<span class="xdoc-id">RF_MultiMode</span>;
+</div>
+<div class='xdocSynSum'><tt></tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt>//&nbsp;Multiple clients/protocols run simultaneously</div>
+<div class="xdocSynCode">
+<tt></tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><span class="xdoc-kw1">const</span> Config.<span class="xdoc-id">RF_SingleMode</span>;
+</div>
+<div class='xdocSynSum'><tt></tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt>//&nbsp;Only a single client/protocol</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">VALUES</div>
+<div class="xdocChild"><span class="xdocChildId">RF_SingleMode</span>
+<span class="xdocChildSum">&#151;&nbsp;A single client/protocol will have exclusive
+  access to the radio.</span>
+</div>
+<div class="xdocChild"><span class="xdocChildId">RF_MultiMode</span>
+<span class="xdocChildSum">&#151;&nbsp;Supports multiple clients/protocols accessing
+  the radio simultaneously.</span>
+</div>
+<span id="xdoc-sect-2"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">You can select the RF driver mode by setting the
+  <a class="xdoc-link" href="Config.html#rf.Driver.Mode" title="rfDriverMode">Config.rfDriverMode</a> configuration parameter.</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id="lib.Type"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">config</span> <span class="xdoc-id">Config.</span><span class="xdoc-id">libType</span>&nbsp;&nbsp;<small><span class="xdocSynSum">//&nbsp;module-wide</span></small></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../ti/drivers/Config.html" title="module Config"><img class="xdocHdrArrow" src="../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../index.html#ti/drivers/Config.html#lib.Type">index URL</a></div>
+<p class="xdocHdrSummaryDcl">TI Drivers library type</p>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2dcl">XDCscript</span></tt> usage</td>
+<td class="xdocLabelRight">meta-domain</td>
+</tr></table>
+<div class="xdocSynMdcl">
+<div class="xdocSynCode">
+<tt></tt><tt></tt>Config.<span class="xdoc-id">libType</span> = <i><a class="xdoc-link" href="../../ti/drivers/Config.html#.Lib.Type" title="ti.drivers.Config.LibType">Config.LibType</a></i> <a class="xdoc-link" href="../../ti/drivers/Config.html#.Lib.Type_.Non.Instrumented" title="ti.drivers.Config.LibType_NonInstrumented">Config.LibType_NonInstrumented</a>;
+</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">The driver libraries are provided to link with your application.
+  Two forms of this library are provided with the TI Drivers product.
+  This configuration parameter allows you to select the form of the
+  driver libraries to use.</div>
+<div class="xdocText">The default value of libType is
+  <a class="xdoc-link" href="Config.html#.Lib.Type_.Non.Instrumented" title="LibType_NonInstrumented">LibType_NonInstrumented</a>.  For a
+  complete list of options and what they offer see <a class="xdoc-link" href="Config.html#.Lib.Type" title="LibType">LibType</a>.</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id="rf.Driver.Mode"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">config</span> <span class="xdoc-id">Config.</span><span class="xdoc-id">rfDriverMode</span>&nbsp;&nbsp;<small><span class="xdocSynSum">//&nbsp;module-wide</span></small></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../ti/drivers/Config.html" title="module Config"><img class="xdocHdrArrow" src="../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../index.html#ti/drivers/Config.html#rf.Driver.Mode">index URL</a></div>
+<p class="xdocHdrSummaryDcl">TI-Drivers RF Driver mode</p>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2dcl">XDCscript</span></tt> usage</td>
+<td class="xdocLabelRight">meta-domain</td>
+</tr></table>
+<div class="xdocSynMdcl">
+<div class="xdocSynCode">
+<tt></tt><tt></tt>Config.<span class="xdoc-id">rfDriverMode</span> = <i><a class="xdoc-link" href="../../ti/drivers/Config.html#.R.F.Driver.Mode" title="ti.drivers.Config.RFDriverMode">Config.RFDriverMode</a></i> <a class="xdoc-link" href="../../ti/drivers/Config.html#.R.F_.Single.Mode" title="ti.drivers.Config.RF_SingleMode">Config.RF_SingleMode</a>;
+</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">The RF driver supports single &amp; multi modes of operation.  In
+  single-mode only a single client/protocol can interact  with the
+  radio, meaning if another protocol is required, the RF driver must be
+  closed &amp; re-opened.</div>
+<div class="xdocText">In multi-mode more than one client/protocol can interact with the radio
+  simultaneously.</div>
+<div class="xdocText">The default value of rfDriverMode is:
+  <a class="xdoc-link" href="Config.html#.R.F_.Single.Mode" title="RF_SingleMode">RF_SingleMode</a>.  For a
+  complete list of options and what they offer see <a class="xdoc-link" href="Config.html#.R.F.Driver.Mode" title="RFDriverMode">RFDriverMode</a>.</div>
+</div>
+<div id="xdocDate">generated on Tue, 06 Feb 2018 01:23:46 GMT</div>
+</div></div></body>
+</html>

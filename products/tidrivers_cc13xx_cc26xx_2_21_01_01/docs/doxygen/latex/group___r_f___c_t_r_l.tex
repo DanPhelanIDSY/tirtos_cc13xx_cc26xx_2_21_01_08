@@ -1,0 +1,43 @@
+\subsection{R\+F\+\_\+\+C\+T\+R\+L}
+\label{group___r_f___c_t_r_l}\index{R\+F\+\_\+\+C\+T\+R\+L@{R\+F\+\_\+\+C\+T\+R\+L}}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group___r_f___c_t_r_l_ga24096530a8da4bde84275bc9c76b2cee}{R\+F\+\_\+\+C\+T\+R\+L\+\_\+\+S\+E\+T\+\_\+\+I\+N\+A\+C\+T\+I\+V\+I\+T\+Y\+\_\+\+T\+I\+M\+E\+O\+U\+T}~0
+\begin{DoxyCompactList}\small\item\em Control code used by R\+F\+\_\+control to set inactivity timeout. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___c_t_r_l_ga74d367afdca187785b17c59b31d1e89a}{R\+F\+\_\+\+C\+T\+R\+L\+\_\+\+U\+P\+D\+A\+T\+E\+\_\+\+S\+E\+T\+U\+P\+\_\+\+C\+M\+D}~1
+\begin{DoxyCompactList}\small\item\em Control code used by R\+F\+\_\+control to update setup command. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___c_t_r_l_ga32bd63d8617c2fde41bbc30d1e8f0db5}{R\+F\+\_\+\+C\+T\+R\+L\+\_\+\+S\+E\+T\+\_\+\+P\+O\+W\+E\+R\+U\+P\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+\+M\+A\+R\+G\+I\+N}~2
+\begin{DoxyCompactList}\small\item\em Control code used by R\+F\+\_\+control to set powerup duration margin. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+R\+F\+\_\+\+C\+T\+R\+L\+\_\+$\ast$ macros are control codes defined in the \hyperlink{_r_f_8h}{R\+F.\+h} driver implementation and need to\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/rf/RF.h>}
+\end{DoxyCode}
+ 
+
+\subsubsection{Macro Definition Documentation}
+\index{R\+F\+\_\+\+C\+T\+R\+L@{R\+F\+\_\+\+C\+T\+R\+L}!R\+F\+\_\+\+C\+T\+R\+L\+\_\+\+S\+E\+T\+\_\+\+I\+N\+A\+C\+T\+I\+V\+I\+T\+Y\+\_\+\+T\+I\+M\+E\+O\+U\+T@{R\+F\+\_\+\+C\+T\+R\+L\+\_\+\+S\+E\+T\+\_\+\+I\+N\+A\+C\+T\+I\+V\+I\+T\+Y\+\_\+\+T\+I\+M\+E\+O\+U\+T}}
+\index{R\+F\+\_\+\+C\+T\+R\+L\+\_\+\+S\+E\+T\+\_\+\+I\+N\+A\+C\+T\+I\+V\+I\+T\+Y\+\_\+\+T\+I\+M\+E\+O\+U\+T@{R\+F\+\_\+\+C\+T\+R\+L\+\_\+\+S\+E\+T\+\_\+\+I\+N\+A\+C\+T\+I\+V\+I\+T\+Y\+\_\+\+T\+I\+M\+E\+O\+U\+T}!R\+F\+\_\+\+C\+T\+R\+L@{R\+F\+\_\+\+C\+T\+R\+L}}
+\paragraph[{R\+F\+\_\+\+C\+T\+R\+L\+\_\+\+S\+E\+T\+\_\+\+I\+N\+A\+C\+T\+I\+V\+I\+T\+Y\+\_\+\+T\+I\+M\+E\+O\+U\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+C\+T\+R\+L\+\_\+\+S\+E\+T\+\_\+\+I\+N\+A\+C\+T\+I\+V\+I\+T\+Y\+\_\+\+T\+I\+M\+E\+O\+U\+T~0}\label{group___r_f___c_t_r_l_ga24096530a8da4bde84275bc9c76b2cee}
+
+
+Control code used by R\+F\+\_\+control to set inactivity timeout. 
+
+Setting this control allows R\+F to power down the radio upon completion of a radio command after a specified timeout period (in us) With this control code {\bfseries arg} is a pointer to the timeout variable and returns R\+F\+\_\+\+Stat\+Success. \index{R\+F\+\_\+\+C\+T\+R\+L@{R\+F\+\_\+\+C\+T\+R\+L}!R\+F\+\_\+\+C\+T\+R\+L\+\_\+\+U\+P\+D\+A\+T\+E\+\_\+\+S\+E\+T\+U\+P\+\_\+\+C\+M\+D@{R\+F\+\_\+\+C\+T\+R\+L\+\_\+\+U\+P\+D\+A\+T\+E\+\_\+\+S\+E\+T\+U\+P\+\_\+\+C\+M\+D}}
+\index{R\+F\+\_\+\+C\+T\+R\+L\+\_\+\+U\+P\+D\+A\+T\+E\+\_\+\+S\+E\+T\+U\+P\+\_\+\+C\+M\+D@{R\+F\+\_\+\+C\+T\+R\+L\+\_\+\+U\+P\+D\+A\+T\+E\+\_\+\+S\+E\+T\+U\+P\+\_\+\+C\+M\+D}!R\+F\+\_\+\+C\+T\+R\+L@{R\+F\+\_\+\+C\+T\+R\+L}}
+\paragraph[{R\+F\+\_\+\+C\+T\+R\+L\+\_\+\+U\+P\+D\+A\+T\+E\+\_\+\+S\+E\+T\+U\+P\+\_\+\+C\+M\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+C\+T\+R\+L\+\_\+\+U\+P\+D\+A\+T\+E\+\_\+\+S\+E\+T\+U\+P\+\_\+\+C\+M\+D~1}\label{group___r_f___c_t_r_l_ga74d367afdca187785b17c59b31d1e89a}
+
+
+Control code used by R\+F\+\_\+control to update setup command. 
+
+Setting this control notifies R\+F that the setup command is to be updated, so that R\+F will take proper actions when executing the next setup command. Note the updated setup command will take effect in the next power up cycle when R\+F executes the setup command. Prior to updating the setup command, user should make sure all pending commands have completed. \index{R\+F\+\_\+\+C\+T\+R\+L@{R\+F\+\_\+\+C\+T\+R\+L}!R\+F\+\_\+\+C\+T\+R\+L\+\_\+\+S\+E\+T\+\_\+\+P\+O\+W\+E\+R\+U\+P\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+\+M\+A\+R\+G\+I\+N@{R\+F\+\_\+\+C\+T\+R\+L\+\_\+\+S\+E\+T\+\_\+\+P\+O\+W\+E\+R\+U\+P\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+\+M\+A\+R\+G\+I\+N}}
+\index{R\+F\+\_\+\+C\+T\+R\+L\+\_\+\+S\+E\+T\+\_\+\+P\+O\+W\+E\+R\+U\+P\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+\+M\+A\+R\+G\+I\+N@{R\+F\+\_\+\+C\+T\+R\+L\+\_\+\+S\+E\+T\+\_\+\+P\+O\+W\+E\+R\+U\+P\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+\+M\+A\+R\+G\+I\+N}!R\+F\+\_\+\+C\+T\+R\+L@{R\+F\+\_\+\+C\+T\+R\+L}}
+\paragraph[{R\+F\+\_\+\+C\+T\+R\+L\+\_\+\+S\+E\+T\+\_\+\+P\+O\+W\+E\+R\+U\+P\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+\+M\+A\+R\+G\+I\+N}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+C\+T\+R\+L\+\_\+\+S\+E\+T\+\_\+\+P\+O\+W\+E\+R\+U\+P\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+\+M\+A\+R\+G\+I\+N~2}\label{group___r_f___c_t_r_l_ga32bd63d8617c2fde41bbc30d1e8f0db5}
+
+
+Control code used by R\+F\+\_\+control to set powerup duration margin. 
+
+Setting this control updates the powerup duration margin. Default is R\+F\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+P\+O\+W\+E\+R\+\_\+\+U\+P\+\_\+\+M\+A\+R\+G\+I\+N. 

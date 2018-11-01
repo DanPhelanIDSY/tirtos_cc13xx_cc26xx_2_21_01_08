@@ -1,0 +1,202 @@
+\subsection{Ring\+Buf.\+h File Reference}
+\label{_ring_buf_8h}\index{Ring\+Buf.\+h@{Ring\+Buf.\+h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stddef.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+Include dependency graph for Ring\+Buf.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{_ring_buf_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=127pt]{_ring_buf_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_ring_buf___object}{Ring\+Buf\+\_\+\+Object}
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_ring_buf___object}{Ring\+Buf\+\_\+\+Object} \hyperlink{_ring_buf_8h_af6920ef38868fbc57971fdbbab477d0d}{Ring\+Buf\+\_\+\+Object}
+\item 
+typedef struct \hyperlink{struct_ring_buf___object}{Ring\+Buf\+\_\+\+Object} $\ast$ \hyperlink{_ring_buf_8h_ade97ef8496bcec2a38a8695128458883}{Ring\+Buf\+\_\+\+Handle}
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_ring_buf_8h_abadef81450098bc113f104e9adec83b1}{Ring\+Buf\+\_\+construct} (\hyperlink{_ring_buf_8h_ade97ef8496bcec2a38a8695128458883}{Ring\+Buf\+\_\+\+Handle} object, unsigned char $\ast$buf\+Ptr, size\+\_\+t buf\+Size)
+\begin{DoxyCompactList}\small\item\em Initialize circular buffer. \end{DoxyCompactList}\item 
+int \hyperlink{_ring_buf_8h_abb0526bc9c7e9a496e7a9fafc34e753e}{Ring\+Buf\+\_\+get} (\hyperlink{_ring_buf_8h_ade97ef8496bcec2a38a8695128458883}{Ring\+Buf\+\_\+\+Handle} object, unsigned char $\ast$data)
+\begin{DoxyCompactList}\small\item\em Get an unsigned char from the end of the circular buffer and remove it. \end{DoxyCompactList}\item 
+int \hyperlink{_ring_buf_8h_ac06c00bf7da6408bf2f17802e16c32a2}{Ring\+Buf\+\_\+get\+Count} (\hyperlink{_ring_buf_8h_ade97ef8496bcec2a38a8695128458883}{Ring\+Buf\+\_\+\+Handle} object)
+\begin{DoxyCompactList}\small\item\em Get the number of unsigned chars currently stored on the circular buffer. \end{DoxyCompactList}\item 
+bool \hyperlink{_ring_buf_8h_adfa531b7441b7fcb65b72adef7e830b9}{Ring\+Buf\+\_\+is\+Full} (\hyperlink{_ring_buf_8h_ade97ef8496bcec2a38a8695128458883}{Ring\+Buf\+\_\+\+Handle} object)
+\begin{DoxyCompactList}\small\item\em Function to determine if the circular buffer is full or not. \end{DoxyCompactList}\item 
+int \hyperlink{_ring_buf_8h_a0e764325ed5803e2dfa555b3e0a77e39}{Ring\+Buf\+\_\+get\+Max\+Count} (\hyperlink{_ring_buf_8h_ade97ef8496bcec2a38a8695128458883}{Ring\+Buf\+\_\+\+Handle} object)
+\begin{DoxyCompactList}\small\item\em A high-\/water mark indicating the largest number of unsigned chars stored on the circular buffer since it was constructed. \end{DoxyCompactList}\item 
+int \hyperlink{_ring_buf_8h_ac71f61b4218cdf81fc8ff30b8e9f1bce}{Ring\+Buf\+\_\+peek} (\hyperlink{_ring_buf_8h_ade97ef8496bcec2a38a8695128458883}{Ring\+Buf\+\_\+\+Handle} object, unsigned char $\ast$data)
+\begin{DoxyCompactList}\small\item\em Get an unsigned char from the end of the circular buffer without removing it. \end{DoxyCompactList}\item 
+int \hyperlink{_ring_buf_8h_a7f2d2d83515194f08fcc7901481b5c62}{Ring\+Buf\+\_\+put} (\hyperlink{_ring_buf_8h_ade97ef8496bcec2a38a8695128458883}{Ring\+Buf\+\_\+\+Handle} object, unsigned char data)
+\begin{DoxyCompactList}\small\item\em Put an unsigned char into the end of the circular buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Typedef Documentation}
+\index{Ring\+Buf.\+h@{Ring\+Buf.\+h}!Ring\+Buf\+\_\+\+Object@{Ring\+Buf\+\_\+\+Object}}
+\index{Ring\+Buf\+\_\+\+Object@{Ring\+Buf\+\_\+\+Object}!Ring\+Buf.\+h@{Ring\+Buf.\+h}}
+\paragraph[{Ring\+Buf\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Ring\+Buf\+\_\+\+Object}  {\bf Ring\+Buf\+\_\+\+Object}}\label{_ring_buf_8h_af6920ef38868fbc57971fdbbab477d0d}
+\index{Ring\+Buf.\+h@{Ring\+Buf.\+h}!Ring\+Buf\+\_\+\+Handle@{Ring\+Buf\+\_\+\+Handle}}
+\index{Ring\+Buf\+\_\+\+Handle@{Ring\+Buf\+\_\+\+Handle}!Ring\+Buf.\+h@{Ring\+Buf.\+h}}
+\paragraph[{Ring\+Buf\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Ring\+Buf\+\_\+\+Object} $\ast$ {\bf Ring\+Buf\+\_\+\+Handle}}\label{_ring_buf_8h_ade97ef8496bcec2a38a8695128458883}
+
+
+\subsubsection{Function Documentation}
+\index{Ring\+Buf.\+h@{Ring\+Buf.\+h}!Ring\+Buf\+\_\+construct@{Ring\+Buf\+\_\+construct}}
+\index{Ring\+Buf\+\_\+construct@{Ring\+Buf\+\_\+construct}!Ring\+Buf.\+h@{Ring\+Buf.\+h}}
+\paragraph[{Ring\+Buf\+\_\+construct}]{\setlength{\rightskip}{0pt plus 5cm}void Ring\+Buf\+\_\+construct (
+\begin{DoxyParamCaption}
+\item[{{\bf Ring\+Buf\+\_\+\+Handle}}]{object, }
+\item[{unsigned char $\ast$}]{buf\+Ptr, }
+\item[{size\+\_\+t}]{buf\+Size}
+\end{DoxyParamCaption}
+)}\label{_ring_buf_8h_abadef81450098bc113f104e9adec83b1}
+
+
+Initialize circular buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em object} & Pointer to a Ring\+Buf Object that contains the member variables to operate a circular buffer.\\
+\hline
+{\em buf\+Ptr} & Pointer to data buffer to be used for the circular buffer. The buffer is N\+O\+T stored in \hyperlink{struct_ring_buf___object}{Ring\+Buf\+\_\+\+Object}.\\
+\hline
+{\em buf\+Size} & The size of buf\+Ptr in number of unsigned chars. \\
+\hline
+\end{DoxyParams}
+\index{Ring\+Buf.\+h@{Ring\+Buf.\+h}!Ring\+Buf\+\_\+get@{Ring\+Buf\+\_\+get}}
+\index{Ring\+Buf\+\_\+get@{Ring\+Buf\+\_\+get}!Ring\+Buf.\+h@{Ring\+Buf.\+h}}
+\paragraph[{Ring\+Buf\+\_\+get}]{\setlength{\rightskip}{0pt plus 5cm}int Ring\+Buf\+\_\+get (
+\begin{DoxyParamCaption}
+\item[{{\bf Ring\+Buf\+\_\+\+Handle}}]{object, }
+\item[{unsigned char $\ast$}]{data}
+\end{DoxyParamCaption}
+)}\label{_ring_buf_8h_abb0526bc9c7e9a496e7a9fafc34e753e}
+
+
+Get an unsigned char from the end of the circular buffer and remove it. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em object} & Pointer to a Ring\+Buf Object that contains the member variables to operate a circular buffer.\\
+\hline
+{\em data} & Pointer to an unsigned char to be filled with the data from the front of the circular buffer.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of unsigned chars on the buffer after taking it out of the circular buffer. If it returns -\/1, the circular buffer was already empty and data is invalid. 
+\end{DoxyReturn}
+\index{Ring\+Buf.\+h@{Ring\+Buf.\+h}!Ring\+Buf\+\_\+get\+Count@{Ring\+Buf\+\_\+get\+Count}}
+\index{Ring\+Buf\+\_\+get\+Count@{Ring\+Buf\+\_\+get\+Count}!Ring\+Buf.\+h@{Ring\+Buf.\+h}}
+\paragraph[{Ring\+Buf\+\_\+get\+Count}]{\setlength{\rightskip}{0pt plus 5cm}int Ring\+Buf\+\_\+get\+Count (
+\begin{DoxyParamCaption}
+\item[{{\bf Ring\+Buf\+\_\+\+Handle}}]{object}
+\end{DoxyParamCaption}
+)}\label{_ring_buf_8h_ac06c00bf7da6408bf2f17802e16c32a2}
+
+
+Get the number of unsigned chars currently stored on the circular buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em object} & Pointer to a Ring\+Buf Object that contains the member variables to operate a circular buffer.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of unsigned chars on the circular buffer. 
+\end{DoxyReturn}
+\index{Ring\+Buf.\+h@{Ring\+Buf.\+h}!Ring\+Buf\+\_\+is\+Full@{Ring\+Buf\+\_\+is\+Full}}
+\index{Ring\+Buf\+\_\+is\+Full@{Ring\+Buf\+\_\+is\+Full}!Ring\+Buf.\+h@{Ring\+Buf.\+h}}
+\paragraph[{Ring\+Buf\+\_\+is\+Full}]{\setlength{\rightskip}{0pt plus 5cm}bool Ring\+Buf\+\_\+is\+Full (
+\begin{DoxyParamCaption}
+\item[{{\bf Ring\+Buf\+\_\+\+Handle}}]{object}
+\end{DoxyParamCaption}
+)}\label{_ring_buf_8h_adfa531b7441b7fcb65b72adef7e830b9}
+
+
+Function to determine if the circular buffer is full or not. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em object} & Pointer to a Ring\+Buf Object that contains the member variables to operate a circular buffer.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if circular buffer is full, else false. 
+\end{DoxyReturn}
+\index{Ring\+Buf.\+h@{Ring\+Buf.\+h}!Ring\+Buf\+\_\+get\+Max\+Count@{Ring\+Buf\+\_\+get\+Max\+Count}}
+\index{Ring\+Buf\+\_\+get\+Max\+Count@{Ring\+Buf\+\_\+get\+Max\+Count}!Ring\+Buf.\+h@{Ring\+Buf.\+h}}
+\paragraph[{Ring\+Buf\+\_\+get\+Max\+Count}]{\setlength{\rightskip}{0pt plus 5cm}int Ring\+Buf\+\_\+get\+Max\+Count (
+\begin{DoxyParamCaption}
+\item[{{\bf Ring\+Buf\+\_\+\+Handle}}]{object}
+\end{DoxyParamCaption}
+)}\label{_ring_buf_8h_a0e764325ed5803e2dfa555b3e0a77e39}
+
+
+A high-\/water mark indicating the largest number of unsigned chars stored on the circular buffer since it was constructed. 
+
+\begin{DoxyReturn}{Returns}
+Get the largest number of unsigned chars that were at one point in the circular buffer. 
+\end{DoxyReturn}
+\index{Ring\+Buf.\+h@{Ring\+Buf.\+h}!Ring\+Buf\+\_\+peek@{Ring\+Buf\+\_\+peek}}
+\index{Ring\+Buf\+\_\+peek@{Ring\+Buf\+\_\+peek}!Ring\+Buf.\+h@{Ring\+Buf.\+h}}
+\paragraph[{Ring\+Buf\+\_\+peek}]{\setlength{\rightskip}{0pt plus 5cm}int Ring\+Buf\+\_\+peek (
+\begin{DoxyParamCaption}
+\item[{{\bf Ring\+Buf\+\_\+\+Handle}}]{object, }
+\item[{unsigned char $\ast$}]{data}
+\end{DoxyParamCaption}
+)}\label{_ring_buf_8h_ac71f61b4218cdf81fc8ff30b8e9f1bce}
+
+
+Get an unsigned char from the end of the circular buffer without removing it. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em object} & Pointer to a Ring\+Buf Object that contains the member variables to operate a circular buffer.\\
+\hline
+{\em data} & Pointer to an unsigned char to be filled with the data from the front of the circular buffer. This function does not remove the data from the circular buffer. Do not evaluate data if the count returned is equal to 0.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of unsigned chars on the circular buffer. If the number != 0, then data will contain the unsigned char at the end of the circular buffer. 
+\end{DoxyReturn}
+\index{Ring\+Buf.\+h@{Ring\+Buf.\+h}!Ring\+Buf\+\_\+put@{Ring\+Buf\+\_\+put}}
+\index{Ring\+Buf\+\_\+put@{Ring\+Buf\+\_\+put}!Ring\+Buf.\+h@{Ring\+Buf.\+h}}
+\paragraph[{Ring\+Buf\+\_\+put}]{\setlength{\rightskip}{0pt plus 5cm}int Ring\+Buf\+\_\+put (
+\begin{DoxyParamCaption}
+\item[{{\bf Ring\+Buf\+\_\+\+Handle}}]{object, }
+\item[{unsigned char}]{data}
+\end{DoxyParamCaption}
+)}\label{_ring_buf_8h_a7f2d2d83515194f08fcc7901481b5c62}
+
+
+Put an unsigned char into the end of the circular buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em object} & Pointer to a Ring\+Buf Object that contains the member variables to operate a circular buffer.\\
+\hline
+{\em data} & unsigned char to be placed at the end of the circular buffer.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of unsigned chars on the buffer after it was added, or -\/1 if it\textquotesingle{}s already full. 
+\end{DoxyReturn}

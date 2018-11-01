@@ -1,0 +1,61 @@
+\subsection{Command Codes}
+\label{group___d_i_s_p_l_a_y___c_m_d}\index{Command Codes@{Command Codes}}
+Collaboration diagram for Command Codes\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=299pt]{group___d_i_s_p_l_a_y___c_m_d}
+\end{center}
+\end{figure}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group___d_i_s_p_l_a_y___c_m_d_ga5be24ea4a3ddfd94efbb513d649ac88b}{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+T\+R\+A\+N\+S\+P\+O\+R\+T\+\_\+\+C\+L\+O\+S\+E}~0
+\begin{DoxyCompactList}\small\item\em Command used by Display\+\_\+control to release its transport layer. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___d_i_s_p_l_a_y___c_m_d_gae12206be356c6b2ce885b5ada9b1854d}{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+T\+R\+A\+N\+S\+P\+O\+R\+T\+\_\+\+O\+P\+E\+N}~1
+\begin{DoxyCompactList}\small\item\em Command used by Display\+\_\+control to resume control of its transport. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___d_i_s_p_l_a_y___c_m_d_ga27b9623d9abc7aa7eeae74ea7d77cd0f}{D\+I\+S\+P\+L\+A\+Y\+S\+H\+A\+R\+P\+\_\+\+C\+M\+D\+\_\+\+S\+E\+T\+\_\+\+C\+O\+L\+O\+R\+S}~\hyperlink{group___d_i_s_p_l_a_y___c_o_n_t_r_o_l_ga99c2401cd11ea3b49e5e3e4ffac5c886}{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D} + 0
+\begin{DoxyCompactList}\small\item\em Command used by Display\+\_\+control to invert the display. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D$\ast$ macros are general command codes for \hyperlink{_display_8h_ad623d21e3c6d821bf6f4bdcfa05ec21f}{Display\+\_\+control()}. Not all Display driver implementations support these command codes.
+
+D\+I\+S\+P\+L\+A\+Y\+S\+H\+A\+R\+P\+\_\+\+C\+M\+D\+\_\+$\ast$ macros are command codes only defined in the \hyperlink{_display_sharp_8h}{Display\+Sharp.\+h} driver implementation and need to\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/mw/display/DisplaySharp.h>}
+\end{DoxyCode}
+ 
+
+\subsubsection{Macro Definition Documentation}
+\index{Command Codes@{Command Codes}!D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+T\+R\+A\+N\+S\+P\+O\+R\+T\+\_\+\+C\+L\+O\+S\+E@{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+T\+R\+A\+N\+S\+P\+O\+R\+T\+\_\+\+C\+L\+O\+S\+E}}
+\index{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+T\+R\+A\+N\+S\+P\+O\+R\+T\+\_\+\+C\+L\+O\+S\+E@{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+T\+R\+A\+N\+S\+P\+O\+R\+T\+\_\+\+C\+L\+O\+S\+E}!Command Codes@{Command Codes}}
+\paragraph[{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+T\+R\+A\+N\+S\+P\+O\+R\+T\+\_\+\+C\+L\+O\+S\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+T\+R\+A\+N\+S\+P\+O\+R\+T\+\_\+\+C\+L\+O\+S\+E~0}\label{group___d_i_s_p_l_a_y___c_m_d_ga5be24ea4a3ddfd94efbb513d649ac88b}
+
+
+Command used by Display\+\_\+control to release its transport layer. 
+
+This command will cause Display implementations that are using a potentially shared transport mechanism to close the open handle.
+
+Methods requiring this transport will meanwhile be discarded.
+
+With this command {\bfseries arg} is {\itshape don\textquotesingle{}t} {\itshape care}. \index{Command Codes@{Command Codes}!D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+T\+R\+A\+N\+S\+P\+O\+R\+T\+\_\+\+O\+P\+E\+N@{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+T\+R\+A\+N\+S\+P\+O\+R\+T\+\_\+\+O\+P\+E\+N}}
+\index{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+T\+R\+A\+N\+S\+P\+O\+R\+T\+\_\+\+O\+P\+E\+N@{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+T\+R\+A\+N\+S\+P\+O\+R\+T\+\_\+\+O\+P\+E\+N}!Command Codes@{Command Codes}}
+\paragraph[{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+T\+R\+A\+N\+S\+P\+O\+R\+T\+\_\+\+O\+P\+E\+N}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+T\+R\+A\+N\+S\+P\+O\+R\+T\+\_\+\+O\+P\+E\+N~1}\label{group___d_i_s_p_l_a_y___c_m_d_gae12206be356c6b2ce885b5ada9b1854d}
+
+
+Command used by Display\+\_\+control to resume control of its transport. 
+
+This command will cause Display implementations that are using a potentially shared transport mechanism to (re-\/)open the closed handle.
+
+With this command {\bfseries arg} is {\itshape don\textquotesingle{}t} {\itshape care}. \index{Command Codes@{Command Codes}!D\+I\+S\+P\+L\+A\+Y\+S\+H\+A\+R\+P\+\_\+\+C\+M\+D\+\_\+\+S\+E\+T\+\_\+\+C\+O\+L\+O\+R\+S@{D\+I\+S\+P\+L\+A\+Y\+S\+H\+A\+R\+P\+\_\+\+C\+M\+D\+\_\+\+S\+E\+T\+\_\+\+C\+O\+L\+O\+R\+S}}
+\index{D\+I\+S\+P\+L\+A\+Y\+S\+H\+A\+R\+P\+\_\+\+C\+M\+D\+\_\+\+S\+E\+T\+\_\+\+C\+O\+L\+O\+R\+S@{D\+I\+S\+P\+L\+A\+Y\+S\+H\+A\+R\+P\+\_\+\+C\+M\+D\+\_\+\+S\+E\+T\+\_\+\+C\+O\+L\+O\+R\+S}!Command Codes@{Command Codes}}
+\paragraph[{D\+I\+S\+P\+L\+A\+Y\+S\+H\+A\+R\+P\+\_\+\+C\+M\+D\+\_\+\+S\+E\+T\+\_\+\+C\+O\+L\+O\+R\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+I\+S\+P\+L\+A\+Y\+S\+H\+A\+R\+P\+\_\+\+C\+M\+D\+\_\+\+S\+E\+T\+\_\+\+C\+O\+L\+O\+R\+S~{\bf D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D} + 0}\label{group___d_i_s_p_l_a_y___c_m_d_ga27b9623d9abc7aa7eeae74ea7d77cd0f}
+
+
+Command used by Display\+\_\+control to invert the display. 
+
+This command allows changing the background and foreground colors from the default, depending on the value (1 -\/ invert, 0 -\/ don\textquotesingle{}t invert) of {\bfseries arg} 
+
+With this command {\bfseries arg} is of type {\ttfamily \hyperlink{struct_display_sharp_color__t}{Display\+Sharp\+Color\+\_\+t}} $\ast$. 

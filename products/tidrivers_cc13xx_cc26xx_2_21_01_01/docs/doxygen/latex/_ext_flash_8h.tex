@@ -1,0 +1,136 @@
+\subsection{Ext\+Flash.\+h File Reference}
+\label{_ext_flash_8h}\index{Ext\+Flash.\+h@{Ext\+Flash.\+h}}
+
+
+\subsubsection{Detailed Description}
+External flash storage abstraction. 
+
+============================================================================
+
+
+
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+Include dependency graph for Ext\+Flash.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=159pt]{_ext_flash_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_ext_flash_info__t}{Ext\+Flash\+Info\+\_\+t}
+\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_ext_flash_8h_a0bc5316ab502ed58a098eef500545d88}{E\+X\+T\+\_\+\+F\+L\+A\+S\+H\+\_\+\+P\+A\+G\+E\+\_\+\+S\+I\+Z\+E}~4096
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{_ext_flash_8h_ad4b1bd8b121baef366934a9815871124}{Ext\+Flash\+\_\+open} (void)
+\item 
+void \hyperlink{_ext_flash_8h_ad456be39a9a700212437ff438410a594}{Ext\+Flash\+\_\+close} (void)
+\item 
+\hyperlink{struct_ext_flash_info__t}{Ext\+Flash\+Info\+\_\+t} $\ast$ \hyperlink{_ext_flash_8h_a30939a5a39e9fbfcd23022c23083b66e}{Ext\+Flash\+\_\+info} (void)
+\item 
+bool \hyperlink{_ext_flash_8h_a2d9f04462020d01ac5fdb55418b077b9}{Ext\+Flash\+\_\+read} (size\+\_\+t offset, size\+\_\+t length, uint8\+\_\+t $\ast$buf)
+\item 
+bool \hyperlink{_ext_flash_8h_a3f0495f78fc59522bbd47b3965bfd325}{Ext\+Flash\+\_\+erase} (size\+\_\+t offset, size\+\_\+t length)
+\item 
+bool \hyperlink{_ext_flash_8h_af4e3c0fef71d31bb67c44979abab1feb}{Ext\+Flash\+\_\+write} (size\+\_\+t offset, size\+\_\+t length, const uint8\+\_\+t $\ast$buf)
+\item 
+bool \hyperlink{_ext_flash_8h_a4f1fb7e68cb15dac521126d472edd81b}{Ext\+Flash\+\_\+test} (void)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{Ext\+Flash.\+h@{Ext\+Flash.\+h}!E\+X\+T\+\_\+\+F\+L\+A\+S\+H\+\_\+\+P\+A\+G\+E\+\_\+\+S\+I\+Z\+E@{E\+X\+T\+\_\+\+F\+L\+A\+S\+H\+\_\+\+P\+A\+G\+E\+\_\+\+S\+I\+Z\+E}}
+\index{E\+X\+T\+\_\+\+F\+L\+A\+S\+H\+\_\+\+P\+A\+G\+E\+\_\+\+S\+I\+Z\+E@{E\+X\+T\+\_\+\+F\+L\+A\+S\+H\+\_\+\+P\+A\+G\+E\+\_\+\+S\+I\+Z\+E}!Ext\+Flash.\+h@{Ext\+Flash.\+h}}
+\paragraph[{E\+X\+T\+\_\+\+F\+L\+A\+S\+H\+\_\+\+P\+A\+G\+E\+\_\+\+S\+I\+Z\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+X\+T\+\_\+\+F\+L\+A\+S\+H\+\_\+\+P\+A\+G\+E\+\_\+\+S\+I\+Z\+E~4096}\label{_ext_flash_8h_a0bc5316ab502ed58a098eef500545d88}
+
+
+\subsubsection{Function Documentation}
+\index{Ext\+Flash.\+h@{Ext\+Flash.\+h}!Ext\+Flash\+\_\+open@{Ext\+Flash\+\_\+open}}
+\index{Ext\+Flash\+\_\+open@{Ext\+Flash\+\_\+open}!Ext\+Flash.\+h@{Ext\+Flash.\+h}}
+\paragraph[{Ext\+Flash\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}bool Ext\+Flash\+\_\+open (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_ext_flash_8h_ad4b1bd8b121baef366934a9815871124}
+Initialize storage driver.
+
+\begin{DoxyReturn}{Returns}
+True when successful. 
+\end{DoxyReturn}
+\index{Ext\+Flash.\+h@{Ext\+Flash.\+h}!Ext\+Flash\+\_\+close@{Ext\+Flash\+\_\+close}}
+\index{Ext\+Flash\+\_\+close@{Ext\+Flash\+\_\+close}!Ext\+Flash.\+h@{Ext\+Flash.\+h}}
+\paragraph[{Ext\+Flash\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}void Ext\+Flash\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_ext_flash_8h_ad456be39a9a700212437ff438410a594}
+Close the storage driver \index{Ext\+Flash.\+h@{Ext\+Flash.\+h}!Ext\+Flash\+\_\+info@{Ext\+Flash\+\_\+info}}
+\index{Ext\+Flash\+\_\+info@{Ext\+Flash\+\_\+info}!Ext\+Flash.\+h@{Ext\+Flash.\+h}}
+\paragraph[{Ext\+Flash\+\_\+info}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Ext\+Flash\+Info\+\_\+t}$\ast$ Ext\+Flash\+\_\+info (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_ext_flash_8h_a30939a5a39e9fbfcd23022c23083b66e}
+Get flash information \index{Ext\+Flash.\+h@{Ext\+Flash.\+h}!Ext\+Flash\+\_\+read@{Ext\+Flash\+\_\+read}}
+\index{Ext\+Flash\+\_\+read@{Ext\+Flash\+\_\+read}!Ext\+Flash.\+h@{Ext\+Flash.\+h}}
+\paragraph[{Ext\+Flash\+\_\+read}]{\setlength{\rightskip}{0pt plus 5cm}bool Ext\+Flash\+\_\+read (
+\begin{DoxyParamCaption}
+\item[{size\+\_\+t}]{offset, }
+\item[{size\+\_\+t}]{length, }
+\item[{uint8\+\_\+t $\ast$}]{buf}
+\end{DoxyParamCaption}
+)}\label{_ext_flash_8h_a2d9f04462020d01ac5fdb55418b077b9}
+Read storage content
+
+\begin{DoxyReturn}{Returns}
+True when successful. 
+\end{DoxyReturn}
+\index{Ext\+Flash.\+h@{Ext\+Flash.\+h}!Ext\+Flash\+\_\+erase@{Ext\+Flash\+\_\+erase}}
+\index{Ext\+Flash\+\_\+erase@{Ext\+Flash\+\_\+erase}!Ext\+Flash.\+h@{Ext\+Flash.\+h}}
+\paragraph[{Ext\+Flash\+\_\+erase}]{\setlength{\rightskip}{0pt plus 5cm}bool Ext\+Flash\+\_\+erase (
+\begin{DoxyParamCaption}
+\item[{size\+\_\+t}]{offset, }
+\item[{size\+\_\+t}]{length}
+\end{DoxyParamCaption}
+)}\label{_ext_flash_8h_a3f0495f78fc59522bbd47b3965bfd325}
+Erase storage sectors corresponding to the range.
+
+\begin{DoxyReturn}{Returns}
+True when successful. 
+\end{DoxyReturn}
+\index{Ext\+Flash.\+h@{Ext\+Flash.\+h}!Ext\+Flash\+\_\+write@{Ext\+Flash\+\_\+write}}
+\index{Ext\+Flash\+\_\+write@{Ext\+Flash\+\_\+write}!Ext\+Flash.\+h@{Ext\+Flash.\+h}}
+\paragraph[{Ext\+Flash\+\_\+write}]{\setlength{\rightskip}{0pt plus 5cm}bool Ext\+Flash\+\_\+write (
+\begin{DoxyParamCaption}
+\item[{size\+\_\+t}]{offset, }
+\item[{size\+\_\+t}]{length, }
+\item[{const uint8\+\_\+t $\ast$}]{buf}
+\end{DoxyParamCaption}
+)}\label{_ext_flash_8h_af4e3c0fef71d31bb67c44979abab1feb}
+Write to storage sectors.
+
+\begin{DoxyReturn}{Returns}
+True when successful. 
+\end{DoxyReturn}
+\index{Ext\+Flash.\+h@{Ext\+Flash.\+h}!Ext\+Flash\+\_\+test@{Ext\+Flash\+\_\+test}}
+\index{Ext\+Flash\+\_\+test@{Ext\+Flash\+\_\+test}!Ext\+Flash.\+h@{Ext\+Flash.\+h}}
+\paragraph[{Ext\+Flash\+\_\+test}]{\setlength{\rightskip}{0pt plus 5cm}bool Ext\+Flash\+\_\+test (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_ext_flash_8h_a4f1fb7e68cb15dac521126d472edd81b}
+Test the flash (power on self-\/test)
+
+\begin{DoxyReturn}{Returns}
+True when successful. 
+\end{DoxyReturn}

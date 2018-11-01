@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<iarUserArgVars>
+  <group active="true" name="tirtos_cc13xx_cc26xx_2_21_01_08">
+    <variable>
+      <name>XDCPATH</name>
+      <value>c:/ti/tirtos_cc13xx_cc26xx_2_21_01_08/packages;c:/ti/tirtos_cc13xx_cc26xx_2_21_01_08/products/tidrivers_cc13xx_cc26xx_2_21_01_01/packages;c:/ti/tirtos_cc13xx_cc26xx_2_21_01_08/products/bios_6_46_01_38/packages;c:/ti/tirtos_cc13xx_cc26xx_2_21_01_08/products/uia_2_01_00_01/packages</value>
+    </variable>
+    <variable>
+      <name>XDCROOT</name>
+      <value>c:/ti/xdctools_3_32_00_06_core</value>
+    </variable>
+    <variable>
+      <name>TIRTOS</name>
+      <value>c:/ti/tirtos_cc13xx_cc26xx_2_21_01_08/packages</value>
+    </variable>
+    <variable>
+      <name>TIDRIVERS</name>
+      <value>c:/ti/tirtos_cc13xx_cc26xx_2_21_01_08/products/tidrivers_cc13xx_cc26xx_2_21_01_01/packages</value>
+    </variable>
+    <variable>
+      <name>BIOS</name>
+      <value>c:/ti/tirtos_cc13xx_cc26xx_2_21_01_08/products/bios_6_46_01_38/packages</value>
+    </variable>
+    <variable>
+      <name>UIA</name>
+      <value>c:/ti/tirtos_cc13xx_cc26xx_2_21_01_08/products/uia_2_01_00_01/packages</value>
+    </variable>
+    <variable>
+      <name>CC13XXWARE</name>
+      <value>c:/ti/tirtos_cc13xx_cc26xx_2_21_01_08/products/cc13xxware_2_04_03_17272</value>
+    </variable>
+    <variable>
+      <name>CC26XXWARE</name>
+      <value>c:/ti/tirtos_cc13xx_cc26xx_2_21_01_08/products/cc26xxware_2_24_03_17272</value>
+    </variable>
+    <variable>
+      <name>EXAMPLE_ROOT</name>
+      <value>c:/ti/tirtos_cc13xx_cc26xx_2_21_01_08/examples/IAR</value>
+    </variable>
+  </group>
+</iarUserArgVars>

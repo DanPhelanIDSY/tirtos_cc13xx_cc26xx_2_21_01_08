@@ -1,0 +1,11 @@
+digraph "Camera_control command and status codes"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir=LR;
+  Node2 [label="Command Codes",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group___camera___c_m_d.html"];
+  Node1 [label="Status Codes",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group___camera___s_t_a_t_u_s.html"];
+  Node0 [label="Camera_control command\l and status codes",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node0->Node1 [shape=plaintext, dir="back", style="solid"];
+  Node0->Node2 [shape=plaintext, dir="back", style="solid"];
+}

@@ -1,0 +1,240 @@
+\subsection{R\+F\+\_\+\+Object Struct Reference}
+\label{struct_r_f___object}\index{R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}}
+
+
+Struct used to store R\+F client state and configuration Pointer to an \hyperlink{struct_r_f___object}{R\+F\+\_\+\+Object} is used as handles (\hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle}) in interactions with the R\+F driver.  
+
+
+
+
+{\ttfamily \#include $<$R\+F.\+h$>$}
+
+
+
+Collaboration diagram for R\+F\+\_\+\+Object\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{struct_r_f___object__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>uint32\_t \hyperlink{struct_r_f___object_acab4c0d923181e985a2867b51f74edcc}{nInactivityTimeout}\\
+\>\>{\em Inactivity timeout in us. }\\
+\>\hyperlink{struct_r_f___mode}{RF\_Mode} $\ast$ \hyperlink{struct_r_f___object_a54a6ee0cde609ca67902a16f9279ca42}{pRfMode}\\
+\>\>{\em Mode of operation. }\\
+\>\hyperlink{union_r_f___radio_setup}{RF\_RadioSetup} $\ast$ \hyperlink{struct_r_f___object_a1a082f0e3e4d1cc3d42438e9c008731a}{pOpSetup}\\
+\>\>{\em Radio setup radio operation, only ram right now. }\\
+\>uint32\_t \hyperlink{struct_r_f___object_a1c977babafc1c400ee7065d588400d62}{nPowerUpDuration}\\
+\>\>{\em Measured poweruptime in us or specified startup time (if left default it will measure) }\\
+\>bool \hyperlink{struct_r_f___object_a2639ebccaae9e421775673e83d477d93}{bPowerUpXOSC}\\
+\>\>{\em Allways enable XOSC\_HF at chip wakeup. }\\
+\>bool \hyperlink{struct_r_f___object_aca08b9616cfe2b6be9699edea541334d}{bUpdateSetup}\\
+\>\>{\em Setup command update. }\\
+\>uint16\_t \hyperlink{struct_r_f___object_a39f22fc67c1062a68306baee91bf613a}{nPowerUpDurationMargin}\\
+\>\>{\em Powerup duration margin in us. }\\
+\>void $\ast$ \hyperlink{struct_r_f___object_ab93839cd7dc102b3eb1c79a3dceb194d}{pPowerCb}\\
+\>\>{\em Power up callback. }\\
+\>void $\ast$ \hyperlink{struct_r_f___object_adf7c2500d579f201e49a6c87e447991b}{pErrCb}\\
+\>\>{\em Error callback. }\\
+\} \hyperlink{struct_r_f___object_aa469075966fd8d652e93528c33a02578}{clientConfig}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em Configuration. \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>struct \{\\
+\>\>rfc\_CMD\_FS\_t \hyperlink{struct_r_f___object_a48d422eefb97146c830e9b21970bc3a6}{cmdFs}\\
+\>\>\>{\em FS command encapsulating FS state. }\\
+\>\} \hyperlink{struct_r_f___object_a8201edc4d31d994d0218da2e8a0fcd5b}{mode\_state}\\
+\>\>\>{\em (Mode-\/specific) state structure }\\
+\>Semaphore\_Struct \hyperlink{struct_r_f___object_a2282dfef5c2e04522edfb61f9152628b}{semSync}\\
+\>\>\>{\em Semaphore used by runCmd(), pendCmd() and powerdown sequence. }\\
+\>\hyperlink{_r_f_8h_a128c46e18dbbaa781abb7abafc35233a}{RF\_EventMask} volatile \hyperlink{struct_r_f___object_a8379964e73b8969eb45fe49773eba235}{eventSync}\\
+\>\>\>{\em Event mask/value used by runCmd() and waitCmd() }\\
+\>void $\ast$ \hyperlink{struct_r_f___object_ae3219bcfb65bacac26d30af83415863b}{pCbSync}\\
+\>\>\>{\em Internal storage for user callback. }\\
+\>\hyperlink{_r_f_8h_a128c46e18dbbaa781abb7abafc35233a}{RF\_EventMask} \hyperlink{struct_r_f___object_a41528750208c1e201b276509396e0a30}{unpendCause}\\
+\>\>\>{\em Return value for \hyperlink{_r_f_8h_a91c1cb2508311f822acbc08ace568a83}{RF\_pendCmd()} }\\
+\>Clock\_Struct \hyperlink{struct_r_f___object_aaa9b100fc07809bd9086ffc44ebd4225}{clkInactivity}\\
+\>\>\>{\em Clock used for inactivity timeouts. }\\
+\>Clock\_Struct \hyperlink{struct_r_f___object_af61760e322c9a76d591bb8b465c9ed37}{clkReqAccess}\\
+\>\>\>{\em Clock used for request access timeouts. }\\
+\>\hyperlink{_r_f_8h_acab1f56c62a9fd1ad0a91a46b6da23f1}{RF\_CmdHandle} volatile \hyperlink{struct_r_f___object_a855d6435f6532e99b2e6d6e1675212ca}{chLastPosted}\\
+\>\>\>{\em Command handle of most recently posted command. }\\
+\>bool \hyperlink{struct_r_f___object_a0b8d281afbb2a67d5b238b30fa1f8849}{bYielded}\\
+\>\>\>{\em Client has indicated that there are no more commands. }\\
+\} \hyperlink{struct_r_f___object_a2690b9a688416515bafa40617e266c89}{state}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em State \& variables. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Struct used to store R\+F client state and configuration Pointer to an \hyperlink{struct_r_f___object}{R\+F\+\_\+\+Object} is used as handles (\hyperlink{_r_f_8h_a5e8ab7fc87fb818f435d9b6226ee573f}{R\+F\+\_\+\+Handle}) in interactions with the R\+F driver. 
+
+\begin{DoxyNote}{Note}
+Must reside in persistent memory 
+
+Except configuration fields before call to \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()}, fields must never be modified directly 
+\end{DoxyNote}
+
+
+\subsubsection{Field Documentation}
+\index{R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}!n\+Inactivity\+Timeout@{n\+Inactivity\+Timeout}}
+\index{n\+Inactivity\+Timeout@{n\+Inactivity\+Timeout}!R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}}
+\paragraph[{n\+Inactivity\+Timeout}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t R\+F\+\_\+\+Object\+::n\+Inactivity\+Timeout}\label{struct_r_f___object_acab4c0d923181e985a2867b51f74edcc}
+
+
+Inactivity timeout in us. 
+
+\index{R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}!p\+Rf\+Mode@{p\+Rf\+Mode}}
+\index{p\+Rf\+Mode@{p\+Rf\+Mode}!R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}}
+\paragraph[{p\+Rf\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf R\+F\+\_\+\+Mode}$\ast$ R\+F\+\_\+\+Object\+::p\+Rf\+Mode}\label{struct_r_f___object_a54a6ee0cde609ca67902a16f9279ca42}
+
+
+Mode of operation. 
+
+\index{R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}!p\+Op\+Setup@{p\+Op\+Setup}}
+\index{p\+Op\+Setup@{p\+Op\+Setup}!R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}}
+\paragraph[{p\+Op\+Setup}]{\setlength{\rightskip}{0pt plus 5cm}{\bf R\+F\+\_\+\+Radio\+Setup}$\ast$ R\+F\+\_\+\+Object\+::p\+Op\+Setup}\label{struct_r_f___object_a1a082f0e3e4d1cc3d42438e9c008731a}
+
+
+Radio setup radio operation, only ram right now. 
+
+\index{R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}!n\+Power\+Up\+Duration@{n\+Power\+Up\+Duration}}
+\index{n\+Power\+Up\+Duration@{n\+Power\+Up\+Duration}!R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}}
+\paragraph[{n\+Power\+Up\+Duration}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t R\+F\+\_\+\+Object\+::n\+Power\+Up\+Duration}\label{struct_r_f___object_a1c977babafc1c400ee7065d588400d62}
+
+
+Measured poweruptime in us or specified startup time (if left default it will measure) 
+
+\index{R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}!b\+Power\+Up\+X\+O\+S\+C@{b\+Power\+Up\+X\+O\+S\+C}}
+\index{b\+Power\+Up\+X\+O\+S\+C@{b\+Power\+Up\+X\+O\+S\+C}!R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}}
+\paragraph[{b\+Power\+Up\+X\+O\+S\+C}]{\setlength{\rightskip}{0pt plus 5cm}bool R\+F\+\_\+\+Object\+::b\+Power\+Up\+X\+O\+S\+C}\label{struct_r_f___object_a2639ebccaae9e421775673e83d477d93}
+
+
+Allways enable X\+O\+S\+C\+\_\+\+H\+F at chip wakeup. 
+
+\index{R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}!b\+Update\+Setup@{b\+Update\+Setup}}
+\index{b\+Update\+Setup@{b\+Update\+Setup}!R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}}
+\paragraph[{b\+Update\+Setup}]{\setlength{\rightskip}{0pt plus 5cm}bool R\+F\+\_\+\+Object\+::b\+Update\+Setup}\label{struct_r_f___object_aca08b9616cfe2b6be9699edea541334d}
+
+
+Setup command update. 
+
+\index{R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}!n\+Power\+Up\+Duration\+Margin@{n\+Power\+Up\+Duration\+Margin}}
+\index{n\+Power\+Up\+Duration\+Margin@{n\+Power\+Up\+Duration\+Margin}!R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}}
+\paragraph[{n\+Power\+Up\+Duration\+Margin}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t R\+F\+\_\+\+Object\+::n\+Power\+Up\+Duration\+Margin}\label{struct_r_f___object_a39f22fc67c1062a68306baee91bf613a}
+
+
+Powerup duration margin in us. 
+
+\index{R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}!p\+Power\+Cb@{p\+Power\+Cb}}
+\index{p\+Power\+Cb@{p\+Power\+Cb}!R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}}
+\paragraph[{p\+Power\+Cb}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ R\+F\+\_\+\+Object\+::p\+Power\+Cb}\label{struct_r_f___object_ab93839cd7dc102b3eb1c79a3dceb194d}
+
+
+Power up callback. 
+
+\index{R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}!p\+Err\+Cb@{p\+Err\+Cb}}
+\index{p\+Err\+Cb@{p\+Err\+Cb}!R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}}
+\paragraph[{p\+Err\+Cb}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ R\+F\+\_\+\+Object\+::p\+Err\+Cb}\label{struct_r_f___object_adf7c2500d579f201e49a6c87e447991b}
+
+
+Error callback. 
+
+\index{R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}!client\+Config@{client\+Config}}
+\index{client\+Config@{client\+Config}!R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}}
+\paragraph[{client\+Config}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \}   R\+F\+\_\+\+Object\+::client\+Config}\label{struct_r_f___object_aa469075966fd8d652e93528c33a02578}
+
+
+Configuration. 
+
+\index{R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}!cmd\+Fs@{cmd\+Fs}}
+\index{cmd\+Fs@{cmd\+Fs}!R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}}
+\paragraph[{cmd\+Fs}]{\setlength{\rightskip}{0pt plus 5cm}rfc\+\_\+\+C\+M\+D\+\_\+\+F\+S\+\_\+t R\+F\+\_\+\+Object\+::cmd\+Fs}\label{struct_r_f___object_a48d422eefb97146c830e9b21970bc3a6}
+
+
+F\+S command encapsulating F\+S state. 
+
+\index{R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}!mode\+\_\+state@{mode\+\_\+state}}
+\index{mode\+\_\+state@{mode\+\_\+state}!R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}}
+\paragraph[{mode\+\_\+state}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \}   R\+F\+\_\+\+Object\+::mode\+\_\+state}\label{struct_r_f___object_a8201edc4d31d994d0218da2e8a0fcd5b}
+
+
+(Mode-\/specific) state structure 
+
+\index{R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}!sem\+Sync@{sem\+Sync}}
+\index{sem\+Sync@{sem\+Sync}!R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}}
+\paragraph[{sem\+Sync}]{\setlength{\rightskip}{0pt plus 5cm}Semaphore\+\_\+\+Struct R\+F\+\_\+\+Object\+::sem\+Sync}\label{struct_r_f___object_a2282dfef5c2e04522edfb61f9152628b}
+
+
+Semaphore used by run\+Cmd(), pend\+Cmd() and powerdown sequence. 
+
+\index{R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}!event\+Sync@{event\+Sync}}
+\index{event\+Sync@{event\+Sync}!R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}}
+\paragraph[{event\+Sync}]{\setlength{\rightskip}{0pt plus 5cm}{\bf R\+F\+\_\+\+Event\+Mask} volatile R\+F\+\_\+\+Object\+::event\+Sync}\label{struct_r_f___object_a8379964e73b8969eb45fe49773eba235}
+
+
+Event mask/value used by run\+Cmd() and wait\+Cmd() 
+
+\index{R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}!p\+Cb\+Sync@{p\+Cb\+Sync}}
+\index{p\+Cb\+Sync@{p\+Cb\+Sync}!R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}}
+\paragraph[{p\+Cb\+Sync}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ R\+F\+\_\+\+Object\+::p\+Cb\+Sync}\label{struct_r_f___object_ae3219bcfb65bacac26d30af83415863b}
+
+
+Internal storage for user callback. 
+
+\index{R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}!unpend\+Cause@{unpend\+Cause}}
+\index{unpend\+Cause@{unpend\+Cause}!R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}}
+\paragraph[{unpend\+Cause}]{\setlength{\rightskip}{0pt plus 5cm}{\bf R\+F\+\_\+\+Event\+Mask} R\+F\+\_\+\+Object\+::unpend\+Cause}\label{struct_r_f___object_a41528750208c1e201b276509396e0a30}
+
+
+Return value for \hyperlink{_r_f_8h_a91c1cb2508311f822acbc08ace568a83}{R\+F\+\_\+pend\+Cmd()} 
+
+\index{R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}!clk\+Inactivity@{clk\+Inactivity}}
+\index{clk\+Inactivity@{clk\+Inactivity}!R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}}
+\paragraph[{clk\+Inactivity}]{\setlength{\rightskip}{0pt plus 5cm}Clock\+\_\+\+Struct R\+F\+\_\+\+Object\+::clk\+Inactivity}\label{struct_r_f___object_aaa9b100fc07809bd9086ffc44ebd4225}
+
+
+Clock used for inactivity timeouts. 
+
+\index{R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}!clk\+Req\+Access@{clk\+Req\+Access}}
+\index{clk\+Req\+Access@{clk\+Req\+Access}!R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}}
+\paragraph[{clk\+Req\+Access}]{\setlength{\rightskip}{0pt plus 5cm}Clock\+\_\+\+Struct R\+F\+\_\+\+Object\+::clk\+Req\+Access}\label{struct_r_f___object_af61760e322c9a76d591bb8b465c9ed37}
+
+
+Clock used for request access timeouts. 
+
+\index{R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}!ch\+Last\+Posted@{ch\+Last\+Posted}}
+\index{ch\+Last\+Posted@{ch\+Last\+Posted}!R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}}
+\paragraph[{ch\+Last\+Posted}]{\setlength{\rightskip}{0pt plus 5cm}{\bf R\+F\+\_\+\+Cmd\+Handle} volatile R\+F\+\_\+\+Object\+::ch\+Last\+Posted}\label{struct_r_f___object_a855d6435f6532e99b2e6d6e1675212ca}
+
+
+Command handle of most recently posted command. 
+
+\index{R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}!b\+Yielded@{b\+Yielded}}
+\index{b\+Yielded@{b\+Yielded}!R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}}
+\paragraph[{b\+Yielded}]{\setlength{\rightskip}{0pt plus 5cm}bool R\+F\+\_\+\+Object\+::b\+Yielded}\label{struct_r_f___object_a0b8d281afbb2a67d5b238b30fa1f8849}
+
+
+Client has indicated that there are no more commands. 
+
+\index{R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}!state@{state}}
+\index{state@{state}!R\+F\+\_\+\+Object@{R\+F\+\_\+\+Object}}
+\paragraph[{state}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \}   R\+F\+\_\+\+Object\+::state}\label{struct_r_f___object_a2690b9a688416515bafa40617e266c89}
+
+
+State \& variables. 
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_r_f_8h}{R\+F.\+h}\end{DoxyCompactItemize}

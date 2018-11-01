@@ -1,0 +1,11 @@
+digraph "lcd" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_622605b5fc87a1221dd66225202096f9 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="mw" fontname="Helvetica", fontsize="10", URL="dir_622605b5fc87a1221dd66225202096f9.html"]
+  dir_5299304ede3f99abaf860c498e8d2dfa [shape=box, label="lcd", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_5299304ede3f99abaf860c498e8d2dfa.html"];
+  }
+  dir_3272f9f9556099c0b986cb38fa788482 [shape=box label="drivers" fillcolor="white" style="filled" color="red" URL="dir_3272f9f9556099c0b986cb38fa788482.html"];
+  dir_5299304ede3f99abaf860c498e8d2dfa->dir_3272f9f9556099c0b986cb38fa788482 [headlabel="3", labeldistance=1.5 headhref="dir_000020_000004.html"];
+}

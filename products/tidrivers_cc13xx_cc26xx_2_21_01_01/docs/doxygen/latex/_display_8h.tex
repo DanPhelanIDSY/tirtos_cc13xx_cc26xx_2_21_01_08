@@ -1,0 +1,756 @@
+\subsection{Display.\+h File Reference}
+\label{_display_8h}\index{Display.\+h@{Display.\+h}}
+
+
+\subsubsection{Detailed Description}
+Generic interface for text output. 
+
+============================================================================
+
+\subsubsection*{Driver include}
+
+The display header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/mw/Display.h>}
+\end{DoxyCode}
+
+
+\subsubsection*{Operation}
+
+The Display middleware-\/driver in T\+I-\/\+R\+T\+O\+S is designed to abstract operations and considerations specific to given output method.
+
+The A\+P\+Is in this driver serve as an interface to a typical T\+I-\/\+R\+T\+O\+S application. The specific peripheral implementations are responsible to create all the S\+Y\+S/\+B\+I\+O\+S specific primitives to allow for thread-\/safe operation.
+
+\begin{DoxyNote}{Note}
+All Display statements will be removed and no display operations will take place if the symbol {\itshape Display\+\_\+\+D\+I\+S\+A\+B\+L\+E\+\_\+\+A\+L\+L} is defined globally, or before {\itshape display.\+h} is included.
+\end{DoxyNote}
+\paragraph*{Opening the driver}
+
+Because the Display driver serves as an abstraction, it is possible to specify the {\itshape type} of Display implementations that should be opened, as well as alternatively the config-\/array index value like with other T\+I-\/\+R\+T\+O\+S drivers.
+
+Optionally, if no particular parameters are desired, the pointer to params can be replaced with N\+U\+L\+L.
+
+
+\begin{DoxyCode}
+Display_Handle    handle;
+Display_Params    params;
+
+Display_Params_init(&params);
+handle = Display_open(someConfigIndexValue, &params);
+\textcolor{comment}{//Display\_open(Display\_Type\_ANY, &params);}
+\textcolor{comment}{//Display\_open(Display\_Type\_UART, NULL);}
+\textcolor{comment}{//Display\_open(Display\_Type\_UART | Display\_Type\_LCD, &params);}
+\end{DoxyCode}
+
+
+\paragraph*{Outputting data}
+
+After the Display interface is opened, the user can call any of the A\+P\+Is 
+\begin{DoxyCode}
+Display_clear(handle);
+Display_clearLines(handle, 0, 4);
+Display_print0(handle, 1, 0, \textcolor{stringliteral}{"Hello"}); \textcolor{comment}{//--> 'Hello' output on line 1, col 0}
+Display_print1(handle, 2, 0, \textcolor{stringliteral}{"Hello %d"}, 42); \textcolor{comment}{// --> 'Hello 42' on line 2, col 0}
+\textcolor{comment}{// ...}
+Display_print5(handle, 5, 0, \textcolor{stringliteral}{"Hello %d %d %d %d %d"}, 1, 2, 3, 4, 5);
+
+Display_close(handle);
+\end{DoxyCode}
+
+
+It is also possible to prefer a graphical display if available. Perhaps most interesting for portable applications.
+
+
+\begin{DoxyCode}
+Display_Handle    handle;
+Display_Params    params;
+
+Display_Params_init(&params);
+handle = Display_open(Display_Type_LCD, &params);
+\textcolor{keywordflow}{if} (NULL == handle)
+   handle = Display_open(Display_Type_UART, &params);
+\end{DoxyCode}
+
+
+\begin{DoxyNote}{Note}
+Display\+\_\+print\+X can only be called from Task context, unless the only opened interfaces specifically allow calls from any context.
+\end{DoxyNote}
+\subsubsection*{Implementation}
+
+This module serves as the main interface for T\+I-\/\+R\+T\+O\+S applications. Its purpose is to redirect the module\textquotesingle{}s A\+P\+Is to specific implementations which are specified using a pointer to a \hyperlink{struct_display___fxn_table}{Display\+\_\+\+Fxn\+Table}.
+
+The Display interface module is joined (at link time) to a N\+U\+L\+L-\/terminated array of \hyperlink{struct_display___config}{Display\+\_\+\+Config} data structures named {\itshape Display\+\_\+config}. {\itshape Display\+\_\+config} is implemented in the application with each entry being an instance of a Display implementation. Each entry in {\itshape Display\+\_\+config} contains a\+:
+\begin{DoxyItemize}
+\item (\hyperlink{struct_display___fxn_table}{Display\+\_\+\+Fxn\+Table} $\ast$) to a set of functions implemening an output channel
+\item (void $\ast$) data object that is associated with the \hyperlink{struct_display___fxn_table}{Display\+\_\+\+Fxn\+Table}
+\item (void $\ast$) hardware attributes that are associated to the \hyperlink{struct_display___fxn_table}{Display\+\_\+\+Fxn\+Table}
+\end{DoxyItemize}
+
+In practical terms theat means the \hyperlink{struct_display___config}{Display\+\_\+\+Config} struct for each specific implementation equates to an instance of an abstract Display \textquotesingle{}class\textquotesingle{}, where the functions are always provided the a \hyperlink{struct_display___config}{Display\+\_\+\+Config} struct pointer in the parameter list, in liu of what in some languages is called {\itshape this} or {\itshape self}.
+
+For example, Display\+\_\+open is called, and display.\+c iterates over the available \hyperlink{struct_display___config}{Display\+\_\+\+Config}\textquotesingle{}s in the external Display\+\_\+config array. For each {\itshape config}, config-\/$>$fxns-\/$>$open is called, and \&config is provided for context.
+
+\subsubsection*{Instrumentation}
+
+The Display interface produces log statements if instrumentation is enabled.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Diagnostics Mask }&{\bf Log details  }\\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R1 &basic operations performed \\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R2 &detailed operations performed \\\cline{1-2}
+\end{TabularC}
+\subsubsection*{Calling Context}
+
+For most implementations of this interface it is only possible to call the A\+P\+Is from Task or Main context because the implementations may rely on Semaphores or other R\+T\+O\+S services that do not work correctly or do not work at all in Hwi / Swi context.
+
+Unless you know that the implementation is safe to use in Hwi/\+Swi, do not \subsubsection*{use this interface in other contexts than Main and Task. }{\ttfamily \#include $<$stdint.\+h$>$}\\*
+Include dependency graph for Display.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=93pt]{_display_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_display_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_display___params}{Display\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em Display Parameters. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_display___fxn_table}{Display\+\_\+\+Fxn\+Table}
+\begin{DoxyCompactList}\small\item\em The definition of a Display function table that contains the required set of functions to control a specific Display driver implementation. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_display___config}{Display\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em Display Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group___d_i_s_p_l_a_y___t_y_p_e_s_ga18e865923359fab7d26c09dc169caf37}{Display\+\_\+\+Type\+\_\+\+A\+N\+Y}~0x\+F\+F\+F\+F\+F\+F\+F\+F
+\item 
+\#define \hyperlink{group___d_i_s_p_l_a_y___t_y_p_e_s_ga9b8f62fe443d3a584f598392d233f38c}{Display\+\_\+\+Type\+\_\+\+L\+C\+D}~0x80000000
+\item 
+\#define \hyperlink{group___d_i_s_p_l_a_y___t_y_p_e_s_ga0257ac5b377a67eb525400e4c2a4f0d0}{Display\+\_\+\+Type\+\_\+\+U\+A\+R\+T}~0x40000000
+\item 
+\#define \hyperlink{group___d_i_s_p_l_a_y___t_y_p_e_s_gaaf8a10cc8b8de9d38f144d44f968b1fc}{Display\+\_\+\+Type\+\_\+\+L\+O\+G}~0x20000000
+\item 
+\#define \hyperlink{group___d_i_s_p_l_a_y___t_y_p_e_s_gae19f6c6b10d4e3d491819fb02ae4c865}{Display\+\_\+\+Type\+\_\+\+I\+T\+M}~0x10000000
+\item 
+\#define \hyperlink{group___d_i_s_p_l_a_y___t_y_p_e_s_ga498ae390d2feea643ec3f23533859f35}{Display\+\_\+\+Type\+\_\+\+G\+R\+L\+I\+B}~0x00100000
+\item 
+\#define \hyperlink{_display_8h_a61eb3c7b2406cb61825a0924b066d1ec}{Display\+\_\+\+M\+A\+X\+I\+N\+D\+E\+X}~15
+\item 
+\#define \hyperlink{group___d_i_s_p_l_a_y___c_o_n_t_r_o_l_ga99c2401cd11ea3b49e5e3e4ffac5c886}{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~32
+\item 
+\#define \hyperlink{group___d_i_s_p_l_a_y___c_o_n_t_r_o_l_gacb7031dd18c19e3ecb86d97cb7b17abb}{D\+I\+S\+P\+L\+A\+Y\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~-\/32
+\item 
+\#define \hyperlink{group___d_i_s_p_l_a_y___s_t_a_t_u_s_ga4f6a4a10f24cf55bc13d1750e38bb946}{D\+I\+S\+P\+L\+A\+Y\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}~0
+\begin{DoxyCompactList}\small\item\em Successful status code returned by \hyperlink{_display_8h_ad623d21e3c6d821bf6f4bdcfa05ec21f}{Display\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___d_i_s_p_l_a_y___s_t_a_t_u_s_gaf91798b06dd95fce8063b7328420fab3}{D\+I\+S\+P\+L\+A\+Y\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}~-\/1
+\begin{DoxyCompactList}\small\item\em Generic error status code returned by \hyperlink{_display_8h_ad623d21e3c6d821bf6f4bdcfa05ec21f}{Display\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___d_i_s_p_l_a_y___s_t_a_t_u_s_ga3e506301dbdad496a95e12c3b17efc6b}{D\+I\+S\+P\+L\+A\+Y\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}~-\/2
+\begin{DoxyCompactList}\small\item\em An error status code returned by \hyperlink{_display_8h_ad623d21e3c6d821bf6f4bdcfa05ec21f}{Display\+\_\+control()} for undefined command codes. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___d_i_s_p_l_a_y___c_m_d_ga5be24ea4a3ddfd94efbb513d649ac88b}{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+T\+R\+A\+N\+S\+P\+O\+R\+T\+\_\+\+C\+L\+O\+S\+E}~0
+\begin{DoxyCompactList}\small\item\em Command used by Display\+\_\+control to release its transport layer. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___d_i_s_p_l_a_y___c_m_d_gae12206be356c6b2ce885b5ada9b1854d}{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+\+T\+R\+A\+N\+S\+P\+O\+R\+T\+\_\+\+O\+P\+E\+N}~1
+\begin{DoxyCompactList}\small\item\em Command used by Display\+\_\+control to resume control of its transport. \end{DoxyCompactList}\item 
+\#define \hyperlink{_display_8h_a4dacdea7e09ccbb7fc6464bb9af6c2cd}{Display\+\_\+clear\+Line}(handle,  n)~\hyperlink{_display_8h_abae2ae910c2c533dbf11d24c656609d1}{Display\+\_\+clear\+Lines}(handle, n, 0)
+\item 
+\#define \hyperlink{_display_8h_a1c085d5459020e806cafd71632e3d8ed}{Display\+\_\+is\+Index}(i)~(i $<$= \hyperlink{_display_8h_a61eb3c7b2406cb61825a0924b066d1ec}{Display\+\_\+\+M\+A\+X\+I\+N\+D\+E\+X})
+\item 
+\#define \hyperlink{_display_8h_ac0fca232ed955fd16bdf1d7b1b560a9e}{Display\+\_\+is\+Meta\+Type}(i)~(i $>$ \hyperlink{_display_8h_a61eb3c7b2406cb61825a0924b066d1ec}{Display\+\_\+\+M\+A\+X\+I\+N\+D\+E\+X})
+\item 
+\#define \hyperlink{_display_8h_a3aa87973a354d4fd6a2969f764e8afe6}{Display\+\_\+open}(id,  params)~\hyperlink{_display_8h_a3e9f4eee43bc9b70a4944e1a3961f7d2}{Display\+\_\+do\+Open}(id, params)
+\item 
+\#define \hyperlink{_display_8h_a4fb2982f52995a80194fbb107883a183}{Display\+\_\+\+Params\+\_\+init}(params)~\hyperlink{_display_8h_aff22833ae1cdccbbde3a57e82f85896c}{Display\+\_\+do\+Params\+Init}(params)
+\item 
+\#define \hyperlink{_display_8h_ab5a031704e2a1a9525d2c1a92346f842}{Display\+\_\+clear}(handle)~\hyperlink{_display_8h_a68955bb81b0db818bf2688695dca1e4a}{Display\+\_\+do\+Clear}(handle)
+\item 
+\#define \hyperlink{_display_8h_abae2ae910c2c533dbf11d24c656609d1}{Display\+\_\+clear\+Lines}(handle,  from\+Line,  to\+Line)~\hyperlink{_display_8h_a443fc3167f9ce70bebf9e016443c6383}{Display\+\_\+do\+Clear\+Lines}(handle, from\+Line, to\+Line)
+\item 
+\#define \hyperlink{_display_8h_acd3685718132aa56f51827b28cab9717}{Display\+\_\+print0}(handle,  line,  col,  fmt)~\hyperlink{_display_8h_a9c5ad419aa15ab0f127aec0e81a4706a}{Display\+\_\+print5}(handle, line, col, (uintptr\+\_\+t)(fmt), 0, 0, 0, 0, 0)
+\item 
+\#define \hyperlink{_display_8h_a32faeb481b205f15a47fe8a57b15050c}{Display\+\_\+print1}(handle,  line,  col,  fmt,  a0)~\hyperlink{_display_8h_a9c5ad419aa15ab0f127aec0e81a4706a}{Display\+\_\+print5}(handle, line, col, (uintptr\+\_\+t)(fmt), (uintptr\+\_\+t)(a0), 0, 0, 0, 0)
+\item 
+\#define \hyperlink{_display_8h_a38c04b221312d6810860cc798c5bd87a}{Display\+\_\+print2}(handle,  line,  col,  fmt,  a0,  a1)~\hyperlink{_display_8h_a9c5ad419aa15ab0f127aec0e81a4706a}{Display\+\_\+print5}(handle, line, col, (uintptr\+\_\+t)(fmt), (uintptr\+\_\+t)(a0), (uintptr\+\_\+t)(a1), 0, 0, 0)
+\item 
+\#define \hyperlink{_display_8h_ac4666e03680fc5c36ba2d186fce9f8f1}{Display\+\_\+print3}(handle,  line,  col,  fmt,  a0,  a1,  a2)~\hyperlink{_display_8h_a9c5ad419aa15ab0f127aec0e81a4706a}{Display\+\_\+print5}(handle, line, col, (uintptr\+\_\+t)(fmt), (uintptr\+\_\+t)(a0), (uintptr\+\_\+t)(a1), (uintptr\+\_\+t)(a2), 0, 0)
+\item 
+\#define \hyperlink{_display_8h_a346f79ffd49fb4b049812cff58e1c55b}{Display\+\_\+print4}(handle,  line,  col,  fmt,  a0,  a1,  a2,  a3)~\hyperlink{_display_8h_a9c5ad419aa15ab0f127aec0e81a4706a}{Display\+\_\+print5}(handle, line, col, (uintptr\+\_\+t)(fmt), (uintptr\+\_\+t)(a0), (uintptr\+\_\+t)(a1), (uintptr\+\_\+t)(a2), (uintptr\+\_\+t)(a3), 0)
+\item 
+\#define \hyperlink{_display_8h_a9c5ad419aa15ab0f127aec0e81a4706a}{Display\+\_\+print5}(handle,  line,  col,  fmt,  a0,  a1,  a2,  a3,  a4)~\hyperlink{_display_8h_a1cd0faeb6b7fcd857e4973fb1d79fac3}{Display\+\_\+do\+Put5}(handle, line, col, (uintptr\+\_\+t)(fmt), (uintptr\+\_\+t)(a0), (uintptr\+\_\+t)(a1), (uintptr\+\_\+t)(a2), (uintptr\+\_\+t)(a3), (uintptr\+\_\+t)(a4))
+\item 
+\#define \hyperlink{_display_8h_ad623d21e3c6d821bf6f4bdcfa05ec21f}{Display\+\_\+control}(handle,  cmd,  arg)~\hyperlink{_display_8h_a330f4fa1032c03e41d3efee191b9670b}{Display\+\_\+do\+Control}(handle, cmd, arg)
+\item 
+\#define \hyperlink{_display_8h_aea13e4e023f2b8020bed2e888cf98599}{Display\+\_\+close}(handle)~\hyperlink{_display_8h_add67d9c5e921786ec12d8029fe6096d1}{Display\+\_\+do\+Close}(handle)
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_display___config}{Display\+\_\+\+Config} $\ast$ \hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle}
+\begin{DoxyCompactList}\small\item\em A handle for specific Display implementations. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_display_8h_a3d9ab99875c344491227a76f1d47e377}{Display\+\_\+\+Line\+Clear\+Mode} \hyperlink{_display_8h_af2fe59ceb3d8c9276018f1ef46e4251c}{Display\+\_\+\+Line\+Clear\+Mode}
+\begin{DoxyCompactList}\small\item\em How to treat existing elements on a line when writing text. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_display___params}{Display\+\_\+\+Params} \hyperlink{_display_8h_a6b9502df6569d4ba369c01b50c7cdb9f}{Display\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em Display Parameters. \end{DoxyCompactList}\item 
+typedef \hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle}($\ast$ \hyperlink{_display_8h_a3119ce57fb115a68a37d7ec274cb0001}{Display\+\_\+open\+Fxn}) (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle, \hyperlink{struct_display___params}{Display\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em A function pointer to a specific implementation of \hyperlink{_display_8h_a3aa87973a354d4fd6a2969f764e8afe6}{Display\+\_\+open()}. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_display_8h_af09f13daab765e83adfac09551e3ee51}{Display\+\_\+clear\+Fxn}) (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a specific implementation of \hyperlink{_display_8h_ab5a031704e2a1a9525d2c1a92346f842}{Display\+\_\+clear()}. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_display_8h_a8350bd25609f51433e21b502ed50f63a}{Display\+\_\+clear\+Lines\+Fxn}) (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle, uint8\+\_\+t from\+Line, uint8\+\_\+t to\+Line)
+\begin{DoxyCompactList}\small\item\em A function pointer to a specific implementation of \hyperlink{_display_8h_abae2ae910c2c533dbf11d24c656609d1}{Display\+\_\+clear\+Lines()}. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_display_8h_a86694b64b96c51c587e649d82537746d}{Display\+\_\+put5\+Fxn}) (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle, uint8\+\_\+t line, uint8\+\_\+t column, uintptr\+\_\+t fmt, uintptr\+\_\+t a0, uintptr\+\_\+t a1, uintptr\+\_\+t a2, uintptr\+\_\+t a3, uintptr\+\_\+t a4)
+\begin{DoxyCompactList}\small\item\em A function pointer to a specific implementation of Display\+\_\+put5(). \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_display_8h_ade8c953094781efff0f10ee0696a984f}{Display\+\_\+close\+Fxn}) (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle})
+\begin{DoxyCompactList}\small\item\em A function pointer to a specific implementation of \hyperlink{_display_8h_aea13e4e023f2b8020bed2e888cf98599}{Display\+\_\+close()}. \end{DoxyCompactList}\item 
+typedef int($\ast$ \hyperlink{_display_8h_a67b559ffeebd829633512c4381858cc1}{Display\+\_\+control\+Fxn}) (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_display_8h_ad623d21e3c6d821bf6f4bdcfa05ec21f}{Display\+\_\+control()}. \end{DoxyCompactList}\item 
+typedef unsigned int($\ast$ \hyperlink{_display_8h_a2800d49b89aa7e3d9a2ec758d60358f1}{Display\+\_\+get\+Type\+Fxn}) (void)
+\begin{DoxyCompactList}\small\item\em A function pointer to a specific implementation of Display\+\_\+get\+Type(). \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_display___fxn_table}{Display\+\_\+\+Fxn\+Table} \hyperlink{_display_8h_abdb33c07acce5b6e5affae6725331399}{Display\+\_\+\+Fxn\+Table}
+\begin{DoxyCompactList}\small\item\em The definition of a Display function table that contains the required set of functions to control a specific Display driver implementation. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_display___config}{Display\+\_\+\+Config} \hyperlink{_display_8h_a154de9b84d3b0d30daa9d729d65a6d5c}{Display\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em Display Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_display_8h_a3d9ab99875c344491227a76f1d47e377}{Display\+\_\+\+Line\+Clear\+Mode} \{ \\*
+\hyperlink{_display_8h_a3d9ab99875c344491227a76f1d47e377a8f60ab659badd77a0591a5357cfe5f54}{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+L\+E\+A\+R\+\_\+\+N\+O\+N\+E} = 0, 
+\\*
+\hyperlink{_display_8h_a3d9ab99875c344491227a76f1d47e377aabdeba4f8c5781eaff441a3778e6cc74}{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+L\+E\+A\+R\+\_\+\+L\+E\+F\+T}, 
+\\*
+\hyperlink{_display_8h_a3d9ab99875c344491227a76f1d47e377affc02447ea45e2c3db516a7b211b3b91}{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+L\+E\+A\+R\+\_\+\+R\+I\+G\+H\+T}, 
+\\*
+\hyperlink{_display_8h_a3d9ab99875c344491227a76f1d47e377a14588c1117513fc430c964428f62484e}{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+L\+E\+A\+R\+\_\+\+B\+O\+T\+H}
+ \}
+\begin{DoxyCompactList}\small\item\em How to treat existing elements on a line when writing text. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} \hyperlink{_display_8h_a3e9f4eee43bc9b70a4944e1a3961f7d2}{Display\+\_\+do\+Open} (uint32\+\_\+t id, \hyperlink{struct_display___params}{Display\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Initialize all the selected Display implementations. \end{DoxyCompactList}\item 
+void \hyperlink{_display_8h_aff22833ae1cdccbbde3a57e82f85896c}{Display\+\_\+do\+Params\+Init} (\hyperlink{struct_display___params}{Display\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Initializes parameter structure with default parameters. \end{DoxyCompactList}\item 
+void \hyperlink{_display_8h_a68955bb81b0db818bf2688695dca1e4a}{Display\+\_\+do\+Clear} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Calls the clear fxn of all opened Display implementations. \end{DoxyCompactList}\item 
+void \hyperlink{_display_8h_a443fc3167f9ce70bebf9e016443c6383}{Display\+\_\+do\+Clear\+Lines} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle, uint8\+\_\+t from\+Line, uint8\+\_\+t to\+Line)
+\begin{DoxyCompactList}\small\item\em Calls the clear\+Lines fxn of all opened Display implementations. \end{DoxyCompactList}\item 
+void \hyperlink{_display_8h_a1cd0faeb6b7fcd857e4973fb1d79fac3}{Display\+\_\+do\+Put5} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle, uint8\+\_\+t line, uint8\+\_\+t column, uintptr\+\_\+t fmt, uintptr\+\_\+t a0, uintptr\+\_\+t a1, uintptr\+\_\+t a2, uintptr\+\_\+t a3, uintptr\+\_\+t a4)
+\begin{DoxyCompactList}\small\item\em Calls the output function of all opened Display implementations. \end{DoxyCompactList}\item 
+void \hyperlink{_display_8h_add67d9c5e921786ec12d8029fe6096d1}{Display\+\_\+do\+Close} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Closes selected Display implementations. \end{DoxyCompactList}\item 
+void \hyperlink{_display_8h_a330f4fa1032c03e41d3efee191b9670b}{Display\+\_\+do\+Control} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em Function performs implementation specific features on a given Display\+\_\+\+Handle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{Display.\+h@{Display.\+h}!Display\+\_\+\+M\+A\+X\+I\+N\+D\+E\+X@{Display\+\_\+\+M\+A\+X\+I\+N\+D\+E\+X}}
+\index{Display\+\_\+\+M\+A\+X\+I\+N\+D\+E\+X@{Display\+\_\+\+M\+A\+X\+I\+N\+D\+E\+X}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+\+M\+A\+X\+I\+N\+D\+E\+X}]{\setlength{\rightskip}{0pt plus 5cm}\#define Display\+\_\+\+M\+A\+X\+I\+N\+D\+E\+X~15}\label{_display_8h_a61eb3c7b2406cb61825a0924b066d1ec}
+Max allowed displays. Any index value above this is a meta-\/type index. \index{Display.\+h@{Display.\+h}!Display\+\_\+clear\+Line@{Display\+\_\+clear\+Line}}
+\index{Display\+\_\+clear\+Line@{Display\+\_\+clear\+Line}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+clear\+Line}]{\setlength{\rightskip}{0pt plus 5cm}\#define Display\+\_\+clear\+Line(
+\begin{DoxyParamCaption}
+\item[{}]{handle, }
+\item[{}]{n}
+\end{DoxyParamCaption}
+)~{\bf Display\+\_\+clear\+Lines}(handle, n, 0)}\label{_display_8h_a4dacdea7e09ccbb7fc6464bb9af6c2cd}
+\index{Display.\+h@{Display.\+h}!Display\+\_\+is\+Index@{Display\+\_\+is\+Index}}
+\index{Display\+\_\+is\+Index@{Display\+\_\+is\+Index}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+is\+Index}]{\setlength{\rightskip}{0pt plus 5cm}\#define Display\+\_\+is\+Index(
+\begin{DoxyParamCaption}
+\item[{}]{i}
+\end{DoxyParamCaption}
+)~(i $<$= {\bf Display\+\_\+\+M\+A\+X\+I\+N\+D\+E\+X})}\label{_display_8h_a1c085d5459020e806cafd71632e3d8ed}
+\index{Display.\+h@{Display.\+h}!Display\+\_\+is\+Meta\+Type@{Display\+\_\+is\+Meta\+Type}}
+\index{Display\+\_\+is\+Meta\+Type@{Display\+\_\+is\+Meta\+Type}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+is\+Meta\+Type}]{\setlength{\rightskip}{0pt plus 5cm}\#define Display\+\_\+is\+Meta\+Type(
+\begin{DoxyParamCaption}
+\item[{}]{i}
+\end{DoxyParamCaption}
+)~(i $>$ {\bf Display\+\_\+\+M\+A\+X\+I\+N\+D\+E\+X})}\label{_display_8h_ac0fca232ed955fd16bdf1d7b1b560a9e}
+\index{Display.\+h@{Display.\+h}!Display\+\_\+open@{Display\+\_\+open}}
+\index{Display\+\_\+open@{Display\+\_\+open}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}\#define Display\+\_\+open(
+\begin{DoxyParamCaption}
+\item[{}]{id, }
+\item[{}]{params}
+\end{DoxyParamCaption}
+)~{\bf Display\+\_\+do\+Open}(id, params)}\label{_display_8h_a3aa87973a354d4fd6a2969f764e8afe6}
+Open selected display id or the first display of type. \begin{DoxySeeAlso}{See also}
+\hyperlink{_display_8h_a3e9f4eee43bc9b70a4944e1a3961f7d2}{Display\+\_\+do\+Open()} 
+\end{DoxySeeAlso}
+\index{Display.\+h@{Display.\+h}!Display\+\_\+\+Params\+\_\+init@{Display\+\_\+\+Params\+\_\+init}}
+\index{Display\+\_\+\+Params\+\_\+init@{Display\+\_\+\+Params\+\_\+init}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+\+Params\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}\#define Display\+\_\+\+Params\+\_\+init(
+\begin{DoxyParamCaption}
+\item[{}]{params}
+\end{DoxyParamCaption}
+)~{\bf Display\+\_\+do\+Params\+Init}(params)}\label{_display_8h_a4fb2982f52995a80194fbb107883a183}
+Initialize default parameters. \begin{DoxySeeAlso}{See also}
+\hyperlink{_display_8h_aff22833ae1cdccbbde3a57e82f85896c}{Display\+\_\+do\+Params\+Init()} 
+\end{DoxySeeAlso}
+\index{Display.\+h@{Display.\+h}!Display\+\_\+clear@{Display\+\_\+clear}}
+\index{Display\+\_\+clear@{Display\+\_\+clear}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+clear}]{\setlength{\rightskip}{0pt plus 5cm}\#define Display\+\_\+clear(
+\begin{DoxyParamCaption}
+\item[{}]{handle}
+\end{DoxyParamCaption}
+)~{\bf Display\+\_\+do\+Clear}(handle)}\label{_display_8h_ab5a031704e2a1a9525d2c1a92346f842}
+Clear display \begin{DoxySeeAlso}{See also}
+\hyperlink{_display_8h_a68955bb81b0db818bf2688695dca1e4a}{Display\+\_\+do\+Clear()} 
+\end{DoxySeeAlso}
+\index{Display.\+h@{Display.\+h}!Display\+\_\+clear\+Lines@{Display\+\_\+clear\+Lines}}
+\index{Display\+\_\+clear\+Lines@{Display\+\_\+clear\+Lines}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+clear\+Lines}]{\setlength{\rightskip}{0pt plus 5cm}\#define Display\+\_\+clear\+Lines(
+\begin{DoxyParamCaption}
+\item[{}]{handle, }
+\item[{}]{from\+Line, }
+\item[{}]{to\+Line}
+\end{DoxyParamCaption}
+)~{\bf Display\+\_\+do\+Clear\+Lines}(handle, from\+Line, to\+Line)}\label{_display_8h_abae2ae910c2c533dbf11d24c656609d1}
+Clear lines in display \begin{DoxySeeAlso}{See also}
+\hyperlink{_display_8h_a443fc3167f9ce70bebf9e016443c6383}{Display\+\_\+do\+Clear\+Lines()} 
+\end{DoxySeeAlso}
+\index{Display.\+h@{Display.\+h}!Display\+\_\+print0@{Display\+\_\+print0}}
+\index{Display\+\_\+print0@{Display\+\_\+print0}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+print0}]{\setlength{\rightskip}{0pt plus 5cm}\#define Display\+\_\+print0(
+\begin{DoxyParamCaption}
+\item[{}]{handle, }
+\item[{}]{line, }
+\item[{}]{col, }
+\item[{}]{fmt}
+\end{DoxyParamCaption}
+)~{\bf Display\+\_\+print5}(handle, line, col, (uintptr\+\_\+t)(fmt), 0, 0, 0, 0, 0)}\label{_display_8h_acd3685718132aa56f51827b28cab9717}
+Output string fmt with 0 arguments to display \begin{DoxySeeAlso}{See also}
+\hyperlink{_display_8h_a1cd0faeb6b7fcd857e4973fb1d79fac3}{Display\+\_\+do\+Put5()} 
+\end{DoxySeeAlso}
+\index{Display.\+h@{Display.\+h}!Display\+\_\+print1@{Display\+\_\+print1}}
+\index{Display\+\_\+print1@{Display\+\_\+print1}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+print1}]{\setlength{\rightskip}{0pt plus 5cm}\#define Display\+\_\+print1(
+\begin{DoxyParamCaption}
+\item[{}]{handle, }
+\item[{}]{line, }
+\item[{}]{col, }
+\item[{}]{fmt, }
+\item[{}]{a0}
+\end{DoxyParamCaption}
+)~{\bf Display\+\_\+print5}(handle, line, col, (uintptr\+\_\+t)(fmt), (uintptr\+\_\+t)(a0), 0, 0, 0, 0)}\label{_display_8h_a32faeb481b205f15a47fe8a57b15050c}
+Output string fmt with 1 argument to display \begin{DoxySeeAlso}{See also}
+\hyperlink{_display_8h_a1cd0faeb6b7fcd857e4973fb1d79fac3}{Display\+\_\+do\+Put5()} 
+\end{DoxySeeAlso}
+\index{Display.\+h@{Display.\+h}!Display\+\_\+print2@{Display\+\_\+print2}}
+\index{Display\+\_\+print2@{Display\+\_\+print2}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+print2}]{\setlength{\rightskip}{0pt plus 5cm}\#define Display\+\_\+print2(
+\begin{DoxyParamCaption}
+\item[{}]{handle, }
+\item[{}]{line, }
+\item[{}]{col, }
+\item[{}]{fmt, }
+\item[{}]{a0, }
+\item[{}]{a1}
+\end{DoxyParamCaption}
+)~{\bf Display\+\_\+print5}(handle, line, col, (uintptr\+\_\+t)(fmt), (uintptr\+\_\+t)(a0), (uintptr\+\_\+t)(a1), 0, 0, 0)}\label{_display_8h_a38c04b221312d6810860cc798c5bd87a}
+Output string fmt with 2 arguments to display \begin{DoxySeeAlso}{See also}
+\hyperlink{_display_8h_a1cd0faeb6b7fcd857e4973fb1d79fac3}{Display\+\_\+do\+Put5()} 
+\end{DoxySeeAlso}
+\index{Display.\+h@{Display.\+h}!Display\+\_\+print3@{Display\+\_\+print3}}
+\index{Display\+\_\+print3@{Display\+\_\+print3}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+print3}]{\setlength{\rightskip}{0pt plus 5cm}\#define Display\+\_\+print3(
+\begin{DoxyParamCaption}
+\item[{}]{handle, }
+\item[{}]{line, }
+\item[{}]{col, }
+\item[{}]{fmt, }
+\item[{}]{a0, }
+\item[{}]{a1, }
+\item[{}]{a2}
+\end{DoxyParamCaption}
+)~{\bf Display\+\_\+print5}(handle, line, col, (uintptr\+\_\+t)(fmt), (uintptr\+\_\+t)(a0), (uintptr\+\_\+t)(a1), (uintptr\+\_\+t)(a2), 0, 0)}\label{_display_8h_ac4666e03680fc5c36ba2d186fce9f8f1}
+Output string fmt with 3 arguments to display \begin{DoxySeeAlso}{See also}
+\hyperlink{_display_8h_a1cd0faeb6b7fcd857e4973fb1d79fac3}{Display\+\_\+do\+Put5()} 
+\end{DoxySeeAlso}
+\index{Display.\+h@{Display.\+h}!Display\+\_\+print4@{Display\+\_\+print4}}
+\index{Display\+\_\+print4@{Display\+\_\+print4}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+print4}]{\setlength{\rightskip}{0pt plus 5cm}\#define Display\+\_\+print4(
+\begin{DoxyParamCaption}
+\item[{}]{handle, }
+\item[{}]{line, }
+\item[{}]{col, }
+\item[{}]{fmt, }
+\item[{}]{a0, }
+\item[{}]{a1, }
+\item[{}]{a2, }
+\item[{}]{a3}
+\end{DoxyParamCaption}
+)~{\bf Display\+\_\+print5}(handle, line, col, (uintptr\+\_\+t)(fmt), (uintptr\+\_\+t)(a0), (uintptr\+\_\+t)(a1), (uintptr\+\_\+t)(a2), (uintptr\+\_\+t)(a3), 0)}\label{_display_8h_a346f79ffd49fb4b049812cff58e1c55b}
+Output string fmt with 4 arguments to display \begin{DoxySeeAlso}{See also}
+\hyperlink{_display_8h_a1cd0faeb6b7fcd857e4973fb1d79fac3}{Display\+\_\+do\+Put5()} 
+\end{DoxySeeAlso}
+\index{Display.\+h@{Display.\+h}!Display\+\_\+print5@{Display\+\_\+print5}}
+\index{Display\+\_\+print5@{Display\+\_\+print5}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+print5}]{\setlength{\rightskip}{0pt plus 5cm}\#define Display\+\_\+print5(
+\begin{DoxyParamCaption}
+\item[{}]{handle, }
+\item[{}]{line, }
+\item[{}]{col, }
+\item[{}]{fmt, }
+\item[{}]{a0, }
+\item[{}]{a1, }
+\item[{}]{a2, }
+\item[{}]{a3, }
+\item[{}]{a4}
+\end{DoxyParamCaption}
+)~{\bf Display\+\_\+do\+Put5}(handle, line, col, (uintptr\+\_\+t)(fmt), (uintptr\+\_\+t)(a0), (uintptr\+\_\+t)(a1), (uintptr\+\_\+t)(a2), (uintptr\+\_\+t)(a3), (uintptr\+\_\+t)(a4))}\label{_display_8h_a9c5ad419aa15ab0f127aec0e81a4706a}
+Output string fmt with 5 arguments to display \begin{DoxySeeAlso}{See also}
+\hyperlink{_display_8h_a1cd0faeb6b7fcd857e4973fb1d79fac3}{Display\+\_\+do\+Put5()} 
+\end{DoxySeeAlso}
+\index{Display.\+h@{Display.\+h}!Display\+\_\+control@{Display\+\_\+control}}
+\index{Display\+\_\+control@{Display\+\_\+control}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+control}]{\setlength{\rightskip}{0pt plus 5cm}\#define Display\+\_\+control(
+\begin{DoxyParamCaption}
+\item[{}]{handle, }
+\item[{}]{cmd, }
+\item[{}]{arg}
+\end{DoxyParamCaption}
+)~{\bf Display\+\_\+do\+Control}(handle, cmd, arg)}\label{_display_8h_ad623d21e3c6d821bf6f4bdcfa05ec21f}
+Control a specific Display driver \begin{DoxySeeAlso}{See also}
+\hyperlink{_display_8h_a330f4fa1032c03e41d3efee191b9670b}{Display\+\_\+do\+Control()} 
+\end{DoxySeeAlso}
+\index{Display.\+h@{Display.\+h}!Display\+\_\+close@{Display\+\_\+close}}
+\index{Display\+\_\+close@{Display\+\_\+close}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}\#define Display\+\_\+close(
+\begin{DoxyParamCaption}
+\item[{}]{handle}
+\end{DoxyParamCaption}
+)~{\bf Display\+\_\+do\+Close}(handle)}\label{_display_8h_aea13e4e023f2b8020bed2e888cf98599}
+Close display \begin{DoxySeeAlso}{See also}
+\hyperlink{_display_8h_add67d9c5e921786ec12d8029fe6096d1}{Display\+\_\+do\+Close()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Typedef Documentation}
+\index{Display.\+h@{Display.\+h}!Display\+\_\+\+Handle@{Display\+\_\+\+Handle}}
+\index{Display\+\_\+\+Handle@{Display\+\_\+\+Handle}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Display\+\_\+\+Config}$\ast$ {\bf Display\+\_\+\+Handle}}\label{_display_8h_a045a26811755aabf1886d982c49e54ab}
+
+
+A handle for specific Display implementations. 
+
+\index{Display.\+h@{Display.\+h}!Display\+\_\+\+Line\+Clear\+Mode@{Display\+\_\+\+Line\+Clear\+Mode}}
+\index{Display\+\_\+\+Line\+Clear\+Mode@{Display\+\_\+\+Line\+Clear\+Mode}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+\+Line\+Clear\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf Display\+\_\+\+Line\+Clear\+Mode}  {\bf Display\+\_\+\+Line\+Clear\+Mode}}\label{_display_8h_af2fe59ceb3d8c9276018f1ef46e4251c}
+
+
+How to treat existing elements on a line when writing text. 
+
+\index{Display.\+h@{Display.\+h}!Display\+\_\+\+Params@{Display\+\_\+\+Params}}
+\index{Display\+\_\+\+Params@{Display\+\_\+\+Params}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+\+Params}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Display\+\_\+\+Params}  {\bf Display\+\_\+\+Params}}\label{_display_8h_a6b9502df6569d4ba369c01b50c7cdb9f}
+
+
+Display Parameters. 
+
+Display parameters are used with the \hyperlink{_display_8h_a3aa87973a354d4fd6a2969f764e8afe6}{Display\+\_\+open()} call. Default values for these parameters are set using \hyperlink{_display_8h_a4fb2982f52995a80194fbb107883a183}{Display\+\_\+\+Params\+\_\+init()}.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_display_8h_a4fb2982f52995a80194fbb107883a183}{Display\+\_\+\+Params\+\_\+init()} 
+\end{DoxySeeAlso}
+\index{Display.\+h@{Display.\+h}!Display\+\_\+open\+Fxn@{Display\+\_\+open\+Fxn}}
+\index{Display\+\_\+open\+Fxn@{Display\+\_\+open\+Fxn}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+open\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Display\+\_\+\+Handle}($\ast$ Display\+\_\+open\+Fxn) ({\bf Display\+\_\+\+Handle} handle, {\bf Display\+\_\+\+Params} $\ast$params)}\label{_display_8h_a3119ce57fb115a68a37d7ec274cb0001}
+
+
+A function pointer to a specific implementation of \hyperlink{_display_8h_a3aa87973a354d4fd6a2969f764e8afe6}{Display\+\_\+open()}. 
+
+\index{Display.\+h@{Display.\+h}!Display\+\_\+clear\+Fxn@{Display\+\_\+clear\+Fxn}}
+\index{Display\+\_\+clear\+Fxn@{Display\+\_\+clear\+Fxn}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+clear\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ Display\+\_\+clear\+Fxn) ({\bf Display\+\_\+\+Handle} handle)}\label{_display_8h_af09f13daab765e83adfac09551e3ee51}
+
+
+A function pointer to a specific implementation of \hyperlink{_display_8h_ab5a031704e2a1a9525d2c1a92346f842}{Display\+\_\+clear()}. 
+
+\index{Display.\+h@{Display.\+h}!Display\+\_\+clear\+Lines\+Fxn@{Display\+\_\+clear\+Lines\+Fxn}}
+\index{Display\+\_\+clear\+Lines\+Fxn@{Display\+\_\+clear\+Lines\+Fxn}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+clear\+Lines\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ Display\+\_\+clear\+Lines\+Fxn) ({\bf Display\+\_\+\+Handle} handle, uint8\+\_\+t from\+Line, uint8\+\_\+t to\+Line)}\label{_display_8h_a8350bd25609f51433e21b502ed50f63a}
+
+
+A function pointer to a specific implementation of \hyperlink{_display_8h_abae2ae910c2c533dbf11d24c656609d1}{Display\+\_\+clear\+Lines()}. 
+
+\index{Display.\+h@{Display.\+h}!Display\+\_\+put5\+Fxn@{Display\+\_\+put5\+Fxn}}
+\index{Display\+\_\+put5\+Fxn@{Display\+\_\+put5\+Fxn}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+put5\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ Display\+\_\+put5\+Fxn) ({\bf Display\+\_\+\+Handle} handle, uint8\+\_\+t line, uint8\+\_\+t column, uintptr\+\_\+t fmt, uintptr\+\_\+t a0, uintptr\+\_\+t a1, uintptr\+\_\+t a2, uintptr\+\_\+t a3, uintptr\+\_\+t a4)}\label{_display_8h_a86694b64b96c51c587e649d82537746d}
+
+
+A function pointer to a specific implementation of Display\+\_\+put5(). 
+
+\index{Display.\+h@{Display.\+h}!Display\+\_\+close\+Fxn@{Display\+\_\+close\+Fxn}}
+\index{Display\+\_\+close\+Fxn@{Display\+\_\+close\+Fxn}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+close\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ Display\+\_\+close\+Fxn) ({\bf Display\+\_\+\+Handle})}\label{_display_8h_ade8c953094781efff0f10ee0696a984f}
+
+
+A function pointer to a specific implementation of \hyperlink{_display_8h_aea13e4e023f2b8020bed2e888cf98599}{Display\+\_\+close()}. 
+
+\index{Display.\+h@{Display.\+h}!Display\+\_\+control\+Fxn@{Display\+\_\+control\+Fxn}}
+\index{Display\+\_\+control\+Fxn@{Display\+\_\+control\+Fxn}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+control\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef int($\ast$ Display\+\_\+control\+Fxn) ({\bf Display\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)}\label{_display_8h_a67b559ffeebd829633512c4381858cc1}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_display_8h_ad623d21e3c6d821bf6f4bdcfa05ec21f}{Display\+\_\+control()}. 
+
+\index{Display.\+h@{Display.\+h}!Display\+\_\+get\+Type\+Fxn@{Display\+\_\+get\+Type\+Fxn}}
+\index{Display\+\_\+get\+Type\+Fxn@{Display\+\_\+get\+Type\+Fxn}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+get\+Type\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef unsigned int($\ast$ Display\+\_\+get\+Type\+Fxn) (void)}\label{_display_8h_a2800d49b89aa7e3d9a2ec758d60358f1}
+
+
+A function pointer to a specific implementation of Display\+\_\+get\+Type(). 
+
+\index{Display.\+h@{Display.\+h}!Display\+\_\+\+Fxn\+Table@{Display\+\_\+\+Fxn\+Table}}
+\index{Display\+\_\+\+Fxn\+Table@{Display\+\_\+\+Fxn\+Table}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+\+Fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Display\+\_\+\+Fxn\+Table}  {\bf Display\+\_\+\+Fxn\+Table}}\label{_display_8h_abdb33c07acce5b6e5affae6725331399}
+
+
+The definition of a Display function table that contains the required set of functions to control a specific Display driver implementation. 
+
+\index{Display.\+h@{Display.\+h}!Display\+\_\+\+Config@{Display\+\_\+\+Config}}
+\index{Display\+\_\+\+Config@{Display\+\_\+\+Config}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Display\+\_\+\+Config}  {\bf Display\+\_\+\+Config}}\label{_display_8h_a154de9b84d3b0d30daa9d729d65a6d5c}
+
+
+Display Global configuration. 
+
+The \hyperlink{struct_display___config}{Display\+\_\+\+Config} structure contains a set of pointers used to characterize the Display interface implementation.
+
+This structure needs to be defined before calling \hyperlink{_display_8h_a3aa87973a354d4fd6a2969f764e8afe6}{Display\+\_\+open()} and it must not be changed thereafter.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_display_8h_a3aa87973a354d4fd6a2969f764e8afe6}{Display\+\_\+open()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Enumeration Type Documentation}
+\index{Display.\+h@{Display.\+h}!Display\+\_\+\+Line\+Clear\+Mode@{Display\+\_\+\+Line\+Clear\+Mode}}
+\index{Display\+\_\+\+Line\+Clear\+Mode@{Display\+\_\+\+Line\+Clear\+Mode}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+\+Line\+Clear\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Display\+\_\+\+Line\+Clear\+Mode}}\label{_display_8h_a3d9ab99875c344491227a76f1d47e377}
+
+
+How to treat existing elements on a line when writing text. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+L\+E\+A\+R\+\_\+\+N\+O\+N\+E@{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+L\+E\+A\+R\+\_\+\+N\+O\+N\+E}!Display.\+h@{Display.\+h}}\index{Display.\+h@{Display.\+h}!D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+L\+E\+A\+R\+\_\+\+N\+O\+N\+E@{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+L\+E\+A\+R\+\_\+\+N\+O\+N\+E}}\item[{\em 
+D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+L\+E\+A\+R\+\_\+\+N\+O\+N\+E\label{_display_8h_a3d9ab99875c344491227a76f1d47e377a8f60ab659badd77a0591a5357cfe5f54}
+}]Do not clear anything before writing \index{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+L\+E\+A\+R\+\_\+\+L\+E\+F\+T@{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+L\+E\+A\+R\+\_\+\+L\+E\+F\+T}!Display.\+h@{Display.\+h}}\index{Display.\+h@{Display.\+h}!D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+L\+E\+A\+R\+\_\+\+L\+E\+F\+T@{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+L\+E\+A\+R\+\_\+\+L\+E\+F\+T}}\item[{\em 
+D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+L\+E\+A\+R\+\_\+\+L\+E\+F\+T\label{_display_8h_a3d9ab99875c344491227a76f1d47e377aabdeba4f8c5781eaff441a3778e6cc74}
+}]Clear pixels to left of text on the line \index{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+L\+E\+A\+R\+\_\+\+R\+I\+G\+H\+T@{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+L\+E\+A\+R\+\_\+\+R\+I\+G\+H\+T}!Display.\+h@{Display.\+h}}\index{Display.\+h@{Display.\+h}!D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+L\+E\+A\+R\+\_\+\+R\+I\+G\+H\+T@{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+L\+E\+A\+R\+\_\+\+R\+I\+G\+H\+T}}\item[{\em 
+D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+L\+E\+A\+R\+\_\+\+R\+I\+G\+H\+T\label{_display_8h_a3d9ab99875c344491227a76f1d47e377affc02447ea45e2c3db516a7b211b3b91}
+}]Clear pixels to right of text on the line \index{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+L\+E\+A\+R\+\_\+\+B\+O\+T\+H@{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+L\+E\+A\+R\+\_\+\+B\+O\+T\+H}!Display.\+h@{Display.\+h}}\index{Display.\+h@{Display.\+h}!D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+L\+E\+A\+R\+\_\+\+B\+O\+T\+H@{D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+L\+E\+A\+R\+\_\+\+B\+O\+T\+H}}\item[{\em 
+D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+L\+E\+A\+R\+\_\+\+B\+O\+T\+H\label{_display_8h_a3d9ab99875c344491227a76f1d47e377a14588c1117513fc430c964428f62484e}
+}]Clear pixels on both sides of text \end{description}
+\end{Desc}
+
+
+\subsubsection{Function Documentation}
+\index{Display.\+h@{Display.\+h}!Display\+\_\+do\+Open@{Display\+\_\+do\+Open}}
+\index{Display\+\_\+do\+Open@{Display\+\_\+do\+Open}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+do\+Open}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Display\+\_\+\+Handle} Display\+\_\+do\+Open (
+\begin{DoxyParamCaption}
+\item[{uint32\+\_\+t}]{id, }
+\item[{{\bf Display\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_display_8h_a3e9f4eee43bc9b70a4944e1a3961f7d2}
+
+
+Initialize all the selected Display implementations. 
+
+The index parameter can be an index in the global Display\+\_\+config array, or a meta-\/type signifying which types of display to open.
+
+The different allowed values in addition to actual index are\+:
+\begin{DoxyItemize}
+\item Display\+\_\+\+Type\+\_\+\+A\+N\+Y open and use the first available display
+\item Display\+\_\+\+Type\+\_\+\+L\+C\+D open and use L\+C\+D type displays
+\item Display\+\_\+\+Type\+\_\+\+U\+A\+R\+T open and use U\+A\+R\+T type displays
+\item Display\+\_\+\+Type\+\_\+\+L\+O\+G open and use xdc.\+runtime.\+Log type displays
+\item Display\+\_\+\+I\+T\+M open and use A\+R\+M I\+T\+M output type displays
+\item Display\+\_\+\+Type\+\_\+\+G\+R\+L\+I\+B open and use Gr\+Lib capable displays It is possible to combine types\+: Display\+\_\+\+Type\+\_\+\+U\+A\+R\+T $\vert$ Display\+\_\+\+Type\+\_\+\+L\+C\+D
+\end{DoxyItemize}
+
+\begin{DoxyNote}{Note}
+Only one display is opened. If the type matches more than one, only the first one found in the Display\+\_\+config array is opened.
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em id} & -\/ Index of Display in Display\+\_\+config array, or alternatively the type(s) of displays to open \\
+\hline
+{\em params} & -\/ display parameters\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Display\+\_\+\+Handle of opened Display or N\+U\+L\+L. 
+\end{DoxyReturn}
+\index{Display.\+h@{Display.\+h}!Display\+\_\+do\+Params\+Init@{Display\+\_\+do\+Params\+Init}}
+\index{Display\+\_\+do\+Params\+Init@{Display\+\_\+do\+Params\+Init}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+do\+Params\+Init}]{\setlength{\rightskip}{0pt plus 5cm}void Display\+\_\+do\+Params\+Init (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_display_8h_aff22833ae1cdccbbde3a57e82f85896c}
+
+
+Initializes parameter structure with default parameters. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\index{Display.\+h@{Display.\+h}!Display\+\_\+do\+Clear@{Display\+\_\+do\+Clear}}
+\index{Display\+\_\+do\+Clear@{Display\+\_\+do\+Clear}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+do\+Clear}]{\setlength{\rightskip}{0pt plus 5cm}void Display\+\_\+do\+Clear (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_display_8h_a68955bb81b0db818bf2688695dca1e4a}
+
+
+Calls the clear fxn of all opened Display implementations. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & -\/ handle of display\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\index{Display.\+h@{Display.\+h}!Display\+\_\+do\+Clear\+Lines@{Display\+\_\+do\+Clear\+Lines}}
+\index{Display\+\_\+do\+Clear\+Lines@{Display\+\_\+do\+Clear\+Lines}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+do\+Clear\+Lines}]{\setlength{\rightskip}{0pt plus 5cm}void Display\+\_\+do\+Clear\+Lines (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{handle, }
+\item[{uint8\+\_\+t}]{from\+Line, }
+\item[{uint8\+\_\+t}]{to\+Line}
+\end{DoxyParamCaption}
+)}\label{_display_8h_a443fc3167f9ce70bebf9e016443c6383}
+
+
+Calls the clear\+Lines fxn of all opened Display implementations. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & -\/ handle of display \\
+\hline
+{\em from\+Line} & -\/ line index (0 .. ) \\
+\hline
+{\em to\+Line} & -\/ line index (0 .. )\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\index{Display.\+h@{Display.\+h}!Display\+\_\+do\+Put5@{Display\+\_\+do\+Put5}}
+\index{Display\+\_\+do\+Put5@{Display\+\_\+do\+Put5}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+do\+Put5}]{\setlength{\rightskip}{0pt plus 5cm}void Display\+\_\+do\+Put5 (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{handle, }
+\item[{uint8\+\_\+t}]{line, }
+\item[{uint8\+\_\+t}]{column, }
+\item[{uintptr\+\_\+t}]{fmt, }
+\item[{uintptr\+\_\+t}]{a0, }
+\item[{uintptr\+\_\+t}]{a1, }
+\item[{uintptr\+\_\+t}]{a2, }
+\item[{uintptr\+\_\+t}]{a3, }
+\item[{uintptr\+\_\+t}]{a4}
+\end{DoxyParamCaption}
+)}\label{_display_8h_a1cd0faeb6b7fcd857e4973fb1d79fac3}
+
+
+Calls the output function of all opened Display implementations. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & -\/ handle of display \\
+\hline
+{\em line} & -\/ line index (0..) \\
+\hline
+{\em column} & -\/ column index (0..) \\
+\hline
+{\em fmt} & -\/ format string \\
+\hline
+{\em a0} & -\/ optional format arguments \\
+\hline
+{\em a1} & -\/ optional format arguments \\
+\hline
+{\em a2} & -\/ optional format arguments \\
+\hline
+{\em a3} & -\/ optional format arguments \\
+\hline
+{\em a4} & -\/ optional format arguments\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\index{Display.\+h@{Display.\+h}!Display\+\_\+do\+Close@{Display\+\_\+do\+Close}}
+\index{Display\+\_\+do\+Close@{Display\+\_\+do\+Close}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+do\+Close}]{\setlength{\rightskip}{0pt plus 5cm}void Display\+\_\+do\+Close (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_display_8h_add67d9c5e921786ec12d8029fe6096d1}
+
+
+Closes selected Display implementations. 
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\index{Display.\+h@{Display.\+h}!Display\+\_\+do\+Control@{Display\+\_\+do\+Control}}
+\index{Display\+\_\+do\+Control@{Display\+\_\+do\+Control}!Display.\+h@{Display.\+h}}
+\paragraph[{Display\+\_\+do\+Control}]{\setlength{\rightskip}{0pt plus 5cm}void Display\+\_\+do\+Control (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{cmd, }
+\item[{void $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}\label{_display_8h_a330f4fa1032c03e41d3efee191b9670b}
+
+
+Function performs implementation specific features on a given Display\+\_\+\+Handle. 
+
+Commands for Display\+\_\+control can originate from \hyperlink{_display_8h}{Display.\+h} or from implementation specific Display$\ast$.h ({\itshape \hyperlink{_display_sharp_8h}{Display\+Sharp.\+h}}, {\itshape \hyperlink{_display_uart_8h}{Display\+Uart.\+h}}, etc.. ) files. While commands from \hyperlink{_display_8h}{Display.\+h} are A\+P\+I portable across driver implementations, not all implementations may support all these commands. Conversely, commands from driver implementation specific Display$\ast$.h files add unique driver capabilities but are not A\+P\+I portable across all Display driver implementations.
+
+Commands supported by \hyperlink{_display_8h}{Display.\+h} follow a D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+M\+D\+\_\+$<$cmd$>$ naming convention.~\newline
+ Commands supported by Display$\ast$.h follow a D\+I\+S\+P\+L\+A\+Y$\ast$\+\_\+\+C\+M\+D\+\_\+$<$cmd$>$ naming convention.~\newline
+ Each control command defines {\bfseries arg} differently. The types of {\bfseries arg} are documented with each command.
+
+See \hyperlink{group___d_i_s_p_l_a_y___c_m_d}{Display\+\_\+control command codes} for command codes.
+
+See \hyperlink{group___d_i_s_p_l_a_y___s_t_a_t_u_s}{Display\+\_\+control return status codes} for status codes.
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_display_8h_a3aa87973a354d4fd6a2969f764e8afe6}{Display\+\_\+open()} has to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A Display handle returned from Display()\\
+\hline
+{\em cmd} & \hyperlink{_display_8h}{Display.\+h} or Display$\ast$.h commands.\\
+\hline
+{\em arg} & An optional R/\+W (read/write) command argument accompanied with cmd\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Implementation specific return codes. Negative values indicate unsuccessful operations. 
+\end{DoxyReturn}

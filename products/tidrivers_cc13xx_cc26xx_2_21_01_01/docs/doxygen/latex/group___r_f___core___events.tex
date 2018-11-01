@@ -1,0 +1,244 @@
+\subsection{R\+F\+\_\+\+Core\+\_\+\+Events}
+\label{group___r_f___core___events}\index{R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}}
+Collaboration diagram for R\+F\+\_\+\+Core\+\_\+\+Events\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=251pt]{group___r_f___core___events}
+\end{center}
+\end{figure}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group___r_f___core___events_gaa1534b443f03187f07f55b0198306a27}{R\+F\+\_\+\+Event\+Cmd\+Done}~(1$<$$<$0)
+\begin{DoxyCompactList}\small\item\em Radio operation command finished. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga2d60db886271cf8e08c7b6b2f5e534f1}{R\+F\+\_\+\+Event\+Last\+Cmd\+Done}~(1$<$$<$1)
+\begin{DoxyCompactList}\small\item\em Last radio operation command in a chain finished. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga4e8f8b70a9cd745561251d61940880f6}{R\+F\+\_\+\+Event\+Tx\+Done}~(1$<$$<$4)
+\begin{DoxyCompactList}\small\item\em Packet transmitted. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_gab1ab01acc148654e8b3dfe42d64785b1}{R\+F\+\_\+\+Event\+T\+X\+Ack}~(1$<$$<$5)
+\begin{DoxyCompactList}\small\item\em A\+C\+K packet transmitted. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga8421bd3a69743f088ac534f85b099a8d}{R\+F\+\_\+\+Event\+Tx\+Ctrl}~(1$<$$<$6)
+\begin{DoxyCompactList}\small\item\em Control packet transmitted. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_gaf15e72a260f7c2d3d659ad76cb876f9a}{R\+F\+\_\+\+Event\+Tx\+Ctrl\+Ack}~(1$<$$<$7)
+\begin{DoxyCompactList}\small\item\em Acknowledgement received on a transmitted control packet. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga00c6a2c502c6b73310d7168d65134728}{R\+F\+\_\+\+Event\+Tx\+Ctrl\+Ack\+Ack}~(1$<$$<$8)
+\begin{DoxyCompactList}\small\item\em Acknowledgement received on a transmitted control packet, and acknowledgement transmitted for that packet. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga2c71299952c2e6f95973f15cd1910012}{R\+F\+\_\+\+Event\+Tx\+Retrans}~(1$<$$<$9)
+\begin{DoxyCompactList}\small\item\em Packet retransmitted. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga2fe4925d81a1b1cf0f081801ccdea5c5}{R\+F\+\_\+\+Event\+Tx\+Entry\+Done}~(1$<$$<$10)
+\begin{DoxyCompactList}\small\item\em Tx queue data entry state changed to Finished. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga595798fcb9995769a5887839567c8ca7}{R\+F\+\_\+\+Event\+Tx\+Buffer\+Change}~(1$<$$<$11)
+\begin{DoxyCompactList}\small\item\em A buffer change is complete. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga8096e854b7ba95ee45054acf8c5d36e4}{R\+F\+\_\+\+Event\+Rx\+Ok}~(1$<$$<$16)
+\begin{DoxyCompactList}\small\item\em Packet received with C\+R\+C O\+K, payload, and not to be ignored. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga0c295aa9a2851efa0ec6309ebab52dc8}{R\+F\+\_\+\+Event\+Rx\+N\+Ok}~(1$<$$<$17)
+\begin{DoxyCompactList}\small\item\em Packet received with C\+R\+C error. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga2dbeb507eec591b320a4b06f36ce8814}{R\+F\+\_\+\+Event\+Rx\+Ignored}~(1$<$$<$18)
+\begin{DoxyCompactList}\small\item\em Packet received with C\+R\+C O\+K, but to be ignored. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga4df2d5bf213600e1bce1c03a1ea950dd}{R\+F\+\_\+\+Event\+Rx\+Empty}~(1$<$$<$19)
+\begin{DoxyCompactList}\small\item\em Packet received with C\+R\+C O\+K, not to be ignored, no payload. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_gafee6f48a825ba7e030ece03eb242e6c2}{R\+F\+\_\+\+Event\+Rx\+Ctrl}~(1$<$$<$20)
+\begin{DoxyCompactList}\small\item\em Control packet received with C\+R\+C O\+K, not to be ignored. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga3c29608b6caa9e380407ee0b3df371b8}{R\+F\+\_\+\+Event\+Rx\+Ctrl\+Ack}~(1$<$$<$21)
+\begin{DoxyCompactList}\small\item\em Control packet received with C\+R\+C O\+K, not to be ignored, then A\+C\+K sent. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga8ddaa54ac8e8721e7e1cee7f0c07c3c1}{R\+F\+\_\+\+Event\+Rx\+Buf\+Full}~(1$<$$<$22)
+\begin{DoxyCompactList}\small\item\em Packet received that did not fit in the Rx queue. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga7051110a4a1fdd459866195be774a2b0}{R\+F\+\_\+\+Event\+Rx\+Entry\+Done}~(1$<$$<$23)
+\begin{DoxyCompactList}\small\item\em Rx queue data entry changing state to Finished. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga8ac187c129b68b4311898a5464aa87e5}{R\+F\+\_\+\+Event\+Data\+Written}~(1$<$$<$24)
+\begin{DoxyCompactList}\small\item\em Data written to partial read Rx buffer. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_gaa9c1eb19ce791f4f9c4b917e10fbabdd}{R\+F\+\_\+\+Event\+N\+Data\+Written}~(1$<$$<$25)
+\begin{DoxyCompactList}\small\item\em Specified number of bytes written to partial read Rx buffer. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_gaf2db331d93e28cdafc4367497a2f6f89}{R\+F\+\_\+\+Event\+Rx\+Aborted}~(1$<$$<$26)
+\begin{DoxyCompactList}\small\item\em Packet reception stopped before packet was done. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_gaaba4e22e27b9ac26244b02c7cfd657d0}{R\+F\+\_\+\+Event\+Rx\+Collision\+Detected}~(1$<$$<$27)
+\begin{DoxyCompactList}\small\item\em A collision was indicated during packet reception. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_gae5cb277f5a7a23bf1d7e6405f3e2253e}{R\+F\+\_\+\+Event\+Modules\+Unlocked}~(1$<$$<$29)
+\begin{DoxyCompactList}\small\item\em As part of the boot process, the C\+M0 has opened access to R\+F core modules and memories. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_gaf872a5a1a47d7401499d7826eea8da98}{R\+F\+\_\+\+Event\+Internal\+Error}~(uint32\+\_\+t)(1$<$$<$31)
+\begin{DoxyCompactList}\small\item\em Internal error observed. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___r_f___core___events_ga83edee28803f1b2addc0f8458d0cc657}{R\+F\+\_\+\+Event\+Mdm\+Soft}~0x0000002000000000
+\begin{DoxyCompactList}\small\item\em Modem Sync detected (M\+D\+M\+S\+O\+F\+T I\+F\+G) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+R\+F Events reported to callback functions, and used in \hyperlink{_r_f_8h_a248bebdd1d0bd6e0812cf18116987e54}{R\+F\+\_\+run\+Cmd()}, \hyperlink{_r_f_8h_a91c1cb2508311f822acbc08ace568a83}{R\+F\+\_\+pend\+Cmd()} 
+
+\subsubsection{Macro Definition Documentation}
+\index{R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}!R\+F\+\_\+\+Event\+Cmd\+Done@{R\+F\+\_\+\+Event\+Cmd\+Done}}
+\index{R\+F\+\_\+\+Event\+Cmd\+Done@{R\+F\+\_\+\+Event\+Cmd\+Done}!R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}}
+\paragraph[{R\+F\+\_\+\+Event\+Cmd\+Done}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+Event\+Cmd\+Done~(1$<$$<$0)}\label{group___r_f___core___events_gaa1534b443f03187f07f55b0198306a27}
+
+
+Radio operation command finished. 
+
+\index{R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}!R\+F\+\_\+\+Event\+Last\+Cmd\+Done@{R\+F\+\_\+\+Event\+Last\+Cmd\+Done}}
+\index{R\+F\+\_\+\+Event\+Last\+Cmd\+Done@{R\+F\+\_\+\+Event\+Last\+Cmd\+Done}!R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}}
+\paragraph[{R\+F\+\_\+\+Event\+Last\+Cmd\+Done}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+Event\+Last\+Cmd\+Done~(1$<$$<$1)}\label{group___r_f___core___events_ga2d60db886271cf8e08c7b6b2f5e534f1}
+
+
+Last radio operation command in a chain finished. 
+
+\index{R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}!R\+F\+\_\+\+Event\+Tx\+Done@{R\+F\+\_\+\+Event\+Tx\+Done}}
+\index{R\+F\+\_\+\+Event\+Tx\+Done@{R\+F\+\_\+\+Event\+Tx\+Done}!R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}}
+\paragraph[{R\+F\+\_\+\+Event\+Tx\+Done}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+Event\+Tx\+Done~(1$<$$<$4)}\label{group___r_f___core___events_ga4e8f8b70a9cd745561251d61940880f6}
+
+
+Packet transmitted. 
+
+\index{R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}!R\+F\+\_\+\+Event\+T\+X\+Ack@{R\+F\+\_\+\+Event\+T\+X\+Ack}}
+\index{R\+F\+\_\+\+Event\+T\+X\+Ack@{R\+F\+\_\+\+Event\+T\+X\+Ack}!R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}}
+\paragraph[{R\+F\+\_\+\+Event\+T\+X\+Ack}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+Event\+T\+X\+Ack~(1$<$$<$5)}\label{group___r_f___core___events_gab1ab01acc148654e8b3dfe42d64785b1}
+
+
+A\+C\+K packet transmitted. 
+
+\index{R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}!R\+F\+\_\+\+Event\+Tx\+Ctrl@{R\+F\+\_\+\+Event\+Tx\+Ctrl}}
+\index{R\+F\+\_\+\+Event\+Tx\+Ctrl@{R\+F\+\_\+\+Event\+Tx\+Ctrl}!R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}}
+\paragraph[{R\+F\+\_\+\+Event\+Tx\+Ctrl}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+Event\+Tx\+Ctrl~(1$<$$<$6)}\label{group___r_f___core___events_ga8421bd3a69743f088ac534f85b099a8d}
+
+
+Control packet transmitted. 
+
+\index{R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}!R\+F\+\_\+\+Event\+Tx\+Ctrl\+Ack@{R\+F\+\_\+\+Event\+Tx\+Ctrl\+Ack}}
+\index{R\+F\+\_\+\+Event\+Tx\+Ctrl\+Ack@{R\+F\+\_\+\+Event\+Tx\+Ctrl\+Ack}!R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}}
+\paragraph[{R\+F\+\_\+\+Event\+Tx\+Ctrl\+Ack}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+Event\+Tx\+Ctrl\+Ack~(1$<$$<$7)}\label{group___r_f___core___events_gaf15e72a260f7c2d3d659ad76cb876f9a}
+
+
+Acknowledgement received on a transmitted control packet. 
+
+\index{R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}!R\+F\+\_\+\+Event\+Tx\+Ctrl\+Ack\+Ack@{R\+F\+\_\+\+Event\+Tx\+Ctrl\+Ack\+Ack}}
+\index{R\+F\+\_\+\+Event\+Tx\+Ctrl\+Ack\+Ack@{R\+F\+\_\+\+Event\+Tx\+Ctrl\+Ack\+Ack}!R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}}
+\paragraph[{R\+F\+\_\+\+Event\+Tx\+Ctrl\+Ack\+Ack}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+Event\+Tx\+Ctrl\+Ack\+Ack~(1$<$$<$8)}\label{group___r_f___core___events_ga00c6a2c502c6b73310d7168d65134728}
+
+
+Acknowledgement received on a transmitted control packet, and acknowledgement transmitted for that packet. 
+
+\index{R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}!R\+F\+\_\+\+Event\+Tx\+Retrans@{R\+F\+\_\+\+Event\+Tx\+Retrans}}
+\index{R\+F\+\_\+\+Event\+Tx\+Retrans@{R\+F\+\_\+\+Event\+Tx\+Retrans}!R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}}
+\paragraph[{R\+F\+\_\+\+Event\+Tx\+Retrans}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+Event\+Tx\+Retrans~(1$<$$<$9)}\label{group___r_f___core___events_ga2c71299952c2e6f95973f15cd1910012}
+
+
+Packet retransmitted. 
+
+\index{R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}!R\+F\+\_\+\+Event\+Tx\+Entry\+Done@{R\+F\+\_\+\+Event\+Tx\+Entry\+Done}}
+\index{R\+F\+\_\+\+Event\+Tx\+Entry\+Done@{R\+F\+\_\+\+Event\+Tx\+Entry\+Done}!R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}}
+\paragraph[{R\+F\+\_\+\+Event\+Tx\+Entry\+Done}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+Event\+Tx\+Entry\+Done~(1$<$$<$10)}\label{group___r_f___core___events_ga2fe4925d81a1b1cf0f081801ccdea5c5}
+
+
+Tx queue data entry state changed to Finished. 
+
+\index{R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}!R\+F\+\_\+\+Event\+Tx\+Buffer\+Change@{R\+F\+\_\+\+Event\+Tx\+Buffer\+Change}}
+\index{R\+F\+\_\+\+Event\+Tx\+Buffer\+Change@{R\+F\+\_\+\+Event\+Tx\+Buffer\+Change}!R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}}
+\paragraph[{R\+F\+\_\+\+Event\+Tx\+Buffer\+Change}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+Event\+Tx\+Buffer\+Change~(1$<$$<$11)}\label{group___r_f___core___events_ga595798fcb9995769a5887839567c8ca7}
+
+
+A buffer change is complete. 
+
+\index{R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}!R\+F\+\_\+\+Event\+Rx\+Ok@{R\+F\+\_\+\+Event\+Rx\+Ok}}
+\index{R\+F\+\_\+\+Event\+Rx\+Ok@{R\+F\+\_\+\+Event\+Rx\+Ok}!R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}}
+\paragraph[{R\+F\+\_\+\+Event\+Rx\+Ok}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+Event\+Rx\+Ok~(1$<$$<$16)}\label{group___r_f___core___events_ga8096e854b7ba95ee45054acf8c5d36e4}
+
+
+Packet received with C\+R\+C O\+K, payload, and not to be ignored. 
+
+\index{R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}!R\+F\+\_\+\+Event\+Rx\+N\+Ok@{R\+F\+\_\+\+Event\+Rx\+N\+Ok}}
+\index{R\+F\+\_\+\+Event\+Rx\+N\+Ok@{R\+F\+\_\+\+Event\+Rx\+N\+Ok}!R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}}
+\paragraph[{R\+F\+\_\+\+Event\+Rx\+N\+Ok}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+Event\+Rx\+N\+Ok~(1$<$$<$17)}\label{group___r_f___core___events_ga0c295aa9a2851efa0ec6309ebab52dc8}
+
+
+Packet received with C\+R\+C error. 
+
+\index{R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}!R\+F\+\_\+\+Event\+Rx\+Ignored@{R\+F\+\_\+\+Event\+Rx\+Ignored}}
+\index{R\+F\+\_\+\+Event\+Rx\+Ignored@{R\+F\+\_\+\+Event\+Rx\+Ignored}!R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}}
+\paragraph[{R\+F\+\_\+\+Event\+Rx\+Ignored}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+Event\+Rx\+Ignored~(1$<$$<$18)}\label{group___r_f___core___events_ga2dbeb507eec591b320a4b06f36ce8814}
+
+
+Packet received with C\+R\+C O\+K, but to be ignored. 
+
+\index{R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}!R\+F\+\_\+\+Event\+Rx\+Empty@{R\+F\+\_\+\+Event\+Rx\+Empty}}
+\index{R\+F\+\_\+\+Event\+Rx\+Empty@{R\+F\+\_\+\+Event\+Rx\+Empty}!R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}}
+\paragraph[{R\+F\+\_\+\+Event\+Rx\+Empty}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+Event\+Rx\+Empty~(1$<$$<$19)}\label{group___r_f___core___events_ga4df2d5bf213600e1bce1c03a1ea950dd}
+
+
+Packet received with C\+R\+C O\+K, not to be ignored, no payload. 
+
+\index{R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}!R\+F\+\_\+\+Event\+Rx\+Ctrl@{R\+F\+\_\+\+Event\+Rx\+Ctrl}}
+\index{R\+F\+\_\+\+Event\+Rx\+Ctrl@{R\+F\+\_\+\+Event\+Rx\+Ctrl}!R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}}
+\paragraph[{R\+F\+\_\+\+Event\+Rx\+Ctrl}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+Event\+Rx\+Ctrl~(1$<$$<$20)}\label{group___r_f___core___events_gafee6f48a825ba7e030ece03eb242e6c2}
+
+
+Control packet received with C\+R\+C O\+K, not to be ignored. 
+
+\index{R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}!R\+F\+\_\+\+Event\+Rx\+Ctrl\+Ack@{R\+F\+\_\+\+Event\+Rx\+Ctrl\+Ack}}
+\index{R\+F\+\_\+\+Event\+Rx\+Ctrl\+Ack@{R\+F\+\_\+\+Event\+Rx\+Ctrl\+Ack}!R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}}
+\paragraph[{R\+F\+\_\+\+Event\+Rx\+Ctrl\+Ack}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+Event\+Rx\+Ctrl\+Ack~(1$<$$<$21)}\label{group___r_f___core___events_ga3c29608b6caa9e380407ee0b3df371b8}
+
+
+Control packet received with C\+R\+C O\+K, not to be ignored, then A\+C\+K sent. 
+
+\index{R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}!R\+F\+\_\+\+Event\+Rx\+Buf\+Full@{R\+F\+\_\+\+Event\+Rx\+Buf\+Full}}
+\index{R\+F\+\_\+\+Event\+Rx\+Buf\+Full@{R\+F\+\_\+\+Event\+Rx\+Buf\+Full}!R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}}
+\paragraph[{R\+F\+\_\+\+Event\+Rx\+Buf\+Full}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+Event\+Rx\+Buf\+Full~(1$<$$<$22)}\label{group___r_f___core___events_ga8ddaa54ac8e8721e7e1cee7f0c07c3c1}
+
+
+Packet received that did not fit in the Rx queue. 
+
+\index{R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}!R\+F\+\_\+\+Event\+Rx\+Entry\+Done@{R\+F\+\_\+\+Event\+Rx\+Entry\+Done}}
+\index{R\+F\+\_\+\+Event\+Rx\+Entry\+Done@{R\+F\+\_\+\+Event\+Rx\+Entry\+Done}!R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}}
+\paragraph[{R\+F\+\_\+\+Event\+Rx\+Entry\+Done}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+Event\+Rx\+Entry\+Done~(1$<$$<$23)}\label{group___r_f___core___events_ga7051110a4a1fdd459866195be774a2b0}
+
+
+Rx queue data entry changing state to Finished. 
+
+\index{R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}!R\+F\+\_\+\+Event\+Data\+Written@{R\+F\+\_\+\+Event\+Data\+Written}}
+\index{R\+F\+\_\+\+Event\+Data\+Written@{R\+F\+\_\+\+Event\+Data\+Written}!R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}}
+\paragraph[{R\+F\+\_\+\+Event\+Data\+Written}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+Event\+Data\+Written~(1$<$$<$24)}\label{group___r_f___core___events_ga8ac187c129b68b4311898a5464aa87e5}
+
+
+Data written to partial read Rx buffer. 
+
+\index{R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}!R\+F\+\_\+\+Event\+N\+Data\+Written@{R\+F\+\_\+\+Event\+N\+Data\+Written}}
+\index{R\+F\+\_\+\+Event\+N\+Data\+Written@{R\+F\+\_\+\+Event\+N\+Data\+Written}!R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}}
+\paragraph[{R\+F\+\_\+\+Event\+N\+Data\+Written}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+Event\+N\+Data\+Written~(1$<$$<$25)}\label{group___r_f___core___events_gaa9c1eb19ce791f4f9c4b917e10fbabdd}
+
+
+Specified number of bytes written to partial read Rx buffer. 
+
+\index{R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}!R\+F\+\_\+\+Event\+Rx\+Aborted@{R\+F\+\_\+\+Event\+Rx\+Aborted}}
+\index{R\+F\+\_\+\+Event\+Rx\+Aborted@{R\+F\+\_\+\+Event\+Rx\+Aborted}!R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}}
+\paragraph[{R\+F\+\_\+\+Event\+Rx\+Aborted}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+Event\+Rx\+Aborted~(1$<$$<$26)}\label{group___r_f___core___events_gaf2db331d93e28cdafc4367497a2f6f89}
+
+
+Packet reception stopped before packet was done. 
+
+\index{R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}!R\+F\+\_\+\+Event\+Rx\+Collision\+Detected@{R\+F\+\_\+\+Event\+Rx\+Collision\+Detected}}
+\index{R\+F\+\_\+\+Event\+Rx\+Collision\+Detected@{R\+F\+\_\+\+Event\+Rx\+Collision\+Detected}!R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}}
+\paragraph[{R\+F\+\_\+\+Event\+Rx\+Collision\+Detected}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+Event\+Rx\+Collision\+Detected~(1$<$$<$27)}\label{group___r_f___core___events_gaaba4e22e27b9ac26244b02c7cfd657d0}
+
+
+A collision was indicated during packet reception. 
+
+\index{R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}!R\+F\+\_\+\+Event\+Modules\+Unlocked@{R\+F\+\_\+\+Event\+Modules\+Unlocked}}
+\index{R\+F\+\_\+\+Event\+Modules\+Unlocked@{R\+F\+\_\+\+Event\+Modules\+Unlocked}!R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}}
+\paragraph[{R\+F\+\_\+\+Event\+Modules\+Unlocked}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+Event\+Modules\+Unlocked~(1$<$$<$29)}\label{group___r_f___core___events_gae5cb277f5a7a23bf1d7e6405f3e2253e}
+
+
+As part of the boot process, the C\+M0 has opened access to R\+F core modules and memories. 
+
+\index{R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}!R\+F\+\_\+\+Event\+Internal\+Error@{R\+F\+\_\+\+Event\+Internal\+Error}}
+\index{R\+F\+\_\+\+Event\+Internal\+Error@{R\+F\+\_\+\+Event\+Internal\+Error}!R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}}
+\paragraph[{R\+F\+\_\+\+Event\+Internal\+Error}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+Event\+Internal\+Error~(uint32\+\_\+t)(1$<$$<$31)}\label{group___r_f___core___events_gaf872a5a1a47d7401499d7826eea8da98}
+
+
+Internal error observed. 
+
+\index{R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}!R\+F\+\_\+\+Event\+Mdm\+Soft@{R\+F\+\_\+\+Event\+Mdm\+Soft}}
+\index{R\+F\+\_\+\+Event\+Mdm\+Soft@{R\+F\+\_\+\+Event\+Mdm\+Soft}!R\+F\+\_\+\+Core\+\_\+\+Events@{R\+F\+\_\+\+Core\+\_\+\+Events}}
+\paragraph[{R\+F\+\_\+\+Event\+Mdm\+Soft}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+\_\+\+Event\+Mdm\+Soft~0x0000002000000000}\label{group___r_f___core___events_ga83edee28803f1b2addc0f8458d0cc657}
+
+
+Modem Sync detected (M\+D\+M\+S\+O\+F\+T I\+F\+G) 
+

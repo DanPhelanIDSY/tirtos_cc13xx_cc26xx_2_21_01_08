@@ -1,0 +1,85 @@
+\subsection{Sensor\+Bmp280.\+h File Reference}
+\label{_sensor_bmp280_8h}\index{Sensor\+Bmp280.\+h@{Sensor\+Bmp280.\+h}}
+
+
+\subsubsection{Detailed Description}
+Driver for the Bosch B\+M\+P280 Pressure Sensor. 
+
+============================================================================
+
+
+
+{\ttfamily \#include \char`\"{}stdint.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}stdbool.\+h\char`\"{}}\\*
+Include dependency graph for Sensor\+Bmp280.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=159pt]{_sensor_bmp280_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_sensor_bmp280_8h_ad917f5bcd2a29d9179fdbb014e7bdfa1}{S\+E\+N\+S\+O\+R\+\_\+\+B\+M\+P280\+\_\+\+D\+A\+T\+A\+S\+I\+Z\+E}~6
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{_sensor_bmp280_8h_a67801dc56a9a7f4e9f3761d9109f4aea}{Sensor\+Bmp280\+\_\+init} (void)
+\item 
+void \hyperlink{_sensor_bmp280_8h_aaf6ce6b44986cf16c8cff37ca93819d3}{Sensor\+Bmp280\+\_\+enable} (bool enable)
+\item 
+bool \hyperlink{_sensor_bmp280_8h_a5060983453e618dce650d2aaf02c549a}{Sensor\+Bmp280\+\_\+test} (void)
+\item 
+bool \hyperlink{_sensor_bmp280_8h_aa8159e0f74495b5e424cc57d4e974c10}{Sensor\+Bmp280\+\_\+read} (uint8\+\_\+t $\ast$p\+Buf)
+\item 
+void \hyperlink{_sensor_bmp280_8h_a11f9ccbd3832161046b7e43d4c9544ba}{Sensor\+Bmp280\+\_\+convert} (uint8\+\_\+t $\ast$raw, int32\+\_\+t $\ast$temp, uint32\+\_\+t $\ast$press)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{Sensor\+Bmp280.\+h@{Sensor\+Bmp280.\+h}!S\+E\+N\+S\+O\+R\+\_\+\+B\+M\+P280\+\_\+\+D\+A\+T\+A\+S\+I\+Z\+E@{S\+E\+N\+S\+O\+R\+\_\+\+B\+M\+P280\+\_\+\+D\+A\+T\+A\+S\+I\+Z\+E}}
+\index{S\+E\+N\+S\+O\+R\+\_\+\+B\+M\+P280\+\_\+\+D\+A\+T\+A\+S\+I\+Z\+E@{S\+E\+N\+S\+O\+R\+\_\+\+B\+M\+P280\+\_\+\+D\+A\+T\+A\+S\+I\+Z\+E}!Sensor\+Bmp280.\+h@{Sensor\+Bmp280.\+h}}
+\paragraph[{S\+E\+N\+S\+O\+R\+\_\+\+B\+M\+P280\+\_\+\+D\+A\+T\+A\+S\+I\+Z\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+E\+N\+S\+O\+R\+\_\+\+B\+M\+P280\+\_\+\+D\+A\+T\+A\+S\+I\+Z\+E~6}\label{_sensor_bmp280_8h_ad917f5bcd2a29d9179fdbb014e7bdfa1}
+
+
+\subsubsection{Function Documentation}
+\index{Sensor\+Bmp280.\+h@{Sensor\+Bmp280.\+h}!Sensor\+Bmp280\+\_\+init@{Sensor\+Bmp280\+\_\+init}}
+\index{Sensor\+Bmp280\+\_\+init@{Sensor\+Bmp280\+\_\+init}!Sensor\+Bmp280.\+h@{Sensor\+Bmp280.\+h}}
+\paragraph[{Sensor\+Bmp280\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}bool Sensor\+Bmp280\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_sensor_bmp280_8h_a67801dc56a9a7f4e9f3761d9109f4aea}
+\index{Sensor\+Bmp280.\+h@{Sensor\+Bmp280.\+h}!Sensor\+Bmp280\+\_\+enable@{Sensor\+Bmp280\+\_\+enable}}
+\index{Sensor\+Bmp280\+\_\+enable@{Sensor\+Bmp280\+\_\+enable}!Sensor\+Bmp280.\+h@{Sensor\+Bmp280.\+h}}
+\paragraph[{Sensor\+Bmp280\+\_\+enable}]{\setlength{\rightskip}{0pt plus 5cm}void Sensor\+Bmp280\+\_\+enable (
+\begin{DoxyParamCaption}
+\item[{bool}]{enable}
+\end{DoxyParamCaption}
+)}\label{_sensor_bmp280_8h_aaf6ce6b44986cf16c8cff37ca93819d3}
+\index{Sensor\+Bmp280.\+h@{Sensor\+Bmp280.\+h}!Sensor\+Bmp280\+\_\+test@{Sensor\+Bmp280\+\_\+test}}
+\index{Sensor\+Bmp280\+\_\+test@{Sensor\+Bmp280\+\_\+test}!Sensor\+Bmp280.\+h@{Sensor\+Bmp280.\+h}}
+\paragraph[{Sensor\+Bmp280\+\_\+test}]{\setlength{\rightskip}{0pt plus 5cm}bool Sensor\+Bmp280\+\_\+test (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_sensor_bmp280_8h_a5060983453e618dce650d2aaf02c549a}
+\index{Sensor\+Bmp280.\+h@{Sensor\+Bmp280.\+h}!Sensor\+Bmp280\+\_\+read@{Sensor\+Bmp280\+\_\+read}}
+\index{Sensor\+Bmp280\+\_\+read@{Sensor\+Bmp280\+\_\+read}!Sensor\+Bmp280.\+h@{Sensor\+Bmp280.\+h}}
+\paragraph[{Sensor\+Bmp280\+\_\+read}]{\setlength{\rightskip}{0pt plus 5cm}bool Sensor\+Bmp280\+\_\+read (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t $\ast$}]{p\+Buf}
+\end{DoxyParamCaption}
+)}\label{_sensor_bmp280_8h_aa8159e0f74495b5e424cc57d4e974c10}
+\index{Sensor\+Bmp280.\+h@{Sensor\+Bmp280.\+h}!Sensor\+Bmp280\+\_\+convert@{Sensor\+Bmp280\+\_\+convert}}
+\index{Sensor\+Bmp280\+\_\+convert@{Sensor\+Bmp280\+\_\+convert}!Sensor\+Bmp280.\+h@{Sensor\+Bmp280.\+h}}
+\paragraph[{Sensor\+Bmp280\+\_\+convert}]{\setlength{\rightskip}{0pt plus 5cm}void Sensor\+Bmp280\+\_\+convert (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t $\ast$}]{raw, }
+\item[{int32\+\_\+t $\ast$}]{temp, }
+\item[{uint32\+\_\+t $\ast$}]{press}
+\end{DoxyParamCaption}
+)}\label{_sensor_bmp280_8h_a11f9ccbd3832161046b7e43d4c9544ba}

@@ -1,0 +1,52 @@
+\subsection{S\+D\+S\+P\+I\+\_\+control command and status codes}
+\label{group___s_d_s_p_i___c_o_n_t_r_o_l}\index{S\+D\+S\+P\+I\+\_\+control command and status codes@{S\+D\+S\+P\+I\+\_\+control command and status codes}}
+Collaboration diagram for S\+D\+S\+P\+I\+\_\+control command and status codes\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=295pt]{group___s_d_s_p_i___c_o_n_t_r_o_l}
+\end{center}
+\end{figure}
+\subsubsection*{Modules}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group___s_d_s_p_i___s_t_a_t_u_s}{Status Codes}
+\item 
+\hyperlink{group___s_d_s_p_i___c_m_d}{Command Codes}
+\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group___s_d_s_p_i___c_o_n_t_r_o_l_ga2912b6627b0f64de874048a5ebea2a85}{S\+D\+S\+P\+I\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~32
+\item 
+\#define \hyperlink{group___s_d_s_p_i___c_o_n_t_r_o_l_ga3037f55e94a7ef536986738c721a690a}{S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~-\/32
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+These S\+D\+S\+P\+I macros are reservations for \hyperlink{_s_d_s_p_i_8h}{S\+D\+S\+P\+I.\+h} 
+
+\subsubsection{Macro Definition Documentation}
+\index{S\+D\+S\+P\+I\+\_\+control command and status codes@{S\+D\+S\+P\+I\+\_\+control command and status codes}!S\+D\+S\+P\+I\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{S\+D\+S\+P\+I\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{S\+D\+S\+P\+I\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{S\+D\+S\+P\+I\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!S\+D\+S\+P\+I\+\_\+control command and status codes@{S\+D\+S\+P\+I\+\_\+control command and status codes}}
+\paragraph[{S\+D\+S\+P\+I\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+S\+P\+I\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~32}\label{group___s_d_s_p_i___c_o_n_t_r_o_l_ga2912b6627b0f64de874048a5ebea2a85}
+Common S\+D\+S\+P\+I\+\_\+control command code reservation offset. S\+D\+S\+P\+I driver implementations should offset command codes with S\+D\+S\+P\+I\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing positively
+
+Example implementation specific command codes\+: 
+\begin{DoxyCode}
+1 #define SDSPIXYZ\_CMD\_COMMAND0    SDSPI\_CMD\_RESERVED + 0
+2 #define SDSPIXYZ\_CMD\_COMMAND1    SDSPI\_CMD\_RESERVED + 1
+\end{DoxyCode}
+ \index{S\+D\+S\+P\+I\+\_\+control command and status codes@{S\+D\+S\+P\+I\+\_\+control command and status codes}!S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!S\+D\+S\+P\+I\+\_\+control command and status codes@{S\+D\+S\+P\+I\+\_\+control command and status codes}}
+\paragraph[{S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~-\/32}\label{group___s_d_s_p_i___c_o_n_t_r_o_l_ga3037f55e94a7ef536986738c721a690a}
+Common S\+D\+S\+P\+I\+\_\+control status code reservation offset. S\+D\+S\+P\+I driver implementations should offset status codes with S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing negatively.
+
+Example implementation specific status codes\+: 
+\begin{DoxyCode}
+1 #define SDSPIXYZ\_STATUS\_ERROR0   SDSPI\_STATUS\_RESERVED - 0
+2 #define SDSPIXYZ\_STATUS\_ERROR1   SDSPI\_STATUS\_RESERVED - 1
+3 #define SDSPIXYZ\_STATUS\_ERROR2   SDSPI\_STATUS\_RESERVED - 2
+\end{DoxyCode}
+ 

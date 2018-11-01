@@ -1,0 +1,156 @@
+\subsection{Display\+Ext.\+h File Reference}
+\label{_display_ext_8h}\index{Display\+Ext.\+h@{Display\+Ext.\+h}}
+
+
+\subsubsection{Detailed Description}
+Extention of Display to access Gr\+Lib functionality in capable displays. 
+
+============================================================================
+
+\subsubsection*{Driver include}
+
+The display header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/mw/DisplayExt.h>}
+\end{DoxyCode}
+
+
+\subsubsection*{Operation}
+
+This extension depends on an already opened Display interface, and accesses the global Display\+\_\+config object.
+
+\begin{DoxyNote}{Note}
+All Display statements will be removed and no display operations will take place if the symbol {\itshape Display\+\_\+\+D\+I\+S\+A\+B\+L\+E\+\_\+\+A\+L\+L} is defined globally, or before {\itshape display.\+h} is included.
+\end{DoxyNote}
+\paragraph*{Using the extension}
+
+First, the regular Display interface must be opened, and after that, A\+P\+Is in this extension become usable.
+
+
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/mw/display/Display.h>}
+\textcolor{preprocessor}{#include <ti/mw/display/DisplayExt.h>}
+\textcolor{preprocessor}{#include <ti/mw/grlib/grlib.h>}
+
+\textcolor{comment}{//...}
+Display_Handle    handle;
+Display_Params    params;
+
+Display_Params_init(&params);
+Display_open(Display_Type_GRLIB, &params);
+\textcolor{comment}{//Display\_open(Display\_ALL, &params);}
+
+tContext *pContext = DisplayExt\_getGrLibContext();
+
+tRectangle rect = \{
+    .sXMin = 10,
+    .sXMax = 30,
+    .sYMin = 10,
+    .sYMax = 20,
+\};
+
+\textcolor{comment}{// It's possible that no compatible Display is available or opened.}
+\textcolor{keywordflow}{if} (pContext != NULL)
+\{
+    GrRectFill(pContext, &rect);
+    GrFlush(pContext);
+\}
+\end{DoxyCode}
+
+
+\paragraph*{Implementation}
+
+This interface expects that all Display implementations that report type Display\+\_\+\+Type\+\_\+\+G\+R\+L\+I\+B will also \textquotesingle{}inherit\textquotesingle{} the \hyperlink{struct_display_gr_lib___object}{Display\+Gr\+Lib\+\_\+\+Object} so that the implementation specific instance object can be cast to the type \hyperlink{struct_display_gr_lib___object}{Display\+Gr\+Lib\+\_\+\+Object}.
+
+In practice this means that the \hyperlink{structt_context}{t\+Context} object used to control Gr\+Lib by the display implementation must be the first member of the Object structure used by that implementation.
+
+For example, Display\+\_\+\+Sharp\+Object can be cast to \hyperlink{struct_display_gr_lib___object}{Display\+Gr\+Lib\+\_\+\+Object} to access the \hyperlink{structt_context}{t\+Context} object, without this interface having prior knowledge about the Sharp display implementation.
+
+\subsubsection*{Instrumentation}
+
+The Display interface produces log statements if instrumentation is enabled.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Diagnostics Mask }&{\bf Log details  }\\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R1 &basic operations performed \\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R2 &detailed operations performed \\\cline{1-2}
+\end{TabularC}
+
+
+{\ttfamily \#include $<$ti/mw/display/\+Display.\+h$>$}\\*
+{\ttfamily \#include $<$ti/mw/grlib/grlib.\+h$>$}\\*
+Include dependency graph for Display\+Ext.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=261pt]{_display_ext_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_display_gr_lib___object}{Display\+Gr\+Lib\+\_\+\+Object}
+\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_display_ext_8h_a13918e8146bde27bee4c6825fd8fe367}{Display\+Ext\+\_\+get\+Grlib\+Context}(handle)~\hyperlink{_display_ext_8h_ad7eb5797f0246189b20d726d68319e79}{Display\+Ext\+\_\+do\+Get\+Grlib\+Context}(handle)
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_display_gr_lib___object}{Display\+Gr\+Lib\+\_\+\+Object} \hyperlink{_display_ext_8h_a10bc4ee8d6e6e8694b4df64e39375a08}{Display\+Gr\+Lib\+\_\+\+Object}
+\item 
+typedef struct \hyperlink{struct_display_gr_lib___object}{Display\+Gr\+Lib\+\_\+\+Object} $\ast$ \hyperlink{_display_ext_8h_a4f7c1242c4a278989925cff6ff214fc6}{Display\+Gr\+Lib\+\_\+\+Handle}
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structt_context}{t\+Context} $\ast$ \hyperlink{_display_ext_8h_ad7eb5797f0246189b20d726d68319e79}{Display\+Ext\+\_\+do\+Get\+Grlib\+Context} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Get the \hyperlink{structt_context}{t\+Context} object of the first available and open Display that uses Gr\+Lib for output. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{Display\+Ext.\+h@{Display\+Ext.\+h}!Display\+Ext\+\_\+get\+Grlib\+Context@{Display\+Ext\+\_\+get\+Grlib\+Context}}
+\index{Display\+Ext\+\_\+get\+Grlib\+Context@{Display\+Ext\+\_\+get\+Grlib\+Context}!Display\+Ext.\+h@{Display\+Ext.\+h}}
+\paragraph[{Display\+Ext\+\_\+get\+Grlib\+Context}]{\setlength{\rightskip}{0pt plus 5cm}\#define Display\+Ext\+\_\+get\+Grlib\+Context(
+\begin{DoxyParamCaption}
+\item[{}]{handle}
+\end{DoxyParamCaption}
+)~{\bf Display\+Ext\+\_\+do\+Get\+Grlib\+Context}(handle)}\label{_display_ext_8h_a13918e8146bde27bee4c6825fd8fe367}
+Get \hyperlink{structt_context}{t\+Context} of first opened Display that uses Gr\+Lib \begin{DoxySeeAlso}{See also}
+Display\+\_\+do\+Get\+Grlib\+Context() 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Typedef Documentation}
+\index{Display\+Ext.\+h@{Display\+Ext.\+h}!Display\+Gr\+Lib\+\_\+\+Object@{Display\+Gr\+Lib\+\_\+\+Object}}
+\index{Display\+Gr\+Lib\+\_\+\+Object@{Display\+Gr\+Lib\+\_\+\+Object}!Display\+Ext.\+h@{Display\+Ext.\+h}}
+\paragraph[{Display\+Gr\+Lib\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Display\+Gr\+Lib\+\_\+\+Object}  {\bf Display\+Gr\+Lib\+\_\+\+Object}}\label{_display_ext_8h_a10bc4ee8d6e6e8694b4df64e39375a08}
+\index{Display\+Ext.\+h@{Display\+Ext.\+h}!Display\+Gr\+Lib\+\_\+\+Handle@{Display\+Gr\+Lib\+\_\+\+Handle}}
+\index{Display\+Gr\+Lib\+\_\+\+Handle@{Display\+Gr\+Lib\+\_\+\+Handle}!Display\+Ext.\+h@{Display\+Ext.\+h}}
+\paragraph[{Display\+Gr\+Lib\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Display\+Gr\+Lib\+\_\+\+Object} $\ast$ {\bf Display\+Gr\+Lib\+\_\+\+Handle}}\label{_display_ext_8h_a4f7c1242c4a278989925cff6ff214fc6}
+
+
+\subsubsection{Function Documentation}
+\index{Display\+Ext.\+h@{Display\+Ext.\+h}!Display\+Ext\+\_\+do\+Get\+Grlib\+Context@{Display\+Ext\+\_\+do\+Get\+Grlib\+Context}}
+\index{Display\+Ext\+\_\+do\+Get\+Grlib\+Context@{Display\+Ext\+\_\+do\+Get\+Grlib\+Context}!Display\+Ext.\+h@{Display\+Ext.\+h}}
+\paragraph[{Display\+Ext\+\_\+do\+Get\+Grlib\+Context}]{\setlength{\rightskip}{0pt plus 5cm}{\bf t\+Context}$\ast$ Display\+Ext\+\_\+do\+Get\+Grlib\+Context (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_display_ext_8h_ad7eb5797f0246189b20d726d68319e79}
+
+
+Get the \hyperlink{structt_context}{t\+Context} object of the first available and open Display that uses Gr\+Lib for output. 
+
+Useful for drawing graphics if you know that the display is Gr\+Lib capable.
+
+\begin{DoxyNote}{Note}
+Calling Gr\+Lib functions directly is not thread-\/safe, and can conflict with Display calls or other Gr\+Lib calls.
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+\hyperlink{structt_context}{t\+Context} pointer or N\+U\+L\+L if no open display is found. 
+\end{DoxyReturn}

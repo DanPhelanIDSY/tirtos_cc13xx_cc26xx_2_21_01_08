@@ -1,0 +1,76 @@
+\subsection{Sensor\+Tmp007.\+h File Reference}
+\label{_sensor_tmp007_8h}\index{Sensor\+Tmp007.\+h@{Sensor\+Tmp007.\+h}}
+
+
+\subsubsection{Detailed Description}
+Driver for the Texas Instruments T\+M\+P007 infra-\/red thermopile sensor. 
+
+============================================================================
+
+
+
+{\ttfamily \#include \char`\"{}stdint.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}stdbool.\+h\char`\"{}}\\*
+Include dependency graph for Sensor\+Tmp007.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=159pt]{_sensor_tmp007_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{_sensor_tmp007_8h_a8f9c955c533d3b9e3abf7848d6669cf8}{Sensor\+Tmp007\+\_\+init} (void)
+\item 
+bool \hyperlink{_sensor_tmp007_8h_aa200c26bb3b24ad1c8d496f270c83581}{Sensor\+Tmp007\+\_\+enable} (bool enable)
+\item 
+bool \hyperlink{_sensor_tmp007_8h_a4fd07cef509ed6e176878f9bab4b5c8b}{Sensor\+Tmp007\+\_\+test} (void)
+\item 
+bool \hyperlink{_sensor_tmp007_8h_a144a9e0070dfcf6aab83940b10aa5056}{Sensor\+Tmp007\+\_\+read} (uint16\+\_\+t $\ast$raw\+Volt, uint16\+\_\+t $\ast$raw\+Temp)
+\item 
+void \hyperlink{_sensor_tmp007_8h_a01dedf941b1ec6a94887d60f189af8af}{Sensor\+Tmp007\+\_\+convert} (uint16\+\_\+t raw\+Volt, uint16\+\_\+t raw\+Temp, float $\ast$t\+Obj, float $\ast$t\+Tgt)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Function Documentation}
+\index{Sensor\+Tmp007.\+h@{Sensor\+Tmp007.\+h}!Sensor\+Tmp007\+\_\+init@{Sensor\+Tmp007\+\_\+init}}
+\index{Sensor\+Tmp007\+\_\+init@{Sensor\+Tmp007\+\_\+init}!Sensor\+Tmp007.\+h@{Sensor\+Tmp007.\+h}}
+\paragraph[{Sensor\+Tmp007\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}bool Sensor\+Tmp007\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_sensor_tmp007_8h_a8f9c955c533d3b9e3abf7848d6669cf8}
+\index{Sensor\+Tmp007.\+h@{Sensor\+Tmp007.\+h}!Sensor\+Tmp007\+\_\+enable@{Sensor\+Tmp007\+\_\+enable}}
+\index{Sensor\+Tmp007\+\_\+enable@{Sensor\+Tmp007\+\_\+enable}!Sensor\+Tmp007.\+h@{Sensor\+Tmp007.\+h}}
+\paragraph[{Sensor\+Tmp007\+\_\+enable}]{\setlength{\rightskip}{0pt plus 5cm}bool Sensor\+Tmp007\+\_\+enable (
+\begin{DoxyParamCaption}
+\item[{bool}]{enable}
+\end{DoxyParamCaption}
+)}\label{_sensor_tmp007_8h_aa200c26bb3b24ad1c8d496f270c83581}
+\index{Sensor\+Tmp007.\+h@{Sensor\+Tmp007.\+h}!Sensor\+Tmp007\+\_\+test@{Sensor\+Tmp007\+\_\+test}}
+\index{Sensor\+Tmp007\+\_\+test@{Sensor\+Tmp007\+\_\+test}!Sensor\+Tmp007.\+h@{Sensor\+Tmp007.\+h}}
+\paragraph[{Sensor\+Tmp007\+\_\+test}]{\setlength{\rightskip}{0pt plus 5cm}bool Sensor\+Tmp007\+\_\+test (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_sensor_tmp007_8h_a4fd07cef509ed6e176878f9bab4b5c8b}
+\index{Sensor\+Tmp007.\+h@{Sensor\+Tmp007.\+h}!Sensor\+Tmp007\+\_\+read@{Sensor\+Tmp007\+\_\+read}}
+\index{Sensor\+Tmp007\+\_\+read@{Sensor\+Tmp007\+\_\+read}!Sensor\+Tmp007.\+h@{Sensor\+Tmp007.\+h}}
+\paragraph[{Sensor\+Tmp007\+\_\+read}]{\setlength{\rightskip}{0pt plus 5cm}bool Sensor\+Tmp007\+\_\+read (
+\begin{DoxyParamCaption}
+\item[{uint16\+\_\+t $\ast$}]{raw\+Volt, }
+\item[{uint16\+\_\+t $\ast$}]{raw\+Temp}
+\end{DoxyParamCaption}
+)}\label{_sensor_tmp007_8h_a144a9e0070dfcf6aab83940b10aa5056}
+\index{Sensor\+Tmp007.\+h@{Sensor\+Tmp007.\+h}!Sensor\+Tmp007\+\_\+convert@{Sensor\+Tmp007\+\_\+convert}}
+\index{Sensor\+Tmp007\+\_\+convert@{Sensor\+Tmp007\+\_\+convert}!Sensor\+Tmp007.\+h@{Sensor\+Tmp007.\+h}}
+\paragraph[{Sensor\+Tmp007\+\_\+convert}]{\setlength{\rightskip}{0pt plus 5cm}void Sensor\+Tmp007\+\_\+convert (
+\begin{DoxyParamCaption}
+\item[{uint16\+\_\+t}]{raw\+Volt, }
+\item[{uint16\+\_\+t}]{raw\+Temp, }
+\item[{float $\ast$}]{t\+Obj, }
+\item[{float $\ast$}]{t\+Tgt}
+\end{DoxyParamCaption}
+)}\label{_sensor_tmp007_8h_a01dedf941b1ec6a94887d60f189af8af}

@@ -1,0 +1,110 @@
+\subsection{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config Union Reference}
+\label{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config}\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}}
+
+
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Audio Pin configuration.  
+
+
+
+
+{\ttfamily \#include $<$P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>uint16\_t \hyperlink{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_afde140c72f0b7fff618278f466a42245}{ad1}\\
+\>uint16\_t \hyperlink{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_a1ed6ea89aca197435fd2119774fc6992}{ad0}\\
+\} \hyperlink{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_a8af297ee464eea4533090185a5f39445}{driverLibParams}\\
+
+\end{tabbing}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>uint8\_t \hyperlink{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_ac6ba5e2275ff8537a39f141db28d6310}{ad1Usage}:2\\
+\>uint8\_t \hyperlink{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_a36ce5e086fdbc64d80735104e76478f2}{enableMclkPin}:1\\
+\>uint8\_t \hyperlink{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_ab1afe1354cd783e06dab4fc8e28f0baf}{reserved}:1\\
+\>uint8\_t \hyperlink{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_aabec0b0c95bf1757afb8fd80e06ef515}{ad1NumOfChannels}:4\\
+\>uint8\_t \hyperlink{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_a44ac00030f25ea2b143b7b87f5794a98}{ad1ChannelMask}\\
+\>uint8\_t \hyperlink{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_aa50e23d415933dbd7a21e5b5f949d38b}{ad0Usage}:2\\
+\>uint8\_t \hyperlink{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_abea61a9942e8a5d934aebeb603d62520}{enableWclkPin}:1\\
+\>uint8\_t \hyperlink{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_a10fc32796844e7f1320cee642695237e}{enableBclkPin}:1\\
+\>uint8\_t \hyperlink{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_aefb4fcc1a8af0204f4daf2dd82b6498a}{ad0NumOfChannels}:4\\
+\>uint8\_t \hyperlink{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_adfd6ad24574668b77d782c3616369c73}{ad0ChannelMask}\\
+\} \hyperlink{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_af7a937acd106d08504f69de6a0569aeb}{bitFields}\\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S Audio Pin configuration. 
+
+These fields are used by the driver to set up the I2\+S module
+
+A sample structure is shown below (single P\+D\+M microphone)\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} PDMCC26XX_I2S_AudioPinConfig PDMCC26XX\_I2Sobjects[] = \{
+        PDMCC26XX_I2S_ADUsageDisabled,
+        0,
+        0,
+        0,
+        0,
+        PDMCC26XX_I2S_ADUsageInput,
+        0,
+        1,
+        2,
+        I2S\_MONO\_MODE
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}!ad1@{ad1}}
+\index{ad1@{ad1}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}}
+\paragraph[{ad1}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config\+::ad1}\label{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_afde140c72f0b7fff618278f466a42245}
+Field that can be used to set pin configuration in Driver\+Lib \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}!ad0@{ad0}}
+\index{ad0@{ad0}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}}
+\paragraph[{ad0}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config\+::ad0}\label{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_a1ed6ea89aca197435fd2119774fc6992}
+Field that can be used to set pin configuration in Driver\+Lib \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}!driver\+Lib\+Params@{driver\+Lib\+Params}}
+\index{driver\+Lib\+Params@{driver\+Lib\+Params}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}}
+\paragraph[{driver\+Lib\+Params}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \}   P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config\+::driver\+Lib\+Params}\label{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_a8af297ee464eea4533090185a5f39445}
+Can be used to set pin configurations in Driver\+Lib \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}!ad1\+Usage@{ad1\+Usage}}
+\index{ad1\+Usage@{ad1\+Usage}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}}
+\paragraph[{ad1\+Usage}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config\+::ad1\+Usage}\label{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_ac6ba5e2275ff8537a39f141db28d6310}
+I2\+S A\+D1 usage (0\+: Disabled, 1\+: Input, 2\+: Output) \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}!enable\+Mclk\+Pin@{enable\+Mclk\+Pin}}
+\index{enable\+Mclk\+Pin@{enable\+Mclk\+Pin}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}}
+\paragraph[{enable\+Mclk\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config\+::enable\+Mclk\+Pin}\label{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_a36ce5e086fdbc64d80735104e76478f2}
+I2\+S Enable Master clock output on pin (0\+: Disabled, 1\+: Enabled) \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}!reserved@{reserved}}
+\index{reserved@{reserved}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}}
+\paragraph[{reserved}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config\+::reserved}\label{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_ab1afe1354cd783e06dab4fc8e28f0baf}
+Reserved bit field \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}!ad1\+Num\+Of\+Channels@{ad1\+Num\+Of\+Channels}}
+\index{ad1\+Num\+Of\+Channels@{ad1\+Num\+Of\+Channels}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}}
+\paragraph[{ad1\+Num\+Of\+Channels}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config\+::ad1\+Num\+Of\+Channels}\label{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_aabec0b0c95bf1757afb8fd80e06ef515}
+I2\+S A\+D1 number of channels (1 -\/ 8). !\+Must match channel mask \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}!ad1\+Channel\+Mask@{ad1\+Channel\+Mask}}
+\index{ad1\+Channel\+Mask@{ad1\+Channel\+Mask}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}}
+\paragraph[{ad1\+Channel\+Mask}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config\+::ad1\+Channel\+Mask}\label{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_a44ac00030f25ea2b143b7b87f5794a98}
+I2\+S A\+D1 Channel Mask bitwise 0\+:Disabled, 1\+:Enabled) E.\+g. Mono\+: 0x01, Stereo\+: 0x03 \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}!ad0\+Usage@{ad0\+Usage}}
+\index{ad0\+Usage@{ad0\+Usage}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}}
+\paragraph[{ad0\+Usage}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config\+::ad0\+Usage}\label{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_aa50e23d415933dbd7a21e5b5f949d38b}
+I2\+S A\+D0 usage (0\+: Disabled, 1\+: Input, 2\+: Output) \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}!enable\+Wclk\+Pin@{enable\+Wclk\+Pin}}
+\index{enable\+Wclk\+Pin@{enable\+Wclk\+Pin}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}}
+\paragraph[{enable\+Wclk\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config\+::enable\+Wclk\+Pin}\label{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_abea61a9942e8a5d934aebeb603d62520}
+I2\+S Enable Word clock output on pin (0\+: Disabled, 1\+: Enabled) \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}!enable\+Bclk\+Pin@{enable\+Bclk\+Pin}}
+\index{enable\+Bclk\+Pin@{enable\+Bclk\+Pin}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}}
+\paragraph[{enable\+Bclk\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config\+::enable\+Bclk\+Pin}\label{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_a10fc32796844e7f1320cee642695237e}
+I2\+S Enable Bit clock output on pin (0\+: Disabled, 1\+: Enabled) \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}!ad0\+Num\+Of\+Channels@{ad0\+Num\+Of\+Channels}}
+\index{ad0\+Num\+Of\+Channels@{ad0\+Num\+Of\+Channels}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}}
+\paragraph[{ad0\+Num\+Of\+Channels}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config\+::ad0\+Num\+Of\+Channels}\label{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_aefb4fcc1a8af0204f4daf2dd82b6498a}
+I2\+S A\+D0 number of channels (1 -\/ 8). !\+Must match channel mask \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}!ad0\+Channel\+Mask@{ad0\+Channel\+Mask}}
+\index{ad0\+Channel\+Mask@{ad0\+Channel\+Mask}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}}
+\paragraph[{ad0\+Channel\+Mask}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config\+::ad0\+Channel\+Mask}\label{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_adfd6ad24574668b77d782c3616369c73}
+I2\+S A\+D0 Channel Mask bitwise(0\+:\+Disabled, 1\+:\+Enabled) E.\+g. Mono\+: 0x01, Stereo\+: 0x03 \index{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}!bit\+Fields@{bit\+Fields}}
+\index{bit\+Fields@{bit\+Fields}!P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config@{P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config}}
+\paragraph[{bit\+Fields}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \}   P\+D\+M\+C\+C26\+X\+X\+\_\+\+I2\+S\+\_\+\+Audio\+Pin\+Config\+::bit\+Fields}\label{union_p_d_m_c_c26_x_x___i2_s___audio_pin_config_af7a937acd106d08504f69de6a0569aeb}
+Used to configure various aspects of the I2\+S hardware during initialisation 
+
+The documentation for this union was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_p_d_m_c_c26_x_x__util_8h}{P\+D\+M\+C\+C26\+X\+X\+\_\+util.\+h}\end{DoxyCompactItemize}

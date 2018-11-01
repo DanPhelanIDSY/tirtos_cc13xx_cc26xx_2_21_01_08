@@ -1,0 +1,53 @@
+\subsection{Status Codes}
+\label{group___s_p_i___s_t_a_t_u_s}\index{Status Codes@{Status Codes}}
+Collaboration diagram for Status Codes\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=263pt]{group___s_p_i___s_t_a_t_u_s}
+\end{center}
+\end{figure}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group___s_p_i___s_t_a_t_u_s_gab38fa90ff62128dbc98b2ecd84ca106f}{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}~0
+\begin{DoxyCompactList}\small\item\em Successful status code returned by \hyperlink{_s_p_i_8h_ab9d3a23991be2741f382749d3844cc2f}{S\+P\+I\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___s_p_i___s_t_a_t_u_s_ga2d0020dd673cc28a9e1c20b0ff101073}{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}~-\/1
+\begin{DoxyCompactList}\small\item\em Generic error status code returned by \hyperlink{_s_p_i_8h_ab9d3a23991be2741f382749d3844cc2f}{S\+P\+I\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{group___s_p_i___s_t_a_t_u_s_gacfcd15e1eecdb99b4867adc7592a8d6e}{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}~-\/2
+\begin{DoxyCompactList}\small\item\em An error status code returned by \hyperlink{_s_p_i_8h_ab9d3a23991be2741f382749d3844cc2f}{S\+P\+I\+\_\+control()} for undefined command codes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+$\ast$ macros are general status codes returned by \hyperlink{_s_p_i_8h_ab9d3a23991be2741f382749d3844cc2f}{S\+P\+I\+\_\+control()}
+
+S\+P\+I\+C\+C26\+X\+X\+D\+M\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+$\ast$ macros are command codes only defined in the \hyperlink{_s_p_i_c_c26_x_x_d_m_a_8h}{S\+P\+I\+C\+C26\+X\+X\+D\+M\+A.\+h} driver implementation and need to\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/sdspi/SPICC26XXDMA.h>}
+\end{DoxyCode}
+ 
+
+\subsubsection{Macro Definition Documentation}
+\index{Status Codes@{Status Codes}!S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S@{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}}
+\index{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S@{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}!Status Codes@{Status Codes}}
+\paragraph[{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S~0}\label{group___s_p_i___s_t_a_t_u_s_gab38fa90ff62128dbc98b2ecd84ca106f}
+
+
+Successful status code returned by \hyperlink{_s_p_i_8h_ab9d3a23991be2741f382749d3844cc2f}{S\+P\+I\+\_\+control()}. 
+
+\hyperlink{_s_p_i_8h_ab9d3a23991be2741f382749d3844cc2f}{S\+P\+I\+\_\+control()} returns S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S if the control code was executed successfully. \index{Status Codes@{Status Codes}!S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R@{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}}
+\index{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R@{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}!Status Codes@{Status Codes}}
+\paragraph[{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R~-\/1}\label{group___s_p_i___s_t_a_t_u_s_ga2d0020dd673cc28a9e1c20b0ff101073}
+
+
+Generic error status code returned by \hyperlink{_s_p_i_8h_ab9d3a23991be2741f382749d3844cc2f}{S\+P\+I\+\_\+control()}. 
+
+\hyperlink{_s_p_i_8h_ab9d3a23991be2741f382749d3844cc2f}{S\+P\+I\+\_\+control()} returns S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R if the control code was not executed successfully. \index{Status Codes@{Status Codes}!S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D@{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}}
+\index{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D@{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}!Status Codes@{Status Codes}}
+\paragraph[{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D~-\/2}\label{group___s_p_i___s_t_a_t_u_s_gacfcd15e1eecdb99b4867adc7592a8d6e}
+
+
+An error status code returned by \hyperlink{_s_p_i_8h_ab9d3a23991be2741f382749d3844cc2f}{S\+P\+I\+\_\+control()} for undefined command codes. 
+
+\hyperlink{_s_p_i_8h_ab9d3a23991be2741f382749d3844cc2f}{S\+P\+I\+\_\+control()} returns S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D if the control code is not recognized by the driver implementation. 

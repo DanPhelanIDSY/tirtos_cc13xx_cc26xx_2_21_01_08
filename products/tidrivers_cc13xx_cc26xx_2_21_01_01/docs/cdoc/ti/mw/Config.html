@@ -1,0 +1,147 @@
+<html>
+<head>
+<title>module ti.mw.Config</title>
+<link rel="stylesheet" type="text/css" href="../../xdoc.css" />
+</head>
+<body><div id="xdocWrapper"><div id="xdocContent">
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">metaonly </span><span class="xdoc-kw1">module</span> <span class="xdoc-id">ti.mw.</span><span class="xdoc-id">Config</span></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../ti/mw/package.html" title="package ti.mw"><img class="xdocHdrArrow" src="../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../index.html#ti/mw/Config.html">index URL</a></div>
+<ul class="xdocToc">
+<li class="xdocToc"><a class="xdocToc" href="#meta-synop">XDCscript usage</a></li>
+<li class="xdocToc2"><a class="xdocToc" href="#xdocMetaElems">Individual elements</a></li>
+</ul>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2">XDCscript</span></tt> usage</td>
+<td class="xdocLabelCenter">meta-domain</td>
+<td class="xdocLabelRight">sourced in <a class="xdocLink" href="../../ti/mw/Config-src.html"><span class="xdocLabelFile">ti/mw/Config.xdc</span></a></td>
+</tr></table>
+<div class="xdocSynM">
+<div class="xdocSynCode">
+<tt></tt><span class="xdoc-kw1">var</span> Config = <span class="xdoc-kw3">xdc.useModule</span>(<span class="xdoc-id">'ti.mw.Config'</span>);
+</div>
+<div class='xdocSynHdr'>module-wide config parameters</div>
+
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><a class="xdocSynGo" href="#provide.Display.Lib">Config.<span class="xdoc-id">provideDisplayLib</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;Adds the Display middleware library to the project</span></span></a> = <i><span class="xdoc-kw2">Bool</span></i> <span class="xdoc-kw2">undefined</span>;
+</div>
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><a class="xdocSynGo" href="#provide.Gr.Lib">Config.<span class="xdoc-id">provideGrLib</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;Adds the GrLib middleware library to the project</span></span></a> = <i><span class="xdoc-kw2">Bool</span></i> <span class="xdoc-kw2">undefined</span>;
+</div>
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><a class="xdocSynGo" href="#provide.L.C.D.Lib">Config.<span class="xdoc-id">provideLCDLib</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;Adds the LCD middleware library to the project</span></span></a> = <i><span class="xdoc-kw2">Bool</span></i> <span class="xdoc-kw2">undefined</span>;
+</div>
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><a class="xdocSynGo" href="#provide.Wi.Fi.C.C3.X00.Lib">Config.<span class="xdoc-id">provideWiFiCC3X00Lib</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;Adds the CC3X00 WiFi host driver middleware library &amp; the TI-RTOS WiFi
+  driver library to the project</span></span></a> = <i><span class="xdoc-kw2">Bool</span></i> <span class="xdoc-kw2">undefined</span>;
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+</div>
+<div id="xdocSep">
+</div>
+<div id="xdocMetaElems">
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id="provide.Display.Lib"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">config</span> <span class="xdoc-id">Config.</span><span class="xdoc-id">provideDisplayLib</span>&nbsp;&nbsp;<small><span class="xdocSynSum">//&nbsp;module-wide</span></small></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../ti/mw/Config.html" title="module Config"><img class="xdocHdrArrow" src="../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../index.html#ti/mw/Config.html#provide.Display.Lib">index URL</a></div>
+<p class="xdocHdrSummaryDcl">Adds the Display middleware library to the project</p>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2dcl">XDCscript</span></tt> usage</td>
+<td class="xdocLabelRight">meta-domain</td>
+</tr></table>
+<div class="xdocSynMdcl">
+<div class="xdocSynCode">
+<tt></tt><tt></tt>Config.<span class="xdoc-id">provideDisplayLib</span> = <i><span class="xdoc-kw2">Bool</span></i> <span class="xdoc-kw2">undefined</span>;
+</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">This option is only supported on CC13XX &amp; CC26XX devices and the
+  default value is true.</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id="provide.Gr.Lib"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">config</span> <span class="xdoc-id">Config.</span><span class="xdoc-id">provideGrLib</span>&nbsp;&nbsp;<small><span class="xdocSynSum">//&nbsp;module-wide</span></small></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../ti/mw/Config.html" title="module Config"><img class="xdocHdrArrow" src="../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../index.html#ti/mw/Config.html#provide.Gr.Lib">index URL</a></div>
+<p class="xdocHdrSummaryDcl">Adds the GrLib middleware library to the project</p>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2dcl">XDCscript</span></tt> usage</td>
+<td class="xdocLabelRight">meta-domain</td>
+</tr></table>
+<div class="xdocSynMdcl">
+<div class="xdocSynCode">
+<tt></tt><tt></tt>Config.<span class="xdoc-id">provideGrLib</span> = <i><span class="xdoc-kw2">Bool</span></i> <span class="xdoc-kw2">undefined</span>;
+</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">This option is only supported on CC13XX &amp; CC26XX devices and the
+  default value is true.</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id="provide.L.C.D.Lib"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">config</span> <span class="xdoc-id">Config.</span><span class="xdoc-id">provideLCDLib</span>&nbsp;&nbsp;<small><span class="xdocSynSum">//&nbsp;module-wide</span></small></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../ti/mw/Config.html" title="module Config"><img class="xdocHdrArrow" src="../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../index.html#ti/mw/Config.html#provide.L.C.D.Lib">index URL</a></div>
+<p class="xdocHdrSummaryDcl">Adds the LCD middleware library to the project</p>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2dcl">XDCscript</span></tt> usage</td>
+<td class="xdocLabelRight">meta-domain</td>
+</tr></table>
+<div class="xdocSynMdcl">
+<div class="xdocSynCode">
+<tt></tt><tt></tt>Config.<span class="xdoc-id">provideLCDLib</span> = <i><span class="xdoc-kw2">Bool</span></i> <span class="xdoc-kw2">undefined</span>;
+</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">This option is only supported on CC13XX &amp; CC26XX devices and the
+  default value is true.</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id="provide.Wi.Fi.C.C3.X00.Lib"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">config</span> <span class="xdoc-id">Config.</span><span class="xdoc-id">provideWiFiCC3X00Lib</span>&nbsp;&nbsp;<small><span class="xdocSynSum">//&nbsp;module-wide</span></small></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../ti/mw/Config.html" title="module Config"><img class="xdocHdrArrow" src="../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../index.html#ti/mw/Config.html#provide.Wi.Fi.C.C3.X00.Lib">index URL</a></div>
+<p class="xdocHdrSummaryDcl">Adds the CC3X00 WiFi host driver middleware library &amp; the TI-RTOS WiFi
+  driver library to the project</p>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2dcl">XDCscript</span></tt> usage</td>
+<td class="xdocLabelRight">meta-domain</td>
+</tr></table>
+<div class="xdocSynMdcl">
+<div class="xdocSynCode">
+<tt></tt><tt></tt>Config.<span class="xdoc-id">provideWiFiCC3X00Lib</span> = <i><span class="xdoc-kw2">Bool</span></i> <span class="xdoc-kw2">undefined</span>;
+</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">This option is only supported on MSP430, MSP432 &amp; TivaC devices and the
+  default value is true.</div>
+</div>
+<div id="xdocDate">generated on Tue, 06 Feb 2018 01:23:45 GMT</div>
+</div></div></body>
+</html>

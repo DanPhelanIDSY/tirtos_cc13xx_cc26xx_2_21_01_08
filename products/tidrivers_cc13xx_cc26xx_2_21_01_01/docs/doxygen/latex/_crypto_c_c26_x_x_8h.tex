@@ -1,0 +1,1089 @@
+\subsection{Crypto\+C\+C26\+X\+X.\+h File Reference}
+\label{_crypto_c_c26_x_x_8h}\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+
+
+\subsubsection{Detailed Description}
+Crypto driver implementation for a C\+C26\+X\+X Crypto controller. 
+
+============================================================================
+
+\subsubsection*{Driver Include}
+
+The Crypto header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/crypto/CryptoCC26XX.h>}
+\end{DoxyCode}
+
+
+\subsubsection*{Overview}
+
+The Crypto\+C\+C26\+X\+X driver simplifies reading and writing to the Crypto\+C\+C26\+X\+X peripheral on the board with multiple modes of operation and performance. These include blocking and polling. A timeout can be configured in blocking mode. The driver supports encryption and decryption for both A\+E\+S-\/\+E\+C\+B and A\+E\+S-\/\+C\+C\+M.
+
+\paragraph*{General Behavior}
+
+For code examples, see \hyperlink{_crypto_c_c26_x_x_8h_CRYPTO_USE_CASES}{Use Cases} below.
+
+\begin{DoxyWarning}{Warning}
+The application should not attempt to encrypt a value stored in flash or use a key stored in flash if the application might switch to the X\+O\+S\+C\+\_\+\+H\+F, the high frequency external oscillator, during the operation.
+\end{DoxyWarning}
+\subparagraph*{Opening the driver}
+
+
+\begin{DoxyItemize}
+\item The application initializes the Crypto\+C\+C26\+X\+X driver by calling \hyperlink{_crypto_c_c26_x_x_8h_a512b301a6ebf10a41c86d9ff725f7749}{Crypto\+C\+C26\+X\+X\+\_\+init()} and is then ready to open a Crypto\+C\+C26\+X\+X by calling \hyperlink{_crypto_c_c26_x_x_8h_a21aa1458d0b063ee3637a40487e8ee12}{Crypto\+C\+C26\+X\+X\+\_\+open()}.
+\item If one client (the first) calls the \hyperlink{_crypto_c_c26_x_x_8h_a21aa1458d0b063ee3637a40487e8ee12}{Crypto\+C\+C26\+X\+X\+\_\+open()} with the exclusive\+Access flag set, all subsequent calls to open will fail (i.\+e. return a N\+U\+L\+L pointer). The first client can use the Crypto module exclusively.
+\item Only one client can call \hyperlink{_crypto_c_c26_x_x_8h_a21aa1458d0b063ee3637a40487e8ee12}{Crypto\+C\+C26\+X\+X\+\_\+open()} at the same time, a second client will pend until the first client\textquotesingle{}s call will release a semaphore.
+\item The number of clients are counted with open\+Cnt in \hyperlink{struct_crypto_c_c26_x_x___object}{Crypto\+C\+C26\+X\+X\+\_\+\+Object}.
+\end{DoxyItemize}
+\begin{DoxyCode}
+\textcolor{comment}{// Declaration (typically done in a task)}
+CryptoCC26XX_Handle      handle;
+CryptoCC26XX_Params      params;
+\textcolor{keywordtype}{bool}                     exclusiveAccess = \textcolor{keyword}{false};
+
+\textcolor{comment}{// Initialize Crypto driver}
+CryptoCC26XX_init();
+
+\textcolor{comment}{// Configure CryptoCC26XX parameters.}
+CryptoCC26XX_Params_init(&params);
+
+\textcolor{comment}{// Attempt to open CryptoCC26XX.}
+handle = CryptoCC26XX_open(Board\_CRYPTO, exclusiveAccess, &params);
+\textcolor{keywordflow}{if} (!handle) \{
+    System\_printf(\textcolor{stringliteral}{"CryptoCC26XX did not open"});
+\}
+\end{DoxyCode}
+
+
+\subparagraph*{Before starting a crypto operation}
+
+
+\begin{DoxyItemize}
+\item Before any encryption/decryption operation starts, the key store must have at least one key loaded.
+\item To get access to a location in the key store, the caller must allocated it by calling \hyperlink{_crypto_c_c26_x_x_8h_a50d5828043e87fd37398d2aabe9b9e92}{Crypto\+C\+C26\+X\+X\+\_\+allocate\+Key()}.
+\item If the requested key location is available, the client will get a key index (uint8\+\_\+t) returned.
+\item If the requested key location is already occupied, the \hyperlink{_crypto_c_c26_x_x_8h_a50d5828043e87fd37398d2aabe9b9e92}{Crypto\+C\+C26\+X\+X\+\_\+allocate\+Key()} will fail and return \hyperlink{_crypto_c_c26_x_x_8h_a077508dd42d5999244911edc61f63194}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}.
+\item The key locations available are defined in \hyperlink{_crypto_c_c26_x_x_8h_a5266637af2c4ac36ed58d4e0f158b706}{Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Location}.
+\item To select any available key location, call the allocate function with key location set to \hyperlink{_crypto_c_c26_x_x_8h_a5266637af2c4ac36ed58d4e0f158b706a335a9c94549f0e882296bd43ccb4f953}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+\+A\+N\+Y}.
+\end{DoxyItemize}\subparagraph*{Performing a crypto operation}
+
+
+\begin{DoxyItemize}
+\item The supported crypto operations are defined in \hyperlink{_crypto_c_c26_x_x_8h_a28465385e5b45efecc00f2015605f970}{Crypto\+C\+C26\+X\+X\+\_\+\+Operation}.
+\item The operation is initiated by calling a transaction function.
+\item The type of operation is decided by the transaction pointer passed to the transaction function.
+\item The mode of the transaction (i.\+e. blocking/polling) is decided by selecting the corresponding transact function (see Supported transaction modes below).
+\item The key index is passed to the encryption/decryption transaction functions as part of the transaction object.
+\item When a transaction starts, a semaphore is used to ensure that only one transaction is performed at a given time. The polling transaction is using 0 wait time, and will return immediately with \hyperlink{_crypto_c_c26_x_x_8h_a077508dd42d5999244911edc61f63194}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R} if the semaphore is not granted.
+\item In blocking mode a constraint is set to ensure that the device only enters idle mode if the C\+P\+U becomes inactive.
+\item When the transaction ends, the device might enter standby.
+\item A key location can be deallocated by calling \hyperlink{_crypto_c_c26_x_x_8h_aa995ee20d8a7fcce66aeae86fee83555}{Crypto\+C\+C26\+X\+X\+\_\+release\+Key()}.
+\end{DoxyItemize}\subparagraph*{Supported transaction modes}
+
+
+\begin{DoxyItemize}
+\item \hyperlink{_crypto_c_c26_x_x_8h_abf86c8ac428559f00fed3299d439e2cdaf0a9faf35a12d014c5f3a475906a3373}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}, typically used from task context. Selected by calling the \hyperlink{_crypto_c_c26_x_x_8h_a6864191d34a9a3cfbcd36cc34570b3b8}{Crypto\+C\+C26\+X\+X\+\_\+transact()} function.
+\item \hyperlink{_crypto_c_c26_x_x_8h_abf86c8ac428559f00fed3299d439e2cda015c9e0e35350eb92ede6ad4109fa50b}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+M\+O\+D\+E\+\_\+\+P\+O\+L\+L\+I\+N\+G}, typically used from hwi/swi context. Selected by calling the \hyperlink{_crypto_c_c26_x_x_8h_a2efbef5e059c752e1f5797a4ef3713a3}{Crypto\+C\+C26\+X\+X\+\_\+transact\+Polling()} function. This mode should be replaced by a callback mode in a future release.
+\end{DoxyItemize}\subparagraph*{Closing the driver}
+
+The crypto driver is closed by calling \hyperlink{_crypto_c_c26_x_x_8h_aa2ece822f0fd8f6dbd3f50500b03bea4}{Crypto\+C\+C26\+X\+X\+\_\+close()} function. When the open\+Cnt is decremented to zero, the crypto related bios modules are destructed. 
+\begin{DoxyCode}
+CryptoCC26XX_close(handle);
+\end{DoxyCode}
+
+
+\paragraph*{Error handling}
+
+If an error occur during encryption/decryption, the operation will return the error code and the device might enter standby.
+
+\paragraph*{Power Management}
+
+During a transaction in blocking mode, the Power\+\_\+\+S\+B\+\_\+\+D\+I\+S\+A\+L\+L\+O\+W constraint is set to block the system from entering standby mode. During this period the system will enter idle mode if no tasks are running.
+
+A system dependency on crypto will be active as long as there are clients with an open handle to the crypto.
+
+\begin{DoxyNote}{Note}
+When coming out of standby the key store R\+A\+M has lost it\textquotesingle{}s content, so the key\+Store in \hyperlink{struct_crypto_c_c26_x_x___object}{Crypto\+C\+C26\+X\+X\+\_\+\+Object} will be cleared and the clients will have to allocate the key over again.
+\end{DoxyNote}
+\paragraph*{Supported Functions}
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf A\+P\+I function }&{\bf Description  }\\\cline{1-2}
+\hyperlink{_crypto_c_c26_x_x_8h_a512b301a6ebf10a41c86d9ff725f7749}{Crypto\+C\+C26\+X\+X\+\_\+init()} &Function to initializes bios modules needed by Crypto\+C\+C26\+X\+X module \\\cline{1-2}
+\hyperlink{_crypto_c_c26_x_x_8h_a21aa1458d0b063ee3637a40487e8ee12}{Crypto\+C\+C26\+X\+X\+\_\+open()} &Initialize Crypto and get crypto handle \\\cline{1-2}
+\hyperlink{_crypto_c_c26_x_x_8h_aa2ece822f0fd8f6dbd3f50500b03bea4}{Crypto\+C\+C26\+X\+X\+\_\+close()} &Disable Crypto H\+W and destruct bios modules used by transactions \\\cline{1-2}
+\hyperlink{_crypto_c_c26_x_x_8h_a057c8155f3a7eb9560a51e2d8d4d98e3}{Crypto\+C\+C26\+X\+X\+\_\+\+Params\+\_\+init()} &Initialize Crypto parameters \\\cline{1-2}
+\hyperlink{_crypto_c_c26_x_x_8h_afb3ea8faceda234cdd62c5f53e203946}{Crypto\+C\+C26\+X\+X\+\_\+\+Transac\+\_\+init()} &Initialize Crypto transaction \\\cline{1-2}
+\hyperlink{_crypto_c_c26_x_x_8h_a50d5828043e87fd37398d2aabe9b9e92}{Crypto\+C\+C26\+X\+X\+\_\+allocate\+Key()} &Allocate a key for current client and write key into one of the Crypto R\+A\+M locations \\\cline{1-2}
+\hyperlink{_crypto_c_c26_x_x_8h_aa995ee20d8a7fcce66aeae86fee83555}{Crypto\+C\+C26\+X\+X\+\_\+release\+Key()} &Release/deallocate a key for current client \\\cline{1-2}
+\hyperlink{_crypto_c_c26_x_x_8h_a6864191d34a9a3cfbcd36cc34570b3b8}{Crypto\+C\+C26\+X\+X\+\_\+transact()} &Start a crypto operation in blocking mode \\\cline{1-2}
+\hyperlink{_crypto_c_c26_x_x_8h_a2efbef5e059c752e1f5797a4ef3713a3}{Crypto\+C\+C26\+X\+X\+\_\+transact\+Polling()} &Start a crypto operation in polling mode \\\cline{1-2}
+\end{TabularC}
+\paragraph*{Unsupported functionality\+:}
+
+Functionality that currently not supported\+:
+\begin{DoxyItemize}
+\item Callback mode
+\item Queued transactions for use in callback mode
+\end{DoxyItemize}
+
+\paragraph*{Supported Operations}
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Operation Type }&{\bf Description  }\\\cline{1-2}
+\hyperlink{_crypto_c_c26_x_x_8h_a00bd9c4c4f823576ed52a99cc1c49df4}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+E\+N\+C\+R\+Y\+P\+T} &A\+E\+S-\/\+C\+C\+M encryption of plaintext and authentication of A\+A\+D and plaintext \\\cline{1-2}
+\hyperlink{_crypto_c_c26_x_x_8h_adbc0e20b32a3e1b968ea9cb05cd2bde4}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+E\+N\+C\+R\+Y\+P\+T\+\_\+\+A\+A\+D\+\_\+\+O\+N\+L\+Y} &A\+E\+S-\/\+C\+C\+M authentication of A\+A\+D only. No payload. \\\cline{1-2}
+\hyperlink{_crypto_c_c26_x_x_8h_af57bb0e27a57946d9fa6ac747d534f26}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+D\+E\+C\+R\+Y\+P\+T} &A\+E\+S-\/\+C\+C\+M decryption of plaintext and verification of A\+A\+D and plaintext \\\cline{1-2}
+\hyperlink{_crypto_c_c26_x_x_8h_a2e9761d83b7e451861e3d1891213d069}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+D\+E\+C\+R\+Y\+P\+T\+\_\+\+A\+A\+D\+\_\+\+O\+N\+L\+Y} &A\+E\+S-\/\+C\+C\+M verification of A\+A\+D only. No payload. \\\cline{1-2}
+\hyperlink{_crypto_c_c26_x_x_8h_af72980622fb0dc9555587ef90083b3ef}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+E\+N\+C\+R\+Y\+P\+T} &A\+E\+S-\/\+E\+C\+B encryption \\\cline{1-2}
+\hyperlink{_crypto_c_c26_x_x_8h_a74881034cf440f28a91c5263fc728097}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+D\+E\+C\+R\+Y\+P\+T} &A\+E\+S-\/\+E\+C\+B decryption \\\cline{1-2}
+\hyperlink{_crypto_c_c26_x_x_8h_aab1035e549d6de54b25a9f9a6ae2f3ba}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+B\+C\+\_\+\+E\+N\+C\+R\+Y\+P\+T} &A\+E\+S-\/\+C\+B\+C encryption \\\cline{1-2}
+\hyperlink{_crypto_c_c26_x_x_8h_a6a2cf7f9abef28bcc0d503d3b7e9a8d3}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+B\+C\+\_\+\+D\+E\+C\+R\+Y\+P\+T} &A\+E\+S-\/\+C\+B\+C decryption \\\cline{1-2}
+\end{TabularC}
+\paragraph*{Use Cases\label{_crypto_c_c26_x_x_8h_CRYPTO_USE_CASES}%
+\hypertarget{_crypto_c_c26_x_x_8h_CRYPTO_USE_CASES}{}%
+}
+
+\subparagraph*{A\+E\+S E\+C\+B operation}
+
+Perform a crypto operation with A\+E\+S-\/\+E\+C\+B in \hyperlink{_crypto_c_c26_x_x_8h_abf86c8ac428559f00fed3299d439e2cdaf0a9faf35a12d014c5f3a475906a3373}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}.
+
+
+\begin{DoxyCode}
+\textcolor{comment}{// AES-ECB example struct}
+\textcolor{keyword}{typedef} \textcolor{keyword}{struct}
+\{
+  uint8\_t key[16];                      \textcolor{comment}{// Stores the Aes Key}
+  CryptoCC26XX_KeyLocation keyLocation; \textcolor{comment}{// Location in Key RAM}
+  uint8\_t clearText[AES\_ECB\_LENGTH];    \textcolor{comment}{// Input message - cleartext}
+  uint8\_t msgOut[AES\_ECB\_LENGTH];       \textcolor{comment}{// Output message}
+\} AESECBExample;
+
+\textcolor{comment}{// AES ECB example data}
+AESECBExample ecbExample =
+\{
+  \{ 0x2B, 0x7E, 0x15, 0x16, 0x28, 0xAE, 0xD2, 0xA6,
+  0xAB, 0xF7, 0x15, 0x88, 0x09, 0xCF, 0x4F, 0x3C \},
+  CRYPTOCC26XX_KEY_0,
+  \{\textcolor{charliteral}{'t'},\textcolor{charliteral}{'h'},\textcolor{charliteral}{'i'},\textcolor{charliteral}{'s'},\textcolor{charliteral}{'i'},\textcolor{charliteral}{'s'},\textcolor{charliteral}{'a'},\textcolor{charliteral}{'p'},\textcolor{charliteral}{'l'},\textcolor{charliteral}{'a'},\textcolor{charliteral}{'i'},\textcolor{charliteral}{'n'},\textcolor{charliteral}{'t'},\textcolor{charliteral}{'e'},\textcolor{charliteral}{'x'},\textcolor{charliteral}{'t'}\},
+  \{ 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 \}
+\};
+
+\textcolor{comment}{// Declaration (typically done in a task)}
+CryptoCC26XX_Handle             handle;
+int32\_t                         keyIndex;
+int32\_t                                                 status;
+CryptoCC26XX_AESECB_Transaction trans;
+
+\textcolor{comment}{// Initialize Crypto driver}
+CryptoCC26XX_init();
+
+
+\textcolor{comment}{// Attempt to open CryptoCC26XX.}
+handle = CryptoCC26XX_open(Board\_CRYPTO, \textcolor{keyword}{false}, NULL);
+\textcolor{keywordflow}{if} (!handle) \{
+  System\_abort(\textcolor{stringliteral}{"Crypto module could not be opened."});
+\}
+
+keyIndex = CryptoCC26XX_allocateKey(handle, ecbExample.keyLocation,
+                                                                   (\textcolor{keyword}{const} uint32\_t *) ecbExample.key);
+
+\textcolor{keywordflow}{if} (keyIndex == CRYPTOCC26XX_STATUS_ERROR) \{
+        System\_abort(\textcolor{stringliteral}{"Key Location was not allocated."});
+\}
+
+\textcolor{comment}{// Initialize transaction}
+CryptoCC26XX_Transac_init((CryptoCC26XX_Transaction *) &trans, 
+      CRYPTOCC26XX_OP_AES_ECB_ENCRYPT);
+
+\textcolor{comment}{// Setup transaction}
+trans.keyIndex         = keyIndex;
+trans.msgIn            = (uint32\_t *) ecbExample.clearText;
+trans.msgOut           = (uint32\_t *) ecbExample.msgOut;
+
+
+\textcolor{comment}{// Encrypt the plaintext with AES ECB}
+status = CryptoCC26XX_transact(handle, (CryptoCC26XX_Transaction *) &trans);
+\textcolor{keywordflow}{if}(status != CRYPTOCC26XX_STATUS_SUCCESS)\{
+        System\_abort(\textcolor{stringliteral}{"Encryption failed."});
+\}
+
+\textcolor{comment}{// Initialize transaction}
+CryptoCC26XX_Transac_init((CryptoCC26XX_Transaction *) &trans, 
+      CRYPTOCC26XX_OP_AES_ECB_DECRYPT);
+
+\textcolor{comment}{// Setup transaction}
+trans.keyIndex         = keyIndex;
+trans.msgIn            = (uint32\_t *) ecbExample.msgOut;
+trans.msgOut           = (uint32\_t *) ecbExample.clearText;
+
+\textcolor{comment}{// Zero original clear text before decrypting the cypher text into the ecbExample.clearText array}
+memset(ecbExample.clearText, 0x0, AES\_ECB\_LENGTH);
+
+\textcolor{comment}{// Decrypt the plaintext with AES ECB}
+status = CryptoCC26XX_transact(handle, (CryptoCC26XX_Transaction *) &trans);
+\textcolor{keywordflow}{if}(status != CRYPTOCC26XX_STATUS_SUCCESS)\{
+        System\_abort(\textcolor{stringliteral}{"Encryption failed."});
+\}
+
+CryptoCC26XX_releaseKey(handle, &keyIndex);
+\end{DoxyCode}
+
+
+\subparagraph*{A\+E\+S C\+C\+M operation}
+
+Perform a crypto and authentication operation with A\+E\+S-\/\+C\+C\+M in \hyperlink{_crypto_c_c26_x_x_8h_abf86c8ac428559f00fed3299d439e2cdaf0a9faf35a12d014c5f3a475906a3373}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}.
+
+
+\begin{DoxyCode}
+\textcolor{preprocessor}{#define macLength           (4)}
+\textcolor{preprocessor}{#define clearTextLength     (16)}
+\textcolor{preprocessor}{#define cipherTextLength    (macLength + clearTextLength)}
+\textcolor{preprocessor}{#define nonceLength         (12)}
+\textcolor{preprocessor}{#define aadLength           (14)}
+
+\textcolor{comment}{// Holds the AES-CCM setup for this example}
+\textcolor{keyword}{typedef} \textcolor{keyword}{struct}
+\{
+    uint8\_t key[16];                                \textcolor{comment}{// A 128 Bit AES key}
+    CryptoCC26XX_KeyLocation keyLocation;           \textcolor{comment}{// One of 8 key locations in the hardware}
+    uint8\_t clearAndCipherText[cipherTextLength];   \textcolor{comment}{// Holds the cleartext before, and the ciphertext}
+                                                    \textcolor{comment}{// after the encryption operation.}
+                                                    \textcolor{comment}{// Ciphertext = encrypted text + message authentication
+       code (MAC).}
+    uint8\_t nonce[nonceLength];  \textcolor{comment}{// A value that is used only once (cryptographic term 'nonce')}
+    uint8\_t header[aadLength];   \textcolor{comment}{// A header that is not encrypted but is authenticated in the operation
+       (AAD).}
+\} AesCcmExample;
+
+AesCcmExample ccmSetup =
+\{
+    .key = \{ 0x2B, 0x7E, 0x15, 0x16, 0x28, 0xAE, 0xD2, 0xA6,
+             0xAB, 0xF7, 0x15, 0x88, 0x09, 0xCF, 0x4F, 0x3C \},
+    .keyLocation = CRYPTOCC26XX_KEY_0,
+    .clearAndCipherText = \{ \textcolor{charliteral}{'t'},\textcolor{charliteral}{'h'},\textcolor{charliteral}{'i'},\textcolor{charliteral}{'s'},\textcolor{charliteral}{'i'},\textcolor{charliteral}{'s'},\textcolor{charliteral}{'a'},\textcolor{charliteral}{'p'},\textcolor{charliteral}{'l'},\textcolor{charliteral}{'a'},\textcolor{charliteral}{'i'},\textcolor{charliteral}{'n'},\textcolor{charliteral}{'t'},\textcolor{charliteral}{'e'},\textcolor{charliteral}{'x'},\textcolor{charliteral}{'t'},\textcolor{charliteral}{'0'},\textcolor{charliteral}{'0'},\textcolor{charliteral}{'0'},\textcolor{charliteral}{'0'}
+       \},
+    .nonce  = \{ \textcolor{charliteral}{'t'},\textcolor{charliteral}{'h'},\textcolor{charliteral}{'i'},\textcolor{charliteral}{'s'},\textcolor{charliteral}{'i'},\textcolor{charliteral}{'s'},\textcolor{charliteral}{'a'},\textcolor{charliteral}{'n'},\textcolor{charliteral}{'o'},\textcolor{charliteral}{'n'},\textcolor{charliteral}{'c'},\textcolor{charliteral}{'e'} \},
+    .header = \{ \textcolor{charliteral}{'t'},\textcolor{charliteral}{'h'},\textcolor{charliteral}{'i'},\textcolor{charliteral}{'s'},\textcolor{charliteral}{'i'},\textcolor{charliteral}{'s'},\textcolor{charliteral}{'a'},\textcolor{charliteral}{'h'},\textcolor{charliteral}{'e'},\textcolor{charliteral}{'a'},\textcolor{charliteral}{'d'},\textcolor{charliteral}{'e'},\textcolor{charliteral}{'r'},\textcolor{charliteral}{'1'} \}
+\};
+
+CryptoCC26XX_Handle             handle;
+int32\_t                         keyIndex;
+CryptoCC26XX_AESCCM_Transaction trans;
+int32\_t                         status;
+
+\textcolor{comment}{// Initialize Crypto driver structures}
+CryptoCC26XX_init();
+
+\textcolor{comment}{// Open the crypto hardware with non-exclusive access and default parameters.}
+handle = CryptoCC26XX_open(Board\_CRYPTO, \textcolor{keyword}{false}, NULL);
+\textcolor{keywordflow}{if} (handle == NULL) \{
+    System\_abort(\textcolor{stringliteral}{"CryptoCC26XX did not open"});
+\}
+
+\textcolor{comment}{// Allocate a key storage location in the hardware}
+keyIndex = CryptoCC26XX_allocateKey(handle, ccmSetup.keyLocation, (\textcolor{keyword}{const} uint32\_t *) ccmSetup.key);
+\textcolor{keywordflow}{if} (keyIndex == CRYPTOCC26XX_STATUS_ERROR) \{
+    System\_abort(\textcolor{stringliteral}{"Key Location was not allocated."});
+\}
+
+\textcolor{comment}{// Encrypt and authenticate the message}
+CryptoCC26XX_Transac_init((CryptoCC26XX_Transaction *) &trans, 
+      CRYPTOCC26XX_OP_AES_CCM);
+trans.keyIndex   = keyIndex;
+trans.authLength = macLength;
+trans.nonce  = (\textcolor{keywordtype}{char} *) ccmSetup.nonce;
+trans.header = (\textcolor{keywordtype}{char} *) ccmSetup.header;
+trans.fieldLength  = 3;
+trans.msgInLength  = clearTextLength;
+trans.headerLength = aadLength;
+trans.msgIn  = (\textcolor{keywordtype}{char} *) &(ccmSetup.clearAndCipherText[0]);                \textcolor{comment}{// Message is encrypted in place}
+trans.msgOut = (\textcolor{keywordtype}{char} *) &(ccmSetup.clearAndCipherText[clearTextLength]);  \textcolor{comment}{// MAC will be written to this
+       position}
+status = CryptoCC26XX_transact(handle, (CryptoCC26XX_Transaction *) &trans);
+\textcolor{keywordflow}{if} (status != CRYPTOCC26XX_STATUS_SUCCESS) \{
+    System\_abort(\textcolor{stringliteral}{"Encryption and signing failed."});
+\}
+
+\textcolor{comment}{// Decrypt and authenticate message}
+CryptoCC26XX_Transac_init((CryptoCC26XX_Transaction *) &trans, 
+      CRYPTOCC26XX_OP_AES_CCMINV);
+trans.keyIndex   = keyIndex;
+trans.authLength = macLength;
+trans.nonce  = (\textcolor{keywordtype}{char} *) ccmSetup.nonce;
+trans.header = (\textcolor{keywordtype}{char} *) ccmSetup.header;
+trans.fieldLength  = 3;
+trans.msgInLength  = cipherTextLength;
+trans.headerLength = aadLength;
+trans.msgIn  = (\textcolor{keywordtype}{char} *) &(ccmSetup.clearAndCipherText[0]);                \textcolor{comment}{// Message is decrypted in place}
+trans.msgOut = (\textcolor{keywordtype}{char} *) &(ccmSetup.clearAndCipherText[clearTextLength]);  \textcolor{comment}{// Points to the MAC, is used as
+       input here}
+
+\textcolor{comment}{// Do AES-CCM decryption and authentication}
+status = CryptoCC26XX_transact(handle, (CryptoCC26XX_Transaction *) &trans);
+\textcolor{keywordflow}{if}(status != CRYPTOCC26XX_STATUS_SUCCESS)\{
+    System\_abort(\textcolor{stringliteral}{"Decryption and authentication failed."});
+\}
+
+\textcolor{comment}{// Release the key location}
+status = CryptoCC26XX_releaseKey(handle, &keyIndex);
+\textcolor{keywordflow}{if} (status != CRYPTOCC26XX_STATUS_SUCCESS) \{
+    System\_abort(\textcolor{stringliteral}{"Key release was not successful."});
+\}
+\end{DoxyCode}
+
+
+\subsubsection*{Instrumentation}
+
+The Crypto\+C\+C26\+X\+X driver interface produces log statements if instrumentation is enabled.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Diagnostics Mask }&{\bf Log details  }\\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R1 &Basic Crypto\+C\+C26\+X\+X operations performed \\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R2 &Detailed Crypto\+C\+C26\+X\+X operations performed \\\cline{1-2}
+\end{TabularC}
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+Power.\+h$>$}\\*
+{\ttfamily \#include $<$driverlib/crypto.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/family/arm/m3/\+Hwi.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/knl/\+Semaphore.\+h$>$}\\*
+Include dependency graph for Crypto\+C\+C26\+X\+X.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_crypto_c_c26_x_x_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_crypto_c_c26_x_x___params}{Crypto\+C\+C26\+X\+X\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em Crypto\+C\+C26\+X\+X Parameters. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_crypto_c_c26_x_x___transaction}{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction}
+\begin{DoxyCompactList}\small\item\em Crypto\+C\+C26\+X\+X Transaction. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_crypto_c_c26_x_x___a_e_s_c_c_m___transaction}{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+C\+C\+M\+\_\+\+Transaction}
+\begin{DoxyCompactList}\small\item\em Crypto\+C\+C26\+X\+X A\+E\+S-\/\+C\+C\+M Transaction. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_crypto_c_c26_x_x___a_e_s_c_b_c___transaction}{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+C\+B\+C\+\_\+\+Transaction}
+\begin{DoxyCompactList}\small\item\em Crypto\+C\+C26\+X\+X A\+E\+S-\/\+C\+B\+C Transaction. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_crypto_c_c26_x_x___a_e_s_e_c_b___transaction}{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction}
+\begin{DoxyCompactList}\small\item\em Crypto\+C\+C26\+X\+X A\+E\+S-\/\+E\+C\+B Transaction. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_crypto_c_c26_x_x___h_w_attrs}{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em Crypto\+C\+C26\+X\+X Hardware Attributes. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_crypto_c_c26_x_x___object}{Crypto\+C\+C26\+X\+X\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em Crypto\+C\+C26\+X\+X Object. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_crypto_c_c26_x_x___config}{Crypto\+C\+C26\+X\+X\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em Crypto\+C\+C26\+X\+X Global Configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_crypto_c_c26_x_x_8h_a8a94999f3768d815e26ac50a0debeeb0}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+T\+I\+M\+E\+O\+U\+T}~20
+\item 
+\#define \hyperlink{_crypto_c_c26_x_x_8h_aaebc21d7bb5269638a64ff57f2b758aa}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}~0
+\item 
+\#define \hyperlink{_crypto_c_c26_x_x_8h_a077508dd42d5999244911edc61f63194}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}~-\/1
+\item 
+\#define \hyperlink{_crypto_c_c26_x_x_8h_a32adca418e15c3d66ec8a1b3dfa9f4d8}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}~-\/2
+\item 
+\#define \hyperlink{_crypto_c_c26_x_x_8h_a00bd9c4c4f823576ed52a99cc1c49df4}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+E\+N\+C\+R\+Y\+P\+T}~0
+\item 
+\#define \hyperlink{_crypto_c_c26_x_x_8h_adbc0e20b32a3e1b968ea9cb05cd2bde4}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+E\+N\+C\+R\+Y\+P\+T\+\_\+\+A\+A\+D\+\_\+\+O\+N\+L\+Y}~1
+\item 
+\#define \hyperlink{_crypto_c_c26_x_x_8h_af57bb0e27a57946d9fa6ac747d534f26}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+D\+E\+C\+R\+Y\+P\+T}~2
+\item 
+\#define \hyperlink{_crypto_c_c26_x_x_8h_a2e9761d83b7e451861e3d1891213d069}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+D\+E\+C\+R\+Y\+P\+T\+\_\+\+A\+A\+D\+\_\+\+O\+N\+L\+Y}~3
+\item 
+\#define \hyperlink{_crypto_c_c26_x_x_8h_af72980622fb0dc9555587ef90083b3ef}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+E\+N\+C\+R\+Y\+P\+T}~4
+\item 
+\#define \hyperlink{_crypto_c_c26_x_x_8h_a74881034cf440f28a91c5263fc728097}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+D\+E\+C\+R\+Y\+P\+T}~5
+\item 
+\#define \hyperlink{_crypto_c_c26_x_x_8h_aab1035e549d6de54b25a9f9a6ae2f3ba}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+B\+C\+\_\+\+E\+N\+C\+R\+Y\+P\+T}~6
+\item 
+\#define \hyperlink{_crypto_c_c26_x_x_8h_a6a2cf7f9abef28bcc0d503d3b7e9a8d3}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+B\+C\+\_\+\+D\+E\+C\+R\+Y\+P\+T}~7
+\item 
+\#define \hyperlink{_crypto_c_c26_x_x_8h_a6ab0b59b64c06856c431f91a7e43b34d}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M}~\hyperlink{_crypto_c_c26_x_x_8h_a00bd9c4c4f823576ed52a99cc1c49df4}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+E\+N\+C\+R\+Y\+P\+T}
+\item 
+\#define \hyperlink{_crypto_c_c26_x_x_8h_acc1c159d62112b90da86ecd846994f98}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+N\+O\+C\+R\+Y\+P\+T}~\hyperlink{_crypto_c_c26_x_x_8h_adbc0e20b32a3e1b968ea9cb05cd2bde4}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+E\+N\+C\+R\+Y\+P\+T\+\_\+\+A\+A\+D\+\_\+\+O\+N\+L\+Y}
+\item 
+\#define \hyperlink{_crypto_c_c26_x_x_8h_a38c8bce4f77947e99d2d877e8d3dee7e}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+I\+N\+V}~\hyperlink{_crypto_c_c26_x_x_8h_af57bb0e27a57946d9fa6ac747d534f26}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+D\+E\+C\+R\+Y\+P\+T}
+\item 
+\#define \hyperlink{_crypto_c_c26_x_x_8h_a445002cd50ecda94d48f437bc213a499}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+I\+N\+V\+\_\+\+N\+O\+C\+R\+Y\+P\+T}~\hyperlink{_crypto_c_c26_x_x_8h_a2e9761d83b7e451861e3d1891213d069}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+D\+E\+C\+R\+Y\+P\+T\+\_\+\+A\+A\+D\+\_\+\+O\+N\+L\+Y}
+\item 
+\#define \hyperlink{_crypto_c_c26_x_x_8h_a9e96510f981e65f0c46c19684daaff07}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B}~\hyperlink{_crypto_c_c26_x_x_8h_af72980622fb0dc9555587ef90083b3ef}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+E\+N\+C\+R\+Y\+P\+T}
+\item 
+\#define \hyperlink{_crypto_c_c26_x_x_8h_aea29a252e094057f90d0fccd938b8a0d}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+N\+O\+C\+R\+Y\+P\+T}~\hyperlink{_crypto_c_c26_x_x_8h_a74881034cf440f28a91c5263fc728097}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+D\+E\+C\+R\+Y\+P\+T}
+\item 
+\#define \hyperlink{_crypto_c_c26_x_x_8h_aaa17ecf48f5762e2e1bdb0bab8aacf0c}{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_crypto_c_c26_x_x___config}{Crypto\+C\+C26\+X\+X\+\_\+\+Config} $\ast$ \hyperlink{_crypto_c_c26_x_x_8h_a8737c63107a1cb5548ba06f7a48259b5}{Crypto\+C\+C26\+X\+X\+\_\+\+Handle}
+\begin{DoxyCompactList}\small\item\em A handle that is returned from a \hyperlink{_crypto_c_c26_x_x_8h_a21aa1458d0b063ee3637a40487e8ee12}{Crypto\+C\+C26\+X\+X\+\_\+open()} call. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_crypto_c_c26_x_x_8h_abf86c8ac428559f00fed3299d439e2cd}{Crypto\+C\+C26\+X\+X\+\_\+\+Mode} \hyperlink{_crypto_c_c26_x_x_8h_a2a7a223869fb2c7f4b577f3552563d16}{Crypto\+C\+C26\+X\+X\+\_\+\+Mode}
+\begin{DoxyCompactList}\small\item\em Crypto\+C\+C26\+X\+X Mode Settings. \end{DoxyCompactList}\item 
+typedef uint8\+\_\+t \hyperlink{_crypto_c_c26_x_x_8h_a28465385e5b45efecc00f2015605f970}{Crypto\+C\+C26\+X\+X\+\_\+\+Operation}
+\begin{DoxyCompactList}\small\item\em Crypto\+C\+C26\+X\+X Operation Type. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_crypto_c_c26_x_x_8h_a5266637af2c4ac36ed58d4e0f158b706}{Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Location} \hyperlink{_crypto_c_c26_x_x_8h_a4e214e5283d16ac67e593c7c8a5bc058}{Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Location}
+\begin{DoxyCompactList}\small\item\em Crypto\+C\+C26\+X\+X Key Store Location. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_crypto_c_c26_x_x___params}{Crypto\+C\+C26\+X\+X\+\_\+\+Params} \hyperlink{_crypto_c_c26_x_x_8h_afd8b8a794d92fe38d4806238c3b6fef7}{Crypto\+C\+C26\+X\+X\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em Crypto\+C\+C26\+X\+X Parameters. \end{DoxyCompactList}\item 
+typedef uint8\+\_\+t \hyperlink{_crypto_c_c26_x_x_8h_a30e647b6ad6b608b60990929200686e0}{Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Store}
+\begin{DoxyCompactList}\small\item\em Crypto\+C\+C26\+X\+X Key. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_crypto_c_c26_x_x___transaction}{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction} \hyperlink{_crypto_c_c26_x_x_8h_a7d5a6e41436163786d2e01c0122a3de7}{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction}
+\begin{DoxyCompactList}\small\item\em Crypto\+C\+C26\+X\+X Transaction. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_crypto_c_c26_x_x___a_e_s_c_c_m___transaction}{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+C\+C\+M\+\_\+\+Transaction} \hyperlink{_crypto_c_c26_x_x_8h_a9cf6019bce243720cebc70eb8310682e}{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+C\+C\+M\+\_\+\+Transaction}
+\begin{DoxyCompactList}\small\item\em Crypto\+C\+C26\+X\+X A\+E\+S-\/\+C\+C\+M Transaction. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_crypto_c_c26_x_x___a_e_s_c_b_c___transaction}{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+C\+B\+C\+\_\+\+Transaction} \hyperlink{_crypto_c_c26_x_x_8h_ac88ef72b5742d84ef0d51ee6b0fd2fc7}{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+C\+B\+C\+\_\+\+Transaction}
+\begin{DoxyCompactList}\small\item\em Crypto\+C\+C26\+X\+X A\+E\+S-\/\+C\+B\+C Transaction. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_crypto_c_c26_x_x___a_e_s_e_c_b___transaction}{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction} \hyperlink{_crypto_c_c26_x_x_8h_a49f5f56e3a3f2f1aa354067e4261533f}{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction}
+\begin{DoxyCompactList}\small\item\em Crypto\+C\+C26\+X\+X A\+E\+S-\/\+E\+C\+B Transaction. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_crypto_c_c26_x_x___h_w_attrs}{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs} \hyperlink{_crypto_c_c26_x_x_8h_a43b8004f918cfc847b65ebe981970da7}{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em Crypto\+C\+C26\+X\+X Hardware Attributes. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_crypto_c_c26_x_x___object}{Crypto\+C\+C26\+X\+X\+\_\+\+Object} \hyperlink{_crypto_c_c26_x_x_8h_a1d3ce506f41ca09dbb4fc02615c54d4e}{Crypto\+C\+C26\+X\+X\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em Crypto\+C\+C26\+X\+X Object. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_crypto_c_c26_x_x___config}{Crypto\+C\+C26\+X\+X\+\_\+\+Config} \hyperlink{_crypto_c_c26_x_x_8h_a7ff3fbcb90bc60cea7c5a281d5c7add2}{Crypto\+C\+C26\+X\+X\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em Crypto\+C\+C26\+X\+X Global Configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_crypto_c_c26_x_x_8h_abf86c8ac428559f00fed3299d439e2cd}{Crypto\+C\+C26\+X\+X\+\_\+\+Mode} \{ \\*
+\hyperlink{_crypto_c_c26_x_x_8h_abf86c8ac428559f00fed3299d439e2cdaf0a9faf35a12d014c5f3a475906a3373}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}, 
+\\*
+\hyperlink{_crypto_c_c26_x_x_8h_abf86c8ac428559f00fed3299d439e2cda015c9e0e35350eb92ede6ad4109fa50b}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+M\+O\+D\+E\+\_\+\+P\+O\+L\+L\+I\+N\+G}
+ \}
+\begin{DoxyCompactList}\small\item\em Crypto\+C\+C26\+X\+X Mode Settings. \end{DoxyCompactList}\item 
+enum \hyperlink{_crypto_c_c26_x_x_8h_a5266637af2c4ac36ed58d4e0f158b706}{Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Location} \{ \\*
+\hyperlink{_crypto_c_c26_x_x_8h_a5266637af2c4ac36ed58d4e0f158b706a49e17e3899e3f3b3fde9a99ab99a4f62}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+0} = 0, 
+\\*
+\hyperlink{_crypto_c_c26_x_x_8h_a5266637af2c4ac36ed58d4e0f158b706a6180ef53c43ac78dfd2879e47f0ae2fe}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+1}, 
+\\*
+\hyperlink{_crypto_c_c26_x_x_8h_a5266637af2c4ac36ed58d4e0f158b706a8fbf1d57797616552fec31ea75968ad4}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+2}, 
+\\*
+\hyperlink{_crypto_c_c26_x_x_8h_a5266637af2c4ac36ed58d4e0f158b706a4d90bb601a0a135054f4a92f02acf101}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+3}, 
+\\*
+\hyperlink{_crypto_c_c26_x_x_8h_a5266637af2c4ac36ed58d4e0f158b706a9ebecf9a462870312120060f28f0cd39}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+4}, 
+\\*
+\hyperlink{_crypto_c_c26_x_x_8h_a5266637af2c4ac36ed58d4e0f158b706aa7bf50a9fdbb8eb3eb9d723532c4fe4c}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+5}, 
+\\*
+\hyperlink{_crypto_c_c26_x_x_8h_a5266637af2c4ac36ed58d4e0f158b706a86392e0370e91b9b7c21505fb067abbb}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+6}, 
+\\*
+\hyperlink{_crypto_c_c26_x_x_8h_a5266637af2c4ac36ed58d4e0f158b706a0494750a494f691ad204a3efc6be2ff1}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+7}, 
+\\*
+\hyperlink{_crypto_c_c26_x_x_8h_a5266637af2c4ac36ed58d4e0f158b706aa4d6d2c76958ac16f7c4d0d80b34db7e}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+\+C\+O\+U\+N\+T}, 
+\\*
+\hyperlink{_crypto_c_c26_x_x_8h_a5266637af2c4ac36ed58d4e0f158b706a335a9c94549f0e882296bd43ccb4f953}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+\+A\+N\+Y}
+ \}
+\begin{DoxyCompactList}\small\item\em Crypto\+C\+C26\+X\+X Key Store Location. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{_crypto_c_c26_x_x_8h_aa2ece822f0fd8f6dbd3f50500b03bea4}{Crypto\+C\+C26\+X\+X\+\_\+close} (\hyperlink{_crypto_c_c26_x_x_8h_a8737c63107a1cb5548ba06f7a48259b5}{Crypto\+C\+C26\+X\+X\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to closes a given Crypto\+C\+C26\+X\+X peripheral specified by the Crypto\+C\+C26\+X\+X handle. \end{DoxyCompactList}\item 
+void \hyperlink{_crypto_c_c26_x_x_8h_a512b301a6ebf10a41c86d9ff725f7749}{Crypto\+C\+C26\+X\+X\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em Function to initializes bios modules needed by Crypto\+C\+C26\+X\+X module. \end{DoxyCompactList}\item 
+\hyperlink{_crypto_c_c26_x_x_8h_a8737c63107a1cb5548ba06f7a48259b5}{Crypto\+C\+C26\+X\+X\+\_\+\+Handle} \hyperlink{_crypto_c_c26_x_x_8h_a21aa1458d0b063ee3637a40487e8ee12}{Crypto\+C\+C26\+X\+X\+\_\+open} (unsigned int index, bool exclusive\+Access, \hyperlink{struct_crypto_c_c26_x_x___params}{Crypto\+C\+C26\+X\+X\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to initialize a given Crypto\+C\+C26\+X\+X peripheral specified by the particular index value. The parameter specifies which mode the Crypto\+C\+C26\+X\+X will operate. \end{DoxyCompactList}\item 
+void \hyperlink{_crypto_c_c26_x_x_8h_a057c8155f3a7eb9560a51e2d8d4d98e3}{Crypto\+C\+C26\+X\+X\+\_\+\+Params\+\_\+init} (\hyperlink{struct_crypto_c_c26_x_x___params}{Crypto\+C\+C26\+X\+X\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to initialize the \hyperlink{struct_crypto_c_c26_x_x___params}{Crypto\+C\+C26\+X\+X\+\_\+\+Params} struct to its defaults. \end{DoxyCompactList}\item 
+void \hyperlink{_crypto_c_c26_x_x_8h_afb3ea8faceda234cdd62c5f53e203946}{Crypto\+C\+C26\+X\+X\+\_\+\+Transac\+\_\+init} (\hyperlink{struct_crypto_c_c26_x_x___transaction}{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction} $\ast$trans, \hyperlink{_crypto_c_c26_x_x_8h_a28465385e5b45efecc00f2015605f970}{Crypto\+C\+C26\+X\+X\+\_\+\+Operation} op\+Type)
+\begin{DoxyCompactList}\small\item\em Function to initialize the \hyperlink{struct_crypto_c_c26_x_x___transaction}{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction} struct to its defaults. \end{DoxyCompactList}\item 
+int \hyperlink{_crypto_c_c26_x_x_8h_a50d5828043e87fd37398d2aabe9b9e92}{Crypto\+C\+C26\+X\+X\+\_\+allocate\+Key} (\hyperlink{_crypto_c_c26_x_x_8h_a8737c63107a1cb5548ba06f7a48259b5}{Crypto\+C\+C26\+X\+X\+\_\+\+Handle} handle, \hyperlink{_crypto_c_c26_x_x_8h_a5266637af2c4ac36ed58d4e0f158b706}{Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Location} key\+Location, const uint32\+\_\+t $\ast$key\+Src)
+\begin{DoxyCompactList}\small\item\em Function that allocates key, writes key into key store R\+A\+M and returns a handle to Crypto\+C\+C26\+X\+X Key. \end{DoxyCompactList}\item 
+int \hyperlink{_crypto_c_c26_x_x_8h_a2faba7afcf3ade13881e4f0ece378c63}{Crypto\+C\+C26\+X\+X\+\_\+load\+Key} (\hyperlink{_crypto_c_c26_x_x_8h_a8737c63107a1cb5548ba06f7a48259b5}{Crypto\+C\+C26\+X\+X\+\_\+\+Handle} handle, int key\+Index, const uint32\+\_\+t $\ast$key\+Src)
+\begin{DoxyCompactList}\small\item\em Function that writes a given key into a key store. \end{DoxyCompactList}\item 
+int \hyperlink{_crypto_c_c26_x_x_8h_aa995ee20d8a7fcce66aeae86fee83555}{Crypto\+C\+C26\+X\+X\+\_\+release\+Key} (\hyperlink{_crypto_c_c26_x_x_8h_a8737c63107a1cb5548ba06f7a48259b5}{Crypto\+C\+C26\+X\+X\+\_\+\+Handle} handle, int $\ast$key\+Index)
+\begin{DoxyCompactList}\small\item\em Function that releases the specified Crypto\+C\+C26\+X\+X Key. \end{DoxyCompactList}\item 
+int \hyperlink{_crypto_c_c26_x_x_8h_a6864191d34a9a3cfbcd36cc34570b3b8}{Crypto\+C\+C26\+X\+X\+\_\+transact} (\hyperlink{_crypto_c_c26_x_x_8h_a8737c63107a1cb5548ba06f7a48259b5}{Crypto\+C\+C26\+X\+X\+\_\+\+Handle} handle, \hyperlink{struct_crypto_c_c26_x_x___transaction}{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Function to do a Crypto operation (encryption or decryption) in blocking mode. \end{DoxyCompactList}\item 
+int \hyperlink{_crypto_c_c26_x_x_8h_a2efbef5e059c752e1f5797a4ef3713a3}{Crypto\+C\+C26\+X\+X\+\_\+transact\+Polling} (\hyperlink{_crypto_c_c26_x_x_8h_a8737c63107a1cb5548ba06f7a48259b5}{Crypto\+C\+C26\+X\+X\+\_\+\+Handle} handle, \hyperlink{struct_crypto_c_c26_x_x___transaction}{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Function to do a Crypto transaction operation (encryption or decryption) in polling mode. \end{DoxyCompactList}\item 
+int \hyperlink{_crypto_c_c26_x_x_8h_a99eb096ad8f78acf23d4e4b75616dc95}{Crypto\+C\+C26\+X\+X\+\_\+transact\+Callback} (\hyperlink{_crypto_c_c26_x_x_8h_a8737c63107a1cb5548ba06f7a48259b5}{Crypto\+C\+C26\+X\+X\+\_\+\+Handle} handle, \hyperlink{struct_crypto_c_c26_x_x___transaction}{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Function to do a Crypto transaction operation (encryption or decryption) in callback mode. Currently not supported. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+T\+I\+M\+E\+O\+U\+T@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+T\+I\+M\+E\+O\+U\+T}}
+\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+T\+I\+M\+E\+O\+U\+T@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+T\+I\+M\+E\+O\+U\+T}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+T\+I\+M\+E\+O\+U\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+T\+I\+M\+E\+O\+U\+T~20}\label{_crypto_c_c26_x_x_8h_a8a94999f3768d815e26ac50a0debeeb0}
+Timeout Return Code \index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}}
+\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S~0}\label{_crypto_c_c26_x_x_8h_aaebc21d7bb5269638a64ff57f2b758aa}
+Success Return Code \index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}}
+\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R~-\/1}\label{_crypto_c_c26_x_x_8h_a077508dd42d5999244911edc61f63194}
+Error Return Code \index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}}
+\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D~-\/2}\label{_crypto_c_c26_x_x_8h_a32adca418e15c3d66ec8a1b3dfa9f4d8}
+Command Undefined Return Code \index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+E\+N\+C\+R\+Y\+P\+T@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+E\+N\+C\+R\+Y\+P\+T}}
+\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+E\+N\+C\+R\+Y\+P\+T@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+E\+N\+C\+R\+Y\+P\+T}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+E\+N\+C\+R\+Y\+P\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+E\+N\+C\+R\+Y\+P\+T~0}\label{_crypto_c_c26_x_x_8h_a00bd9c4c4f823576ed52a99cc1c49df4}
+A\+E\+S-\/\+C\+C\+M encryption of both A\+A\+D and plain text \index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+E\+N\+C\+R\+Y\+P\+T\+\_\+\+A\+A\+D\+\_\+\+O\+N\+L\+Y@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+E\+N\+C\+R\+Y\+P\+T\+\_\+\+A\+A\+D\+\_\+\+O\+N\+L\+Y}}
+\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+E\+N\+C\+R\+Y\+P\+T\+\_\+\+A\+A\+D\+\_\+\+O\+N\+L\+Y@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+E\+N\+C\+R\+Y\+P\+T\+\_\+\+A\+A\+D\+\_\+\+O\+N\+L\+Y}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+E\+N\+C\+R\+Y\+P\+T\+\_\+\+A\+A\+D\+\_\+\+O\+N\+L\+Y}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+E\+N\+C\+R\+Y\+P\+T\+\_\+\+A\+A\+D\+\_\+\+O\+N\+L\+Y~1}\label{_crypto_c_c26_x_x_8h_adbc0e20b32a3e1b968ea9cb05cd2bde4}
+A\+E\+S-\/\+C\+C\+M authentication of A\+D\+D only \index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+D\+E\+C\+R\+Y\+P\+T@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+D\+E\+C\+R\+Y\+P\+T}}
+\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+D\+E\+C\+R\+Y\+P\+T@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+D\+E\+C\+R\+Y\+P\+T}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+D\+E\+C\+R\+Y\+P\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+D\+E\+C\+R\+Y\+P\+T~2}\label{_crypto_c_c26_x_x_8h_af57bb0e27a57946d9fa6ac747d534f26}
+A\+E\+S-\/\+C\+C\+M decryption of both A\+A\+D and plain text and verification of both \index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+D\+E\+C\+R\+Y\+P\+T\+\_\+\+A\+A\+D\+\_\+\+O\+N\+L\+Y@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+D\+E\+C\+R\+Y\+P\+T\+\_\+\+A\+A\+D\+\_\+\+O\+N\+L\+Y}}
+\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+D\+E\+C\+R\+Y\+P\+T\+\_\+\+A\+A\+D\+\_\+\+O\+N\+L\+Y@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+D\+E\+C\+R\+Y\+P\+T\+\_\+\+A\+A\+D\+\_\+\+O\+N\+L\+Y}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+D\+E\+C\+R\+Y\+P\+T\+\_\+\+A\+A\+D\+\_\+\+O\+N\+L\+Y}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+D\+E\+C\+R\+Y\+P\+T\+\_\+\+A\+A\+D\+\_\+\+O\+N\+L\+Y~3}\label{_crypto_c_c26_x_x_8h_a2e9761d83b7e451861e3d1891213d069}
+A\+E\+S-\/\+C\+C\+M verification of A\+D\+D only \index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+E\+N\+C\+R\+Y\+P\+T@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+E\+N\+C\+R\+Y\+P\+T}}
+\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+E\+N\+C\+R\+Y\+P\+T@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+E\+N\+C\+R\+Y\+P\+T}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+E\+N\+C\+R\+Y\+P\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+E\+N\+C\+R\+Y\+P\+T~4}\label{_crypto_c_c26_x_x_8h_af72980622fb0dc9555587ef90083b3ef}
+A\+E\+S-\/\+E\+C\+B encryption \index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+D\+E\+C\+R\+Y\+P\+T@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+D\+E\+C\+R\+Y\+P\+T}}
+\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+D\+E\+C\+R\+Y\+P\+T@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+D\+E\+C\+R\+Y\+P\+T}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+D\+E\+C\+R\+Y\+P\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+D\+E\+C\+R\+Y\+P\+T~5}\label{_crypto_c_c26_x_x_8h_a74881034cf440f28a91c5263fc728097}
+A\+E\+S-\/\+E\+C\+B decryption \index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+B\+C\+\_\+\+E\+N\+C\+R\+Y\+P\+T@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+B\+C\+\_\+\+E\+N\+C\+R\+Y\+P\+T}}
+\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+B\+C\+\_\+\+E\+N\+C\+R\+Y\+P\+T@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+B\+C\+\_\+\+E\+N\+C\+R\+Y\+P\+T}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+B\+C\+\_\+\+E\+N\+C\+R\+Y\+P\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+B\+C\+\_\+\+E\+N\+C\+R\+Y\+P\+T~6}\label{_crypto_c_c26_x_x_8h_aab1035e549d6de54b25a9f9a6ae2f3ba}
+A\+E\+S-\/\+C\+B\+C encryption \index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+B\+C\+\_\+\+D\+E\+C\+R\+Y\+P\+T@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+B\+C\+\_\+\+D\+E\+C\+R\+Y\+P\+T}}
+\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+B\+C\+\_\+\+D\+E\+C\+R\+Y\+P\+T@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+B\+C\+\_\+\+D\+E\+C\+R\+Y\+P\+T}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+B\+C\+\_\+\+D\+E\+C\+R\+Y\+P\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+B\+C\+\_\+\+D\+E\+C\+R\+Y\+P\+T~7}\label{_crypto_c_c26_x_x_8h_a6a2cf7f9abef28bcc0d503d3b7e9a8d3}
+A\+E\+S-\/\+C\+B\+C decryption \index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M}}
+\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M~{\bf C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+E\+N\+C\+R\+Y\+P\+T}}\label{_crypto_c_c26_x_x_8h_a6ab0b59b64c06856c431f91a7e43b34d}
+\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+N\+O\+C\+R\+Y\+P\+T@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+N\+O\+C\+R\+Y\+P\+T}}
+\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+N\+O\+C\+R\+Y\+P\+T@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+N\+O\+C\+R\+Y\+P\+T}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+N\+O\+C\+R\+Y\+P\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+N\+O\+C\+R\+Y\+P\+T~{\bf C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+E\+N\+C\+R\+Y\+P\+T\+\_\+\+A\+A\+D\+\_\+\+O\+N\+L\+Y}}\label{_crypto_c_c26_x_x_8h_acc1c159d62112b90da86ecd846994f98}
+\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+I\+N\+V@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+I\+N\+V}}
+\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+I\+N\+V@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+I\+N\+V}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+I\+N\+V}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+I\+N\+V~{\bf C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+D\+E\+C\+R\+Y\+P\+T}}\label{_crypto_c_c26_x_x_8h_a38c8bce4f77947e99d2d877e8d3dee7e}
+\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+I\+N\+V\+\_\+\+N\+O\+C\+R\+Y\+P\+T@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+I\+N\+V\+\_\+\+N\+O\+C\+R\+Y\+P\+T}}
+\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+I\+N\+V\+\_\+\+N\+O\+C\+R\+Y\+P\+T@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+I\+N\+V\+\_\+\+N\+O\+C\+R\+Y\+P\+T}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+I\+N\+V\+\_\+\+N\+O\+C\+R\+Y\+P\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+I\+N\+V\+\_\+\+N\+O\+C\+R\+Y\+P\+T~{\bf C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+D\+E\+C\+R\+Y\+P\+T\+\_\+\+A\+A\+D\+\_\+\+O\+N\+L\+Y}}\label{_crypto_c_c26_x_x_8h_a445002cd50ecda94d48f437bc213a499}
+\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B}}
+\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B~{\bf C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+E\+N\+C\+R\+Y\+P\+T}}\label{_crypto_c_c26_x_x_8h_a9e96510f981e65f0c46c19684daaff07}
+\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+N\+O\+C\+R\+Y\+P\+T@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+N\+O\+C\+R\+Y\+P\+T}}
+\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+N\+O\+C\+R\+Y\+P\+T@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+N\+O\+C\+R\+Y\+P\+T}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+N\+O\+C\+R\+Y\+P\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+N\+O\+C\+R\+Y\+P\+T~{\bf C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+D\+E\+C\+R\+Y\+P\+T}}\label{_crypto_c_c26_x_x_8h_aea29a252e094057f90d0fccd938b8a0d}
+\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames@{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}}
+\index{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames@{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}]{\setlength{\rightskip}{0pt plus 5cm}\#define ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}\label{_crypto_c_c26_x_x_8h_aaa17ecf48f5762e2e1bdb0bab8aacf0c}
+
+
+\subsubsection{Typedef Documentation}
+\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!Crypto\+C\+C26\+X\+X\+\_\+\+Handle@{Crypto\+C\+C26\+X\+X\+\_\+\+Handle}}
+\index{Crypto\+C\+C26\+X\+X\+\_\+\+Handle@{Crypto\+C\+C26\+X\+X\+\_\+\+Handle}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{Crypto\+C\+C26\+X\+X\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Crypto\+C\+C26\+X\+X\+\_\+\+Config}$\ast$ {\bf Crypto\+C\+C26\+X\+X\+\_\+\+Handle}}\label{_crypto_c_c26_x_x_8h_a8737c63107a1cb5548ba06f7a48259b5}
+
+
+A handle that is returned from a \hyperlink{_crypto_c_c26_x_x_8h_a21aa1458d0b063ee3637a40487e8ee12}{Crypto\+C\+C26\+X\+X\+\_\+open()} call. 
+
+\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!Crypto\+C\+C26\+X\+X\+\_\+\+Mode@{Crypto\+C\+C26\+X\+X\+\_\+\+Mode}}
+\index{Crypto\+C\+C26\+X\+X\+\_\+\+Mode@{Crypto\+C\+C26\+X\+X\+\_\+\+Mode}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{Crypto\+C\+C26\+X\+X\+\_\+\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf Crypto\+C\+C26\+X\+X\+\_\+\+Mode}  {\bf Crypto\+C\+C26\+X\+X\+\_\+\+Mode}}\label{_crypto_c_c26_x_x_8h_a2a7a223869fb2c7f4b577f3552563d16}
+
+
+Crypto\+C\+C26\+X\+X Mode Settings. 
+
+This enum defines the read and write modes for the configured Crypto\+C\+C26\+X\+X. \index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!Crypto\+C\+C26\+X\+X\+\_\+\+Operation@{Crypto\+C\+C26\+X\+X\+\_\+\+Operation}}
+\index{Crypto\+C\+C26\+X\+X\+\_\+\+Operation@{Crypto\+C\+C26\+X\+X\+\_\+\+Operation}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{Crypto\+C\+C26\+X\+X\+\_\+\+Operation}]{\setlength{\rightskip}{0pt plus 5cm}typedef uint8\+\_\+t {\bf Crypto\+C\+C26\+X\+X\+\_\+\+Operation}}\label{_crypto_c_c26_x_x_8h_a28465385e5b45efecc00f2015605f970}
+
+
+Crypto\+C\+C26\+X\+X Operation Type. 
+
+This type holds the Crypto\+C\+C26\+X\+X operation.
+
+Currently supported types are
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Encryption }&{\bf Decryption  }\\\cline{1-2}
+\hyperlink{_crypto_c_c26_x_x_8h_a00bd9c4c4f823576ed52a99cc1c49df4}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+E\+N\+C\+R\+Y\+P\+T} &\hyperlink{_crypto_c_c26_x_x_8h_af57bb0e27a57946d9fa6ac747d534f26}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+D\+E\+C\+R\+Y\+P\+T} \\\cline{1-2}
+\hyperlink{_crypto_c_c26_x_x_8h_adbc0e20b32a3e1b968ea9cb05cd2bde4}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+E\+N\+C\+R\+Y\+P\+T\+\_\+\+A\+A\+D\+\_\+\+O\+N\+L\+Y} &\hyperlink{_crypto_c_c26_x_x_8h_a2e9761d83b7e451861e3d1891213d069}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+C\+M\+\_\+\+D\+E\+C\+R\+Y\+P\+T\+\_\+\+A\+A\+D\+\_\+\+O\+N\+L\+Y} \\\cline{1-2}
+\hyperlink{_crypto_c_c26_x_x_8h_af72980622fb0dc9555587ef90083b3ef}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+E\+N\+C\+R\+Y\+P\+T} &\hyperlink{_crypto_c_c26_x_x_8h_a74881034cf440f28a91c5263fc728097}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+E\+C\+B\+\_\+\+D\+E\+C\+R\+Y\+P\+T} \\\cline{1-2}
+\hyperlink{_crypto_c_c26_x_x_8h_aab1035e549d6de54b25a9f9a6ae2f3ba}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+B\+C\+\_\+\+E\+N\+C\+R\+Y\+P\+T} &\hyperlink{_crypto_c_c26_x_x_8h_a6a2cf7f9abef28bcc0d503d3b7e9a8d3}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+O\+P\+\_\+\+A\+E\+S\+\_\+\+C\+B\+C\+\_\+\+D\+E\+C\+R\+Y\+P\+T} \\\cline{1-2}
+\end{TabularC}
+\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Location@{Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Location}}
+\index{Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Location@{Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Location}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Location}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Location}  {\bf Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Location}}\label{_crypto_c_c26_x_x_8h_a4e214e5283d16ac67e593c7c8a5bc058}
+
+
+Crypto\+C\+C26\+X\+X Key Store Location. 
+
+This enumeration defines the possible key locations in Crypto\+C\+C26\+X\+X. \index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!Crypto\+C\+C26\+X\+X\+\_\+\+Params@{Crypto\+C\+C26\+X\+X\+\_\+\+Params}}
+\index{Crypto\+C\+C26\+X\+X\+\_\+\+Params@{Crypto\+C\+C26\+X\+X\+\_\+\+Params}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{Crypto\+C\+C26\+X\+X\+\_\+\+Params}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Crypto\+C\+C26\+X\+X\+\_\+\+Params}  {\bf Crypto\+C\+C26\+X\+X\+\_\+\+Params}}\label{_crypto_c_c26_x_x_8h_afd8b8a794d92fe38d4806238c3b6fef7}
+
+
+Crypto\+C\+C26\+X\+X Parameters. 
+
+\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Store@{Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Store}}
+\index{Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Store@{Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Store}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Store}]{\setlength{\rightskip}{0pt plus 5cm}typedef uint8\+\_\+t {\bf Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Store}}\label{_crypto_c_c26_x_x_8h_a30e647b6ad6b608b60990929200686e0}
+
+
+Crypto\+C\+C26\+X\+X Key. 
+
+This holds allocation information for the keys in the key store. \index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!Crypto\+C\+C26\+X\+X\+\_\+\+Transaction@{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction}}
+\index{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction@{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Crypto\+C\+C26\+X\+X\+\_\+\+Transaction}  {\bf Crypto\+C\+C26\+X\+X\+\_\+\+Transaction}}\label{_crypto_c_c26_x_x_8h_a7d5a6e41436163786d2e01c0122a3de7}
+
+
+Crypto\+C\+C26\+X\+X Transaction. 
+
+This structure defines the nature of a general crypto transaction. An operation specific object, e.\+g. \hyperlink{struct_crypto_c_c26_x_x___a_e_s_c_c_m___transaction}{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+C\+C\+M\+\_\+\+Transaction}, must be used by the clients. All transaction must be typecasted to this common type when calling the transact functions. The first data of all transactions must hold a type field indicating which type of transaction to be performed. \index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+C\+C\+M\+\_\+\+Transaction@{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+C\+C\+M\+\_\+\+Transaction}}
+\index{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+C\+C\+M\+\_\+\+Transaction@{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+C\+C\+M\+\_\+\+Transaction}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+C\+C\+M\+\_\+\+Transaction}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+C\+C\+M\+\_\+\+Transaction}  {\bf Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+C\+C\+M\+\_\+\+Transaction}}\label{_crypto_c_c26_x_x_8h_a9cf6019bce243720cebc70eb8310682e}
+
+
+Crypto\+C\+C26\+X\+X A\+E\+S-\/\+C\+C\+M Transaction. 
+
+The Counter with C\+B\+C-\/\+M\+A\+C (C\+C\+M) mode of operation is a generic authenticated encryption block cipher mode. It can be used with any 128-\/bit block cipher. A\+E\+S-\/\+C\+C\+M combines C\+B\+C-\/\+M\+A\+C with an A\+E\+S block cipher.
+
+A\+E\+S-\/\+C\+C\+M encryption has the following inputs and outputs\+:
+
+\begin{table}[h]\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Encryption}&{\bf Decryption }\\\cline{1-2}
+\rowcolor{lightgray}\multicolumn{2}{|p{(\linewidth-\tabcolsep*2-\arrayrulewidth*1)*2/2}|}{\cellcolor{lightgray}{\bf Input }}\\\cline{1-2}
+Shared A\+E\+S key&Shared A\+E\+S key \\\cline{1-2}
+Nonce&Nonce \\\cline{1-2}
+Cleartext&Ciphertext (encrypted cleartext + M\+A\+C) \\\cline{1-2}
+A\+A\+D (optional)&A\+A\+D (optional) \\\cline{1-2}
+\rowcolor{lightgray}\multicolumn{2}{|p{(\linewidth-\tabcolsep*2-\arrayrulewidth*1)*2/2}|}{\cellcolor{lightgray}{\bf Output }}\\\cline{1-2}
+Ciphertext (encrypted cleartext + M\+A\+C)&Cleartext \\\cline{1-2}
+\end{TabularNC}
+\centering
+\caption{A\+E\+S-\/\+C\+C\+M input and output parameters}
+\end{table}
+
+
+The A\+E\+S key is a shared secret between the two parties and has a length of 128 Bit. The key is stored in the dedicated R\+A\+M of the A\+E\+S hardware unit before the crypto operation.
+
+The nonce is generated by the party performing the authenticated encryption operation. Within the scope of any authenticated encryption key, the nonce value must be unique. That is, the set of nonce values used with any given key must not contain any duplicate values. Using the same nonce for two different messages encrypted with the same key destroys the security properties.
+
+The optional A\+A\+D is authenticated, but not encrypted. Thus, the A\+A\+D is not included in the A\+E\+S-\/\+C\+C\+M output. It can be used to authenticate packet headers for transport layer security.
+
+After the encryption operation, the ciphertext contains the encrypted data and the message authentication code (M\+A\+C). The M\+A\+C can be seen as an encrypted fingerprint of the message header and content.
+
+A\+E\+S-\/\+C\+C\+M works in both ways\+: encryption and decryption. When a message is decrypted, then ciphertext, A\+A\+D and nonce are used as inputs while the output comprises the cleartext only. The decryption operation is successful, when the received ciphertext, the nonce and the A\+A\+D can reproduce the containing M\+A\+C.
+
+The \hyperlink{struct_crypto_c_c26_x_x___a_e_s_c_c_m___transaction}{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+C\+C\+M\+\_\+\+Transaction} structure defines all necessary parameters for a A\+E\+S-\/\+C\+C\+M transaction. \index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+C\+B\+C\+\_\+\+Transaction@{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+C\+B\+C\+\_\+\+Transaction}}
+\index{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+C\+B\+C\+\_\+\+Transaction@{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+C\+B\+C\+\_\+\+Transaction}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+C\+B\+C\+\_\+\+Transaction}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+C\+B\+C\+\_\+\+Transaction}  {\bf Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+C\+B\+C\+\_\+\+Transaction}}\label{_crypto_c_c26_x_x_8h_ac88ef72b5742d84ef0d51ee6b0fd2fc7}
+
+
+Crypto\+C\+C26\+X\+X A\+E\+S-\/\+C\+B\+C Transaction. 
+
+This structure defines the nature of the A\+E\+S-\/\+C\+B\+C transaction. An object of this structure must be initialized by calling \hyperlink{_crypto_c_c26_x_x_8h_afb3ea8faceda234cdd62c5f53e203946}{Crypto\+C\+C26\+X\+X\+\_\+\+Transac\+\_\+init()}. \index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction@{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction}}
+\index{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction@{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction}  {\bf Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction}}\label{_crypto_c_c26_x_x_8h_a49f5f56e3a3f2f1aa354067e4261533f}
+
+
+Crypto\+C\+C26\+X\+X A\+E\+S-\/\+E\+C\+B Transaction. 
+
+This structure defines the nature of the A\+E\+S-\/\+E\+C\+B transaction. An object of this structure must be initialized by calling \hyperlink{_crypto_c_c26_x_x_8h_afb3ea8faceda234cdd62c5f53e203946}{Crypto\+C\+C26\+X\+X\+\_\+\+Transac\+\_\+init()}. \index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\index{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}  {\bf Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}\label{_crypto_c_c26_x_x_8h_a43b8004f918cfc847b65ebe981970da7}
+
+
+Crypto\+C\+C26\+X\+X Hardware Attributes. 
+
+These fields, with the exception of int\+Priority, are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For C\+C26\+X\+X\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item inc/hw\+\_\+ints.\+h
+\end{DoxyItemize}
+
+int\+Priority is the Crypto peripheral\textquotesingle{}s interrupt priority, as defined by the underlying O\+S. It is passed unmodified to the underlying O\+S\textquotesingle{}s interrupt handler creation code, so you need to refer to the O\+S documentation for usage. For example, for S\+Y\+S/\+B\+I\+O\+S applications, refer to the ti.\+sysbios.\+family.\+arm.\+m3.\+Hwi documentation for S\+Y\+S/\+B\+I\+O\+S usage of interrupt priorities. If the driver uses the ti.\+drivers.\+ports interface instead of making O\+S calls directly, then the Hwi\+P port handles the interrupt priority in an O\+S specific way. In the case of the S\+Y\+S/\+B\+I\+O\+S port, int\+Priority is passed unmodified to Hwi\+\_\+create().
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+1 const CryptoCC26XX\_HWAttrs cryptoCC26XXHWAttrs[] = \{
+2     \{
+3         .baseAddr = CRYPTO\_BASE,
+4         .powerMngrId = PERIPH\_CRYPTO,
+5         .intNum = INT\_CRYPTO,
+6         .intPriority = (~0)
+7     \}
+8 \};
+\end{DoxyCode}
+ \index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!Crypto\+C\+C26\+X\+X\+\_\+\+Object@{Crypto\+C\+C26\+X\+X\+\_\+\+Object}}
+\index{Crypto\+C\+C26\+X\+X\+\_\+\+Object@{Crypto\+C\+C26\+X\+X\+\_\+\+Object}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{Crypto\+C\+C26\+X\+X\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Crypto\+C\+C26\+X\+X\+\_\+\+Object}  {\bf Crypto\+C\+C26\+X\+X\+\_\+\+Object}}\label{_crypto_c_c26_x_x_8h_a1d3ce506f41ca09dbb4fc02615c54d4e}
+
+
+Crypto\+C\+C26\+X\+X Object. 
+
+The application must not access any member variables of this structure! \index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!Crypto\+C\+C26\+X\+X\+\_\+\+Config@{Crypto\+C\+C26\+X\+X\+\_\+\+Config}}
+\index{Crypto\+C\+C26\+X\+X\+\_\+\+Config@{Crypto\+C\+C26\+X\+X\+\_\+\+Config}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{Crypto\+C\+C26\+X\+X\+\_\+\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Crypto\+C\+C26\+X\+X\+\_\+\+Config}  {\bf Crypto\+C\+C26\+X\+X\+\_\+\+Config}}\label{_crypto_c_c26_x_x_8h_a7ff3fbcb90bc60cea7c5a281d5c7add2}
+
+
+Crypto\+C\+C26\+X\+X Global Configuration. 
+
+
+
+\subsubsection{Enumeration Type Documentation}
+\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!Crypto\+C\+C26\+X\+X\+\_\+\+Mode@{Crypto\+C\+C26\+X\+X\+\_\+\+Mode}}
+\index{Crypto\+C\+C26\+X\+X\+\_\+\+Mode@{Crypto\+C\+C26\+X\+X\+\_\+\+Mode}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{Crypto\+C\+C26\+X\+X\+\_\+\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Crypto\+C\+C26\+X\+X\+\_\+\+Mode}}\label{_crypto_c_c26_x_x_8h_abf86c8ac428559f00fed3299d439e2cd}
+
+
+Crypto\+C\+C26\+X\+X Mode Settings. 
+
+This enum defines the read and write modes for the configured Crypto\+C\+C26\+X\+X. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}}\item[{\em 
+C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G\label{_crypto_c_c26_x_x_8h_abf86c8ac428559f00fed3299d439e2cdaf0a9faf35a12d014c5f3a475906a3373}
+}]Uses a semaphore to block while data is being sent. Context of the call must be a Task. \index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+M\+O\+D\+E\+\_\+\+P\+O\+L\+L\+I\+N\+G@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+M\+O\+D\+E\+\_\+\+P\+O\+L\+L\+I\+N\+G}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+M\+O\+D\+E\+\_\+\+P\+O\+L\+L\+I\+N\+G@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+M\+O\+D\+E\+\_\+\+P\+O\+L\+L\+I\+N\+G}}\item[{\em 
+C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+M\+O\+D\+E\+\_\+\+P\+O\+L\+L\+I\+N\+G\label{_crypto_c_c26_x_x_8h_abf86c8ac428559f00fed3299d439e2cda015c9e0e35350eb92ede6ad4109fa50b}
+}]Will return when the operation has finished. Call can be made from hwi and swi context. \end{description}
+\end{Desc}
+\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Location@{Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Location}}
+\index{Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Location@{Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Location}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Location}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Location}}\label{_crypto_c_c26_x_x_8h_a5266637af2c4ac36ed58d4e0f158b706}
+
+
+Crypto\+C\+C26\+X\+X Key Store Location. 
+
+This enumeration defines the possible key locations in Crypto\+C\+C26\+X\+X. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+0@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+0}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+0@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+0}}\item[{\em 
+C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+0\label{_crypto_c_c26_x_x_8h_a5266637af2c4ac36ed58d4e0f158b706a49e17e3899e3f3b3fde9a99ab99a4f62}
+}]\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+1@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+1}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+1@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+1}}\item[{\em 
+C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+1\label{_crypto_c_c26_x_x_8h_a5266637af2c4ac36ed58d4e0f158b706a6180ef53c43ac78dfd2879e47f0ae2fe}
+}]\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+2@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+2}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+2@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+2}}\item[{\em 
+C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+2\label{_crypto_c_c26_x_x_8h_a5266637af2c4ac36ed58d4e0f158b706a8fbf1d57797616552fec31ea75968ad4}
+}]\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+3@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+3}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+3@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+3}}\item[{\em 
+C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+3\label{_crypto_c_c26_x_x_8h_a5266637af2c4ac36ed58d4e0f158b706a4d90bb601a0a135054f4a92f02acf101}
+}]\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+4@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+4}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+4@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+4}}\item[{\em 
+C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+4\label{_crypto_c_c26_x_x_8h_a5266637af2c4ac36ed58d4e0f158b706a9ebecf9a462870312120060f28f0cd39}
+}]\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+5@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+5}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+5@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+5}}\item[{\em 
+C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+5\label{_crypto_c_c26_x_x_8h_a5266637af2c4ac36ed58d4e0f158b706aa7bf50a9fdbb8eb3eb9d723532c4fe4c}
+}]\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+6@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+6}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+6@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+6}}\item[{\em 
+C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+6\label{_crypto_c_c26_x_x_8h_a5266637af2c4ac36ed58d4e0f158b706a86392e0370e91b9b7c21505fb067abbb}
+}]\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+7@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+7}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+7@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+7}}\item[{\em 
+C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+7\label{_crypto_c_c26_x_x_8h_a5266637af2c4ac36ed58d4e0f158b706a0494750a494f691ad204a3efc6be2ff1}
+}]\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+\+C\+O\+U\+N\+T@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+\+C\+O\+U\+N\+T}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+\+C\+O\+U\+N\+T@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+\+C\+O\+U\+N\+T}}\item[{\em 
+C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+\+C\+O\+U\+N\+T\label{_crypto_c_c26_x_x_8h_a5266637af2c4ac36ed58d4e0f158b706aa4d6d2c76958ac16f7c4d0d80b34db7e}
+}]\index{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+\+A\+N\+Y@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+\+A\+N\+Y}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+\+A\+N\+Y@{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+\+A\+N\+Y}}\item[{\em 
+C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+\+A\+N\+Y\label{_crypto_c_c26_x_x_8h_a5266637af2c4ac36ed58d4e0f158b706a335a9c94549f0e882296bd43ccb4f953}
+}]\end{description}
+\end{Desc}
+
+
+\subsubsection{Function Documentation}
+\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!Crypto\+C\+C26\+X\+X\+\_\+close@{Crypto\+C\+C26\+X\+X\+\_\+close}}
+\index{Crypto\+C\+C26\+X\+X\+\_\+close@{Crypto\+C\+C26\+X\+X\+\_\+close}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{Crypto\+C\+C26\+X\+X\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}int Crypto\+C\+C26\+X\+X\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{{\bf Crypto\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_crypto_c_c26_x_x_8h_aa2ece822f0fd8f6dbd3f50500b03bea4}
+
+
+Function to closes a given Crypto\+C\+C26\+X\+X peripheral specified by the Crypto\+C\+C26\+X\+X handle. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_crypto_c_c26_x_x_8h_a21aa1458d0b063ee3637a40487e8ee12}{Crypto\+C\+C26\+X\+X\+\_\+open()} had to be called first. Calling context\+: Task
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A Crypto\+C\+C26\+X\+X\+\_\+\+Handle returned from \hyperlink{_crypto_c_c26_x_x_8h_a21aa1458d0b063ee3637a40487e8ee12}{Crypto\+C\+C26\+X\+X\+\_\+open()}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S if successful, otherwise will return C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_crypto_c_c26_x_x_8h_a21aa1458d0b063ee3637a40487e8ee12}{Crypto\+C\+C26\+X\+X\+\_\+open} 
+\end{DoxySeeAlso}
+\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!Crypto\+C\+C26\+X\+X\+\_\+init@{Crypto\+C\+C26\+X\+X\+\_\+init}}
+\index{Crypto\+C\+C26\+X\+X\+\_\+init@{Crypto\+C\+C26\+X\+X\+\_\+init}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{Crypto\+C\+C26\+X\+X\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void Crypto\+C\+C26\+X\+X\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_crypto_c_c26_x_x_8h_a512b301a6ebf10a41c86d9ff725f7749}
+
+
+Function to initializes bios modules needed by Crypto\+C\+C26\+X\+X module. 
+
+\begin{DoxyPrecond}{Precondition}
+This function must be called before any other Crypto\+C\+C26\+X\+X driver A\+P\+Is. Calling context\+: Task and Main. 
+\end{DoxyPrecond}
+\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!Crypto\+C\+C26\+X\+X\+\_\+open@{Crypto\+C\+C26\+X\+X\+\_\+open}}
+\index{Crypto\+C\+C26\+X\+X\+\_\+open@{Crypto\+C\+C26\+X\+X\+\_\+open}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{Crypto\+C\+C26\+X\+X\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Crypto\+C\+C26\+X\+X\+\_\+\+Handle} Crypto\+C\+C26\+X\+X\+\_\+open (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{index, }
+\item[{bool}]{exclusive\+Access, }
+\item[{{\bf Crypto\+C\+C26\+X\+X\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_crypto_c_c26_x_x_8h_a21aa1458d0b063ee3637a40487e8ee12}
+
+
+Function to initialize a given Crypto\+C\+C26\+X\+X peripheral specified by the particular index value. The parameter specifies which mode the Crypto\+C\+C26\+X\+X will operate. 
+
+\begin{DoxyPrecond}{Precondition}
+The \hyperlink{struct_crypto_c_c26_x_x___config}{Crypto\+C\+C26\+X\+X\+\_\+\+Config} structure must exist and be persistent before this function can be called. Crypto\+C\+C26\+X\+X has been initialized with \hyperlink{_crypto_c_c26_x_x_8h_a512b301a6ebf10a41c86d9ff725f7749}{Crypto\+C\+C26\+X\+X\+\_\+init()}. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em index} & Logical peripheral number indexed into the H\+W\+Attrs table.\\
+\hline
+{\em exclusive\+Access} & Boolean flag to get exclusive access, if true all subsequent calls to \hyperlink{_crypto_c_c26_x_x_8h_a21aa1458d0b063ee3637a40487e8ee12}{Crypto\+C\+C26\+X\+X\+\_\+open()} will fail.\\
+\hline
+{\em params} & Pointer to an parameter block, if N\+U\+L\+L it will use default values.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A Crypto\+C\+C26\+X\+X\+\_\+\+Handle on success or a N\+U\+L\+L on an error or if it has been already opened with exclusive\+Access set.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_crypto_c_c26_x_x_8h_aa2ece822f0fd8f6dbd3f50500b03bea4}{Crypto\+C\+C26\+X\+X\+\_\+close()}, \hyperlink{_crypto_c_c26_x_x_8h_a512b301a6ebf10a41c86d9ff725f7749}{Crypto\+C\+C26\+X\+X\+\_\+init()} 
+\end{DoxySeeAlso}
+\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!Crypto\+C\+C26\+X\+X\+\_\+\+Params\+\_\+init@{Crypto\+C\+C26\+X\+X\+\_\+\+Params\+\_\+init}}
+\index{Crypto\+C\+C26\+X\+X\+\_\+\+Params\+\_\+init@{Crypto\+C\+C26\+X\+X\+\_\+\+Params\+\_\+init}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{Crypto\+C\+C26\+X\+X\+\_\+\+Params\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void Crypto\+C\+C26\+X\+X\+\_\+\+Params\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf Crypto\+C\+C26\+X\+X\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_crypto_c_c26_x_x_8h_a057c8155f3a7eb9560a51e2d8d4d98e3}
+
+
+Function to initialize the \hyperlink{struct_crypto_c_c26_x_x___params}{Crypto\+C\+C26\+X\+X\+\_\+\+Params} struct to its defaults. 
+
+\begin{DoxyPrecond}{Precondition}
+Calling context\+: Hwi, Swi and Task.
+\end{DoxyPrecond}
+Defaults values are\+: timeout = B\+I\+O\+S\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R;
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & Parameter structure to initialize. \\
+\hline
+\end{DoxyParams}
+\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!Crypto\+C\+C26\+X\+X\+\_\+\+Transac\+\_\+init@{Crypto\+C\+C26\+X\+X\+\_\+\+Transac\+\_\+init}}
+\index{Crypto\+C\+C26\+X\+X\+\_\+\+Transac\+\_\+init@{Crypto\+C\+C26\+X\+X\+\_\+\+Transac\+\_\+init}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{Crypto\+C\+C26\+X\+X\+\_\+\+Transac\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void Crypto\+C\+C26\+X\+X\+\_\+\+Transac\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf Crypto\+C\+C26\+X\+X\+\_\+\+Transaction} $\ast$}]{trans, }
+\item[{{\bf Crypto\+C\+C26\+X\+X\+\_\+\+Operation}}]{op\+Type}
+\end{DoxyParamCaption}
+)}\label{_crypto_c_c26_x_x_8h_afb3ea8faceda234cdd62c5f53e203946}
+
+
+Function to initialize the \hyperlink{struct_crypto_c_c26_x_x___transaction}{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction} struct to its defaults. 
+
+\begin{DoxyPrecond}{Precondition}
+Calling context\+: Hwi, Swi and Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em trans} & Transaction structure to initialize.\\
+\hline
+{\em op\+Type} & Cryto Operation type to perform in the transaction. See \hyperlink{_crypto_c_c26_x_x_8h_a28465385e5b45efecc00f2015605f970}{Crypto\+C\+C26\+X\+X\+\_\+\+Operation} for currently supported types. \\
+\hline
+\end{DoxyParams}
+\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!Crypto\+C\+C26\+X\+X\+\_\+allocate\+Key@{Crypto\+C\+C26\+X\+X\+\_\+allocate\+Key}}
+\index{Crypto\+C\+C26\+X\+X\+\_\+allocate\+Key@{Crypto\+C\+C26\+X\+X\+\_\+allocate\+Key}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{Crypto\+C\+C26\+X\+X\+\_\+allocate\+Key}]{\setlength{\rightskip}{0pt plus 5cm}int Crypto\+C\+C26\+X\+X\+\_\+allocate\+Key (
+\begin{DoxyParamCaption}
+\item[{{\bf Crypto\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle, }
+\item[{{\bf Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Location}}]{key\+Location, }
+\item[{const uint32\+\_\+t $\ast$}]{key\+Src}
+\end{DoxyParamCaption}
+)}\label{_crypto_c_c26_x_x_8h_a50d5828043e87fd37398d2aabe9b9e92}
+
+
+Function that allocates key, writes key into key store R\+A\+M and returns a handle to Crypto\+C\+C26\+X\+X Key. 
+
+This function tries to allocate the wanted key location, initiates an operation to write a key into one of the keystore R\+A\+M entries and returns a key index integer to the calling client. The allocated key index shall be used when building a transaction data object, e.\+g. \hyperlink{struct_crypto_c_c26_x_x___a_e_s_c_c_m___transaction_af0eb856eb89478eef0d83a61e52ad435}{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+C\+C\+M\+\_\+\+Transaction.\+key\+Index}. The function blocks the task calling it until the crypto hardware is available.
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_crypto_c_c26_x_x_8h_a21aa1458d0b063ee3637a40487e8ee12}{Crypto\+C\+C26\+X\+X\+\_\+open()} has to be called first. Calling context\+: Hwi, Swi and Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A Crypto\+C\+C26\+X\+X\+\_\+\+Handle returned by \hyperlink{_crypto_c_c26_x_x_8h_a21aa1458d0b063ee3637a40487e8ee12}{Crypto\+C\+C26\+X\+X\+\_\+open()}.\\
+\hline
+{\em key\+Location} & The key location in key store to allocate. If set to C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+K\+E\+Y\+\_\+\+A\+N\+Y, the first available key, starting from highest index, will be allocated.\\
+\hline
+{\em key\+Src} & A pointer to buffer containing key to be written. If this pointer is N\+U\+L\+L, the key store will be reserved for the handle, but no key will be written to the key store.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An integer representing the index allocated in key store or a C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R on an error.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_crypto_c_c26_x_x_8h_aa995ee20d8a7fcce66aeae86fee83555}{Crypto\+C\+C26\+X\+X\+\_\+release\+Key()} 
+
+\hyperlink{_crypto_c_c26_x_x_8h_a2faba7afcf3ade13881e4f0ece378c63}{Crypto\+C\+C26\+X\+X\+\_\+load\+Key()} 
+\end{DoxySeeAlso}
+\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!Crypto\+C\+C26\+X\+X\+\_\+load\+Key@{Crypto\+C\+C26\+X\+X\+\_\+load\+Key}}
+\index{Crypto\+C\+C26\+X\+X\+\_\+load\+Key@{Crypto\+C\+C26\+X\+X\+\_\+load\+Key}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{Crypto\+C\+C26\+X\+X\+\_\+load\+Key}]{\setlength{\rightskip}{0pt plus 5cm}int Crypto\+C\+C26\+X\+X\+\_\+load\+Key (
+\begin{DoxyParamCaption}
+\item[{{\bf Crypto\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle, }
+\item[{int}]{key\+Index, }
+\item[{const uint32\+\_\+t $\ast$}]{key\+Src}
+\end{DoxyParamCaption}
+)}\label{_crypto_c_c26_x_x_8h_a2faba7afcf3ade13881e4f0ece378c63}
+
+
+Function that writes a given key into a key store. 
+
+This function loads a key into a keystore without needing to release the key store and re-\/allocate it using \hyperlink{_crypto_c_c26_x_x_8h_aa995ee20d8a7fcce66aeae86fee83555}{Crypto\+C\+C26\+X\+X\+\_\+release\+Key()} and \hyperlink{_crypto_c_c26_x_x_8h_a50d5828043e87fd37398d2aabe9b9e92}{Crypto\+C\+C26\+X\+X\+\_\+allocate\+Key()}. The function blocks the task calling it until the crypto hardware is available.
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_crypto_c_c26_x_x_8h_a21aa1458d0b063ee3637a40487e8ee12}{Crypto\+C\+C26\+X\+X\+\_\+open()} and \hyperlink{_crypto_c_c26_x_x_8h_a50d5828043e87fd37398d2aabe9b9e92}{Crypto\+C\+C26\+X\+X\+\_\+allocate\+Key()} have to be called first. Calling context\+: Hwi, Swi and Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A Crypto\+C\+C26\+X\+X\+\_\+\+Handle returned by \hyperlink{_crypto_c_c26_x_x_8h_a21aa1458d0b063ee3637a40487e8ee12}{Crypto\+C\+C26\+X\+X\+\_\+open()}.\\
+\hline
+{\em key\+Index} & A key index returned by a previous call to \hyperlink{_crypto_c_c26_x_x_8h_a50d5828043e87fd37398d2aabe9b9e92}{Crypto\+C\+C26\+X\+X\+\_\+allocate\+Key()}.\\
+\hline
+{\em key\+Src} & A pointer to buffer containing a key.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An integer representing success (\hyperlink{_crypto_c_c26_x_x_8h_aaebc21d7bb5269638a64ff57f2b758aa}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}) or an error (\hyperlink{_crypto_c_c26_x_x_8h_a077508dd42d5999244911edc61f63194}{C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}).
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_crypto_c_c26_x_x_8h_aa995ee20d8a7fcce66aeae86fee83555}{Crypto\+C\+C26\+X\+X\+\_\+release\+Key()} 
+
+\hyperlink{_crypto_c_c26_x_x_8h_a2faba7afcf3ade13881e4f0ece378c63}{Crypto\+C\+C26\+X\+X\+\_\+load\+Key()} 
+\end{DoxySeeAlso}
+\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!Crypto\+C\+C26\+X\+X\+\_\+release\+Key@{Crypto\+C\+C26\+X\+X\+\_\+release\+Key}}
+\index{Crypto\+C\+C26\+X\+X\+\_\+release\+Key@{Crypto\+C\+C26\+X\+X\+\_\+release\+Key}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{Crypto\+C\+C26\+X\+X\+\_\+release\+Key}]{\setlength{\rightskip}{0pt plus 5cm}int Crypto\+C\+C26\+X\+X\+\_\+release\+Key (
+\begin{DoxyParamCaption}
+\item[{{\bf Crypto\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle, }
+\item[{int $\ast$}]{key\+Index}
+\end{DoxyParamCaption}
+)}\label{_crypto_c_c26_x_x_8h_aa995ee20d8a7fcce66aeae86fee83555}
+
+
+Function that releases the specified Crypto\+C\+C26\+X\+X Key. 
+
+This function releases the crypto key, so it can be used by other clients.
+
+\begin{DoxyPrecond}{Precondition}
+Driver must have been opened and the key must have been allocated first. Calling context\+: Hwi, Swi and Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A Crypto\+C\+C26\+X\+X\+\_\+\+Handle returned by \hyperlink{_crypto_c_c26_x_x_8h_a21aa1458d0b063ee3637a40487e8ee12}{Crypto\+C\+C26\+X\+X\+\_\+open()}.\\
+\hline
+{\em key\+Index} & A pointer to the key\+Index to be released.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S if successful, otherwise will return C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_crypto_c_c26_x_x_8h_a50d5828043e87fd37398d2aabe9b9e92}{Crypto\+C\+C26\+X\+X\+\_\+allocate\+Key()} 
+\end{DoxySeeAlso}
+\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!Crypto\+C\+C26\+X\+X\+\_\+transact@{Crypto\+C\+C26\+X\+X\+\_\+transact}}
+\index{Crypto\+C\+C26\+X\+X\+\_\+transact@{Crypto\+C\+C26\+X\+X\+\_\+transact}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{Crypto\+C\+C26\+X\+X\+\_\+transact}]{\setlength{\rightskip}{0pt plus 5cm}int Crypto\+C\+C26\+X\+X\+\_\+transact (
+\begin{DoxyParamCaption}
+\item[{{\bf Crypto\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle, }
+\item[{{\bf Crypto\+C\+C26\+X\+X\+\_\+\+Transaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)}\label{_crypto_c_c26_x_x_8h_a6864191d34a9a3cfbcd36cc34570b3b8}
+
+
+Function to do a Crypto operation (encryption or decryption) in blocking mode. 
+
+This function initiates a blocking crypto operation.
+
+\hyperlink{_crypto_c_c26_x_x_8h_a6864191d34a9a3cfbcd36cc34570b3b8}{Crypto\+C\+C26\+X\+X\+\_\+transact()} will block task execution until all the data has been encrypted or decrypted, a task switch could be done when pending on a semaphore.
+
+\begin{DoxyPrecond}{Precondition}
+Driver must have been opened and a key must have been allocated first. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A Crypto\+C\+C26\+X\+X\+\_\+\+Handle returned by \hyperlink{_crypto_c_c26_x_x_8h_a21aa1458d0b063ee3637a40487e8ee12}{Crypto\+C\+C26\+X\+X\+\_\+open()}.\\
+\hline
+{\em transaction} & Pointer to a transaction descriptor.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S if successful, error code if not.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_crypto_c_c26_x_x_8h_a21aa1458d0b063ee3637a40487e8ee12}{Crypto\+C\+C26\+X\+X\+\_\+open()}, \hyperlink{_crypto_c_c26_x_x_8h_a50d5828043e87fd37398d2aabe9b9e92}{Crypto\+C\+C26\+X\+X\+\_\+allocate\+Key()}, \hyperlink{_crypto_c_c26_x_x_8h_a2efbef5e059c752e1f5797a4ef3713a3}{Crypto\+C\+C26\+X\+X\+\_\+transact\+Polling()} 
+\end{DoxySeeAlso}
+\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!Crypto\+C\+C26\+X\+X\+\_\+transact\+Polling@{Crypto\+C\+C26\+X\+X\+\_\+transact\+Polling}}
+\index{Crypto\+C\+C26\+X\+X\+\_\+transact\+Polling@{Crypto\+C\+C26\+X\+X\+\_\+transact\+Polling}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{Crypto\+C\+C26\+X\+X\+\_\+transact\+Polling}]{\setlength{\rightskip}{0pt plus 5cm}int Crypto\+C\+C26\+X\+X\+\_\+transact\+Polling (
+\begin{DoxyParamCaption}
+\item[{{\bf Crypto\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle, }
+\item[{{\bf Crypto\+C\+C26\+X\+X\+\_\+\+Transaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)}\label{_crypto_c_c26_x_x_8h_a2efbef5e059c752e1f5797a4ef3713a3}
+
+
+Function to do a Crypto transaction operation (encryption or decryption) in polling mode. 
+
+This function initiates a polling crypto operation.
+
+\hyperlink{_crypto_c_c26_x_x_8h_a2efbef5e059c752e1f5797a4ef3713a3}{Crypto\+C\+C26\+X\+X\+\_\+transact\+Polling()} blocks task execution and does not pend on a semaphore, consequently no task switch will be done as a result of pending.
+
+\begin{DoxyPrecond}{Precondition}
+Driver must have been opened and a key must have been allocated first. Calling context\+: Hwi, Swi and Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & An Crypto\+C\+C26\+X\+X\+\_\+\+Handle returned by \hyperlink{_crypto_c_c26_x_x_8h_a21aa1458d0b063ee3637a40487e8ee12}{Crypto\+C\+C26\+X\+X\+\_\+open()}.\\
+\hline
+{\em transaction} & Pointer to a transaction descriptor.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S if successful, error code if not.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_crypto_c_c26_x_x_8h_a21aa1458d0b063ee3637a40487e8ee12}{Crypto\+C\+C26\+X\+X\+\_\+open()}, \hyperlink{_crypto_c_c26_x_x_8h_a50d5828043e87fd37398d2aabe9b9e92}{Crypto\+C\+C26\+X\+X\+\_\+allocate\+Key()}, \hyperlink{_crypto_c_c26_x_x_8h_a6864191d34a9a3cfbcd36cc34570b3b8}{Crypto\+C\+C26\+X\+X\+\_\+transact()} 
+\end{DoxySeeAlso}
+\index{Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}!Crypto\+C\+C26\+X\+X\+\_\+transact\+Callback@{Crypto\+C\+C26\+X\+X\+\_\+transact\+Callback}}
+\index{Crypto\+C\+C26\+X\+X\+\_\+transact\+Callback@{Crypto\+C\+C26\+X\+X\+\_\+transact\+Callback}!Crypto\+C\+C26\+X\+X.\+h@{Crypto\+C\+C26\+X\+X.\+h}}
+\paragraph[{Crypto\+C\+C26\+X\+X\+\_\+transact\+Callback}]{\setlength{\rightskip}{0pt plus 5cm}int Crypto\+C\+C26\+X\+X\+\_\+transact\+Callback (
+\begin{DoxyParamCaption}
+\item[{{\bf Crypto\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle, }
+\item[{{\bf Crypto\+C\+C26\+X\+X\+\_\+\+Transaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)}\label{_crypto_c_c26_x_x_8h_a99eb096ad8f78acf23d4e4b75616dc95}
+
+
+Function to do a Crypto transaction operation (encryption or decryption) in callback mode. Currently not supported. 
+
+This function initiates a callback crypto operation.
+
+\hyperlink{_crypto_c_c26_x_x_8h_a99eb096ad8f78acf23d4e4b75616dc95}{Crypto\+C\+C26\+X\+X\+\_\+transact\+Callback()} will continue task execution (i.\+e. does not pend on a semaphore). A callback function must be defined, and will be called when the crypto operation has finished.
+
+\begin{DoxyPrecond}{Precondition}
+Driver must have been opened and a key must have been allocated first. Calling context\+: Hwi, Swi and Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & An Crypto\+C\+C26\+X\+X\+\_\+\+Handle returned by \hyperlink{_crypto_c_c26_x_x_8h_a21aa1458d0b063ee3637a40487e8ee12}{Crypto\+C\+C26\+X\+X\+\_\+open()}.\\
+\hline
+{\em transaction} & Pointer to a transaction descriptor.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns C\+R\+Y\+P\+T\+O\+C\+C26\+X\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S if successful, error code if not.
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Currently not supported. Will replace Crypto\+C\+C26\+X\+X\+\_\+transact\+Polling in the future.
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_crypto_c_c26_x_x_8h_a21aa1458d0b063ee3637a40487e8ee12}{Crypto\+C\+C26\+X\+X\+\_\+open()}, \hyperlink{_crypto_c_c26_x_x_8h_a50d5828043e87fd37398d2aabe9b9e92}{Crypto\+C\+C26\+X\+X\+\_\+allocate\+Key()}, \hyperlink{_crypto_c_c26_x_x_8h_a6864191d34a9a3cfbcd36cc34570b3b8}{Crypto\+C\+C26\+X\+X\+\_\+transact()} 
+\end{DoxySeeAlso}

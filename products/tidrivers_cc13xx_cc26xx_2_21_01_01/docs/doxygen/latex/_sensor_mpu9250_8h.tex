@@ -1,0 +1,314 @@
+\subsection{Sensor\+Mpu9250.\+h File Reference}
+\label{_sensor_mpu9250_8h}\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+
+
+\subsubsection{Detailed Description}
+Driver for the Inven\+Sense M\+P\+U9250 Motion Processing Unit. 
+
+============================================================================
+
+
+
+{\ttfamily \#include \char`\"{}stdint.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}stdbool.\+h\char`\"{}}\\*
+Include dependency graph for Sensor\+Mpu9250.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=159pt]{_sensor_mpu9250_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_sensor_mpu9250_8h_abc4ef02068eeab8d7749cdd74f51ad6e}{A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+2\+G}~0
+\item 
+\#define \hyperlink{_sensor_mpu9250_8h_a1c2254abc35ba34e1f8ddd6d135626c9}{A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+4\+G}~1
+\item 
+\#define \hyperlink{_sensor_mpu9250_8h_a6ace6622fb4717d882aa4bce9995e5d4}{A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+8\+G}~2
+\item 
+\#define \hyperlink{_sensor_mpu9250_8h_a0963334f69738c406dc0b1317e704059}{A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+16\+G}~3
+\item 
+\#define \hyperlink{_sensor_mpu9250_8h_ab1589368771e7a1cc4bdd0c1b1082ce8}{A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+\+I\+N\+V\+A\+L\+I\+D}~0x\+F\+F
+\item 
+\#define \hyperlink{_sensor_mpu9250_8h_a12f74f3b6b2ba2113d7e4e4370e0a8e4}{M\+P\+U\+\_\+\+A\+X\+\_\+\+G\+Y\+R}~0x07
+\item 
+\#define \hyperlink{_sensor_mpu9250_8h_a0b48ac6995dff8817d287abf12af7728}{M\+P\+U\+\_\+\+A\+X\+\_\+\+A\+C\+C}~0x38
+\item 
+\#define \hyperlink{_sensor_mpu9250_8h_a6d69e3ef527fb739f6c6f6d221326762}{M\+P\+U\+\_\+\+A\+X\+\_\+\+M\+A\+G}~0x40
+\item 
+\#define \hyperlink{_sensor_mpu9250_8h_a2715503b0c3c16e31ad7496d1c39cba9}{M\+P\+U\+\_\+\+A\+X\+\_\+\+A\+L\+L}~0x7\+F
+\item 
+\#define \hyperlink{_sensor_mpu9250_8h_a9089d4df07cdfd3eb0d831d6e0a46ea9}{M\+P\+U\+\_\+\+D\+A\+T\+A\+\_\+\+R\+E\+A\+D\+Y}~0x01
+\item 
+\#define \hyperlink{_sensor_mpu9250_8h_ae8b13fe9114199150efae2942dd065df}{M\+P\+U\+\_\+\+M\+O\+V\+E\+M\+E\+N\+T}~0x40
+\item 
+\#define \hyperlink{_sensor_mpu9250_8h_a561317e29a01be9d04f17a84aef1c46a}{M\+A\+G\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+O\+K}~0x00
+\item 
+\#define \hyperlink{_sensor_mpu9250_8h_acebcf6323a6758500592adfd47d27f4c}{M\+A\+G\+\_\+\+R\+E\+A\+D\+\_\+\+S\+T\+\_\+\+E\+R\+R}~0x01
+\item 
+\#define \hyperlink{_sensor_mpu9250_8h_ad23103397377f77033ef1407d7ce948c}{M\+A\+G\+\_\+\+D\+A\+T\+A\+\_\+\+N\+O\+T\+\_\+\+R\+D\+Y}~0x02
+\item 
+\#define \hyperlink{_sensor_mpu9250_8h_afa761a3aae81d8f551bf0afa37f5f0e6}{M\+A\+G\+\_\+\+O\+V\+E\+R\+F\+L\+O\+W}~0x03
+\item 
+\#define \hyperlink{_sensor_mpu9250_8h_ac5eb51e2b0a75689bf0751d8cb1e2d13}{M\+A\+G\+\_\+\+R\+E\+A\+D\+\_\+\+D\+A\+T\+A\+\_\+\+E\+R\+R}~0x04
+\item 
+\#define \hyperlink{_sensor_mpu9250_8h_afef90734eba934f4aa4bdb196e90d7c3}{M\+A\+G\+\_\+\+B\+Y\+P\+A\+S\+S\+\_\+\+F\+A\+I\+L}~0x05
+\item 
+\#define \hyperlink{_sensor_mpu9250_8h_a22fdc0872449f36a67d8dd323037ee43}{M\+A\+G\+\_\+\+N\+O\+\_\+\+P\+O\+W\+E\+R}~0x06
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef void($\ast$ \hyperlink{_sensor_mpu9250_8h_a46597d1d93c12c2bb2bf0e7fadcf5d3c}{Sensor\+Mpu9250\+Callback\+Fn\+\_\+t}) (void)
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{_sensor_mpu9250_8h_a70c3dc5a3748b4d87e627a57e00f0212}{Sensor\+Mpu9250\+\_\+init} (void)
+\item 
+bool \hyperlink{_sensor_mpu9250_8h_aa199e74fac83bfcc797045ce022843d6}{Sensor\+Mpu9250\+\_\+reset} (void)
+\item 
+void \hyperlink{_sensor_mpu9250_8h_a218bba45842f2a71ce19694c0f73518c}{Sensor\+Mpu9250\+\_\+register\+Callback} (\hyperlink{_sensor_mpu9250_8h_a46597d1d93c12c2bb2bf0e7fadcf5d3c}{Sensor\+Mpu9250\+Callback\+Fn\+\_\+t})
+\item 
+bool \hyperlink{_sensor_mpu9250_8h_a46bb976672f9a571ff18566d1d3c5a24}{Sensor\+Mpu9250\+\_\+test} (void)
+\item 
+void \hyperlink{_sensor_mpu9250_8h_ab785d484e3a43d8efa0e3c783caf4613}{Sensor\+Mpu9250\+\_\+power\+On} (void)
+\item 
+void \hyperlink{_sensor_mpu9250_8h_a3e374299b91f804ffd07db9330796219}{Sensor\+Mpu9250\+\_\+power\+Off} (void)
+\item 
+bool \hyperlink{_sensor_mpu9250_8h_a39a1fe0e3d26befc2f9032263b6dac1b}{Sensor\+Mpu9250\+\_\+power\+Is\+On} (void)
+\item 
+void \hyperlink{_sensor_mpu9250_8h_a2c1d07e12e41dfdc993c5783c87cb372}{Sensor\+Mpu9250\+\_\+enable} (uint16\+\_\+t config)
+\item 
+bool \hyperlink{_sensor_mpu9250_8h_a07cca176e6908a3ce5cad560897a5e93}{Sensor\+Mpu9250\+\_\+enable\+Wom} (uint8\+\_\+t threshold)
+\item 
+uint8\+\_\+t \hyperlink{_sensor_mpu9250_8h_a5ff6bc06ac2af7d4637951b12b3baed2}{Sensor\+Mpu9250\+\_\+irq\+Status} (void)
+\item 
+bool \hyperlink{_sensor_mpu9250_8h_ac2f846fe053b4f025d5a60bcd28b5d86}{Sensor\+Mpu9250\+\_\+acc\+Set\+Range} (uint8\+\_\+t range)
+\item 
+uint8\+\_\+t \hyperlink{_sensor_mpu9250_8h_a7cced230a6a897c757fca032e7219be4}{Sensor\+Mpu9250\+\_\+acc\+Read\+Range} (void)
+\item 
+bool \hyperlink{_sensor_mpu9250_8h_abae57bd70cabd2a183ce98b5ace2d329}{Sensor\+Mpu9250\+\_\+acc\+Read} (uint16\+\_\+t $\ast$raw\+Data)
+\item 
+float \hyperlink{_sensor_mpu9250_8h_a3d866ff1aea56c827b1de59ea8a54d8d}{Sensor\+Mpu9250\+\_\+acc\+Convert} (int16\+\_\+t raw\+Value)
+\item 
+bool \hyperlink{_sensor_mpu9250_8h_ae9fa3abb44ca267374b96f2a218e90ad}{Sensor\+Mpu9250\+\_\+gyro\+Read} (uint16\+\_\+t $\ast$raw\+Data)
+\item 
+float \hyperlink{_sensor_mpu9250_8h_aa7c6327fc0848e156cef6f4350b286fa}{Sensor\+Mpu9250\+\_\+gyro\+Convert} (int16\+\_\+t raw\+Value)
+\item 
+bool \hyperlink{_sensor_mpu9250_8h_a8804081ccd27489dd7173c82f408ea38}{Sensor\+Mpu9250\+\_\+mag\+Test} (void)
+\item 
+uint8\+\_\+t \hyperlink{_sensor_mpu9250_8h_a593aab760dd24e57010d7bf7fc6d2a03}{Sensor\+Mpu9250\+\_\+mag\+Read} (int16\+\_\+t $\ast$p\+Raw\+Data)
+\item 
+uint8\+\_\+t \hyperlink{_sensor_mpu9250_8h_a7455703e28b77dbbc0dc659facf5e4b7}{Sensor\+Mpu9250\+\_\+mag\+Status} (void)
+\item 
+void \hyperlink{_sensor_mpu9250_8h_aa6f9928bfd3d77c9ea318adac3999bc7}{Sensor\+Mpu9250\+\_\+mag\+Reset} (void)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+2\+G@{A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+2\+G}}
+\index{A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+2\+G@{A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+2\+G}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+2\+G}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+2\+G~0}\label{_sensor_mpu9250_8h_abc4ef02068eeab8d7749cdd74f51ad6e}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+4\+G@{A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+4\+G}}
+\index{A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+4\+G@{A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+4\+G}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+4\+G}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+4\+G~1}\label{_sensor_mpu9250_8h_a1c2254abc35ba34e1f8ddd6d135626c9}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+8\+G@{A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+8\+G}}
+\index{A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+8\+G@{A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+8\+G}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+8\+G}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+8\+G~2}\label{_sensor_mpu9250_8h_a6ace6622fb4717d882aa4bce9995e5d4}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+16\+G@{A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+16\+G}}
+\index{A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+16\+G@{A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+16\+G}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+16\+G}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+16\+G~3}\label{_sensor_mpu9250_8h_a0963334f69738c406dc0b1317e704059}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+\+I\+N\+V\+A\+L\+I\+D@{A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+\+I\+N\+V\+A\+L\+I\+D}}
+\index{A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+\+I\+N\+V\+A\+L\+I\+D@{A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+\+I\+N\+V\+A\+L\+I\+D}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+\+I\+N\+V\+A\+L\+I\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+C\+C\+\_\+\+R\+A\+N\+G\+E\+\_\+\+I\+N\+V\+A\+L\+I\+D~0x\+F\+F}\label{_sensor_mpu9250_8h_ab1589368771e7a1cc4bdd0c1b1082ce8}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!M\+P\+U\+\_\+\+A\+X\+\_\+\+G\+Y\+R@{M\+P\+U\+\_\+\+A\+X\+\_\+\+G\+Y\+R}}
+\index{M\+P\+U\+\_\+\+A\+X\+\_\+\+G\+Y\+R@{M\+P\+U\+\_\+\+A\+X\+\_\+\+G\+Y\+R}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{M\+P\+U\+\_\+\+A\+X\+\_\+\+G\+Y\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+P\+U\+\_\+\+A\+X\+\_\+\+G\+Y\+R~0x07}\label{_sensor_mpu9250_8h_a12f74f3b6b2ba2113d7e4e4370e0a8e4}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!M\+P\+U\+\_\+\+A\+X\+\_\+\+A\+C\+C@{M\+P\+U\+\_\+\+A\+X\+\_\+\+A\+C\+C}}
+\index{M\+P\+U\+\_\+\+A\+X\+\_\+\+A\+C\+C@{M\+P\+U\+\_\+\+A\+X\+\_\+\+A\+C\+C}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{M\+P\+U\+\_\+\+A\+X\+\_\+\+A\+C\+C}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+P\+U\+\_\+\+A\+X\+\_\+\+A\+C\+C~0x38}\label{_sensor_mpu9250_8h_a0b48ac6995dff8817d287abf12af7728}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!M\+P\+U\+\_\+\+A\+X\+\_\+\+M\+A\+G@{M\+P\+U\+\_\+\+A\+X\+\_\+\+M\+A\+G}}
+\index{M\+P\+U\+\_\+\+A\+X\+\_\+\+M\+A\+G@{M\+P\+U\+\_\+\+A\+X\+\_\+\+M\+A\+G}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{M\+P\+U\+\_\+\+A\+X\+\_\+\+M\+A\+G}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+P\+U\+\_\+\+A\+X\+\_\+\+M\+A\+G~0x40}\label{_sensor_mpu9250_8h_a6d69e3ef527fb739f6c6f6d221326762}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!M\+P\+U\+\_\+\+A\+X\+\_\+\+A\+L\+L@{M\+P\+U\+\_\+\+A\+X\+\_\+\+A\+L\+L}}
+\index{M\+P\+U\+\_\+\+A\+X\+\_\+\+A\+L\+L@{M\+P\+U\+\_\+\+A\+X\+\_\+\+A\+L\+L}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{M\+P\+U\+\_\+\+A\+X\+\_\+\+A\+L\+L}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+P\+U\+\_\+\+A\+X\+\_\+\+A\+L\+L~0x7\+F}\label{_sensor_mpu9250_8h_a2715503b0c3c16e31ad7496d1c39cba9}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!M\+P\+U\+\_\+\+D\+A\+T\+A\+\_\+\+R\+E\+A\+D\+Y@{M\+P\+U\+\_\+\+D\+A\+T\+A\+\_\+\+R\+E\+A\+D\+Y}}
+\index{M\+P\+U\+\_\+\+D\+A\+T\+A\+\_\+\+R\+E\+A\+D\+Y@{M\+P\+U\+\_\+\+D\+A\+T\+A\+\_\+\+R\+E\+A\+D\+Y}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{M\+P\+U\+\_\+\+D\+A\+T\+A\+\_\+\+R\+E\+A\+D\+Y}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+P\+U\+\_\+\+D\+A\+T\+A\+\_\+\+R\+E\+A\+D\+Y~0x01}\label{_sensor_mpu9250_8h_a9089d4df07cdfd3eb0d831d6e0a46ea9}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!M\+P\+U\+\_\+\+M\+O\+V\+E\+M\+E\+N\+T@{M\+P\+U\+\_\+\+M\+O\+V\+E\+M\+E\+N\+T}}
+\index{M\+P\+U\+\_\+\+M\+O\+V\+E\+M\+E\+N\+T@{M\+P\+U\+\_\+\+M\+O\+V\+E\+M\+E\+N\+T}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{M\+P\+U\+\_\+\+M\+O\+V\+E\+M\+E\+N\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+P\+U\+\_\+\+M\+O\+V\+E\+M\+E\+N\+T~0x40}\label{_sensor_mpu9250_8h_ae8b13fe9114199150efae2942dd065df}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!M\+A\+G\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+O\+K@{M\+A\+G\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+O\+K}}
+\index{M\+A\+G\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+O\+K@{M\+A\+G\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+O\+K}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{M\+A\+G\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+O\+K}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+G\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+O\+K~0x00}\label{_sensor_mpu9250_8h_a561317e29a01be9d04f17a84aef1c46a}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!M\+A\+G\+\_\+\+R\+E\+A\+D\+\_\+\+S\+T\+\_\+\+E\+R\+R@{M\+A\+G\+\_\+\+R\+E\+A\+D\+\_\+\+S\+T\+\_\+\+E\+R\+R}}
+\index{M\+A\+G\+\_\+\+R\+E\+A\+D\+\_\+\+S\+T\+\_\+\+E\+R\+R@{M\+A\+G\+\_\+\+R\+E\+A\+D\+\_\+\+S\+T\+\_\+\+E\+R\+R}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{M\+A\+G\+\_\+\+R\+E\+A\+D\+\_\+\+S\+T\+\_\+\+E\+R\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+G\+\_\+\+R\+E\+A\+D\+\_\+\+S\+T\+\_\+\+E\+R\+R~0x01}\label{_sensor_mpu9250_8h_acebcf6323a6758500592adfd47d27f4c}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!M\+A\+G\+\_\+\+D\+A\+T\+A\+\_\+\+N\+O\+T\+\_\+\+R\+D\+Y@{M\+A\+G\+\_\+\+D\+A\+T\+A\+\_\+\+N\+O\+T\+\_\+\+R\+D\+Y}}
+\index{M\+A\+G\+\_\+\+D\+A\+T\+A\+\_\+\+N\+O\+T\+\_\+\+R\+D\+Y@{M\+A\+G\+\_\+\+D\+A\+T\+A\+\_\+\+N\+O\+T\+\_\+\+R\+D\+Y}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{M\+A\+G\+\_\+\+D\+A\+T\+A\+\_\+\+N\+O\+T\+\_\+\+R\+D\+Y}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+G\+\_\+\+D\+A\+T\+A\+\_\+\+N\+O\+T\+\_\+\+R\+D\+Y~0x02}\label{_sensor_mpu9250_8h_ad23103397377f77033ef1407d7ce948c}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!M\+A\+G\+\_\+\+O\+V\+E\+R\+F\+L\+O\+W@{M\+A\+G\+\_\+\+O\+V\+E\+R\+F\+L\+O\+W}}
+\index{M\+A\+G\+\_\+\+O\+V\+E\+R\+F\+L\+O\+W@{M\+A\+G\+\_\+\+O\+V\+E\+R\+F\+L\+O\+W}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{M\+A\+G\+\_\+\+O\+V\+E\+R\+F\+L\+O\+W}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+G\+\_\+\+O\+V\+E\+R\+F\+L\+O\+W~0x03}\label{_sensor_mpu9250_8h_afa761a3aae81d8f551bf0afa37f5f0e6}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!M\+A\+G\+\_\+\+R\+E\+A\+D\+\_\+\+D\+A\+T\+A\+\_\+\+E\+R\+R@{M\+A\+G\+\_\+\+R\+E\+A\+D\+\_\+\+D\+A\+T\+A\+\_\+\+E\+R\+R}}
+\index{M\+A\+G\+\_\+\+R\+E\+A\+D\+\_\+\+D\+A\+T\+A\+\_\+\+E\+R\+R@{M\+A\+G\+\_\+\+R\+E\+A\+D\+\_\+\+D\+A\+T\+A\+\_\+\+E\+R\+R}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{M\+A\+G\+\_\+\+R\+E\+A\+D\+\_\+\+D\+A\+T\+A\+\_\+\+E\+R\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+G\+\_\+\+R\+E\+A\+D\+\_\+\+D\+A\+T\+A\+\_\+\+E\+R\+R~0x04}\label{_sensor_mpu9250_8h_ac5eb51e2b0a75689bf0751d8cb1e2d13}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!M\+A\+G\+\_\+\+B\+Y\+P\+A\+S\+S\+\_\+\+F\+A\+I\+L@{M\+A\+G\+\_\+\+B\+Y\+P\+A\+S\+S\+\_\+\+F\+A\+I\+L}}
+\index{M\+A\+G\+\_\+\+B\+Y\+P\+A\+S\+S\+\_\+\+F\+A\+I\+L@{M\+A\+G\+\_\+\+B\+Y\+P\+A\+S\+S\+\_\+\+F\+A\+I\+L}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{M\+A\+G\+\_\+\+B\+Y\+P\+A\+S\+S\+\_\+\+F\+A\+I\+L}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+G\+\_\+\+B\+Y\+P\+A\+S\+S\+\_\+\+F\+A\+I\+L~0x05}\label{_sensor_mpu9250_8h_afef90734eba934f4aa4bdb196e90d7c3}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!M\+A\+G\+\_\+\+N\+O\+\_\+\+P\+O\+W\+E\+R@{M\+A\+G\+\_\+\+N\+O\+\_\+\+P\+O\+W\+E\+R}}
+\index{M\+A\+G\+\_\+\+N\+O\+\_\+\+P\+O\+W\+E\+R@{M\+A\+G\+\_\+\+N\+O\+\_\+\+P\+O\+W\+E\+R}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{M\+A\+G\+\_\+\+N\+O\+\_\+\+P\+O\+W\+E\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+G\+\_\+\+N\+O\+\_\+\+P\+O\+W\+E\+R~0x06}\label{_sensor_mpu9250_8h_a22fdc0872449f36a67d8dd323037ee43}
+
+
+\subsubsection{Typedef Documentation}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!Sensor\+Mpu9250\+Callback\+Fn\+\_\+t@{Sensor\+Mpu9250\+Callback\+Fn\+\_\+t}}
+\index{Sensor\+Mpu9250\+Callback\+Fn\+\_\+t@{Sensor\+Mpu9250\+Callback\+Fn\+\_\+t}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{Sensor\+Mpu9250\+Callback\+Fn\+\_\+t}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ Sensor\+Mpu9250\+Callback\+Fn\+\_\+t) (void)}\label{_sensor_mpu9250_8h_a46597d1d93c12c2bb2bf0e7fadcf5d3c}
+
+
+\subsubsection{Function Documentation}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!Sensor\+Mpu9250\+\_\+init@{Sensor\+Mpu9250\+\_\+init}}
+\index{Sensor\+Mpu9250\+\_\+init@{Sensor\+Mpu9250\+\_\+init}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{Sensor\+Mpu9250\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}bool Sensor\+Mpu9250\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_sensor_mpu9250_8h_a70c3dc5a3748b4d87e627a57e00f0212}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!Sensor\+Mpu9250\+\_\+reset@{Sensor\+Mpu9250\+\_\+reset}}
+\index{Sensor\+Mpu9250\+\_\+reset@{Sensor\+Mpu9250\+\_\+reset}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{Sensor\+Mpu9250\+\_\+reset}]{\setlength{\rightskip}{0pt plus 5cm}bool Sensor\+Mpu9250\+\_\+reset (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_sensor_mpu9250_8h_aa199e74fac83bfcc797045ce022843d6}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!Sensor\+Mpu9250\+\_\+register\+Callback@{Sensor\+Mpu9250\+\_\+register\+Callback}}
+\index{Sensor\+Mpu9250\+\_\+register\+Callback@{Sensor\+Mpu9250\+\_\+register\+Callback}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{Sensor\+Mpu9250\+\_\+register\+Callback}]{\setlength{\rightskip}{0pt plus 5cm}void Sensor\+Mpu9250\+\_\+register\+Callback (
+\begin{DoxyParamCaption}
+\item[{{\bf Sensor\+Mpu9250\+Callback\+Fn\+\_\+t}}]{}
+\end{DoxyParamCaption}
+)}\label{_sensor_mpu9250_8h_a218bba45842f2a71ce19694c0f73518c}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!Sensor\+Mpu9250\+\_\+test@{Sensor\+Mpu9250\+\_\+test}}
+\index{Sensor\+Mpu9250\+\_\+test@{Sensor\+Mpu9250\+\_\+test}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{Sensor\+Mpu9250\+\_\+test}]{\setlength{\rightskip}{0pt plus 5cm}bool Sensor\+Mpu9250\+\_\+test (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_sensor_mpu9250_8h_a46bb976672f9a571ff18566d1d3c5a24}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!Sensor\+Mpu9250\+\_\+power\+On@{Sensor\+Mpu9250\+\_\+power\+On}}
+\index{Sensor\+Mpu9250\+\_\+power\+On@{Sensor\+Mpu9250\+\_\+power\+On}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{Sensor\+Mpu9250\+\_\+power\+On}]{\setlength{\rightskip}{0pt plus 5cm}void Sensor\+Mpu9250\+\_\+power\+On (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_sensor_mpu9250_8h_ab785d484e3a43d8efa0e3c783caf4613}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!Sensor\+Mpu9250\+\_\+power\+Off@{Sensor\+Mpu9250\+\_\+power\+Off}}
+\index{Sensor\+Mpu9250\+\_\+power\+Off@{Sensor\+Mpu9250\+\_\+power\+Off}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{Sensor\+Mpu9250\+\_\+power\+Off}]{\setlength{\rightskip}{0pt plus 5cm}void Sensor\+Mpu9250\+\_\+power\+Off (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_sensor_mpu9250_8h_a3e374299b91f804ffd07db9330796219}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!Sensor\+Mpu9250\+\_\+power\+Is\+On@{Sensor\+Mpu9250\+\_\+power\+Is\+On}}
+\index{Sensor\+Mpu9250\+\_\+power\+Is\+On@{Sensor\+Mpu9250\+\_\+power\+Is\+On}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{Sensor\+Mpu9250\+\_\+power\+Is\+On}]{\setlength{\rightskip}{0pt plus 5cm}bool Sensor\+Mpu9250\+\_\+power\+Is\+On (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_sensor_mpu9250_8h_a39a1fe0e3d26befc2f9032263b6dac1b}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!Sensor\+Mpu9250\+\_\+enable@{Sensor\+Mpu9250\+\_\+enable}}
+\index{Sensor\+Mpu9250\+\_\+enable@{Sensor\+Mpu9250\+\_\+enable}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{Sensor\+Mpu9250\+\_\+enable}]{\setlength{\rightskip}{0pt plus 5cm}void Sensor\+Mpu9250\+\_\+enable (
+\begin{DoxyParamCaption}
+\item[{uint16\+\_\+t}]{config}
+\end{DoxyParamCaption}
+)}\label{_sensor_mpu9250_8h_a2c1d07e12e41dfdc993c5783c87cb372}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!Sensor\+Mpu9250\+\_\+enable\+Wom@{Sensor\+Mpu9250\+\_\+enable\+Wom}}
+\index{Sensor\+Mpu9250\+\_\+enable\+Wom@{Sensor\+Mpu9250\+\_\+enable\+Wom}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{Sensor\+Mpu9250\+\_\+enable\+Wom}]{\setlength{\rightskip}{0pt plus 5cm}bool Sensor\+Mpu9250\+\_\+enable\+Wom (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{threshold}
+\end{DoxyParamCaption}
+)}\label{_sensor_mpu9250_8h_a07cca176e6908a3ce5cad560897a5e93}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!Sensor\+Mpu9250\+\_\+irq\+Status@{Sensor\+Mpu9250\+\_\+irq\+Status}}
+\index{Sensor\+Mpu9250\+\_\+irq\+Status@{Sensor\+Mpu9250\+\_\+irq\+Status}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{Sensor\+Mpu9250\+\_\+irq\+Status}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t Sensor\+Mpu9250\+\_\+irq\+Status (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_sensor_mpu9250_8h_a5ff6bc06ac2af7d4637951b12b3baed2}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!Sensor\+Mpu9250\+\_\+acc\+Set\+Range@{Sensor\+Mpu9250\+\_\+acc\+Set\+Range}}
+\index{Sensor\+Mpu9250\+\_\+acc\+Set\+Range@{Sensor\+Mpu9250\+\_\+acc\+Set\+Range}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{Sensor\+Mpu9250\+\_\+acc\+Set\+Range}]{\setlength{\rightskip}{0pt plus 5cm}bool Sensor\+Mpu9250\+\_\+acc\+Set\+Range (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{range}
+\end{DoxyParamCaption}
+)}\label{_sensor_mpu9250_8h_ac2f846fe053b4f025d5a60bcd28b5d86}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!Sensor\+Mpu9250\+\_\+acc\+Read\+Range@{Sensor\+Mpu9250\+\_\+acc\+Read\+Range}}
+\index{Sensor\+Mpu9250\+\_\+acc\+Read\+Range@{Sensor\+Mpu9250\+\_\+acc\+Read\+Range}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{Sensor\+Mpu9250\+\_\+acc\+Read\+Range}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t Sensor\+Mpu9250\+\_\+acc\+Read\+Range (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_sensor_mpu9250_8h_a7cced230a6a897c757fca032e7219be4}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!Sensor\+Mpu9250\+\_\+acc\+Read@{Sensor\+Mpu9250\+\_\+acc\+Read}}
+\index{Sensor\+Mpu9250\+\_\+acc\+Read@{Sensor\+Mpu9250\+\_\+acc\+Read}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{Sensor\+Mpu9250\+\_\+acc\+Read}]{\setlength{\rightskip}{0pt plus 5cm}bool Sensor\+Mpu9250\+\_\+acc\+Read (
+\begin{DoxyParamCaption}
+\item[{uint16\+\_\+t $\ast$}]{raw\+Data}
+\end{DoxyParamCaption}
+)}\label{_sensor_mpu9250_8h_abae57bd70cabd2a183ce98b5ace2d329}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!Sensor\+Mpu9250\+\_\+acc\+Convert@{Sensor\+Mpu9250\+\_\+acc\+Convert}}
+\index{Sensor\+Mpu9250\+\_\+acc\+Convert@{Sensor\+Mpu9250\+\_\+acc\+Convert}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{Sensor\+Mpu9250\+\_\+acc\+Convert}]{\setlength{\rightskip}{0pt plus 5cm}float Sensor\+Mpu9250\+\_\+acc\+Convert (
+\begin{DoxyParamCaption}
+\item[{int16\+\_\+t}]{raw\+Value}
+\end{DoxyParamCaption}
+)}\label{_sensor_mpu9250_8h_a3d866ff1aea56c827b1de59ea8a54d8d}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!Sensor\+Mpu9250\+\_\+gyro\+Read@{Sensor\+Mpu9250\+\_\+gyro\+Read}}
+\index{Sensor\+Mpu9250\+\_\+gyro\+Read@{Sensor\+Mpu9250\+\_\+gyro\+Read}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{Sensor\+Mpu9250\+\_\+gyro\+Read}]{\setlength{\rightskip}{0pt plus 5cm}bool Sensor\+Mpu9250\+\_\+gyro\+Read (
+\begin{DoxyParamCaption}
+\item[{uint16\+\_\+t $\ast$}]{raw\+Data}
+\end{DoxyParamCaption}
+)}\label{_sensor_mpu9250_8h_ae9fa3abb44ca267374b96f2a218e90ad}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!Sensor\+Mpu9250\+\_\+gyro\+Convert@{Sensor\+Mpu9250\+\_\+gyro\+Convert}}
+\index{Sensor\+Mpu9250\+\_\+gyro\+Convert@{Sensor\+Mpu9250\+\_\+gyro\+Convert}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{Sensor\+Mpu9250\+\_\+gyro\+Convert}]{\setlength{\rightskip}{0pt plus 5cm}float Sensor\+Mpu9250\+\_\+gyro\+Convert (
+\begin{DoxyParamCaption}
+\item[{int16\+\_\+t}]{raw\+Value}
+\end{DoxyParamCaption}
+)}\label{_sensor_mpu9250_8h_aa7c6327fc0848e156cef6f4350b286fa}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!Sensor\+Mpu9250\+\_\+mag\+Test@{Sensor\+Mpu9250\+\_\+mag\+Test}}
+\index{Sensor\+Mpu9250\+\_\+mag\+Test@{Sensor\+Mpu9250\+\_\+mag\+Test}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{Sensor\+Mpu9250\+\_\+mag\+Test}]{\setlength{\rightskip}{0pt plus 5cm}bool Sensor\+Mpu9250\+\_\+mag\+Test (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_sensor_mpu9250_8h_a8804081ccd27489dd7173c82f408ea38}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!Sensor\+Mpu9250\+\_\+mag\+Read@{Sensor\+Mpu9250\+\_\+mag\+Read}}
+\index{Sensor\+Mpu9250\+\_\+mag\+Read@{Sensor\+Mpu9250\+\_\+mag\+Read}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{Sensor\+Mpu9250\+\_\+mag\+Read}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t Sensor\+Mpu9250\+\_\+mag\+Read (
+\begin{DoxyParamCaption}
+\item[{int16\+\_\+t $\ast$}]{p\+Raw\+Data}
+\end{DoxyParamCaption}
+)}\label{_sensor_mpu9250_8h_a593aab760dd24e57010d7bf7fc6d2a03}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!Sensor\+Mpu9250\+\_\+mag\+Status@{Sensor\+Mpu9250\+\_\+mag\+Status}}
+\index{Sensor\+Mpu9250\+\_\+mag\+Status@{Sensor\+Mpu9250\+\_\+mag\+Status}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{Sensor\+Mpu9250\+\_\+mag\+Status}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t Sensor\+Mpu9250\+\_\+mag\+Status (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_sensor_mpu9250_8h_a7455703e28b77dbbc0dc659facf5e4b7}
+\index{Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}!Sensor\+Mpu9250\+\_\+mag\+Reset@{Sensor\+Mpu9250\+\_\+mag\+Reset}}
+\index{Sensor\+Mpu9250\+\_\+mag\+Reset@{Sensor\+Mpu9250\+\_\+mag\+Reset}!Sensor\+Mpu9250.\+h@{Sensor\+Mpu9250.\+h}}
+\paragraph[{Sensor\+Mpu9250\+\_\+mag\+Reset}]{\setlength{\rightskip}{0pt plus 5cm}void Sensor\+Mpu9250\+\_\+mag\+Reset (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_sensor_mpu9250_8h_aa6f9928bfd3d77c9ea318adac3999bc7}

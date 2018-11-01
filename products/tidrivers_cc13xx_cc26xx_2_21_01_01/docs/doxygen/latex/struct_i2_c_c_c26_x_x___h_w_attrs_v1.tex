@@ -1,0 +1,100 @@
+\subsection{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1 Struct Reference}
+\label{struct_i2_c_c_c26_x_x___h_w_attrs_v1}\index{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1@{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1}}
+
+
+I2\+C\+C\+C26\+X\+X Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$I2\+C\+C\+C26\+X\+X.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_i2_c_c_c26_x_x_8h_a6e087d828c4463de0061d8205b2245d8}{I2\+C\+Base\+Addr\+Type} \hyperlink{struct_i2_c_c_c26_x_x___h_w_attrs_v1_a1dcaf2c98df0688a137d6d36fcf5b813}{base\+Addr}
+\item 
+unsigned long \hyperlink{struct_i2_c_c_c26_x_x___h_w_attrs_v1_ae4f13a6d9682c89ebaa095ac65550284}{power\+Mngr\+Id}
+\item 
+int \hyperlink{struct_i2_c_c_c26_x_x___h_w_attrs_v1_a47978d1b0177205345aea6760bdd44ff}{int\+Num}
+\item 
+uint8\+\_\+t \hyperlink{struct_i2_c_c_c26_x_x___h_w_attrs_v1_af2ce41811fa52e3b70cb2388b1a9a5e4}{int\+Priority}
+\begin{DoxyCompactList}\small\item\em I2\+C Peripheral\textquotesingle{}s interrupt priority. \end{DoxyCompactList}\item 
+uint32\+\_\+t \hyperlink{struct_i2_c_c_c26_x_x___h_w_attrs_v1_af6dcf5a19b94fa39e89a1435c78f0d61}{swi\+Priority}
+\begin{DoxyCompactList}\small\item\em I2\+C S\+W\+I priority. The higher the number, the higher the priority. The minimum is 0 and the maximum is 15 by default. The maximum can be reduced to save R\+A\+M by adding or modifying Swi.\+num\+Priorities in the kernel configuration file. \end{DoxyCompactList}\item 
+uint8\+\_\+t \hyperlink{struct_i2_c_c_c26_x_x___h_w_attrs_v1_a3387c3315d2b4f62fedf70563fd55931}{sda\+Pin}
+\item 
+uint8\+\_\+t \hyperlink{struct_i2_c_c_c26_x_x___h_w_attrs_v1_a0c0d7cba4b01ece784f35192fdc91b0a}{scl\+Pin}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+I2\+C\+C\+C26\+X\+X Hardware attributes. 
+
+These fields, with the exception of int\+Priority, are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For cc26xxware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item inc/hw\+\_\+ints.\+h
+\end{DoxyItemize}
+
+int\+Priority is the I2\+C peripheral\textquotesingle{}s interrupt priority, as defined by the underlying O\+S. It is passed unmodified to the underlying O\+S\textquotesingle{}s interrupt handler creation code, so you need to refer to the O\+S documentation for usage. For example, for S\+Y\+S/\+B\+I\+O\+S applications, refer to the ti.\+sysbios.\+family.\+arm.\+m3.\+Hwi documentation for S\+Y\+S/\+B\+I\+O\+S usage of interrupt priorities.
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} I2CCC26XX_HWAttrsV1 i2cCC26XXHWAttrs[] = \{
+    \{
+       .baseAddr = I2C0\_BASE,
+       .powerMngrId = PERIPH\_I2C0,
+       .intNum = INT\_I2C,
+       .intPriority = ~0,
+       .swiPriority = 0,
+       .sdaPin = Board\_I2C\_SDA,
+       .sclPin = Board\_I2C\_SCL,
+    \},
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1@{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1@{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+C\+Base\+Addr\+Type} I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1\+::base\+Addr}\label{struct_i2_c_c_c26_x_x___h_w_attrs_v1_a1dcaf2c98df0688a137d6d36fcf5b813}
+I2\+C Peripheral\textquotesingle{}s base address \index{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1@{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1}!power\+Mngr\+Id@{power\+Mngr\+Id}}
+\index{power\+Mngr\+Id@{power\+Mngr\+Id}!I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1@{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1}}
+\paragraph[{power\+Mngr\+Id}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1\+::power\+Mngr\+Id}\label{struct_i2_c_c_c26_x_x___h_w_attrs_v1_ae4f13a6d9682c89ebaa095ac65550284}
+I2\+C Peripheral\textquotesingle{}s power manager I\+D \index{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1@{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1}!int\+Num@{int\+Num}}
+\index{int\+Num@{int\+Num}!I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1@{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1}}
+\paragraph[{int\+Num}]{\setlength{\rightskip}{0pt plus 5cm}int I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1\+::int\+Num}\label{struct_i2_c_c_c26_x_x___h_w_attrs_v1_a47978d1b0177205345aea6760bdd44ff}
+I2\+C Peripheral\textquotesingle{}s interrupt vector \index{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1@{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1}!int\+Priority@{int\+Priority}}
+\index{int\+Priority@{int\+Priority}!I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1@{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1}}
+\paragraph[{int\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1\+::int\+Priority}\label{struct_i2_c_c_c26_x_x___h_w_attrs_v1_af2ce41811fa52e3b70cb2388b1a9a5e4}
+
+
+I2\+C Peripheral\textquotesingle{}s interrupt priority. 
+
+The C\+C26xx uses three of the priority bits, meaning $\sim$0 has the same effect as (7 $<$$<$ 5).
+
+(7 $<$$<$ 5) will apply the lowest priority.
+
+(1 $<$$<$ 5) will apply the highest priority.
+
+Setting the priority to 0 is not supported by this driver.
+
+H\+W\+I\textquotesingle{}s with priority 0 ignore the H\+W\+I dispatcher to support zero-\/latency interrupts, thus invalidating the critical sections in this driver. \index{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1@{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1}!swi\+Priority@{swi\+Priority}}
+\index{swi\+Priority@{swi\+Priority}!I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1@{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1}}
+\paragraph[{swi\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1\+::swi\+Priority}\label{struct_i2_c_c_c26_x_x___h_w_attrs_v1_af6dcf5a19b94fa39e89a1435c78f0d61}
+
+
+I2\+C S\+W\+I priority. The higher the number, the higher the priority. The minimum is 0 and the maximum is 15 by default. The maximum can be reduced to save R\+A\+M by adding or modifying Swi.\+num\+Priorities in the kernel configuration file. 
+
+\index{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1@{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1}!sda\+Pin@{sda\+Pin}}
+\index{sda\+Pin@{sda\+Pin}!I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1@{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1}}
+\paragraph[{sda\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1\+::sda\+Pin}\label{struct_i2_c_c_c26_x_x___h_w_attrs_v1_a3387c3315d2b4f62fedf70563fd55931}
+I2\+C S\+D\+A pin mapping \index{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1@{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1}!scl\+Pin@{scl\+Pin}}
+\index{scl\+Pin@{scl\+Pin}!I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1@{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1}}
+\paragraph[{scl\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+V1\+::scl\+Pin}\label{struct_i2_c_c_c26_x_x___h_w_attrs_v1_a0c0d7cba4b01ece784f35192fdc91b0a}
+I2\+C S\+C\+L pin mapping 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_i2_c_c_c26_x_x_8h}{I2\+C\+C\+C26\+X\+X.\+h}\end{DoxyCompactItemize}

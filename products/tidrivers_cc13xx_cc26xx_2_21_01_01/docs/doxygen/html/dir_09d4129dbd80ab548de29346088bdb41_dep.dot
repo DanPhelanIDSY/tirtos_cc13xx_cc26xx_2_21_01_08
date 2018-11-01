@@ -1,0 +1,13 @@
+digraph "fatfs" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_622605b5fc87a1221dd66225202096f9 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="mw" fontname="Helvetica", fontsize="10", URL="dir_622605b5fc87a1221dd66225202096f9.html"]
+  subgraph clusterdir_09d4129dbd80ab548de29346088bdb41 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_09d4129dbd80ab548de29346088bdb41.html"];
+    dir_09d4129dbd80ab548de29346088bdb41 [shape=plaintext label="fatfs"];
+    dir_c59c23ce3cff09378dc1c9d68a28cd84 [shape=box label="utils" color="black" fillcolor="white" style="filled" URL="dir_c59c23ce3cff09378dc1c9d68a28cd84.html"];
+  }
+  }
+}

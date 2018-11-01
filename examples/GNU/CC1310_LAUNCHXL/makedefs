@@ -1,0 +1,41 @@
+###### CHANGE LOCATION TO YOUR CODEGEN TOOLS INSTALL DIR. UNIX PATH (no backslashes) #######
+CODEGEN_INSTALL_DIR = c:/ti/ccsv6/tools/compiler/gcc-arm-none-eabi-4_8-2014q3
+
+CC = "$(CODEGEN_INSTALL_DIR)/bin/arm-none-eabi-gcc"
+LNK = "$(CODEGEN_INSTALL_DIR)/bin/arm-none-eabi-gcc"
+
+XDC_INSTALL_DIR := c:/ti/xdctools_3_32_00_06_core
+TIRTOS_INSTALL_DIR := c:/ti/tirtos_cc13xx_cc26xx_2_21_01_08
+TIDRIVERS_INSTALL_DIR := $(TIRTOS_INSTALL_DIR)/products/tidrivers_cc13xx_cc26xx_2_21_01_01
+BIOS_INSTALL_DIR := $(TIRTOS_INSTALL_DIR)/products/bios_6_46_01_38
+UIA_INSTALL_DIR := $(TIRTOS_INSTALL_DIR)/products/uia_2_01_00_01
+CC13XXWARE_INSTALL_DIR ?= $(TIRTOS_INSTALL_DIR)/products/cc13xxware_2_04_03_17272
+
+TIRTOS_PACKAGES_DIR = $(TIRTOS_INSTALL_DIR)/packages
+TIDRIVERS_PACKAGES_DIR = $(TIDRIVERS_INSTALL_DIR)/packages
+BIOS_PACKAGES_DIR = $(BIOS_INSTALL_DIR)/packages
+UIA_PACKAGES_DIR = $(UIA_INSTALL_DIR)/packages
+
+XDCPATH = $(TIRTOS_PACKAGES_DIR);$(TIDRIVERS_PACKAGES_DIR);$(BIOS_PACKAGES_DIR);$(UIA_PACKAGES_DIR);
+
+CFLAGS = -I$(CC13XXWARE_INSTALL_DIR) -Dgcc -mcpu=cortex-m3 -march=armv7-m -mthumb -mfloat-abi=soft -ffunction-sections -fdata-sections -g -gstrict-dwarf -Wall
+
+LFLAGS = -Wl,-T,CC1310_LAUNCHXL.lds -Wl,-Map,$(NAME).map -Wl,-T,$(NAME)/linker.cmd -l:$(CC13XXWARE_INSTALL_DIR)/driverlib/bin/gcc/driverlib.lib -march=armv7-m -mthumb -nostartfiles -static -Wl,--gc-sections -L$(BIOS_PACKAGES_DIR)/gnu/targets/arm/libs/install-native/arm-none-eabi/lib/armv7-m -lgcc -lc -lm -lnosys
+
+###################### SHOULD NOT MODIFY BELOW THIS LINE ############################
+export XDCPATH
+
+XDCTARGET = gnu.targets.arm.M3
+PLATFORM = ti.platforms.simplelink:CC1310F128
+
+ifeq ("$(SHELL)","sh.exe")
+#For Windows
+        RMDIR  = -rmdir /S /Q
+        remove = -del $(subst /,\,$1)
+        pwd    = cd
+else
+#For Linux
+        RMDIR  = rm -rf
+        remove = rm -f $(subst /,\,$1)
+        pwd    = pwd
+endif

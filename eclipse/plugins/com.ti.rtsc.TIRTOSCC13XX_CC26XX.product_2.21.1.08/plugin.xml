@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin
+    name="TI-RTOS for CC13XX and CC26XX Target Content"
+    id="com.ti.rtsc.TIRTOSCC13XX_CC26XX.product_2.21.1.08"
+    version="2.21.1.08"
+    provider-name="Texas Instruments">
+
+    <extension point="org.eclipse.rtsc.xdctools.ui.productInfo">
+        <repository location="../../../packages"/>
+        <repository location="../../../products/tidrivers_cc13xx_cc26xx_2_21_01_01/packages"/>
+        <repository location="../../../products/bios_6_46_01_38/packages"/>
+        <repository location="../../../products/uia_2_01_00_01/packages"/>
+        <docs location="../../../."/>
+        <docs location="../../../docs"/>
+        <docs location="../../../docs/cdoc"/>
+        <docs location="../../../docs/doxygen"/>
+        <docs location="../../../docs/doxygen/html"/>
+        <docs location="../../../products/tidrivers_cc13xx_cc26xx_2_21_01_01/docs"/>
+        <docs location="../../../products/tidrivers_cc13xx_cc26xx_2_21_01_01/docs/doxygen/html"/>
+        <docs location="../../../products/bios_6_46_01_38/docs"/>
+        <docs location="../../../products/bios_6_46_01_38/docs/cdoc"/>
+        <docs location="../../../products/uia_2_01_00_01/docs"/>
+        <docs location="../../../products/uia_2_01_00_01/docs/cdoc"/>
+        <rtscTarget sourceFile="products/bios_6_46_01_38/etc/targets.json"/>
+        <rtscPlatform sourceFile="products/bios_6_46_01_38/etc/platforms.json"/>
+        <info
+            installLocation="../../.."
+            productName="TI-RTOS for CC13XX and CC26XX"
+            versionNumber="2.21.1.08"
+            containsRTSCPlatforms="true"
+        />
+    </extension>
+
+    <extension point="org.eclipse.rtsc.xdctools.model.productView">
+        <productview
+            moduleName="ti.tirtos.productview.TIRTOSProductView"
+         />
+    </extension>
+
+    <extension point="org.eclipse.rtsc.xdctools.managedbuild.core.rtscProductTypes">
+        <productType
+            id="com.ti.rtsc.TIRTOSCC13XX_CC26XX"
+            name="TI-RTOS for CC13XX and CC26XX"
+            folderPrefix="TI-RTOS for CC13XX and CC26XX"
+            repoMacroName="COM_TI_RTSC_TIRTOSCC13XX_CC26XX_REPOS"
+            rootMacroName="COM_TI_RTSC_TIRTOSCC13XX_CC26XX_INSTALL_DIR"/>
+    </extension>
+
+    <extension point="org.eclipse.rtsc.xdctools.managedbuild.core.rtscProducts">
+        <product
+            productTypeId="com.ti.rtsc.TIRTOSCC13XX_CC26XX"
+            version="2.21.1.08">
+            <resources location="resources"/>
+        </product>
+    </extension>
+</plugin>

@@ -1,0 +1,52 @@
+\subsection{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params Struct Reference}
+\label{struct_u_s_b_m_s_c_h_fat_fs___params}\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params}}
+
+
+U\+S\+B\+M\+S\+C\+H\+Fat\+Fs Parameters.  
+
+
+
+
+{\ttfamily \#include $<$U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int \hyperlink{struct_u_s_b_m_s_c_h_fat_fs___params_aeb87fb7c375ba66138e4379ae9d5c786}{service\+Priority}
+\item 
+void $\ast$ \hyperlink{struct_u_s_b_m_s_c_h_fat_fs___params_a76c517fe62891079c9f04de90a6a4334}{service\+Task\+Stack\+Ptr}
+\item 
+size\+\_\+t \hyperlink{struct_u_s_b_m_s_c_h_fat_fs___params_a78253d7819c9c921daa7d652b0b61812}{service\+Task\+Stack\+Size}
+\item 
+uintptr\+\_\+t \hyperlink{struct_u_s_b_m_s_c_h_fat_fs___params_a665e71dc3924d9c80b987da2e705a74b}{custom}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+U\+S\+B\+M\+S\+C\+H\+Fat\+Fs Parameters. 
+
+U\+S\+B\+M\+S\+C\+H\+Fat\+Fs parameters are used to with the \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_a64956f1bd732672e4cd5592a4fef4a09}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+open()} call. Default values for these parameters are set using \hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_ae46d9bf936f1837eddea6e787954afec}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params\+\_\+init()}.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_u_s_b_m_s_c_h_fat_fs_8h_ae46d9bf936f1837eddea6e787954afec}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Field Documentation}
+\index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params}!service\+Priority@{service\+Priority}}
+\index{service\+Priority@{service\+Priority}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params}}
+\paragraph[{service\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params\+::service\+Priority}\label{struct_u_s_b_m_s_c_h_fat_fs___params_aeb87fb7c375ba66138e4379ae9d5c786}
+U\+S\+B service Task priority. Default is highest Task priority \index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params}!service\+Task\+Stack\+Ptr@{service\+Task\+Stack\+Ptr}}
+\index{service\+Task\+Stack\+Ptr@{service\+Task\+Stack\+Ptr}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params}}
+\paragraph[{service\+Task\+Stack\+Ptr}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params\+::service\+Task\+Stack\+Ptr}\label{struct_u_s_b_m_s_c_h_fat_fs___params_a76c517fe62891079c9f04de90a6a4334}
+U\+S\+B service Task stack pointer. Default is N\+U\+L\+L \index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params}!service\+Task\+Stack\+Size@{service\+Task\+Stack\+Size}}
+\index{service\+Task\+Stack\+Size@{service\+Task\+Stack\+Size}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params}}
+\paragraph[{service\+Task\+Stack\+Size}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params\+::service\+Task\+Stack\+Size}\label{struct_u_s_b_m_s_c_h_fat_fs___params_a78253d7819c9c921daa7d652b0b61812}
+U\+S\+B service Task stack size. Default is Task module\textquotesingle{}s Task\+\_\+default\+Stack\+Size \index{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params}!custom@{custom}}
+\index{custom@{custom}!U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params@{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params}}
+\paragraph[{custom}]{\setlength{\rightskip}{0pt plus 5cm}uintptr\+\_\+t U\+S\+B\+M\+S\+C\+H\+Fat\+Fs\+\_\+\+Params\+::custom}\label{struct_u_s_b_m_s_c_h_fat_fs___params_a665e71dc3924d9c80b987da2e705a74b}
+Custom argument used by driver implementation 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_u_s_b_m_s_c_h_fat_fs_8h}{U\+S\+B\+M\+S\+C\+H\+Fat\+Fs.\+h}\end{DoxyCompactItemize}

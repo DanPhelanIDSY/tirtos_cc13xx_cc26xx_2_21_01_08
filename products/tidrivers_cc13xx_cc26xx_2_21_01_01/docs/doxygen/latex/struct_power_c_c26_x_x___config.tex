@@ -1,0 +1,89 @@
+\subsection{Power\+C\+C26\+X\+X\+\_\+\+Config Struct Reference}
+\label{struct_power_c_c26_x_x___config}\index{Power\+C\+C26\+X\+X\+\_\+\+Config@{Power\+C\+C26\+X\+X\+\_\+\+Config}}
+
+
+Global configuration structure.  
+
+
+
+
+{\ttfamily \#include $<$Power\+C\+C26\+X\+X.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_power_8h_a435fdeb71d13ea6be86f599c9b6a0d78}{Power\+\_\+\+Policy\+Init\+Fxn} \hyperlink{struct_power_c_c26_x_x___config_aa5fa2edd433b84788c63277a21bc8dea}{policy\+Init\+Fxn}
+\begin{DoxyCompactList}\small\item\em The power policy\textquotesingle{}s initialization function. \end{DoxyCompactList}\item 
+\hyperlink{_power_8h_a333038d1e9cd5f93dda7b83f8a1afa8b}{Power\+\_\+\+Policy\+Fxn} \hyperlink{struct_power_c_c26_x_x___config_acd4011995544865f832440e9d869b563}{policy\+Fxn}
+\begin{DoxyCompactList}\small\item\em The power policy function. \end{DoxyCompactList}\item 
+bool($\ast$ \hyperlink{struct_power_c_c26_x_x___config_a92f68736067cceef7bbc32408b5bec96}{calibrate\+Fxn} )(unsigned int)
+\begin{DoxyCompactList}\small\item\em The function to be used for activating R\+C Oscillator (R\+C\+O\+S\+C) calibration. \end{DoxyCompactList}\item 
+bool \hyperlink{struct_power_c_c26_x_x___config_a0dabcd65e4700189af683ce0f54e8479}{enable\+Policy}
+\begin{DoxyCompactList}\small\item\em Boolean specifying if the power policy function is enabled. \end{DoxyCompactList}\item 
+bool \hyperlink{struct_power_c_c26_x_x___config_ae5541ad9e9fb883e9bdf9c68d1c0226b}{calibrate\+R\+C\+O\+S\+C\+\_\+\+L\+F}
+\begin{DoxyCompactList}\small\item\em Boolean specifying whether the low frequency R\+C\+O\+S\+C (R\+C\+O\+S\+C\+\_\+\+L\+F) should be calibrated. \end{DoxyCompactList}\item 
+bool \hyperlink{struct_power_c_c26_x_x___config_a896b6c56c0d1be28de7ce4ef09fe616a}{calibrate\+R\+C\+O\+S\+C\+\_\+\+H\+F}
+\begin{DoxyCompactList}\small\item\em Boolean specifying whether the high frequency R\+C\+O\+S\+C (R\+C\+O\+S\+C\+\_\+\+H\+F) should be calibrated. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Global configuration structure. 
+
+\subsubsection{Field Documentation}
+\index{Power\+C\+C26\+X\+X\+\_\+\+Config@{Power\+C\+C26\+X\+X\+\_\+\+Config}!policy\+Init\+Fxn@{policy\+Init\+Fxn}}
+\index{policy\+Init\+Fxn@{policy\+Init\+Fxn}!Power\+C\+C26\+X\+X\+\_\+\+Config@{Power\+C\+C26\+X\+X\+\_\+\+Config}}
+\paragraph[{policy\+Init\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Power\+\_\+\+Policy\+Init\+Fxn} Power\+C\+C26\+X\+X\+\_\+\+Config\+::policy\+Init\+Fxn}\label{struct_power_c_c26_x_x___config_aa5fa2edd433b84788c63277a21bc8dea}
+
+
+The power policy\textquotesingle{}s initialization function. 
+
+If the policy does not have an initialization function, \textquotesingle{}N\+U\+L\+L\textquotesingle{} should be specified. \index{Power\+C\+C26\+X\+X\+\_\+\+Config@{Power\+C\+C26\+X\+X\+\_\+\+Config}!policy\+Fxn@{policy\+Fxn}}
+\index{policy\+Fxn@{policy\+Fxn}!Power\+C\+C26\+X\+X\+\_\+\+Config@{Power\+C\+C26\+X\+X\+\_\+\+Config}}
+\paragraph[{policy\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Power\+\_\+\+Policy\+Fxn} Power\+C\+C26\+X\+X\+\_\+\+Config\+::policy\+Fxn}\label{struct_power_c_c26_x_x___config_acd4011995544865f832440e9d869b563}
+
+
+The power policy function. 
+
+When enabled, this function is called in the idle loop, to decide upon and activate sleep states. Two reference power policies are provided\+:
+
+\hyperlink{_power_c_c26_x_x_8h_ad4ff77b3854dd494aac42e42f70bdee7}{Power\+C\+C26\+X\+X\+\_\+do\+W\+F\+I()} -\/ a simple policy that invokes wait for interrupt (W\+F\+I)
+
+\hyperlink{_power_c_c26_x_x_8h_aea49c1a01cb045b1ce6be1ecb3587498}{Power\+C\+C26\+X\+X\+\_\+standby\+Policy()} -\/ an agressive policy that considers constraints and latencies, and optionally puts the device into the standby state.
+
+Custom policies can be written, and specified via this function pointer. \index{Power\+C\+C26\+X\+X\+\_\+\+Config@{Power\+C\+C26\+X\+X\+\_\+\+Config}!calibrate\+Fxn@{calibrate\+Fxn}}
+\index{calibrate\+Fxn@{calibrate\+Fxn}!Power\+C\+C26\+X\+X\+\_\+\+Config@{Power\+C\+C26\+X\+X\+\_\+\+Config}}
+\paragraph[{calibrate\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}bool($\ast$ Power\+C\+C26\+X\+X\+\_\+\+Config\+::calibrate\+Fxn) (unsigned int)}\label{struct_power_c_c26_x_x___config_a92f68736067cceef7bbc32408b5bec96}
+
+
+The function to be used for activating R\+C Oscillator (R\+C\+O\+S\+C) calibration. 
+
+Calibration is normally enabled, via specification of the function \hyperlink{_power_c_c26_x_x_8h_a27a4c7312d5cf59eb699ad5f87104408}{Power\+C\+C26\+X\+X\+\_\+calibrate()}. This enables high accuracy operation, and faster high frequency crystal oscillator (X\+O\+S\+C\+\_\+\+H\+F) startups.
+
+To disable R\+C\+O\+S\+C calibration the function \hyperlink{_power_c_c26_x_x_8h_a39c82b7c57a1b5c013f5e285e98232e9}{Power\+C\+C26\+X\+X\+\_\+no\+Calibrate()} should be specified. \index{Power\+C\+C26\+X\+X\+\_\+\+Config@{Power\+C\+C26\+X\+X\+\_\+\+Config}!enable\+Policy@{enable\+Policy}}
+\index{enable\+Policy@{enable\+Policy}!Power\+C\+C26\+X\+X\+\_\+\+Config@{Power\+C\+C26\+X\+X\+\_\+\+Config}}
+\paragraph[{enable\+Policy}]{\setlength{\rightskip}{0pt plus 5cm}bool Power\+C\+C26\+X\+X\+\_\+\+Config\+::enable\+Policy}\label{struct_power_c_c26_x_x___config_a0dabcd65e4700189af683ce0f54e8479}
+
+
+Boolean specifying if the power policy function is enabled. 
+
+If \textquotesingle{}T\+R\+U\+E\textquotesingle{}, the policy function will be invoked once for each pass of the idle loop.
+
+If \textquotesingle{}F\+A\+L\+S\+E\textquotesingle{}, the policy will not run by default. But the policy can be enabled later at runtime, once the application has started, via a call to \hyperlink{_power_8h_ae8d6092a8fb35b6db52a69a35fcc327f}{Power\+\_\+enable\+Policy()}. Once it has been enabled, the policy will be invoked once for each pass of the idle loop. \index{Power\+C\+C26\+X\+X\+\_\+\+Config@{Power\+C\+C26\+X\+X\+\_\+\+Config}!calibrate\+R\+C\+O\+S\+C\+\_\+\+L\+F@{calibrate\+R\+C\+O\+S\+C\+\_\+\+L\+F}}
+\index{calibrate\+R\+C\+O\+S\+C\+\_\+\+L\+F@{calibrate\+R\+C\+O\+S\+C\+\_\+\+L\+F}!Power\+C\+C26\+X\+X\+\_\+\+Config@{Power\+C\+C26\+X\+X\+\_\+\+Config}}
+\paragraph[{calibrate\+R\+C\+O\+S\+C\+\_\+\+L\+F}]{\setlength{\rightskip}{0pt plus 5cm}bool Power\+C\+C26\+X\+X\+\_\+\+Config\+::calibrate\+R\+C\+O\+S\+C\+\_\+\+L\+F}\label{struct_power_c_c26_x_x___config_ae5541ad9e9fb883e9bdf9c68d1c0226b}
+
+
+Boolean specifying whether the low frequency R\+C\+O\+S\+C (R\+C\+O\+S\+C\+\_\+\+L\+F) should be calibrated. 
+
+If R\+C\+O\+S\+C calibration is enabled (above, via specification of an appropriate calibrate\+Fxn), this Boolean specifies whether R\+C\+O\+S\+C\+\_\+\+L\+F should be calibrated. \index{Power\+C\+C26\+X\+X\+\_\+\+Config@{Power\+C\+C26\+X\+X\+\_\+\+Config}!calibrate\+R\+C\+O\+S\+C\+\_\+\+H\+F@{calibrate\+R\+C\+O\+S\+C\+\_\+\+H\+F}}
+\index{calibrate\+R\+C\+O\+S\+C\+\_\+\+H\+F@{calibrate\+R\+C\+O\+S\+C\+\_\+\+H\+F}!Power\+C\+C26\+X\+X\+\_\+\+Config@{Power\+C\+C26\+X\+X\+\_\+\+Config}}
+\paragraph[{calibrate\+R\+C\+O\+S\+C\+\_\+\+H\+F}]{\setlength{\rightskip}{0pt plus 5cm}bool Power\+C\+C26\+X\+X\+\_\+\+Config\+::calibrate\+R\+C\+O\+S\+C\+\_\+\+H\+F}\label{struct_power_c_c26_x_x___config_a896b6c56c0d1be28de7ce4ef09fe616a}
+
+
+Boolean specifying whether the high frequency R\+C\+O\+S\+C (R\+C\+O\+S\+C\+\_\+\+H\+F) should be calibrated. 
+
+If R\+C\+O\+S\+C calibration is enabled (above, via specification of an appropriate calibrate\+Fxn), this Boolean specifies whether R\+C\+O\+S\+C\+\_\+\+H\+F should be calibrated. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_power_c_c26_x_x_8h}{Power\+C\+C26\+X\+X.\+h}\end{DoxyCompactItemize}

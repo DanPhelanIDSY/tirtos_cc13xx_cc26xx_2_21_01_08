@@ -1,0 +1,87 @@
+\subsection{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object Struct Reference}
+\label{struct_p_w_m_timer_c_c26_x_x___object}\index{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object}}
+
+
+P\+W\+M\+Timer26\+X\+X Object.  
+
+
+
+
+{\ttfamily \#include $<$P\+W\+M\+Timer\+C\+C26\+X\+X.\+h$>$}
+
+
+
+Collaboration diagram for P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=321pt]{struct_p_w_m_timer_c_c26_x_x___object__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{struct_p_w_m_timer_c_c26_x_x___object_a441df1ad70adabb3de769358d301416c}{is\+Open}
+\item 
+\hyperlink{_p_w_m_8h_a11aa442e82549992c98729216d64fd63}{P\+W\+M\+\_\+\+Period\+\_\+\+Units} \hyperlink{struct_p_w_m_timer_c_c26_x_x___object_aa844c8a863f84a9775dbabb0241b41fd}{period\+Unit}
+\item 
+uint32\+\_\+t \hyperlink{struct_p_w_m_timer_c_c26_x_x___object_ad725c417ec82ce43ae3d37d7c6fbb204}{period\+Value}
+\item 
+uint32\+\_\+t \hyperlink{struct_p_w_m_timer_c_c26_x_x___object_ae502cdc25152927e72670c6d89d26fa9}{period\+Counts}
+\item 
+\hyperlink{_p_w_m_8h_abc7bc5565f2767cf9f06c1572044a8ee}{P\+W\+M\+\_\+\+Duty\+\_\+\+Units} \hyperlink{struct_p_w_m_timer_c_c26_x_x___object_aa1dc95a5203db4aa57210b66d75827fe}{duty\+Unit}
+\item 
+uint32\+\_\+t \hyperlink{struct_p_w_m_timer_c_c26_x_x___object_ab32ceff831d4f1c28fea0dcd51694c60}{duty\+Value}
+\item 
+uint32\+\_\+t \hyperlink{struct_p_w_m_timer_c_c26_x_x___object_a212dc0c3c4ae31c8bc285add11ee31a8}{duty\+Counts}
+\item 
+\hyperlink{_p_w_m_8h_a5a40c7014745d15b0c1a604dae5593f9}{P\+W\+M\+\_\+\+Idle\+Level} \hyperlink{struct_p_w_m_timer_c_c26_x_x___object_ad185ce1a42838b87b520ba3ca066ccc1}{idle\+Level}
+\item 
+\hyperlink{_g_p_timer_c_c26_x_x_8h_ab85403dde5940c587c57ca1a140e655a}{G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle} \hyperlink{struct_p_w_m_timer_c_c26_x_x___object_a8ccd272d60d7cae93d6ab39d50b3a175}{h\+Timer}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+P\+W\+M\+Timer26\+X\+X Object. 
+
+These fields are used by the driver to store and modify P\+W\+M configuration during run-\/time. The application must not edit any member variables of this structure. Appplications should also not access member variables of this structure as backwards compatibility is not guaranteed. A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{comment}{// PWM object, one per PWM output}
+PWMTimerCC26XX_Object pwmtimerCC26xxObjects[CC2650\_PWMCOUNT];
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object}!is\+Open@{is\+Open}}
+\index{is\+Open@{is\+Open}!P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{is\+Open}]{\setlength{\rightskip}{0pt plus 5cm}bool P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object\+::is\+Open}\label{struct_p_w_m_timer_c_c26_x_x___object_a441df1ad70adabb3de769358d301416c}
+open flag used to check if P\+W\+M is opened \index{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object}!period\+Unit@{period\+Unit}}
+\index{period\+Unit@{period\+Unit}!P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{period\+Unit}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+W\+M\+\_\+\+Period\+\_\+\+Units} P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object\+::period\+Unit}\label{struct_p_w_m_timer_c_c26_x_x___object_aa844c8a863f84a9775dbabb0241b41fd}
+Current period unit \index{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object}!period\+Value@{period\+Value}}
+\index{period\+Value@{period\+Value}!P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{period\+Value}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object\+::period\+Value}\label{struct_p_w_m_timer_c_c26_x_x___object_ad725c417ec82ce43ae3d37d7c6fbb204}
+Current period value in unit \index{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object}!period\+Counts@{period\+Counts}}
+\index{period\+Counts@{period\+Counts}!P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{period\+Counts}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object\+::period\+Counts}\label{struct_p_w_m_timer_c_c26_x_x___object_ae502cdc25152927e72670c6d89d26fa9}
+Current period in raw timer counts \index{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object}!duty\+Unit@{duty\+Unit}}
+\index{duty\+Unit@{duty\+Unit}!P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{duty\+Unit}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+W\+M\+\_\+\+Duty\+\_\+\+Units} P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object\+::duty\+Unit}\label{struct_p_w_m_timer_c_c26_x_x___object_aa1dc95a5203db4aa57210b66d75827fe}
+Current duty cycle unit \index{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object}!duty\+Value@{duty\+Value}}
+\index{duty\+Value@{duty\+Value}!P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{duty\+Value}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object\+::duty\+Value}\label{struct_p_w_m_timer_c_c26_x_x___object_ab32ceff831d4f1c28fea0dcd51694c60}
+Current duty cycle value in unit \index{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object}!duty\+Counts@{duty\+Counts}}
+\index{duty\+Counts@{duty\+Counts}!P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{duty\+Counts}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object\+::duty\+Counts}\label{struct_p_w_m_timer_c_c26_x_x___object_a212dc0c3c4ae31c8bc285add11ee31a8}
+Current duty in raw timer counts \index{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object}!idle\+Level@{idle\+Level}}
+\index{idle\+Level@{idle\+Level}!P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{idle\+Level}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+W\+M\+\_\+\+Idle\+Level} P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object\+::idle\+Level}\label{struct_p_w_m_timer_c_c26_x_x___object_ad185ce1a42838b87b520ba3ca066ccc1}
+P\+W\+M idle level when stopped / not started \index{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object}!h\+Timer@{h\+Timer}}
+\index{h\+Timer@{h\+Timer}!P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object@{P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{h\+Timer}]{\setlength{\rightskip}{0pt plus 5cm}{\bf G\+P\+Timer\+C\+C26\+X\+X\+\_\+\+Handle} P\+W\+M\+Timer\+C\+C26\+X\+X\+\_\+\+Object\+::h\+Timer}\label{struct_p_w_m_timer_c_c26_x_x___object_a8ccd272d60d7cae93d6ab39d50b3a175}
+Handle to underlying G\+P\+Timer peripheral 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_p_w_m_timer_c_c26_x_x_8h}{P\+W\+M\+Timer\+C\+C26\+X\+X.\+h}\end{DoxyCompactItemize}

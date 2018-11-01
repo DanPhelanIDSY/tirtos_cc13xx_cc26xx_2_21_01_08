@@ -1,0 +1,247 @@
+%%{
+    var Boards    = $args[0];
+    var board     = $args[1];
+    var example   = $args[2];
+    var prodList  = $args[3];
+    var targDir   = $args[4];
+    var fileList  = $args[5];
+    var tool      = "IAR";
+    var cOpts     = "";
+    var lOpts     = "";
+    var device    = "";
+    var linkercmd = "";
+    var cfgFile   = "";
+    var cFiles    = [];
+    var hFiles    = [];
+    var docFiles  = [];
+    var exIncDirs = "";
+
+    /* Function to remove IAR header file directories for MSP43x */
+    var removeMSP43xHeaderPaths = function (board, options) {
+        var path;
+        if (board.family == "MSP430") {
+            path = prodList["iarMSP430Headers"].dir;
+        }
+        else if (board.family == "MSP432") {
+            path = prodList["iarMSP432Headers"].dir;
+        }
+        else {
+            throw ("Trying to replace paths for an invalid device family");
+        }
+
+        while (options.indexOf(path) != -1) {
+            var start = options.indexOf(path);
+            var end = options.indexOf(" ", start);
+            var pathString = " -I" + options.substring(start, end);
+            options = options.replace(pathString, "");
+        }
+
+        return (options);
+    };
+
+    /* Function to substitute makefile symbols for full paths */
+    var replaceVariables = function(str) {
+        /* Replace makefile symbols with IAR variables */
+        for each (var prod in prodList) {
+            var replaceString = "$" + prod.iarName + "$";
+
+            if (prod.makePackagesPath == "") {
+                continue;
+            }
+
+            while (str.indexOf(prod.makePackagesPath) != -1) {
+                str = str.replace(prod.makePackagesPath, replaceString);
+            }
+        }
+
+        /* Replace './' with $PROJ_DIR$/ */
+        str = str.replace(/ \.\//g, "$PROJ_DIR$/");
+        return (str);
+    };
+
+    device = Boards.getPlatform(board).split(":").pop();
+
+    linkercmd = board.linkercmd[tool].path.split("/").pop();
+
+    cOpts = Boards.getIdeCompilerOptions(board, tool);
+    lOpts = Boards.getIdeLinkerOptions(board, tool);
+
+    /* Add example compiler & linker options if defined */
+    if (example.compilerBuildOptions && example.compilerBuildOptions[tool]) {
+        cOpts += " " + example.compilerBuildOptions[tool];
+    }
+
+    if (example.linkerBuildOptions && example.linkerBuildOptions[tool]) {
+        lOpts += " " + example.linkerBuildOptions[tool];
+    }
+
+    /* Special condition - remove IAR header paths (IDE adds them) */
+    if (board.family == "MSP430" || board.family == "MSP432") {
+        cOpts = removeMSP43xHeaderPaths(board, cOpts);
+        lOpts = removeMSP43xHeaderPaths(board, lOpts);
+    }
+
+    /* Sort example files into file arrays & get example include directories */
+    for each (var file in fileList) {
+        var ext = file.path.substring(file.path.lastIndexOf(".")).trim();
+        var fileName = file.path.substring(file.path.lastIndexOf("/") + 1).trim();
+
+        if (file.targetDirectory && file.targetDirectory != ".") {
+            fileName = file.targetDirectory + "/" + fileName;
+
+            /* Only add tempdir if not already listed */
+            var tempDir = " -I$PROJ_DIR$/"  + file.targetDirectory;
+            if (exIncDirs.indexOf(tempDir) < 0) {
+                exIncDirs += tempDir;
+            }
+        }
+
+        switch(ext) {
+            case ".c":
+            case ".cpp":
+                cFiles.push(fileName);
+                break;
+            case ".cfg":
+                cfgFile = fileName;
+                break;
+            case ".h":
+                hFiles.push(fileName);
+                break;
+            case ".txt":
+            case ".html":
+                docFiles.push(fileName);
+                break;
+            default:
+                break;
+        }
+    }
+
+    /* Add include paths to compiler options */
+    cOpts += exIncDirs;
+
+    cOpts = replaceVariables(cOpts).trim().split(" ");
+    lOpts = replaceVariables(lOpts).trim().split(" ");
+%%}
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IAR Project Connection File -->
+
+<iarProjectConnection version="1.2" name="`example.title`" oneShot="true"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="IarProjectConnection_1.2.xsd">
+
+  <device>
+    <name>`device`</name>
+  </device>
+
+  <extraOptions>
+    <args>
+      <arg>-f</arg>
+      <arg>$PROJ_DIR$/configPkg/compiler.opt.defs</arg>
+      <arg>--diag_suppress=Pa050</arg>
+%for each (var opt in cOpts) {
+      <arg>`opt`</arg>
+%}
+    </args>
+  </extraOptions>
+
+  <linkerFile>
+%if (linkercmd) {
+    <override>true</override>
+    <path>$PROJ_DIR$/$PROJ_FNAME$_`linkercmd`</path>
+%}
+%else {
+    <override>false</override>
+%}
+  </linkerFile>
+
+  <linkerExtraOptions>
+    <args>
+      <arg>-f</arg>
+      <arg>$PROJ_DIR$/configPkg/linker.cmd</arg>
+%for each (var opt in lOpts) {
+      <arg>`opt`</arg>
+%}
+    </args>
+  </linkerExtraOptions>
+
+  <customBuildTools>
+    <customBuildTool name="configuro">   <!-- Custom build tool that will be assigned to a file group -->
+      <fileExtensions>.cfg</fileExtensions>
+      <command>"$XDCROOT$/bin/stderr"</command>
+      <output>
+        <path>$PROJ_DIR$/configPkg/package.mak</path>
+      </output>
+    </customBuildTool>
+  </customBuildTools>
+
+  <heaps>
+    <heap> <!-- If omitted, id="0" -->
+      <size>0</size>
+    </heap>
+    <heap id="1">
+      <size>0</size>
+    </heap>
+  </heaps>
+%%{
+    /* Read stack from .cfg file & override default */
+    var stack = 512;
+    var line = null;
+    var File = xdc.useModule("xdc.services.io.File");
+    var cfg = File.open(targDir + "/" + cfgFile, "r");
+
+    while ((line = cfg.readLine()) != null) {
+        if (line.match(/Program\.stack\s*=/)) {
+            stack = line.substring(line.lastIndexOf("=") + 1, line.indexOf(";"));
+            stack = stack.replace(/^\s+|\s+$/g, '');
+            if (stack.match(/0x/)) {
+                stack = stack.substring(stack.lastIndexOf("x") + 1);
+                stack = parseInt(stack, 16);
+            }
+            break;
+        }
+    }
+    cfg.close();
+%%}
+  <stacks>
+    <stack> <!-- If omitted, id="0" -->
+      <size>`stack`</size>
+    </stack>
+  </stacks>
+
+  <preBuild>
+    <command>"$XDCROOT$/xs" --xdcpath="$XDCPATH$" iar.tools.configuro -c "$TOOLKIT_DIR$" --cc "$COMPILER_PATH$" --device "$DEVICE$" --compileOptions $COMPILER_ARGS_ROOT_QUOTED$ --linkOptions $LINKER_ARGS_QUOTED$ --profile release --projFile "$PROJ_PATH$"</command>
+  </preBuild>
+
+  <files>
+%if (cFiles.length) {
+    <group name="Source files">
+%    for each (var file in cFiles) {
+      <path copyTo="$PROJ_DIR$/`file`">./`file`</path>
+%    }
+%if (linkercmd) {
+      <path copyTo="$PROJ_DIR$/$PROJ_FNAME$_`linkercmd`">./`linkercmd`</path>
+%}
+    </group>
+%}
+
+%if (hFiles.length) {
+    <group name="Header files">
+%    for each (var file in hFiles) {
+      <path copyTo="$PROJ_DIR$/`file`">./`file`</path>
+%    }
+    </group>
+%}
+
+    <group name="Configuration files" customBuildTool="configuro">
+       <path copyTo="$PROJ_DIR$/$PROJ_FNAME$.cfg">./`cfgFile`</path>
+    </group>
+
+%if (docFiles.length) {
+    <group name="Documentation" build="false">
+%    for each (var file in docFiles) {
+      <path copyTo="$PROJ_DIR$/`file`">./`file`</path>
+%    }
+    </group>
+%}
+  </files>
+</iarProjectConnection>

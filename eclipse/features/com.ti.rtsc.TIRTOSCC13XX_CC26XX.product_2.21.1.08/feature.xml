@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.ti.rtsc.TIRTOSCC13XX_CC26XX.product_2.21.1.08"
+      version="2.21.1.08"
+      label="TI-RTOS for CC13XX and CC26XX (Target Content)"
+      provider-name="Texas Instruments">
+
+   <description url="http://processors.wiki.ti.com/index.php/TI-RTOS">
+This version of TI-RTOS for CC13XX and CC26XX Target Content can be chosen separately for each C/C++ project via their project settings.  The TI-RTOS for CC13XX and CC26XX IDE Client, on the other hand, is common to all projects and its version must be equal to or greater than the version of this Target Content feature.
+   </description>
+
+   <copyright>
+Copyright (c) 2015, Texas Instruments Incorporated
+   </copyright>
+
+   <license>
+      Released under Eclipse public license(EPL).
+Visit http://www.eclipse.org/legal/epl-v10.html for details of license.
+   </license>
+
+
+   <plugin
+        id="com.ti.rtsc.TIRTOSCC13XX_CC26XX.product_2.21.1.08"
+        version="2.21.1.08"
+        unpack="false" 
+   />
+    
+</feature>

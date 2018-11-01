@@ -1,0 +1,89 @@
+\subsection{R\+F\+\_\+\+Params Struct Reference}
+\label{struct_r_f___params}\index{R\+F\+\_\+\+Params@{R\+F\+\_\+\+Params}}
+
+
+R\+F parameter struct R\+F parameters are used with the \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} and \hyperlink{_r_f_8h_ab956de3745437cb7a69c4edfb006434e}{R\+F\+\_\+\+Params\+\_\+init()} call.  
+
+
+
+
+{\ttfamily \#include $<$R\+F.\+h$>$}
+
+
+
+Collaboration diagram for R\+F\+\_\+\+Params\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{struct_r_f___params__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \hyperlink{struct_r_f___params_a01d3752799ea4318bbf9d1384cb49b97}{n\+Inactivity\+Timeout}
+\begin{DoxyCompactList}\small\item\em Inactivity timeout in us, default is infinite. \end{DoxyCompactList}\item 
+uint32\+\_\+t \hyperlink{struct_r_f___params_a58dc682aa09acabe6411ea186dd3aebf}{n\+Power\+Up\+Duration}
+\begin{DoxyCompactList}\small\item\em Measured poweruptime in us or specified startup time (if left default it will measure) \end{DoxyCompactList}\item 
+\hyperlink{_r_f_8h_a4d2ce6dc70b0f329dc5e249ec10c574a}{R\+F\+\_\+\+Callback} \hyperlink{struct_r_f___params_ae683ebc129d40a11fb9ec7e371f1e11b}{p\+Power\+Cb}
+\begin{DoxyCompactList}\small\item\em Power up callback. \end{DoxyCompactList}\item 
+\hyperlink{_r_f_8h_a4d2ce6dc70b0f329dc5e249ec10c574a}{R\+F\+\_\+\+Callback} \hyperlink{struct_r_f___params_ab7be231b23fab2503b8c54b474fba74d}{p\+Err\+Cb}
+\begin{DoxyCompactList}\small\item\em Error callback. \end{DoxyCompactList}\item 
+bool \hyperlink{struct_r_f___params_a66feaf5103de9d0b45085c7c44ea918b}{b\+Power\+Up\+X\+O\+S\+C}
+\begin{DoxyCompactList}\small\item\em Allways enable X\+O\+S\+C\+\_\+\+H\+F at chip wakeup. \end{DoxyCompactList}\item 
+uint16\+\_\+t \hyperlink{struct_r_f___params_a848ebeabce42f87f6a1d4f51f908dbe4}{n\+Power\+Up\+Duration\+Margin}
+\begin{DoxyCompactList}\small\item\em Powerup duration margin in us. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+R\+F parameter struct R\+F parameters are used with the \hyperlink{_r_f_8h_a13a7c6f5a2b797e0aac18fecfaba6f64}{R\+F\+\_\+open()} and \hyperlink{_r_f_8h_ab956de3745437cb7a69c4edfb006434e}{R\+F\+\_\+\+Params\+\_\+init()} call. 
+
+\subsubsection{Field Documentation}
+\index{R\+F\+\_\+\+Params@{R\+F\+\_\+\+Params}!n\+Inactivity\+Timeout@{n\+Inactivity\+Timeout}}
+\index{n\+Inactivity\+Timeout@{n\+Inactivity\+Timeout}!R\+F\+\_\+\+Params@{R\+F\+\_\+\+Params}}
+\paragraph[{n\+Inactivity\+Timeout}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t R\+F\+\_\+\+Params\+::n\+Inactivity\+Timeout}\label{struct_r_f___params_a01d3752799ea4318bbf9d1384cb49b97}
+
+
+Inactivity timeout in us, default is infinite. 
+
+\index{R\+F\+\_\+\+Params@{R\+F\+\_\+\+Params}!n\+Power\+Up\+Duration@{n\+Power\+Up\+Duration}}
+\index{n\+Power\+Up\+Duration@{n\+Power\+Up\+Duration}!R\+F\+\_\+\+Params@{R\+F\+\_\+\+Params}}
+\paragraph[{n\+Power\+Up\+Duration}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t R\+F\+\_\+\+Params\+::n\+Power\+Up\+Duration}\label{struct_r_f___params_a58dc682aa09acabe6411ea186dd3aebf}
+
+
+Measured poweruptime in us or specified startup time (if left default it will measure) 
+
+\index{R\+F\+\_\+\+Params@{R\+F\+\_\+\+Params}!p\+Power\+Cb@{p\+Power\+Cb}}
+\index{p\+Power\+Cb@{p\+Power\+Cb}!R\+F\+\_\+\+Params@{R\+F\+\_\+\+Params}}
+\paragraph[{p\+Power\+Cb}]{\setlength{\rightskip}{0pt plus 5cm}{\bf R\+F\+\_\+\+Callback} R\+F\+\_\+\+Params\+::p\+Power\+Cb}\label{struct_r_f___params_ae683ebc129d40a11fb9ec7e371f1e11b}
+
+
+Power up callback. 
+
+\index{R\+F\+\_\+\+Params@{R\+F\+\_\+\+Params}!p\+Err\+Cb@{p\+Err\+Cb}}
+\index{p\+Err\+Cb@{p\+Err\+Cb}!R\+F\+\_\+\+Params@{R\+F\+\_\+\+Params}}
+\paragraph[{p\+Err\+Cb}]{\setlength{\rightskip}{0pt plus 5cm}{\bf R\+F\+\_\+\+Callback} R\+F\+\_\+\+Params\+::p\+Err\+Cb}\label{struct_r_f___params_ab7be231b23fab2503b8c54b474fba74d}
+
+
+Error callback. 
+
+\index{R\+F\+\_\+\+Params@{R\+F\+\_\+\+Params}!b\+Power\+Up\+X\+O\+S\+C@{b\+Power\+Up\+X\+O\+S\+C}}
+\index{b\+Power\+Up\+X\+O\+S\+C@{b\+Power\+Up\+X\+O\+S\+C}!R\+F\+\_\+\+Params@{R\+F\+\_\+\+Params}}
+\paragraph[{b\+Power\+Up\+X\+O\+S\+C}]{\setlength{\rightskip}{0pt plus 5cm}bool R\+F\+\_\+\+Params\+::b\+Power\+Up\+X\+O\+S\+C}\label{struct_r_f___params_a66feaf5103de9d0b45085c7c44ea918b}
+
+
+Allways enable X\+O\+S\+C\+\_\+\+H\+F at chip wakeup. 
+
+\index{R\+F\+\_\+\+Params@{R\+F\+\_\+\+Params}!n\+Power\+Up\+Duration\+Margin@{n\+Power\+Up\+Duration\+Margin}}
+\index{n\+Power\+Up\+Duration\+Margin@{n\+Power\+Up\+Duration\+Margin}!R\+F\+\_\+\+Params@{R\+F\+\_\+\+Params}}
+\paragraph[{n\+Power\+Up\+Duration\+Margin}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t R\+F\+\_\+\+Params\+::n\+Power\+Up\+Duration\+Margin}\label{struct_r_f___params_a848ebeabce42f87f6a1d4f51f908dbe4}
+
+
+Powerup duration margin in us. 
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_r_f_8h}{R\+F.\+h}\end{DoxyCompactItemize}

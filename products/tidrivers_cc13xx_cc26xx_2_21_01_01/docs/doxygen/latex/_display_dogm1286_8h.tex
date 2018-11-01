@@ -1,0 +1,136 @@
+\subsection{Display\+Dogm1286.\+h File Reference}
+\label{_display_dogm1286_8h}\index{Display\+Dogm1286.\+h@{Display\+Dogm1286.\+h}}
+{\ttfamily \#include $<$ti/drivers/\+S\+P\+I.\+h$>$}\\*
+{\ttfamily \#include $<$ti/mw/display/\+Display.\+h$>$}\\*
+{\ttfamily \#include $<$ti/mw/lcd/\+L\+C\+D\+Dogm1286.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$xdc/std.\+h$>$}\\*
+Include dependency graph for Display\+Dogm1286.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_display_dogm1286_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_display_dogm1286___h_w_attrs}{Display\+Dogm1286\+\_\+\+H\+W\+Attrs}
+\item 
+struct \hyperlink{struct_display_dogm1286___object}{Display\+Dogm1286\+\_\+\+Object}
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_display_dogm1286___h_w_attrs}{Display\+Dogm1286\+\_\+\+H\+W\+Attrs} \hyperlink{_display_dogm1286_8h_a59380665e121771f575e353c0fa5f69c}{Display\+Dogm1286\+\_\+\+H\+W\+Attrs}
+\item 
+typedef struct \hyperlink{struct_display_dogm1286___object}{Display\+Dogm1286\+\_\+\+Object} \hyperlink{_display_dogm1286_8h_ae9fcc5568d4b81bf8085ec89ef4b655c}{Display\+Dogm1286\+\_\+\+Object}
+\item 
+typedef struct \hyperlink{struct_display_dogm1286___object}{Display\+Dogm1286\+\_\+\+Object} $\ast$ \hyperlink{_display_dogm1286_8h_a717f1494741e8428201f7204f6d5c4d5}{Display\+Dogm1286\+\_\+\+Handle}
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} \hyperlink{_display_dogm1286_8h_a4c7a1aa2af584f06ad1ff1ee72e54642}{Display\+Dogm1286\+\_\+open} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle}, \hyperlink{struct_display___params}{Display\+\_\+\+Params} $\ast$params)
+\item 
+void \hyperlink{_display_dogm1286_8h_a71691cd65dfc4e2958127a24d86d0e1b}{Display\+Dogm1286\+\_\+clear} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle)
+\item 
+void \hyperlink{_display_dogm1286_8h_a3f1cb817259d4bde56d2bfafa686c104}{Display\+Dogm1286\+\_\+clear\+Lines} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle, uint8\+\_\+t from\+Line, uint8\+\_\+t to\+Line)
+\item 
+void \hyperlink{_display_dogm1286_8h_ad389ba8187ab364ac1be546ecdc2db12}{Display\+Dogm1286\+\_\+put5} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle, uint8\+\_\+t line, uint8\+\_\+t column, uintptr\+\_\+t fmt, uintptr\+\_\+t a0, uintptr\+\_\+t a1, uintptr\+\_\+t a2, uintptr\+\_\+t a3, uintptr\+\_\+t a4)
+\item 
+void \hyperlink{_display_dogm1286_8h_a16baf7b6fd4bd7b8be9592f00a2eb54f}{Display\+Dogm1286\+\_\+close} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle})
+\item 
+int \hyperlink{_display_dogm1286_8h_a39ef449adc9aa5322f24bd5750311bcd}{Display\+Dogm1286\+\_\+control} (\hyperlink{_display_8h_a045a26811755aabf1886d982c49e54ab}{Display\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)
+\item 
+unsigned int \hyperlink{_display_dogm1286_8h_ab8314e4631d8ee4a9f71b1f0dd0c1c0c}{Display\+Dogm1286\+\_\+get\+Type} (void)
+\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_display___fxn_table}{Display\+\_\+\+Fxn\+Table} \hyperlink{_display_dogm1286_8h_a0fe13f03cd4fc79e290221fd2b86d4cf}{Display\+Dogm1286\+\_\+fxn\+Table}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Typedef Documentation}
+\index{Display\+Dogm1286.\+h@{Display\+Dogm1286.\+h}!Display\+Dogm1286\+\_\+\+H\+W\+Attrs@{Display\+Dogm1286\+\_\+\+H\+W\+Attrs}}
+\index{Display\+Dogm1286\+\_\+\+H\+W\+Attrs@{Display\+Dogm1286\+\_\+\+H\+W\+Attrs}!Display\+Dogm1286.\+h@{Display\+Dogm1286.\+h}}
+\paragraph[{Display\+Dogm1286\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Display\+Dogm1286\+\_\+\+H\+W\+Attrs}  {\bf Display\+Dogm1286\+\_\+\+H\+W\+Attrs}}\label{_display_dogm1286_8h_a59380665e121771f575e353c0fa5f69c}
+\index{Display\+Dogm1286.\+h@{Display\+Dogm1286.\+h}!Display\+Dogm1286\+\_\+\+Object@{Display\+Dogm1286\+\_\+\+Object}}
+\index{Display\+Dogm1286\+\_\+\+Object@{Display\+Dogm1286\+\_\+\+Object}!Display\+Dogm1286.\+h@{Display\+Dogm1286.\+h}}
+\paragraph[{Display\+Dogm1286\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Display\+Dogm1286\+\_\+\+Object}  {\bf Display\+Dogm1286\+\_\+\+Object}}\label{_display_dogm1286_8h_ae9fcc5568d4b81bf8085ec89ef4b655c}
+\index{Display\+Dogm1286.\+h@{Display\+Dogm1286.\+h}!Display\+Dogm1286\+\_\+\+Handle@{Display\+Dogm1286\+\_\+\+Handle}}
+\index{Display\+Dogm1286\+\_\+\+Handle@{Display\+Dogm1286\+\_\+\+Handle}!Display\+Dogm1286.\+h@{Display\+Dogm1286.\+h}}
+\paragraph[{Display\+Dogm1286\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Display\+Dogm1286\+\_\+\+Object} $\ast$ {\bf Display\+Dogm1286\+\_\+\+Handle}}\label{_display_dogm1286_8h_a717f1494741e8428201f7204f6d5c4d5}
+
+
+\subsubsection{Function Documentation}
+\index{Display\+Dogm1286.\+h@{Display\+Dogm1286.\+h}!Display\+Dogm1286\+\_\+open@{Display\+Dogm1286\+\_\+open}}
+\index{Display\+Dogm1286\+\_\+open@{Display\+Dogm1286\+\_\+open}!Display\+Dogm1286.\+h@{Display\+Dogm1286.\+h}}
+\paragraph[{Display\+Dogm1286\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Display\+\_\+\+Handle} Display\+Dogm1286\+\_\+open (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{, }
+\item[{{\bf Display\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_display_dogm1286_8h_a4c7a1aa2af584f06ad1ff1ee72e54642}
+\index{Display\+Dogm1286.\+h@{Display\+Dogm1286.\+h}!Display\+Dogm1286\+\_\+clear@{Display\+Dogm1286\+\_\+clear}}
+\index{Display\+Dogm1286\+\_\+clear@{Display\+Dogm1286\+\_\+clear}!Display\+Dogm1286.\+h@{Display\+Dogm1286.\+h}}
+\paragraph[{Display\+Dogm1286\+\_\+clear}]{\setlength{\rightskip}{0pt plus 5cm}void Display\+Dogm1286\+\_\+clear (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_display_dogm1286_8h_a71691cd65dfc4e2958127a24d86d0e1b}
+\index{Display\+Dogm1286.\+h@{Display\+Dogm1286.\+h}!Display\+Dogm1286\+\_\+clear\+Lines@{Display\+Dogm1286\+\_\+clear\+Lines}}
+\index{Display\+Dogm1286\+\_\+clear\+Lines@{Display\+Dogm1286\+\_\+clear\+Lines}!Display\+Dogm1286.\+h@{Display\+Dogm1286.\+h}}
+\paragraph[{Display\+Dogm1286\+\_\+clear\+Lines}]{\setlength{\rightskip}{0pt plus 5cm}void Display\+Dogm1286\+\_\+clear\+Lines (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{handle, }
+\item[{uint8\+\_\+t}]{from\+Line, }
+\item[{uint8\+\_\+t}]{to\+Line}
+\end{DoxyParamCaption}
+)}\label{_display_dogm1286_8h_a3f1cb817259d4bde56d2bfafa686c104}
+\index{Display\+Dogm1286.\+h@{Display\+Dogm1286.\+h}!Display\+Dogm1286\+\_\+put5@{Display\+Dogm1286\+\_\+put5}}
+\index{Display\+Dogm1286\+\_\+put5@{Display\+Dogm1286\+\_\+put5}!Display\+Dogm1286.\+h@{Display\+Dogm1286.\+h}}
+\paragraph[{Display\+Dogm1286\+\_\+put5}]{\setlength{\rightskip}{0pt plus 5cm}void Display\+Dogm1286\+\_\+put5 (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{handle, }
+\item[{uint8\+\_\+t}]{line, }
+\item[{uint8\+\_\+t}]{column, }
+\item[{uintptr\+\_\+t}]{fmt, }
+\item[{uintptr\+\_\+t}]{a0, }
+\item[{uintptr\+\_\+t}]{a1, }
+\item[{uintptr\+\_\+t}]{a2, }
+\item[{uintptr\+\_\+t}]{a3, }
+\item[{uintptr\+\_\+t}]{a4}
+\end{DoxyParamCaption}
+)}\label{_display_dogm1286_8h_ad389ba8187ab364ac1be546ecdc2db12}
+\index{Display\+Dogm1286.\+h@{Display\+Dogm1286.\+h}!Display\+Dogm1286\+\_\+close@{Display\+Dogm1286\+\_\+close}}
+\index{Display\+Dogm1286\+\_\+close@{Display\+Dogm1286\+\_\+close}!Display\+Dogm1286.\+h@{Display\+Dogm1286.\+h}}
+\paragraph[{Display\+Dogm1286\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}void Display\+Dogm1286\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{}
+\end{DoxyParamCaption}
+)}\label{_display_dogm1286_8h_a16baf7b6fd4bd7b8be9592f00a2eb54f}
+\index{Display\+Dogm1286.\+h@{Display\+Dogm1286.\+h}!Display\+Dogm1286\+\_\+control@{Display\+Dogm1286\+\_\+control}}
+\index{Display\+Dogm1286\+\_\+control@{Display\+Dogm1286\+\_\+control}!Display\+Dogm1286.\+h@{Display\+Dogm1286.\+h}}
+\paragraph[{Display\+Dogm1286\+\_\+control}]{\setlength{\rightskip}{0pt plus 5cm}int Display\+Dogm1286\+\_\+control (
+\begin{DoxyParamCaption}
+\item[{{\bf Display\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{cmd, }
+\item[{void $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}\label{_display_dogm1286_8h_a39ef449adc9aa5322f24bd5750311bcd}
+\index{Display\+Dogm1286.\+h@{Display\+Dogm1286.\+h}!Display\+Dogm1286\+\_\+get\+Type@{Display\+Dogm1286\+\_\+get\+Type}}
+\index{Display\+Dogm1286\+\_\+get\+Type@{Display\+Dogm1286\+\_\+get\+Type}!Display\+Dogm1286.\+h@{Display\+Dogm1286.\+h}}
+\paragraph[{Display\+Dogm1286\+\_\+get\+Type}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int Display\+Dogm1286\+\_\+get\+Type (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_display_dogm1286_8h_ab8314e4631d8ee4a9f71b1f0dd0c1c0c}
+
+
+\subsubsection{Variable Documentation}
+\index{Display\+Dogm1286.\+h@{Display\+Dogm1286.\+h}!Display\+Dogm1286\+\_\+fxn\+Table@{Display\+Dogm1286\+\_\+fxn\+Table}}
+\index{Display\+Dogm1286\+\_\+fxn\+Table@{Display\+Dogm1286\+\_\+fxn\+Table}!Display\+Dogm1286.\+h@{Display\+Dogm1286.\+h}}
+\paragraph[{Display\+Dogm1286\+\_\+fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Display\+\_\+\+Fxn\+Table} Display\+Dogm1286\+\_\+fxn\+Table}\label{_display_dogm1286_8h_a0fe13f03cd4fc79e290221fd2b86d4cf}

@@ -1,0 +1,21 @@
+digraph "DisplayDogm1286_HWAttrs"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="DisplayDogm1286_HWAttrs",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" lcdHandle" ];
+  Node2 [label="LCD_Config",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_l_c_d___config.html",tooltip="The LCD_Config structure contains a set of pointers used to characterize the LCD driver implementatio..."];
+  Node3 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" hwAttrs" ];
+  Node3 [label="LCD_HWAttrs",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_l_c_d___h_w_attrs.html",tooltip="LCD Hardware attributes. "];
+  Node4 -> Node3 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" LCD_initCmd" ];
+  Node4 [label="LCD_Command",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_l_c_d___command.html",tooltip="Format of LCD commands used by the LCD controller. "];
+  Node5 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" object" ];
+  Node5 [label="LCD_Object",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_l_c_d___object.html",tooltip="LCD Object. "];
+  Node6 -> Node5 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" lcdBuffers" ];
+  Node6 [label="LCD_Buffer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_l_c_d___buffer.html",tooltip="LCD_Buffer used to store data to be printed on the LCD display. "];
+  Node7 -> Node5 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" spiHandle" ];
+  Node7 [label="SPI_Config",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_s_p_i___config.html",tooltip="SPI Global configuration. "];
+  Node8 -> Node7 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" fxnTablePtr" ];
+  Node8 [label="SPI_FxnTable",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_s_p_i___fxn_table.html",tooltip="The definition of a SPI function table that contains the required set of functions to control a speci..."];
+  Node7 -> Node8 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" closeFxn\nserviceISRFxn\ninitFxn\ntransferCancelFxn\ncontrolFxn\nopenFxn\ntransferFxn" ];
+}

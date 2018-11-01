@@ -1,0 +1,83 @@
+/*
+ * Copyright (c) 2015, Texas Instruments Incorporated
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * *  Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * *  Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * *  Neither the name of Texas Instruments Incorporated nor the names of
+ *    its contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/*
+ * Get products installation directories & versions.  productList must be
+ * defined before the boards & examples capsules are loaded.
+ */
+var xdcArgs = java.lang.System.getenv("XDCARGS");
+var productList = xdc.loadCapsule("examples/productList.xs");
+var prodList = productList.createProductList("BUILD", xdcArgs, "trex");
+var msp43xExtraOptions = productList.getMSP43xExtraOptions("BUILD",
+    xdcArgs, "trex");
+
+var Boards = xdc.loadCapsule("examples/Boards.xs");
+var ExampleList = xdc.loadCapsule("examples/ExampleList.xs");
+var examplesDir = new java.io.File(prodList["tirtos"].absPath + "/packages/examples").getPath();
+
+/* List of files to export */
+var packageFiles = [
+    "Boards.xs",
+    "ExampleList.xs",
+    "makefile.defs",
+    "package.bld",
+    "productList.xs"
+];
+
+/* Iterate over all boards and get boards for which the *Ware is defined */
+for each (var board in Boards.allBoards) {
+    if (typeof prodList[board.driverlib].absPath == "undefined" ||
+        prodList[board.driverlib].absPath == "") {
+        continue;
+    }
+
+    /* Determine which examples are supported on the board */
+    for each (var example in ExampleList.allExamples) {
+        if (!ExampleList.isBoardSupported(example, board)) {
+            continue;
+        }
+
+        /* Get all files for an example and add them to the export list */
+        for each (var file in ExampleList.getExampleSourceFiles(examplesDir,
+            board, example)) {
+            /*
+             * Only add the file if it exists in examples directory.  Filter
+             * out any files that may be copied from *Wares or other sources.
+             */
+            if (new java.io.File("." + file.path).exists()) {
+                packageFiles.push("." + file.path);
+            }
+        }
+    }
+}
+
+Pkg.otherFiles = packageFiles;

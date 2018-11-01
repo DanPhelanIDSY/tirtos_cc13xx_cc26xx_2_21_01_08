@@ -1,0 +1,80 @@
+\subsection{ffcio.\+h File Reference}
+\label{ffcio_8h}\index{ffcio.\+h@{ffcio.\+h}}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{ffcio_8h_ab242d2a1a94533d541974dd05d723b90}{ffcio\+\_\+close} (int dev\+\_\+fd)
+\item 
+fpos\+\_\+t \hyperlink{ffcio_8h_a4043a21260906da7e457b4998e679b88}{ffcio\+\_\+lseek} (int dev\+\_\+fd, fpos\+\_\+t offset, int origin)
+\item 
+int \hyperlink{ffcio_8h_a9ae4b6e39e5fa2ad6ad927475839d9fc}{ffcio\+\_\+open} (const char $\ast$path, unsigned flags, int llv\+\_\+fd)
+\item 
+int \hyperlink{ffcio_8h_a8adf559daf9db27c89cd9abc3d4d53f3}{ffcio\+\_\+read} (int dev\+\_\+fd, char $\ast$buf, unsigned count)
+\item 
+int \hyperlink{ffcio_8h_a4437ebfe676a8444acbb5af50d0990a5}{ffcio\+\_\+rename} (const char $\ast$old\+\_\+name, const char $\ast$new\+\_\+name)
+\item 
+int \hyperlink{ffcio_8h_a63d398fbcb823cfa1a634d626f3a1945}{ffcio\+\_\+unlink} (const char $\ast$path)
+\item 
+int \hyperlink{ffcio_8h_a53f05ca85817c6cfc474f39de9608fe7}{ffcio\+\_\+write} (int dev\+\_\+fd, const char $\ast$buf, unsigned count)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Function Documentation}
+\index{ffcio.\+h@{ffcio.\+h}!ffcio\+\_\+close@{ffcio\+\_\+close}}
+\index{ffcio\+\_\+close@{ffcio\+\_\+close}!ffcio.\+h@{ffcio.\+h}}
+\paragraph[{ffcio\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}int ffcio\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{int}]{dev\+\_\+fd}
+\end{DoxyParamCaption}
+)}\label{ffcio_8h_ab242d2a1a94533d541974dd05d723b90}
+\index{ffcio.\+h@{ffcio.\+h}!ffcio\+\_\+lseek@{ffcio\+\_\+lseek}}
+\index{ffcio\+\_\+lseek@{ffcio\+\_\+lseek}!ffcio.\+h@{ffcio.\+h}}
+\paragraph[{ffcio\+\_\+lseek}]{\setlength{\rightskip}{0pt plus 5cm}fpos\+\_\+t ffcio\+\_\+lseek (
+\begin{DoxyParamCaption}
+\item[{int}]{dev\+\_\+fd, }
+\item[{fpos\+\_\+t}]{offset, }
+\item[{int}]{origin}
+\end{DoxyParamCaption}
+)}\label{ffcio_8h_a4043a21260906da7e457b4998e679b88}
+\index{ffcio.\+h@{ffcio.\+h}!ffcio\+\_\+open@{ffcio\+\_\+open}}
+\index{ffcio\+\_\+open@{ffcio\+\_\+open}!ffcio.\+h@{ffcio.\+h}}
+\paragraph[{ffcio\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}int ffcio\+\_\+open (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{path, }
+\item[{unsigned}]{flags, }
+\item[{int}]{llv\+\_\+fd}
+\end{DoxyParamCaption}
+)}\label{ffcio_8h_a9ae4b6e39e5fa2ad6ad927475839d9fc}
+\index{ffcio.\+h@{ffcio.\+h}!ffcio\+\_\+read@{ffcio\+\_\+read}}
+\index{ffcio\+\_\+read@{ffcio\+\_\+read}!ffcio.\+h@{ffcio.\+h}}
+\paragraph[{ffcio\+\_\+read}]{\setlength{\rightskip}{0pt plus 5cm}int ffcio\+\_\+read (
+\begin{DoxyParamCaption}
+\item[{int}]{dev\+\_\+fd, }
+\item[{char $\ast$}]{buf, }
+\item[{unsigned}]{count}
+\end{DoxyParamCaption}
+)}\label{ffcio_8h_a8adf559daf9db27c89cd9abc3d4d53f3}
+\index{ffcio.\+h@{ffcio.\+h}!ffcio\+\_\+rename@{ffcio\+\_\+rename}}
+\index{ffcio\+\_\+rename@{ffcio\+\_\+rename}!ffcio.\+h@{ffcio.\+h}}
+\paragraph[{ffcio\+\_\+rename}]{\setlength{\rightskip}{0pt plus 5cm}int ffcio\+\_\+rename (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{old\+\_\+name, }
+\item[{const char $\ast$}]{new\+\_\+name}
+\end{DoxyParamCaption}
+)}\label{ffcio_8h_a4437ebfe676a8444acbb5af50d0990a5}
+\index{ffcio.\+h@{ffcio.\+h}!ffcio\+\_\+unlink@{ffcio\+\_\+unlink}}
+\index{ffcio\+\_\+unlink@{ffcio\+\_\+unlink}!ffcio.\+h@{ffcio.\+h}}
+\paragraph[{ffcio\+\_\+unlink}]{\setlength{\rightskip}{0pt plus 5cm}int ffcio\+\_\+unlink (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{path}
+\end{DoxyParamCaption}
+)}\label{ffcio_8h_a63d398fbcb823cfa1a634d626f3a1945}
+\index{ffcio.\+h@{ffcio.\+h}!ffcio\+\_\+write@{ffcio\+\_\+write}}
+\index{ffcio\+\_\+write@{ffcio\+\_\+write}!ffcio.\+h@{ffcio.\+h}}
+\paragraph[{ffcio\+\_\+write}]{\setlength{\rightskip}{0pt plus 5cm}int ffcio\+\_\+write (
+\begin{DoxyParamCaption}
+\item[{int}]{dev\+\_\+fd, }
+\item[{const char $\ast$}]{buf, }
+\item[{unsigned}]{count}
+\end{DoxyParamCaption}
+)}\label{ffcio_8h_a53f05ca85817c6cfc474f39de9608fe7}

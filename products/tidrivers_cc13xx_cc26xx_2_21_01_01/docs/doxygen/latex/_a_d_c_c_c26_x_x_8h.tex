@@ -1,0 +1,238 @@
+\subsection{A\+D\+C\+C\+C26\+X\+X.\+h File Reference}
+\label{_a_d_c_c_c26_x_x_8h}\index{A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}}
+
+
+\subsubsection{Detailed Description}
+A\+D\+C driver implementation for the A\+D\+C peripheral on C\+C26\+X\+X. 
+
+============================================================================
+
+This A\+D\+C driver implementation is designed to operate on a A\+D\+C peripheral for C\+C26\+X\+X. The A\+D\+C C\+C26\+X\+X header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/ADC.h>}
+\textcolor{preprocessor}{#include <ti/drivers/ADCCC26XX.h>}
+\end{DoxyCode}
+
+
+Refer to \hyperlink{_a_d_c_8h}{A\+D\+C.\+h} for a complete description of A\+P\+Is \& example of use. 
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+A\+D\+C.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+P\+I\+N.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/pin/\+P\+I\+N\+C\+C26\+X\+X.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+Power.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/power/\+Power\+C\+C26\+X\+X.\+h$>$}\\*
+{\ttfamily \#include $<$driverlib/aux\+\_\+adc.\+h$>$}\\*
+Include dependency graph for A\+D\+C\+C\+C26\+X\+X.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_a_d_c_c_c26_x_x_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_a_d_c_c_c26_x_x___h_w_attrs}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em A\+D\+C\+C\+C26\+X\+X Hardware attributes These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_a_d_c_c_c26_x_x___object}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em A\+D\+C\+C\+C26\+X\+X Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \hyperlink{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration} \hyperlink{_a_d_c_c_c26_x_x_8h_a267282cd7cedc4f9562dd5ed3e112b7b}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration}
+\begin{DoxyCompactList}\small\item\em Amount of time the A\+D\+C spends sampling the analogue input. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_a_d_c_c_c26_x_x_8h_a5ed293d16be70036c4008865dbe33b98}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source} \hyperlink{_a_d_c_c_c26_x_x_8h_a3690de700d303a304c078243b30df922}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source}
+\begin{DoxyCompactList}\small\item\em Specifies whether the internal reference of the A\+D\+C is sourced from the battery voltage or a fixed internal source. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_a_d_c_c_c26_x_x_8h_ac122319c50b5f443f4d3254a2b2d58f0}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Trigger\+\_\+\+Source} \hyperlink{_a_d_c_c_c26_x_x_8h_a09a1c4f09a9c71437616da95458b10ea}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Trigger\+\_\+\+Source}
+\begin{DoxyCompactList}\small\item\em List of sources the A\+D\+C can be configured to trigger off of. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_a_d_c_c_c26_x_x___h_w_attrs}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs} \hyperlink{_a_d_c_c_c26_x_x_8h_a02974734e3c626de2dfe586e4498addf}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em A\+D\+C\+C\+C26\+X\+X Hardware attributes These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_a_d_c_c_c26_x_x___object}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Object} \hyperlink{_a_d_c_c_c26_x_x_8h_a2aca732c47705fd1004c9fa5d031620d}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em A\+D\+C\+C\+C26\+X\+X Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration} \{ \\*
+\hyperlink{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1aba2a098b9bcf13ffe3dc3c5ef69c5452}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+2\+P7\+\_\+\+U\+S} = A\+U\+X\+A\+D\+C\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+T\+I\+M\+E\+\_\+2\+P7\+\_\+\+U\+S, 
+\\*
+\hyperlink{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1a9827d7266c7e2f27fad6bddbf30a71a3}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+5\+P3\+\_\+\+U\+S} = A\+U\+X\+A\+D\+C\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+T\+I\+M\+E\+\_\+5\+P3\+\_\+\+U\+S, 
+\\*
+\hyperlink{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1a250013498c4ab0a0b1dbfd950a107d75}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+10\+P6\+\_\+\+U\+S} = A\+U\+X\+A\+D\+C\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+T\+I\+M\+E\+\_\+10\+P6\+\_\+\+U\+S, 
+\\*
+\hyperlink{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1a4d2a5b63503209857e898330299c1f87}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+21\+P3\+\_\+\+U\+S} = A\+U\+X\+A\+D\+C\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+T\+I\+M\+E\+\_\+21\+P3\+\_\+\+U\+S, 
+\\*
+\hyperlink{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1a27254a92037a20001aaa223facd1bc59}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+42\+P6\+\_\+\+U\+S} = A\+U\+X\+A\+D\+C\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+T\+I\+M\+E\+\_\+42\+P6\+\_\+\+U\+S, 
+\\*
+\hyperlink{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1a476cb15ad1d204ad35b8e69a396dc476}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+85\+P3\+\_\+\+U\+S} = A\+U\+X\+A\+D\+C\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+T\+I\+M\+E\+\_\+85\+P3\+\_\+\+U\+S, 
+\\*
+\hyperlink{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1a84388397aab7566b272db3b0365e427c}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+170\+\_\+\+U\+S} = A\+U\+X\+A\+D\+C\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+T\+I\+M\+E\+\_\+170\+\_\+\+U\+S, 
+\\*
+\hyperlink{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1a867e94bb4303cf3cd543e3e212e5e45d}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+341\+\_\+\+U\+S} = A\+U\+X\+A\+D\+C\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+T\+I\+M\+E\+\_\+341\+\_\+\+U\+S, 
+\\*
+\hyperlink{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1ab923c950eb31510f3e2bfa377c8b83e9}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+682\+\_\+\+U\+S} = A\+U\+X\+A\+D\+C\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+T\+I\+M\+E\+\_\+682\+\_\+\+U\+S, 
+\\*
+\hyperlink{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1a15f0105a973d2c2c8e0a249909a4396a}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+1\+P37\+\_\+\+M\+S} = A\+U\+X\+A\+D\+C\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+T\+I\+M\+E\+\_\+1\+P37\+\_\+\+M\+S, 
+\\*
+\hyperlink{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1aa9a8a57d24bd02b0fa4cf4073541ade9}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+2\+P73\+\_\+\+M\+S} = A\+U\+X\+A\+D\+C\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+T\+I\+M\+E\+\_\+2\+P73\+\_\+\+M\+S, 
+\\*
+\hyperlink{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1a83687d85af11cd1c395629545c105e19}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+5\+P46\+\_\+\+M\+S} = A\+U\+X\+A\+D\+C\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+T\+I\+M\+E\+\_\+5\+P46\+\_\+\+M\+S, 
+\\*
+\hyperlink{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1aa342c522b5290ad8e8c031ffc5969173}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+10\+P9\+\_\+\+M\+S} = A\+U\+X\+A\+D\+C\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+T\+I\+M\+E\+\_\+10\+P9\+\_\+\+M\+S
+ \}
+\begin{DoxyCompactList}\small\item\em Amount of time the A\+D\+C spends sampling the analogue input. \end{DoxyCompactList}\item 
+enum \hyperlink{_a_d_c_c_c26_x_x_8h_a5ed293d16be70036c4008865dbe33b98}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source} \{ \\*
+\hyperlink{_a_d_c_c_c26_x_x_8h_a5ed293d16be70036c4008865dbe33b98a31a665bebb0b9c1edc53ca94ff5baa56}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+F\+I\+X\+E\+D\+\_\+\+R\+E\+F\+E\+R\+E\+N\+C\+E} = A\+U\+X\+A\+D\+C\+\_\+\+R\+E\+F\+\_\+\+F\+I\+X\+E\+D, 
+\\*
+\hyperlink{_a_d_c_c_c26_x_x_8h_a5ed293d16be70036c4008865dbe33b98a2591afa01edb684501f9c60f646e2dbb}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+V\+D\+D\+S\+\_\+\+R\+E\+F\+E\+R\+E\+N\+C\+E} = A\+U\+X\+A\+D\+C\+\_\+\+R\+E\+F\+\_\+\+V\+D\+D\+S\+\_\+\+R\+E\+L
+ \}
+\begin{DoxyCompactList}\small\item\em Specifies whether the internal reference of the A\+D\+C is sourced from the battery voltage or a fixed internal source. \end{DoxyCompactList}\item 
+enum \hyperlink{_a_d_c_c_c26_x_x_8h_ac122319c50b5f443f4d3254a2b2d58f0}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Trigger\+\_\+\+Source} \{ \hyperlink{_a_d_c_c_c26_x_x_8h_ac122319c50b5f443f4d3254a2b2d58f0aafe64b4149875b946350262169812030}{A\+D\+C\+C\+C26\+X\+X\+\_\+\+T\+R\+I\+G\+G\+E\+R\+\_\+\+M\+A\+N\+U\+A\+L} = A\+U\+X\+A\+D\+C\+\_\+\+T\+R\+I\+G\+G\+E\+R\+\_\+\+M\+A\+N\+U\+A\+L
+ \}
+\begin{DoxyCompactList}\small\item\em List of sources the A\+D\+C can be configured to trigger off of. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_a_d_c___fxn_table}{A\+D\+C\+\_\+\+Fxn\+Table} \hyperlink{_a_d_c_c_c26_x_x_8h_a4e18261700c8a99141f2507c54c13227}{A\+D\+C\+C\+C26\+X\+X\+\_\+fxn\+Table}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Typedef Documentation}
+\index{A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}!A\+D\+C\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration}}
+\index{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration}!A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}}
+\paragraph[{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf A\+D\+C\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration}  {\bf A\+D\+C\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration}}\label{_a_d_c_c_c26_x_x_8h_a267282cd7cedc4f9562dd5ed3e112b7b}
+
+
+Amount of time the A\+D\+C spends sampling the analogue input. 
+
+The analogue to digital conversion process consists of two phases in the C\+C26\+X\+X A\+D\+C, the sampling and conversion phases. During the sampling phase, the A\+D\+C samples the analogue input signal. The duration of the sampling phase is configurable. Larger input loads require longer sample times for the most accurate results. \index{A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}!A\+D\+C\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source}}
+\index{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source}!A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}}
+\paragraph[{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf A\+D\+C\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source}  {\bf A\+D\+C\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source}}\label{_a_d_c_c_c26_x_x_8h_a3690de700d303a304c078243b30df922}
+
+
+Specifies whether the internal reference of the A\+D\+C is sourced from the battery voltage or a fixed internal source. 
+
+
+\begin{DoxyItemize}
+\item In practice, using the internal fixed voltage reference sets the upper range of the A\+D\+C to a fixed value. That value is 4.\+3\+V with input scaling enabled and $\sim$1.4785\+V with input scaling disabled. In this mode, the output is a function of the input voltage multiplied by the resolution in alternatives (not bits) divided by the upper voltage range of the A\+D\+C. Output = Input (V) $\ast$ 2$^\wedge$12 / (A\+D\+C range (V))
+\item Using V\+D\+D\+S as a reference scales the upper range of the A\+D\+C with the battery voltage. As the battery depletes and its voltage drops, so does the range of the A\+D\+C. This is helpful when measuring signals that are generated relative to the battery voltage. In this mode, the output is a function of the input voltage multiplied by the resolution in alternatives (not bits) divided by V\+D\+D\+S multiplied by a scaling factor derived from the input scaling. Output = Input (V) $\ast$ 2$^\wedge$12 / (V\+D\+D\+S (V) $\ast$ Scaling factor), where the scaling factor is $\sim$1.4785/4.\+3 for input scaling disabled and 1 for input scaling enabled.
+\end{DoxyItemize}
+
+\begin{DoxyNote}{Note}
+The actual reference values are slightly different for each device and are higher than the values specified above. This gain is saved in the F\+C\+F\+G. The function \hyperlink{_a_d_c_8h_a81e762c06c3957c01d3271bdecef358d}{A\+D\+C\+\_\+convert\+Raw\+To\+Micro\+Volts()} must be used to derive actual voltage values. Do not attempt to compare raw values between devices or derive a voltage from them yourself. The results of doing so will only be approximately correct.
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+Even though the upper voltage range of the A\+D\+C is 4.\+3 volts in fixed mode with input scaling enabled, the input should never exceed V\+D\+D\+S as per the data sheet. 
+\end{DoxyWarning}
+\index{A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}!A\+D\+C\+C\+C26\+X\+X\+\_\+\+Trigger\+\_\+\+Source@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Trigger\+\_\+\+Source}}
+\index{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Trigger\+\_\+\+Source@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Trigger\+\_\+\+Source}!A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}}
+\paragraph[{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Trigger\+\_\+\+Source}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf A\+D\+C\+C\+C26\+X\+X\+\_\+\+Trigger\+\_\+\+Source}  {\bf A\+D\+C\+C\+C26\+X\+X\+\_\+\+Trigger\+\_\+\+Source}}\label{_a_d_c_c_c26_x_x_8h_a09a1c4f09a9c71437616da95458b10ea}
+
+
+List of sources the A\+D\+C can be configured to trigger off of. 
+
+The A\+D\+C driver currently only supports the driver manually triggering a conversion. Support for other trigger sources may be added later. \index{A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}!A\+D\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\index{A\+D\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}}
+\paragraph[{A\+D\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf A\+D\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}  {\bf A\+D\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}\label{_a_d_c_c_c26_x_x_8h_a02974734e3c626de2dfe586e4498addf}
+
+
+A\+D\+C\+C\+C26\+X\+X Hardware attributes These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. 
+
+\index{A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}!A\+D\+C\+C\+C26\+X\+X\+\_\+\+Object@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Object}}
+\index{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Object@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Object}!A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}}
+\paragraph[{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf A\+D\+C\+C\+C26\+X\+X\+\_\+\+Object}  {\bf A\+D\+C\+C\+C26\+X\+X\+\_\+\+Object}}\label{_a_d_c_c_c26_x_x_8h_a2aca732c47705fd1004c9fa5d031620d}
+
+
+A\+D\+C\+C\+C26\+X\+X Object. 
+
+The application must not access any member variables of this structure! 
+
+\subsubsection{Enumeration Type Documentation}
+\index{A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}!A\+D\+C\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration}}
+\index{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration}!A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}}
+\paragraph[{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf A\+D\+C\+C\+C26\+X\+X\+\_\+\+Sampling\+\_\+\+Duration}}\label{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1}
+
+
+Amount of time the A\+D\+C spends sampling the analogue input. 
+
+The analogue to digital conversion process consists of two phases in the C\+C26\+X\+X A\+D\+C, the sampling and conversion phases. During the sampling phase, the A\+D\+C samples the analogue input signal. The duration of the sampling phase is configurable. Larger input loads require longer sample times for the most accurate results. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+2\+P7\+\_\+\+U\+S@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+2\+P7\+\_\+\+U\+S}!A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}!A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+2\+P7\+\_\+\+U\+S@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+2\+P7\+\_\+\+U\+S}}\item[{\em 
+A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+2\+P7\+\_\+\+U\+S\label{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1aba2a098b9bcf13ffe3dc3c5ef69c5452}
+}]\index{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+5\+P3\+\_\+\+U\+S@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+5\+P3\+\_\+\+U\+S}!A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}!A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+5\+P3\+\_\+\+U\+S@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+5\+P3\+\_\+\+U\+S}}\item[{\em 
+A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+5\+P3\+\_\+\+U\+S\label{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1a9827d7266c7e2f27fad6bddbf30a71a3}
+}]\index{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+10\+P6\+\_\+\+U\+S@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+10\+P6\+\_\+\+U\+S}!A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}!A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+10\+P6\+\_\+\+U\+S@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+10\+P6\+\_\+\+U\+S}}\item[{\em 
+A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+10\+P6\+\_\+\+U\+S\label{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1a250013498c4ab0a0b1dbfd950a107d75}
+}]\index{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+21\+P3\+\_\+\+U\+S@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+21\+P3\+\_\+\+U\+S}!A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}!A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+21\+P3\+\_\+\+U\+S@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+21\+P3\+\_\+\+U\+S}}\item[{\em 
+A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+21\+P3\+\_\+\+U\+S\label{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1a4d2a5b63503209857e898330299c1f87}
+}]\index{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+42\+P6\+\_\+\+U\+S@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+42\+P6\+\_\+\+U\+S}!A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}!A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+42\+P6\+\_\+\+U\+S@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+42\+P6\+\_\+\+U\+S}}\item[{\em 
+A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+42\+P6\+\_\+\+U\+S\label{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1a27254a92037a20001aaa223facd1bc59}
+}]\index{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+85\+P3\+\_\+\+U\+S@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+85\+P3\+\_\+\+U\+S}!A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}!A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+85\+P3\+\_\+\+U\+S@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+85\+P3\+\_\+\+U\+S}}\item[{\em 
+A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+85\+P3\+\_\+\+U\+S\label{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1a476cb15ad1d204ad35b8e69a396dc476}
+}]\index{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+170\+\_\+\+U\+S@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+170\+\_\+\+U\+S}!A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}!A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+170\+\_\+\+U\+S@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+170\+\_\+\+U\+S}}\item[{\em 
+A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+170\+\_\+\+U\+S\label{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1a84388397aab7566b272db3b0365e427c}
+}]\index{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+341\+\_\+\+U\+S@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+341\+\_\+\+U\+S}!A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}!A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+341\+\_\+\+U\+S@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+341\+\_\+\+U\+S}}\item[{\em 
+A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+341\+\_\+\+U\+S\label{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1a867e94bb4303cf3cd543e3e212e5e45d}
+}]\index{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+682\+\_\+\+U\+S@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+682\+\_\+\+U\+S}!A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}!A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+682\+\_\+\+U\+S@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+682\+\_\+\+U\+S}}\item[{\em 
+A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+682\+\_\+\+U\+S\label{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1ab923c950eb31510f3e2bfa377c8b83e9}
+}]\index{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+1\+P37\+\_\+\+M\+S@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+1\+P37\+\_\+\+M\+S}!A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}!A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+1\+P37\+\_\+\+M\+S@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+1\+P37\+\_\+\+M\+S}}\item[{\em 
+A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+1\+P37\+\_\+\+M\+S\label{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1a15f0105a973d2c2c8e0a249909a4396a}
+}]\index{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+2\+P73\+\_\+\+M\+S@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+2\+P73\+\_\+\+M\+S}!A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}!A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+2\+P73\+\_\+\+M\+S@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+2\+P73\+\_\+\+M\+S}}\item[{\em 
+A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+2\+P73\+\_\+\+M\+S\label{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1aa9a8a57d24bd02b0fa4cf4073541ade9}
+}]\index{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+5\+P46\+\_\+\+M\+S@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+5\+P46\+\_\+\+M\+S}!A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}!A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+5\+P46\+\_\+\+M\+S@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+5\+P46\+\_\+\+M\+S}}\item[{\em 
+A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+5\+P46\+\_\+\+M\+S\label{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1a83687d85af11cd1c395629545c105e19}
+}]\index{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+10\+P9\+\_\+\+M\+S@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+10\+P9\+\_\+\+M\+S}!A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}!A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+10\+P9\+\_\+\+M\+S@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+10\+P9\+\_\+\+M\+S}}\item[{\em 
+A\+D\+C\+C\+C26\+X\+X\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+D\+U\+R\+A\+T\+I\+O\+N\+\_\+10\+P9\+\_\+\+M\+S\label{_a_d_c_c_c26_x_x_8h_adb3cf48cf9cac58a07ade90966bdb8f1aa342c522b5290ad8e8c031ffc5969173}
+}]\end{description}
+\end{Desc}
+\index{A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}!A\+D\+C\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source}}
+\index{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source}!A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}}
+\paragraph[{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf A\+D\+C\+C\+C26\+X\+X\+\_\+\+Reference\+\_\+\+Source}}\label{_a_d_c_c_c26_x_x_8h_a5ed293d16be70036c4008865dbe33b98}
+
+
+Specifies whether the internal reference of the A\+D\+C is sourced from the battery voltage or a fixed internal source. 
+
+
+\begin{DoxyItemize}
+\item In practice, using the internal fixed voltage reference sets the upper range of the A\+D\+C to a fixed value. That value is 4.\+3\+V with input scaling enabled and $\sim$1.4785\+V with input scaling disabled. In this mode, the output is a function of the input voltage multiplied by the resolution in alternatives (not bits) divided by the upper voltage range of the A\+D\+C. Output = Input (V) $\ast$ 2$^\wedge$12 / (A\+D\+C range (V))
+\item Using V\+D\+D\+S as a reference scales the upper range of the A\+D\+C with the battery voltage. As the battery depletes and its voltage drops, so does the range of the A\+D\+C. This is helpful when measuring signals that are generated relative to the battery voltage. In this mode, the output is a function of the input voltage multiplied by the resolution in alternatives (not bits) divided by V\+D\+D\+S multiplied by a scaling factor derived from the input scaling. Output = Input (V) $\ast$ 2$^\wedge$12 / (V\+D\+D\+S (V) $\ast$ Scaling factor), where the scaling factor is $\sim$1.4785/4.\+3 for input scaling disabled and 1 for input scaling enabled.
+\end{DoxyItemize}
+
+\begin{DoxyNote}{Note}
+The actual reference values are slightly different for each device and are higher than the values specified above. This gain is saved in the F\+C\+F\+G. The function \hyperlink{_a_d_c_8h_a81e762c06c3957c01d3271bdecef358d}{A\+D\+C\+\_\+convert\+Raw\+To\+Micro\+Volts()} must be used to derive actual voltage values. Do not attempt to compare raw values between devices or derive a voltage from them yourself. The results of doing so will only be approximately correct.
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+Even though the upper voltage range of the A\+D\+C is 4.\+3 volts in fixed mode with input scaling enabled, the input should never exceed V\+D\+D\+S as per the data sheet. 
+\end{DoxyWarning}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{A\+D\+C\+C\+C26\+X\+X\+\_\+\+F\+I\+X\+E\+D\+\_\+\+R\+E\+F\+E\+R\+E\+N\+C\+E@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+F\+I\+X\+E\+D\+\_\+\+R\+E\+F\+E\+R\+E\+N\+C\+E}!A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}!A\+D\+C\+C\+C26\+X\+X\+\_\+\+F\+I\+X\+E\+D\+\_\+\+R\+E\+F\+E\+R\+E\+N\+C\+E@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+F\+I\+X\+E\+D\+\_\+\+R\+E\+F\+E\+R\+E\+N\+C\+E}}\item[{\em 
+A\+D\+C\+C\+C26\+X\+X\+\_\+\+F\+I\+X\+E\+D\+\_\+\+R\+E\+F\+E\+R\+E\+N\+C\+E\label{_a_d_c_c_c26_x_x_8h_a5ed293d16be70036c4008865dbe33b98a31a665bebb0b9c1edc53ca94ff5baa56}
+}]\index{A\+D\+C\+C\+C26\+X\+X\+\_\+\+V\+D\+D\+S\+\_\+\+R\+E\+F\+E\+R\+E\+N\+C\+E@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+V\+D\+D\+S\+\_\+\+R\+E\+F\+E\+R\+E\+N\+C\+E}!A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}!A\+D\+C\+C\+C26\+X\+X\+\_\+\+V\+D\+D\+S\+\_\+\+R\+E\+F\+E\+R\+E\+N\+C\+E@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+V\+D\+D\+S\+\_\+\+R\+E\+F\+E\+R\+E\+N\+C\+E}}\item[{\em 
+A\+D\+C\+C\+C26\+X\+X\+\_\+\+V\+D\+D\+S\+\_\+\+R\+E\+F\+E\+R\+E\+N\+C\+E\label{_a_d_c_c_c26_x_x_8h_a5ed293d16be70036c4008865dbe33b98a2591afa01edb684501f9c60f646e2dbb}
+}]\end{description}
+\end{Desc}
+\index{A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}!A\+D\+C\+C\+C26\+X\+X\+\_\+\+Trigger\+\_\+\+Source@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Trigger\+\_\+\+Source}}
+\index{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Trigger\+\_\+\+Source@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Trigger\+\_\+\+Source}!A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}}
+\paragraph[{A\+D\+C\+C\+C26\+X\+X\+\_\+\+Trigger\+\_\+\+Source}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf A\+D\+C\+C\+C26\+X\+X\+\_\+\+Trigger\+\_\+\+Source}}\label{_a_d_c_c_c26_x_x_8h_ac122319c50b5f443f4d3254a2b2d58f0}
+
+
+List of sources the A\+D\+C can be configured to trigger off of. 
+
+The A\+D\+C driver currently only supports the driver manually triggering a conversion. Support for other trigger sources may be added later. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{A\+D\+C\+C\+C26\+X\+X\+\_\+\+T\+R\+I\+G\+G\+E\+R\+\_\+\+M\+A\+N\+U\+A\+L@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+T\+R\+I\+G\+G\+E\+R\+\_\+\+M\+A\+N\+U\+A\+L}!A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}}\index{A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}!A\+D\+C\+C\+C26\+X\+X\+\_\+\+T\+R\+I\+G\+G\+E\+R\+\_\+\+M\+A\+N\+U\+A\+L@{A\+D\+C\+C\+C26\+X\+X\+\_\+\+T\+R\+I\+G\+G\+E\+R\+\_\+\+M\+A\+N\+U\+A\+L}}\item[{\em 
+A\+D\+C\+C\+C26\+X\+X\+\_\+\+T\+R\+I\+G\+G\+E\+R\+\_\+\+M\+A\+N\+U\+A\+L\label{_a_d_c_c_c26_x_x_8h_ac122319c50b5f443f4d3254a2b2d58f0aafe64b4149875b946350262169812030}
+}]\end{description}
+\end{Desc}
+
+
+\subsubsection{Variable Documentation}
+\index{A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}!A\+D\+C\+C\+C26\+X\+X\+\_\+fxn\+Table@{A\+D\+C\+C\+C26\+X\+X\+\_\+fxn\+Table}}
+\index{A\+D\+C\+C\+C26\+X\+X\+\_\+fxn\+Table@{A\+D\+C\+C\+C26\+X\+X\+\_\+fxn\+Table}!A\+D\+C\+C\+C26\+X\+X.\+h@{A\+D\+C\+C\+C26\+X\+X.\+h}}
+\paragraph[{A\+D\+C\+C\+C26\+X\+X\+\_\+fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf A\+D\+C\+\_\+\+Fxn\+Table} A\+D\+C\+C\+C26\+X\+X\+\_\+fxn\+Table}\label{_a_d_c_c_c26_x_x_8h_a4e18261700c8a99141f2507c54c13227}
